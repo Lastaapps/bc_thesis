@@ -10,6 +10,8 @@ services:
       # Preserved files ownership
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
+    environment:
+        HOME: /home/petr/Projects/bc_thesis/build
     working_dir: ${PWD}
     tty: true
 

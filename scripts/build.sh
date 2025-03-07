@@ -5,4 +5,15 @@ if [[ -z "$1" ]]; then
     exit 1
 fi
 
-docker exec -it nac_env latexmk -pdf -interaction=nonstopmode -synctex=1 -auxdir=build "$1"
+source ./scripts/env.sh
+
+# This option is required to allow access to fonts cache at /var/cache
+# --privileged 
+
+# LaTeX
+# docker exec -it --privileged "${CONTAINER_NAME}" latexmk -pdf -interaction=nonstopmode -synctex=1 -auxdir=build "$@"
+# LuaTeX
+docker exec -it --privileged "${CONTAINER_NAME}" latexmk -pdflua -interaction=nonstopmode -synctex=1 -auxdir=build "$@"
+# XeLaTeX
+# docker exec -it --privileged "${CONTAINER_NAME}" latexmk -pdfxe -interaction=nonstopmode -synctex=1 -auxdir=build "$@"
+

@@ -6,12 +6,12 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- TeX
 lspconfig.texlab.setup {
   capabilities = capabilities,
-  cmd = { 'docker', 'exec', '-i', 'nac_env', 'texlab' },
+  cmd = { 'docker', 'exec', '-i', '--privileged', 'bc_thesis', 'texlab' },
   settings = {
     texlab = {
       build = {
         args = {
-          "-pdf",
+          "-pdflua",
           "-interaction=nonstopmode",
           "-synctex=1",
           "-auxdir=build",
@@ -31,7 +31,7 @@ lspconfig.texlab.setup {
         args = { '-l' },
       },
       experimental = {
-          followPackageLinks = true,
+        followPackageLinks = true,
       },
     },
   },

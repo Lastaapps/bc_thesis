@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-docker exec -it nac_env /usr/bin/bash
+source ./scripts/env.sh
+docker exec -it "${CONTAINER_NAME}" /usr/bin/bash
 
