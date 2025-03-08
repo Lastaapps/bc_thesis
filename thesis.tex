@@ -89,6 +89,15 @@
 % CONTENTS SETTINGS END
 %%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%
+% CUSTOM COMMANDS
+%%%%%%%%%%%%%%%%%
+\newcommand{\MSO}{\(\text{MSO2}\)}
+%%%%%%%%%%%%%%%%%
+% CUSTOM COMMANDS END
+%%%%%%%%%%%%%%%%%
+
+
 \begin{document}
 \frontmatter\frontmatterinit{} % do not remove these two commands
 
@@ -219,7 +228,9 @@
 % MODIFY ANYTHING BELOW THIS LINE
 %%%%%%%%%%%%%%%%%%%
 
-\include{text/text} % include `text.tex' from `text/' subdirectory
+\include{./text/introduction}
+\include{./text/fpt_algo}
+\include{./text/examples}
 
 \appendix\appendixinit{} % do not remove these two commands
 

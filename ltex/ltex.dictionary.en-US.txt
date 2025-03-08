@@ -2,3 +2,5 @@ Legerský
 Petr
 Laštovička
 NAC-colorings
+techn
+Monadic

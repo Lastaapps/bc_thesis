@@ -1,2 +1,3 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QLaštovička Název příkladné závěrečné práce Petr Laštovička Petr Dr. techn. Ing. Jan Legerský Katedra teoretické informatiky 2021 Praze Fill in the abstract of this thesis in Czech.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QLaštovička Název příkladné závěrečné práce Petr Laštovička Petr Dr. techn. Ing. Jan Legerský Faculty of Theoretical Informatics 2025 Prague Fill in the abstract of this thesis in Czech.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QLaštovička NAC-colorings search: complexity and algorithms Petr Laštovička Petr Dr. techn. Ing. Jan Legerský Faculty of Theoretical Informatics 2025 Prague Fill in the abstract of this thesis in Czech.\\E$"}
