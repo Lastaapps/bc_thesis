@@ -312,6 +312,48 @@ after the last vertex is forgotten.
 
 
 \subsection{Time complexity}
+
+Bell numbers are defined as the number of factorizations of the set.
+They can be upper bounded by \( n^n \), which is what we will use from now on.
+\todo[inline]{Reference?}
+Recall that \( \forall t \in \mathcal{T} : |X_t| \le k+1 \).
+
+First, size of the state space used is upper bounded.
+For each color there is up to \( {(k+1)}^{(k+1)} \) factorizations of a bag and
+up to \( 2^{\binom(k, 2)} \) neighbors relations.
+Total state space size for each bag is therefore bounded by
+\( {\big({(k+1)}^{(k+1)} \cdot 2^{\binom{k}{2}} \big)}^2 = {(k+1)}^{2(k+1)} \cdot 2^{2 \binom{k}{2}} \).
+
+We go through all the nodes and state complexity of the operations performed in the node:
+\begin{description}
+	\item[Introduce vertex node]
+	      We need to fill a state space and copy previous values into the cache
+	      which can be done in constant time per operation,
+	      so the time complexity corresponds to the state space size:
+	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(1) \).
+	\item[Forget vertex node]
+	      Even if the operation seams complex, we just need to traverse the state space
+	      and create target state after \( v \) is removed. This can be done in \( O(k) \) time
+	      per state, total complexity therefore is
+	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
+	\item[Introduce edge node]
+	      The state space is iterated again and we run few simple checks and cache key constructions
+	      that can be run in \( O(k) \) time, therefore the final complexity stays the same
+	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
+	\item[Join node]
+	      We iterate through product of state spaces,
+	      so the size of the new spate space is power of two
+	      of the otherwise used state space size.
+	      This hides into the big \( O \) notation.
+	      Checks run checking for almost cycles can be run in time \( O(k^2) \).
+	      Thus, the final		complexity is
+	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k^2) \).
+\end{description}
+
+There are \( O(nk) \) nodes in \( \mathcal{T} \).
+The final complexity of the algorithm is therefore
+\( {k}^{O(k)} \cdot O(n) \).
+
 \subsection{Introduce node with edges}
 \subsection{Monochromatic components}
 
