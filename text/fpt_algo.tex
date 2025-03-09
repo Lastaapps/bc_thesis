@@ -98,8 +98,8 @@ for \( a \in \{\red, \blue\} \) as:
 	R_a^\prime & \coloneqq R_a \setminus \{ (p_1, p_2) \mid (p_1, p_2) \in R_a, (\{v\} \in p_1 \lor \{v\} \in p_2) \} \notag \\
 	c[t, s]    & \coloneqq
 	\begin{cases}
-		0,                                                                           & \text{if } (\exists a)(\{v\} \not\in P_a)                      \\
-		0,                                                                           & \text{if } (\exists a )(\exits p \in P_a) ((\{v\}, p) \in R_a) \\
+		0,                                                                           & \text{if } \exists a : \{v\} \not\in P_a                    \\
+		0,                                                                           & \text{if } \exists a \exists p \in P_a : (\{v\}, p) \in R_a \\
 		c[t^\prime, (P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)], & \text{otherwise}
 	\end{cases}
 \end{align*}
@@ -124,7 +124,7 @@ for \( a \in \{\red, \blue\} \) as:
 	M(P)          & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\}   \notag                                                                                       \\
 	\mathcal{P}_a & \coloneqq \{ P_a^\prime \mid P_a^\prime \in \mathcal{F}(X_{t^\prime}), M(P_a^\prime) = P_a \}   \notag                                                  \\
 	\mathcal{R}_a & \coloneqq \{ R_a^\prime \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \subseteq P_a^\prime \times P_a^\prime,   \notag                                  \\
-	              & (\forall (p_1, p_2) \in R_a^\prime)((m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset ) \}   \notag                                          \\
+	              & \qquad \forall (p_1, p_2) \in R_a^\prime : (m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset \}   \notag                                     \\
 	S^\prime      & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \in \mathcal{R}_a  \}   \notag \\
 	c[t, s]       & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime]
 \end{align}
@@ -204,6 +204,113 @@ the cache entry results into \( c_\blue[t, s] = 0 \).
 The final entry is \( c[t, s] = c_\red[t, s] + c_\blue[t, s] \).
 
 \subsection{Join node}
+
+Suppose that \( t \in \mathcal{T} \) is
+the only parent of \( t_1, t_2 \in \mathcal{T} \) in \( \mathcal {T} \).
+It holds that \( X_t = X_{t_1} = X_{t_2} \)
+and \( S = S_1 = S_2 \) where \( S_\cdot \) are corresponding cache state spaces.
+
+We create mappings \( M: S_1 \times S_2 \to S \) and \( N: S_1 \times S_2 \to \{0, 1\} \).
+Mapping \( M \) maps to the state when connected components of both the states
+are joined together and \( N \) states if the given join is valid.
+
+Let \( {(.)}^* \) denote the transitive closure of a set.
+For states let us have
+% \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \),
+\( s_1 = (P_{1,\red}, R_{1,\red}, P_{1,\blue}, R_{1,\blue}), s_1 \in S_1 \) and
+\( s_2 = (P_{2,\red}, R_{2,\red}, P_{2,\blue}, R_{2,\blue}), s_2 \in S_2 \).
+Let \( a \in \{\red, \blue\} \),
+We take original relations \( O_{1, a}, O_{2, a} \)
+from which \( P_{1, a}, P_{2, a} \) were factorizes.
+We set
+%
+\begin{align}
+	O_a & \coloneqq {(O_{1, a} \cup O_{2, a})}^*   \notag \\
+	P_a & \coloneqq \mathcal{F}_{O_a}(X_t)
+\end{align}
+%
+where \( \mathcal{F}_O(X) \) stands for factorization of \( X \)
+according to relation \( O \). This operation represents merging connected
+components from both the states. No NAC-coloring related checking is performed yet.
+
+We continue with neighbors relation. We drop connections that related components
+that were merged (we will get back to them soon).
+Let for \( i \in {1, 2} \)
+%
+\begin{align}
+	R_{i,a}^\prime & \coloneqq \{(p_1, p_2) \mid p_1, p_2 \in P_a,   \notag                                                                                                            \\
+	               & \qquad \exists p_1^\prime, p_2^\prime \in P_{i,a} : (p_1^\prime, p_2^\prime) \in R_{i,a} \land p_1^\prime \subseteq p_1 \land p_2^\prime \subseteq p_2\}   \notag
+\end{align}
+%
+and \WLOG{} let \( R_a \coloneqq R_{1,a} \).
+Then we define mapping \( M \) as \[ M(s_1, s_2) = (P_\red, R_\red, P_\blue, R_\blue). \]
+
+We follow with mapping \( N \) that states if the merge done by \( M \) is valid.
+First, sates that provide different guaranties
+(\( R_{1,a}^\prime \not= R_{2,a}^\prime \)) about neighboring components
+among the components in the final state are unsuitable.
+Now we need to validate that we did not create an almost cycle by checking
+neighboring relations in \( R_{1,a} \) among components from \( P_{1,a} \)
+that will be merged because of \( P_{2,\red}, P_{2,\blue} \).
+The same follows the other way.
+
+The rest of the statement follows similar in introduce edge node proof.
+The check is done once again for both the colors.
+Let us go through cases how can an almost cycle be created.
+Suppose the only edge with different color is colored \( \red \).
+Then there must exist a \( \blue \) path. If the path spans only using vertices
+in \( V_{t_1} \), the cache entry must hold zero as no NAC-coloring can come
+from \( s_1 \). This case is of not interest to us.
+Therefore, the \( \red \) edge must be
+a bridge connecting two \( \blue \) components in \( P_{1,\blue} \) and
+the path has to also span trough vertices in \( V_{t_2} \).
+Such vertices have to share the same connected \( \blue \) component in \( P_{2,\blue} \).
+This happens if and only if there is a neighboring pair of components in \( P_{1,\blue} \)
+that can be connected by a \( \blue \) path in \( P_{2,\blue} \).
+
+To formalize let \( a \in \{\red, \blue \}  \) and \( b \in \{\red, \blue \} \setminus \{a\} \).
+Let \( \mathcal{P} \subseteq P_{1, a} \)
+and \( p \in P_{a} \) such that \( \bigcup_{p^\prime \in \mathcal{P}} p^\prime = p \).
+If there exists \( p_1, p_2 \in \mathcal{P} : (p_1, p_2) \in R_{1, a} \),
+this configuration is not acceptable as an almost cycle is created
+using a \( \red \) bridge connecting \( p_1 \) and \( p_2 \).
+
+This is the only way an almost cycle can be created as no edges are added.
+Note that each vertex in \( X_t \) is part of both \( \red \) and \( \blue \)
+components even if the components have just a single vertex.
+All the checks for both sides (\( 1, 2 \)) and colors are run and
+if a single one of them fails, the states pair is considered bad.
+We denote set of such bad configurations as \( \mathcal{B}, (s_1, s_2) \in \mathcal{B} \).
+
+%
+\begin{align}
+	N(s_1, s_2) =
+	\begin{cases}
+		0, & \text{if } (s_1, s_2) \in \mathcal{B}                  \\
+		0, & \text{if } \exists a : R_{1,a}^\prime = R_{2,a}^\prime \\
+		1, & \text{otherwise}
+	\end{cases}\notag
+\end{align}
+%
+
+Lastly we show formula to compute cache entries based on previously stated mappings.
+It comes from the same idea as coloring product where all the resulting colorings
+are NAC-colorings. The size of such product is multiple of sizes of the original subgraphs.
+%
+\begin{align}
+	\mathcal{S}(s) & \coloneqq \{(s_1, s_2) \mid M(s_1, s_2) = s \}   \notag                                                     \\
+	c[t, s]        & \coloneqq \sum_{(s_1, s_2) \in \mathcal{S}(s)} N(s_1, s_2) \cdot c[t_1, s_1] \cdot c[t_{2}, s_{2}]   \notag
+\end{align}
+%
+
+This finishes our basic dynamic programming algorithm
+for counting NAC-colorings of the graph.
+The number of NAC-colorings is the only value stored in cache
+after the last vertex is forgotten.
+
+\todo[inline]{Don't forget to define \( V_t \)}
+
+
 \subsection{Time complexity}
 \subsection{Introduce node with edges}
 \subsection{Monochromatic components}
