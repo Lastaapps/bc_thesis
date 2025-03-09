@@ -78,13 +78,15 @@
 %%%%%%%%%%%%%%%%%%%%%%
 \usepackage{dirtree}
 \usepackage{lipsum,tikz}
-\usepackage[style=iso-numeric]{biblatex}
-\addbibresource{text/bib-database.bib}
 \usepackage{xurl}
 \usepackage{listings} % typesetting of sources
 %\usepackage{minted}
 \usepackage{csquotes}
 
+\usepackage{todonotes}
+
+\usepackage[style=iso-numeric]{biblatex}
+\addbibresource{text/bib-database.bib}
 %%%%%%%%%%%%%%%%%%%%%%
 % CONTENTS SETTINGS END
 %%%%%%%%%%%%%%%%%%%%%%
@@ -92,7 +94,23 @@
 %%%%%%%%%%%%%%%%%
 % CUSTOM COMMANDS
 %%%%%%%%%%%%%%%%%
+
+% Text mode macros
+\newcommand{\WLOG}{WLOG}
+\newcommand{\G}{\(G\)}
+\newcommand{\Gprime}{\(G^\prime\)}
+\newcommand{\Ered}{\(E_\text{red}\)}
+\newcommand{\Eblue}{\(E_\text{blue}\)}
+%% FPT
 \newcommand{\MSO}{\(\text{MSO2}\)}
+\newcommand{\Xt}{\(X_t\)}
+
+% Math mode macros
+\newcommand{\red}{\text{red}}
+\newcommand{\blue}{\text{blue}}
+\newcommand{\NACG}{\text{NAC} (G)}
+\newcommand{\N}{\mathbb{N}}
+
 %%%%%%%%%%%%%%%%%
 % CUSTOM COMMANDS END
 %%%%%%%%%%%%%%%%%
@@ -135,7 +153,7 @@
 % FILL IN / MODIFY
 %%%%%%%%%%%%%%%%%%%
 % INSTRUCTIONS
-% https://courses.fit.cvut.cz/SFE/download/index.html#_documents (document Declaration for FT in English) (prohlášení do ZP)
+% https://courses.fit.cvut.cz/SFE/download/index.html#_documents () (prohlášení do ZP)
 \begin{declarationpage}
 	I hereby declare that the presented thesis is my own work and that I have cited all sources of
 	information in accordance with the Guideline for adhering to ethical principles when elaborating an

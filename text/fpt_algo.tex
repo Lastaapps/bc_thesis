@@ -1,0 +1,210 @@
+\chapter{FPT Algorithm for NAC-coloring counting}
+
+\begin{chapterabstract}
+
+	It can be easily shown that the NAC-coloring counting as a NP-complete
+	problem can be parametrized by tree width by using \MSO{} logic.
+	In this chapter, we present an algorithm that can solve the given problem
+	in \({k}^{O(k)} n^{O(1)}\) time, where \(k\) stands for the tree width of the graph.
+
+\end{chapterabstract}
+
+\section{Tree width}
+
+In this section I'll describe following:
+\begin{description}
+	\item[FPT algorithms]
+	\item[Tree width]
+	\item[Tree decomposition]
+	\item[Other common parameters]
+\end{description}
+
+\section{Monadic second-order logic}
+
+In this section I'll describe following:
+
+\begin{description}
+	\item[Introduce the reader swiftly into~\MSO]
+	\item[Tree width]
+	\item[Tree decomposition]
+	\item[Other common parameters]
+\end{description}
+
+\section{FPT algorithm}
+
+In this section we first introduce the main idea of the algorithm,
+go through each type of node in a tree decomposition and
+set final complexity of the algorithm.
+Lastly we optimize the algorithm by using monochromatic components.
+
+Our algorithm will be somewhat similar to Steiner tree construction algorithm
+as described in~\cite{book_parametrized_algorithms} as both the problems require connectivity
+among vertex partitions.
+
+First we want to build the intuition for the following algorithm.
+Let us have a graph \( G \) and all the NAC-colorings coloring of the graph
+\( NACG \). Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\Gprime.
+We want to obtain \( \text{NAC} (G^\prime) \) from \( NAC(G) \).
+Let us have \( \delta \in \NACG \).
+We want to extend it to \( delta^\prime \), suppose \( \delta^\prime(e) = \blue \).
+\( \delta^\prime \) is a NAC-coloring unless we formed an almost cycle.
+In that case one of these must be true:
+\begin{itemize}
+	\item Both vertices \( u, v \) share the same connected component in \( G[\Ered] \).
+	      An almost cycle is formed
+	      from \( u \)-\( v \)-path in the connected component with \( \red \) color
+	      and edge \( e \) with \( \blue \) color.
+	\item Vertices \( u, v \) lay in different connected components in \( G[\Eblue] \)
+	      and there is a \( \red \) colored edge connecting some vertices from the components.
+	      An almost cycle is formed from paths in each component, the bridge and edge \( e \).
+\end{itemize}
+In all other cases an almost cycle cannot be formed by adding an edge.
+Note that if a vertex cannot be in more connected component for the given color
+as this fact would mean that both the components are not maximal.
+
+\subsection{Dynamic cache}
+
+First we define a state space \( S \) of \emph{configurations}
+that will be used by our cache in our dynamic programming
+algorithm on a tree decomposition \( \mathcal{T} \) of a graph \( G \) with width \( k \).
+For a bag \Xt{} for \( t \in \mathcal{T} \)
+with \( l \le k+1 \) vertices we take all the factorizations of \Xt{} denoted by \( \mathcal{F}(X_t) \)
+and for each partitioning we take all the possible symmetric irreflexive relations between
+partitions. Now we do it again for the other color.
+Our configuration is the formed by a four tuple \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \)
+where \( P_\red\), resp. \( P_\blue \), is a partitioning of \Xt{}
+and \( R_\red\), resp. \(R_\blue \), is a relation
+on partitions in \( P_\red\), resp. \(P_\blue \).
+Partitions \( P_\red, P_\blue \) represent vertices
+that share the same connected component in the subgraph
+corresponding to the specified color and
+relations \( R_\red, R_\blue \) represent
+whenever the connected components are connected by an edge of the opposite color.
+Note that the state space is somewhat large, but it is expected as we are solving
+and NP-complete problem.
+We denote cache as function \( c: S \to \N \).
+
+
+\subsection{Introduce node}
+
+Suppose that \( t \in \mathcal{T} \) is
+the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
+Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
+for \( a \in \{\red, \blue\} \) as:
+%
+\begin{align*}
+	P_a^\prime & \coloneqq P_a \setminus \{\{v\}\}                                                                    \notag \\
+	R_a^\prime & \coloneqq R_a \setminus \{ (p_1, p_2) \mid (p_1, p_2) \in R_a, (\{v\} \in p_1 \lor \{v\} \in p_2) \} \notag \\
+	c[t, s]    & \coloneqq
+	\begin{cases}
+		0,                                                                           & \text{if } (\exists a)(\{v\} \not\in P_a)                      \\
+		0,                                                                           & \text{if } (\exists a )(\exits p \in P_a) ((\{v\}, p) \in R_a) \\
+		c[t^\prime, (P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)], & \text{otherwise}
+	\end{cases}
+\end{align*}
+%
+What this means is that we just propagate our already computed values to the next level.
+We did not find any new NAC-colorings as we did not add any edges.
+Zero is set for components that state to be connected,
+but they cannot be as they contain \( v \)
+which has no edge connecting it to the other vertices of \( X_{t^\prime} \).
+The same idea holds for bridges as no bridge is created.
+
+\subsection{Forget node}
+
+Suppose that \( t \in \mathcal{T} \) is
+the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+Let \( v \) be the only vertex in \( X_{t^\prime} \setminus X_t \).
+Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
+for \( a \in \{\red, \blue\} \) as:
+%
+\begin{align}
+	m(p)          & \coloneqq p \setminus \{v\}   \notag                                                                                                                    \\
+	M(P)          & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\}   \notag                                                                                       \\
+	\mathcal{P}_a & \coloneqq \{ P_a^\prime \mid P_a^\prime \in \mathcal{F}(X_{t^\prime}), M(P_a^\prime) = P_a \}   \notag                                                  \\
+	\mathcal{R}_a & \coloneqq \{ R_a^\prime \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \subseteq P_a^\prime \times P_a^\prime,   \notag                                  \\
+	              & (\forall (p_1, p_2) \in R_a^\prime)((m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset ) \}   \notag                                          \\
+	S^\prime      & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \in \mathcal{R}_a  \}   \notag \\
+	c[t, s]       & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime]
+\end{align}
+%
+We take all the previous states that collapse into our requested state \( s \)
+after removing \( v \).
+\todo[inline]{Prove that no coloring is counted twice by checking that each previous state is mapped to exactly one new state}
+
+\subsection{Introduce edge}
+
+Suppose that \( t \in \mathcal{T} \) is
+the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+It holds that \( X_t = X_{t^\prime} \),
+let \( e = \{u, v\} \) be the only edge added in the step, \( e \in E_t \setminus E_{t^\prime} \).
+We will discuss all the possible cases that must be fulfilled for both colors,
+otherwise the resulting value for the state given is zero.
+Interactions between components of different colors are of no interest for us.
+We state conditions for a single color, \WLOG{} let the edge \( e \) be \( \blue \):
+%
+\begin{description}
+	\item[Edge lies in a \( \blue \) connected component]
+	      In this case there is no risk of an almost cycle being created.
+	\item[Edge lies in a \( \red \) connected component]
+	      In this case an almost cycle is trivially created,
+	      therefore this is not allowed.
+	\item[Edge connects two neighboring \( \blue \) connected components]
+	      This again causes an almost cycle to be created.
+	\item[Edge connects two neighboring \( \red \) connected components]
+	      This causes no harm as cycle with two \( \blue \) edges is created.
+	\item[Edge connects two non-neighboring \( \blue \) connected components]
+	      This operation is not allowed as both the components
+	      are now connected using this edge.
+	\item[Edge connects two non-neighboring \( \red \) connected components]
+	      This is not allowed as bot the components
+	      are neighbors with \( e \) being the new bridge.
+\end{description}
+%
+Note that either both conditions need to pass.
+
+Now we state how the cached values is computed for cases when
+the previous conditions pass for both the colors.
+Resulting cache entry is sum of multiple previous states that
+collapse into the new valid state as some components are joined,
+and some neighboring relations are created:
+%
+\begin{description}
+	\item[Edge lies in a \( \blue \) connected component]
+	      First we query the previous cache state with
+	      the same partition and neighbors configuration.
+	      Then we also need to add configurations where
+	      both the components were not neighbors as no almost cycle was created
+	      and both the separate connected components
+	      are now joined into a single component.
+	      We denote \( \blue \) components of such configuration
+	      as \( P_\blue^\prime \) and \( R_\blue^\prime \).
+	      Note, that other relations between partitions need to match.
+	\item[Edge connects two neighboring \( \red \) connected components]
+	      Result is a sum of previous states with the same partitioning as \( P_\red \),
+	      for first query we use \( R_\red \),
+	      and then we add query of \( R^\prime_\red = R_\red \setminus \{(c(u), c(v)), (c(v), c(u))\} \)
+	      (with the neighbor constraint removed).
+\end{description}
+%
+
+The resulting cache for \( \blue \) color is then computed as follows:
+%
+\begin{align}
+	c_\blue[t, s] & = c[t^\prime, (P_\red, R_\red, P_\blue, R_\blue)]   \notag                      \\
+	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue, R_\blue)]   \notag               \\
+	              & + c[t^\prime, (P_\red, R_\red, P_\blue^\prime, R_\blue^\prime)]   \notag        \\
+	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)]   \notag
+\end{align}
+%
+If some rule was not matched for \( s \) and \( e \) colored \( \blue \)
+the cache entry results into \( c_\blue[t, s] = 0 \).
+
+The final entry is \( c[t, s] = c_\red[t, s] + c_\blue[t, s] \).
+
+\subsection{Join node}
+\subsection{Time complexity}
+\subsection{Introduce node with edges}
+\subsection{Monochromatic components}
+
