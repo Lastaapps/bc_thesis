@@ -337,7 +337,7 @@ We go through all the nodes and state complexity of the operations performed in 
 	      per state, total complexity therefore is
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
 	\item[Introduce edge node]
-	      The state space is iterated again and we run few simple checks and cache key constructions
+	      The state space is iterated again, and we run few simple checks and cache key constructions
 	      that can be run in \( O(k) \) time, therefore the final complexity stays the same
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
 	\item[Join node]
@@ -350,10 +350,50 @@ We go through all the nodes and state complexity of the operations performed in 
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k^2) \).
 \end{description}
 
-There are \( O(nk) \) nodes in \( \mathcal{T} \).
+There are \( O((n+m)k) \) nodes in \( \mathcal{T} \).
 The final complexity of the algorithm is therefore
-\( {k}^{O(k)} \cdot O(n) \).
+\( {k}^{O(k)} \cdot O(n^2) \).
+\todo[inline]{Check number of nodes in \( \mathcal{T} \)}
 
-\subsection{Introduce node with edges}
+\subsection{Introduce vertex with edges node}
+
+The algorithm as stated above can be improved by avoiding edge introduce nodes.
+We can add vertex with all its edges in a singe step.
+To simplify our proof we will create a sequence of bags and then replace the
+vertex introduce node with a join node adding our custom bags
+and remove all the edge introduce bags from the original \( \mathcal{T} \).
+
+Let \( t \in T \) be they introduce vertex node we are trying to replace,
+\( t^\prime \in \mathcal{T} \) its only child,
+\( w \in \mathcal{T} \) its only parent,
+\( v \) be the vertex to be introduced,
+\( B = N(v) \cap X_t \) and
+\( E_v \) edges incident to \( v \) and vertices in \( B \).
+First we create vertex introduce bags for \( v \) and each vertex in \( B \).
+Then we create edge introduce bags for each edge in \( E_v \).
+Let the last bag created be \( b \).
+Note, that \( V_b \) is a star graph with \( v \) as the center.
+Finally, we replace \( t \) in \( \mathcal{T} \) with a join node
+with parent \( w \) and children \( t^\prime \) and \( b \).
+We also remove all the edge introduce bags for edges \( B \) from \( \mathcal{T} \).
+Now we join all the bags created in the previous steps including the join node
+into a single new node called \textbf{Intrude vertex with edges node}.
+
+The new tree \( \mathcal{T}^\prime \) is also a nice tree decomposition
+of the same graph as the same vertices and edges were added.
+We can repeat this procedure till all the edge introduce nodes are gone.
+
+The benefits of such a node are both theoretical and practical performance increase.
+Also, in the following section we will improve this step by using monochromatic components.
+
+This step can be implemented smarter than by calling the join routine.
+We iterate through product of the state space and all the \( \red, \blue \)
+colorings of edges \( B \). There, we can in \( O(k^2) \) time decide
+how the resulting state after components are joined because of the edges look and
+if the state is even valid.
+
 \subsection{Monochromatic components}
+
+% To Be Vymyšleno
+% Ale určitě jde zlepšit introduce node with edges
 
