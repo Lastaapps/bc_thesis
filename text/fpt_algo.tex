@@ -85,7 +85,7 @@ and NP-complete problem.
 We denote cache as function \( c: S \to \N \).
 
 
-\subsection{Introduce node}
+\subsection{\IntroduceVertexNode}
 
 Suppose that \( t \in \mathcal{T} \) is
 the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
@@ -111,7 +111,7 @@ but they cannot be as they contain \( v \)
 which has no edge connecting it to the other vertices of \( X_{t^\prime} \).
 The same idea holds for bridges as no bridge is created.
 
-\subsection{Forget node}
+\subsection{\ForgetVertexNode}
 
 Suppose that \( t \in \mathcal{T} \) is
 the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
@@ -133,7 +133,7 @@ We take all the previous states that collapse into our requested state \( s \)
 after removing \( v \).
 \todo[inline]{Prove that no coloring is counted twice by checking that each previous state is mapped to exactly one new state}
 
-\subsection{Introduce edge}
+\subsection{IntroduceEdgeNode}
 
 Suppose that \( t \in \mathcal{T} \) is
 the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
@@ -203,7 +203,7 @@ the cache entry results into \( c_\blue[t, s] = 0 \).
 
 The final entry is \( c[t, s] = c_\red[t, s] + c_\blue[t, s] \).
 
-\subsection{Join node}
+\subsection{\JoinNode}
 
 Suppose that \( t \in \mathcal{T} \) is
 the only parent of \( t_1, t_2 \in \mathcal{T} \) in \( \mathcal {T} \).
@@ -326,21 +326,21 @@ Total state space size for each bag is therefore bounded by
 
 We go through all the nodes and state complexity of the operations performed in the node:
 \begin{description}
-	\item[Introduce vertex node]
+	\item[\IntroduceVertexNode{}]
 	      We need to fill a state space and copy previous values into the cache
 	      which can be done in constant time per operation,
 	      so the time complexity corresponds to the state space size:
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(1) \).
-	\item[Forget vertex node]
+	\item[\ForgetVertexNode{}]
 	      Even if the operation seams complex, we just need to traverse the state space
 	      and create target state after \( v \) is removed. This can be done in \( O(k) \) time
 	      per state, total complexity therefore is
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
-	\item[Introduce edge node]
+	\item[\IntroduceEdgeNode{}]
 	      The state space is iterated again, and we run few simple checks and cache key constructions
 	      that can be run in \( O(k) \) time, therefore the final complexity stays the same
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k) \).
-	\item[Join node]
+	\item[\JoinNode{}]
 	      We iterate through product of state spaces,
 	      so the size of the new spate space is power of two
 	      of the otherwise used state space size.
@@ -355,15 +355,15 @@ The final complexity of the algorithm is therefore
 \( {k}^{O(k)} \cdot O(n^2) \).
 \todo[inline]{Check number of nodes in \( \mathcal{T} \)}
 
-\subsection{Introduce vertex with edges node}
+\subsection{\IntroduceVertexWithEdgesNode}
 
-The algorithm as stated above can be improved by avoiding edge introduce nodes.
+The algorithm as stated above can be improved by avoiding \IntroduceEdgeNode{}s.
 We can add vertex with all its edges in a singe step.
 To simplify our proof we will create a sequence of bags and then replace the
-vertex introduce node with a join node adding our custom bags
+\IntroduceVertexNode{} with an \JoinNode{} adding our custom bags
 and remove all the edge introduce bags from the original \( \mathcal{T} \).
 
-Let \( t \in T \) be they introduce vertex node we are trying to replace,
+Let \( t \in T \) be they \IntroduceVertexNode{] we are trying to replace,
 \( t^\prime \in \mathcal{T} \) its only child,
 \( w \in \mathcal{T} \) its only parent,
 \( v \) be the vertex to be introduced,
@@ -381,7 +381,7 @@ into a single new node called \textbf{Intrude vertex with edges node}.
 
 The new tree \( \mathcal{T}^\prime \) is also a nice tree decomposition
 of the same graph as the same vertices and edges were added.
-We can repeat this procedure till all the edge introduce nodes are gone.
+We can repeat this procedure till all the \IntroduceEdgeNode{}s are gone.
 
 The benefits of such a node are both theoretical and practical performance increase.
 Also, in the following section we will improve this step by using monochromatic components.
@@ -394,6 +394,95 @@ if the state is even valid.
 
 \subsection{Monochromatic components}
 
-% To Be Vymyšleno
-% Ale určitě jde zlepšit introduce node with edges
+Monochromatic components can be used to significantly reduce state space
+that needs to be searched. First we introduce state space reduction when
+there is an edge in a bag, then we extend the result to multiple edges
+sharing the same monochromatic component, and lastly we improve the number of
+operations needed in the Insert vertex with edges node.
+%
+\begin{theorem}
+	For \( t \in \mathcal{T} \) and an edge \( e = \{u, v\} \) in \( E_t \).
+	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
+	\( \forall a \in {\red, \blue} \forall p \in P_a : u \in p \Rightarrow v \not\in p \)
+	it holds that \( c[t, s] = 0 \).
+\end{theorem}
+%
+%
+\begin{proof}
+	For contradiction suppose that such state is valid. The edge \( e \)
+	has to be either \( \red \) or \( \blue \). Let \WLOG{} \( e \) be colored \( \blue \).
+	That means that both \( u, v \) are in the same \( \blue \) connected component.
+	But the state \( s \) states that \( u, v \) do not share a \( \blue \) connected component.
+	This is contradiction and such state \( s \) is therefore not acceptable
+	and the cache entry should store zero.
+\end{proof}
+%
+
+We extend the result for monochromatic components as follows.
+See that this is just a generalization of the previous theorem
+as an edge forms a trivial monochromatic class.
+%
+\begin{theorem}
+	For \( t \in \mathcal{T} \),
+	edges \( E_M \subseteq E_t \) such that
+	they share the same connected monochromatic component
+	and vertices \( U \) such that they are end points of the edges in \( E_M \).
+	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
+	\( \forall a \in {\red, \blue} \forall p \in P_a : U \not\subseteq p \)
+	it holds that \( c[t, s] = 0 \).
+\end{theorem}
+%
+%
+\begin{proof}
+	For contradiction suppose that such state is valid. The edges \( E_M \)
+	has to be either \( \red \) or \( \blue \).
+	Let \WLOG{} edges in \( E_M \) be colored \( \blue \).
+	That means that all vertices in \( U \) are in the same \( \blue \) connected component
+	and the edges are from a connected monochromatic component.
+	But the state \( s \) states that there is a vertex \( u \in U \)
+	that does not share a \( \blue \) connected component with the other.
+	This is contradiction and such state \( s \) is therefore not acceptable
+	and the cache entry should store zero.
+\end{proof}
+%
+
+Lastly, we describe how \IntroduceVertexWithEdgesNode{} can be optimized.
+First, while traversing all the colorings of the edges incident to the added vertex \( E_N \)
+we do not try all the color combinations as usual. If there are some edges
+in \( E_{t^\prime} \cup E_N \) that are part of a monochromatic component,
+the same as above applies. We cannot create a contradicting state with non-zero
+cache entry. But by using monochromatic classes
+we can enforce that both the edges should always have the same color.
+We can also enforce the color by using an edge of the same monochromatic class
+that is a part of \( E_{t^\prime} \).
+For example if the edge in \( E_{t^\prime} \) is part of a \( \blue \) connected class,
+the other edges from the same monochromatic component can be added with
+this idea in consideration.
+
+
+\todo[inline]{Fix monochromatic components notation based on the rest of the thesis}
+
+
+\subsection{Additional considerations}
+
+\subsubsection{NAC-coloring certificate}
+
+To obtain a NAC-coloring certificate or all the NAC-colorings of the graph
+given we need to traverse the cache backwards recursively.
+The only step where edges were added to the graph are either Insert edge node
+or Insert vertex with edges node. In both cases the given cache entry correspond
+to some color given to the edge. From the recursive step we can obtain
+all the NAC-colorings of \( V_{t^\prime} \) and add our edge.
+Note that the whole cache has to be stored in memory the whole time unless
+NAC-colorings are materialized while the algorithm runs.
+This kills our performance as we process up to \( 2^{O(n^2)} \) colorings
+in each node of the tree.
+
+\subsubsection{Other optimizations}
+
+First it is trivial to see that if the input graph has an articulation,
+we can once again run our algorithm on each block of the graph separately
+and then multiply the results together to get the final result
+while also considering monochromatic colorings of each block.
+Note that the same can be done for disconnected graphs.
 
