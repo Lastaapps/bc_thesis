@@ -2,10 +2,11 @@
 
 \begin{chapterabstract}
 
-	It can be easily shown that the NAC-coloring counting as a NP-complete
+	It can be easily shown that the NAC-coloring existence as an NP-complete
 	problem can be parametrized by tree width by using \MSO{} logic.
-	In this chapter, we present an algorithm that can solve the given problem
-	in \({k}^{O(k)} n^{O(1)}\) time, where \(k\) stands for the tree width of the graph.
+	In this chapter, we present an algorithm that can obtain
+	the number of NAC-coloring of a graph in \({k}^{O(k)} n^{O(1)}\) time,
+	where \(k\) stands for the tree width of the graph.
 
 \end{chapterabstract}
 
@@ -19,12 +20,15 @@ In this section I'll describe following:
 	\item[Other common parameters]
 \end{description}
 
+% Množinu hran bagu
+% Nice decompozici
+
 \section{Monadic second-order logic}
 
 In this section I'll describe following:
 
 \begin{description}
-	\item[Introduce the reader swiftly into~\MSO]
+	\item[Introduce the reader swiftly into~\MSO{}]
 	\item[Tree width]
 	\item[Tree decomposition]
 	\item[Other common parameters]
@@ -32,65 +36,112 @@ In this section I'll describe following:
 
 \section{FPT algorithm}
 
-In this section we first introduce the main idea of the algorithm,
+In this section we first introduce the core idea of the algorithm,
 go through each type of node in a tree decomposition and
-set final complexity of the algorithm.
-Lastly we optimize the algorithm by using monochromatic components.
+determine the complexity of the algorithm.
+Lastly, we optimize the algorithm by empowering using monochromatic components.
 
-Our algorithm will be somewhat similar to Steiner tree construction algorithm
+Our algorithm will be somewhat similar to Steiner tree search algorithm
 as described in~\cite{book_parametrized_algorithms} as both the problems require connectivity
-among vertex partitions.
+among vertex partitions. Unlike in the Steiner tree search algorithm,
+our state space is even larger and all the operations work significantly differently.
 
-First we want to build the intuition for the following algorithm.
+First we want to build the intuition for the upcoming operations.
 Let us have a graph \( G \) and all the NAC-colorings coloring of the graph
 \( NACG \). Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\Gprime.
-We want to obtain \( \text{NAC} (G^\prime) \) from \( NAC(G) \).
+We want to extend \( NAC(G) \) to \( \text{NAC} (G^\prime) \).
+
 Let us have \( \delta \in \NACG \).
 We want to extend it to \( delta^\prime \), suppose \( \delta^\prime(e) = \blue \).
-\( \delta^\prime \) is a NAC-coloring unless we formed an almost cycle.
-In that case one of these must be true:
+\( \delta^\prime \) is a NAC-coloring unless an almost cycle is formed.
+In that case one of following cases must be true:
+%
 \begin{itemize}
 	\item Both vertices \( u, v \) share the same connected component in \( G[\Ered] \).
 	      An almost cycle is formed
-	      from \( u \)-\( v \)-path in the connected component with \( \red \) color
+	      from \( \red \) \( u \)-\( v \)-path in the connected component
 	      and edge \( e \) with \( \blue \) color.
 	\item Vertices \( u, v \) lay in different connected components in \( G[\Eblue] \)
 	      and there is a \( \red \) colored edge connecting some vertices from the components.
+	      We call such an edge a \emph{bridge}.
 	      An almost cycle is formed from paths in each component, the bridge and edge \( e \).
 \end{itemize}
+%
 In all other cases an almost cycle cannot be formed by adding an edge.
 Note that if a vertex cannot be in more connected component for the given color
 as this fact would mean that both the components are not maximal.
+Note that for simplicity we do not for now consider
+NAC-colorings of \( G^\prime \)
+where \( e \) is the only edge of its color.
+
+Lastly we define some terms that will come useful in the following sections.
+%
+\begin{definition}[Bridge]
+	For a graph \( G \) and two distinct connected components
+	in \( G[\Ered] \), resp. \( G[\Eblue] \)
+	spanning vertices \( U, V \),
+	a \emph{bridge} is an edge \( e = \{u, v\} \in E(G) \) such that \( u \in U \land v \in V \).
+\end{definition}
+%
+%
+\begin{definition}[Neighboring components]
+	For a graph \( G \), two distinct connected components
+	in \( G[\Ered] \), resp. \( G[\Eblue] \)
+	are neighboring if there exists a bridge over these two components.
+\end{definition}
+%
 
 \subsection{Dynamic cache}
 
 First we define a state space \( S \) of \emph{configurations}
-that will be used by our cache in our dynamic programming
-algorithm on a tree decomposition \( \mathcal{T} \) of a graph \( G \) with width \( k \).
-For a bag \Xt{} for \( t \in \mathcal{T} \)
-with \( l \le k+1 \) vertices we take all the factorizations of \Xt{} denoted by \( \mathcal{F}(X_t) \)
-and for each partitioning we take all the possible symmetric irreflexive relations between
-partitions. Now we do it again for the other color.
-Our configuration is the formed by a four tuple \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \)
-where \( P_\red\), resp. \( P_\blue \), is a partitioning of \Xt{}
-and \( R_\red\), resp. \(R_\blue \), is a relation
-on partitions in \( P_\red\), resp. \(P_\blue \).
+that will be used by our cache in our dynamic programming algorithm.
+We operate on a nice tree decomposition \( \mathcal{T} \) of a graph \( G \)
+with tree width \( k \).
+
+%
+\begin{definition}[State space]
+	Let \( t \in \mathcal{T} \) be a node in the nice tree decomposition tree and
+	\Xt{} be a bag of vertices.
+	% where with \( l \le k+1 \) vertices
+	Take all the factorizations of \Xt{} denoted by \( \mathcal{F}(X_t) \).
+	For each partitioning take all the possible
+	symmetric irreflexive relations on partitions.
+	We do these operations twice (for each color).
+	%
+	A configuration is formed by a tuple \( s = (P_\red, R_\red, P_\blue, R_\blue) \)
+	where \( P_\red\), resp. \( P_\blue \), is a partitioning of \Xt{}
+	and \( R_\red\), resp. \(R_\blue \), is a relation
+	on partitions in \( P_\red\), resp. \(P_\blue \).
+	%
+	All the possible states on \Xt{} to form the state space \( S_t \).
+\end{definition}
+%
 Partitions \( P_\red, P_\blue \) represent vertices
-that share the same connected component in the subgraph
-corresponding to the specified color and
-relations \( R_\red, R_\blue \) represent
-whenever the connected components are connected by an edge of the opposite color.
-Note that the state space is somewhat large, but it is expected as we are solving
-and NP-complete problem.
-We denote cache as function \( c: S \to \N \).
+that share the same connected component in the subgraph of \( V_t \)
+induced by edges of the specified color.
+Relations \( R_\red, R_\blue \) represent
+whenever the connected components are neighboring.
+
+Note that the state space is somewhat large.
+That it is expected as we are trying to solve an NP-complete problem.
+
+We denote cache as function \( c: \mathcal{S} \to \N \)
+where \( \mathcal{S} = \bigcup\{S_t \mid t \in \mathcal{T}\} \).
+Cache entry denotes the number of NAC-colorings
+that span \( V_t \) with a configuration \( s \) in \Xt{}.
+
+In the following sections we show different mappings from cache entries
+from child nodes in \( \mathcal{T} \) to cache entries of the parent nodes.
+We make sure that invalid states that cannot occur by applying our operation
+get zero cache entry value as they cannot represent any NAC-coloring.
 
 
 \subsection{\IntroduceVertexNode}
 
 Suppose that \( t \in \mathcal{T} \) is
-the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+the only parent of \( t^\prime\) in \( \mathcal {T} \).
 Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
-Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
+Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
 for \( a \in \{\red, \blue\} \) as:
 %
 \begin{align*}
@@ -104,12 +155,25 @@ for \( a \in \{\red, \blue\} \) as:
 	\end{cases}
 \end{align*}
 %
-What this means is that we just propagate our already computed values to the next level.
-We did not find any new NAC-colorings as we did not add any edges.
-Zero is set for components that state to be connected,
-but they cannot be as they contain \( v \)
-which has no edge connecting it to the other vertices of \( X_{t^\prime} \).
-The same idea holds for bridges as no bridge is created.
+%
+\begin{proof}
+	If vertex \( v \) is in a connected component with other vertex,
+	the configuration cannot be valid as \( v \) is an isolated vertex
+	and therefore cannot be in a connected component with other vertices.
+	%
+	Also, as \( v \) is an isolated vertex, there cannot be a bridge
+	connecting this and another component.
+	Thus, all the configurations where there exists
+	a connected component neighboring \( v \) are invalid.
+	%
+	We need to ensure both the previous statements hold for both the colors.
+	%
+	No new NAC-coloring can be created by adding an isolated vertex,
+	therefore the number of NAC-coloring for a state \( s \) must be the same
+	as for the state with \( v \) and related relations removed.
+\end{proof}
+%
+To summarize, already computed values are propagated to the valid states in the next iteration.
 
 \subsection{\ForgetVertexNode}
 
@@ -129,11 +193,29 @@ for \( a \in \{\red, \blue\} \) as:
 	c[t, s]       & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime]
 \end{align}
 %
-We take all the previous states that collapse into our requested state \( s \)
-after removing \( v \).
-\todo[inline]{Prove that no coloring is counted twice by checking that each previous state is mapped to exactly one new state}
+%
+\begin{proof}
+	If state is invalid, all the previous states that collapse into it by removing \( v \)
+	are also invalid, therefore the resulting value is zero.
+	%
+	If \( v \) did not share a connected component with other vertices,
+	and if we later add an edge \( e = \{u, v\}, u, v \in X_t \) to the graph,
+	no almost cycle using \( v \) cannot be created as entering and leaving the component
+	requires more than one edge of each color.
+	%
+	Lastly if \( v \) shares a connected component with other vertices,
+	and an almost cycle passing through \( v \) is created in the future,
+	in can be rerouted to pass through other vertices of the connected component,
+	If not there is a bridge incident to \( v \), such information if passed
+	further using neighboring relation and such cycle will be found.
+	Therefore, the number of NAC-colorings stays the same if we remove \( v \)
+	from  partitions.
+	%
+	The resulting cache entry holds values from both the configuration types.
+\end{proof}
+%
 
-\subsection{IntroduceEdgeNode}
+\subsection{\IntroduceEdgeNode}
 
 Suppose that \( t \in \mathcal{T} \) is
 the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
@@ -363,7 +445,7 @@ To simplify our proof we will create a sequence of bags and then replace the
 \IntroduceVertexNode{} with an \JoinNode{} adding our custom bags
 and remove all the edge introduce bags from the original \( \mathcal{T} \).
 
-Let \( t \in T \) be they \IntroduceVertexNode{] we are trying to replace,
+Let \( t \in T \) be they \IntroduceVertexNode{} we are trying to replace,
 \( t^\prime \in \mathcal{T} \) its only child,
 \( w \in \mathcal{T} \) its only parent,
 \( v \) be the vertex to be introduced,
@@ -485,4 +567,12 @@ we can once again run our algorithm on each block of the graph separately
 and then multiply the results together to get the final result
 while also considering monochromatic colorings of each block.
 Note that the same can be done for disconnected graphs.
+
+There is possibility that the algorithm can be further improved by creating
+a Monte Carlo algorithm or a linear algebra based algorithm that can run
+in \( O(c^k), c \in \N \) time as~\cite{book_parametrized_algorithms} suggests
+for problems with connectivity requirements.
+This is unfortunately far beyond the scope of this thesis.
+
+\todo[inline]{Cite/Introduce Monte Carlo algorithms}
 
