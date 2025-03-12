@@ -12,16 +12,134 @@
 
 \section{Tree width}
 
-In this section I'll describe following:
-\begin{description}
-	\item[FPT algorithms]
-	\item[Tree width]
-	\item[Tree decomposition]
-	\item[Other common parameters]
-\end{description}
+We use notation as used in~\cite{book_parametrized_algorithms}.
+Tree with alongside path with, clique, maximal degree width
+and many other graph parametrizations.
+These approaches are used to somehow exploit graphs structure
+and provide algorithms with possibly significantly lower time complexity
+then algorithms considering general graphs only.
+Using this many NP-complete problems can be solved in a time polynomial in \( n \)
+for many graph classes that have such a bounded structural property.
+To name a few: \textsc{VertexCover}, \textsc{DominatingSet}, \textsc{LongestPath}, \dots.
+
+%
+\begin{definition}[FPT alorithm~\cite{book_parametrized_algorithms}]
+	Algorithms with running time \( f(k)\cdot n^c \), for a constant \( c \),
+	are called \emph{fixed-parameter algorithms}, of FPT algorithms.
+\end{definition}
+%
+In parametrized algorithmic, \( k \) stands for different parameters
+representing some form on internal graph structure as noted before.
+
+For many problems it is quite simple to find a fast solution on trees.
+Often a dynamic programming approach is needed for that.
+%
+One of the most popular and simple approaches
+is the use of tree width and tree decomposition.
+The metric tries to show how similar a graph is to a tree.
+%
+The usual goal of algorithms is to develop a dynamic programming algorithm
+that exploits the tree-likeness of a graph.
+
+%
+\begin{definition}[Tree decomposition~\cite{book_parametrized_algorithms}]
+	A tree decomposition of a graph \( G \) is
+	a pair \( (T, {\{X_t\}}_{t \in V ( T )}) \)
+	where \( T \) is decomposition tree and every node \( t \)
+	is assigned a bag \( X_t \subseteq V(G) \) such that the following hold:
+	%
+	\begin{enumerate}
+		\item \( \bigcup_{\{t \in V(T)\}} X_t = V(G) \).
+		      Each vertex is in at least one bag.
+		\item For every \( \{u,v\} \in E(G) \) there exists
+		      a node \( t \in T \) such that both \( u, v \in X_t \).
+		\item For every \( u \in V(G) \),
+		      the set \( T_u = \{t \in V(T) \mid u \in X_t\} \)
+		      induces a connected subtree of \( T \).
+	\end{enumerate}
+\end{definition}
+%
+\begin{definition}[Tree width~\cite{book_parametrized_algorithms}]
+	The \emph{width} of a tree decomposition given by pair
+	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
+	equals to \( \max_{t\in V(T)} |X_t| - 1 \).
+	The tree width of a graph \( G \) is the minimum such width.
+\end{definition}
+%
+The width is decreased by one, so the tree width of a tree is one.
+
+Through the chapter we use term \emph{vertex} for vertices of \( G \)
+and \emph{node} for nodes of \( T \).
+We also use shorten \( t \in V(T) \) to \( t \in T \).
+
+We follow with lemma that is important for all the related
+dynamic programming approaches running on tree decompositions.
+%
+\begin{definition}[Vertex subset border~\cite{book_parametrized_algorithms}]
+	Let \( A \subseteq V(G) \). Then the \emph{border} of \( A \) denoted by \( \delta(A) \)
+	is the set of vertices \( u \in A \)
+	such that \( \exists v \in V(G) \setminus A : \{u, v\} \in E(G) \).
+\end{definition}
+%
+\begin{lemma}[Separators in tree decomposition~\cite{book_parametrized_algorithms}]
+	Let \( (T, {\{X_t\}}_{t \in V ( T )}) \)
+	be a tree decomposition of a graph \( G \)
+	and let \( \{a, b\} \in E(T) \).
+	Then \( T - \{a, b\} \) consists of two connected components \( T_a, T_b \).
+	%
+	Let \( A = \bigcup_{t \in T_a} X_t \) and \( B = \bigcup_{t \in T_b} X_t \).
+	Then \( \delta(A), \delta(B) \subseteq X_a \cap X_b \).
+\end{lemma}
+%
+We can reformulate the lemma as follows:
+\( (A, B) \) is a separation of \( G \) with separator \( X_a \cap X_b \).
+
+We obtained a class of decompositions that can differ significantly.
+There may be multiple nodes with same bags or just a single bag.
+We also have no guarantee how many vertices differ between two neighboring bags.
+Therefore, we want to define a \emph{nice} tree decomposition where nodes
+represent some useful change between two bags.
+First, we want our nice tree to be rooted tree,
+let \( r \in T \) be the root node.
+%
+\begin{definition}[Nice tree decomposition~\cite{book_parametrized_algorithms}]
+	A rooted tree decomposition
+	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
+	is \emph{nice} if the following conditions are satisfied:
+	%
+	\begin{itemize}
+		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every leaf node \( l \in T \).
+		\item Every non-leaf node is one of the following types:
+		      \begin{itemize}
+			      \item \IntroduceVertexNode{}: a node \( t \) with one child \( t^\prime \)
+			            such that \( X_t = X_{t^\prime} \cup \{v\} \) where \( v \not\in X_{t^\prime} \).
+			            We say that \( v \) is introduced by \( t \).
+			      \item \ForgetVertexNode{}: a node \( t \) with one child \( t^\prime \)
+			            such that \( X_t = X_{t^\prime} \setminus \{v\} \) where \( v \in X_{t^\prime} \).
+			            We say that \( v \) is forgotten by \( t \).
+			      \item \JoinNode: a node \( t \) with two children \( t^\prime, t^{\prime\prime} \)
+			            such that \( X_t = X_{t^\prime} \cup X_{t^{\prime\prime}} \).
+		      \end{itemize}
+	\end{itemize}
+\end{definition}
+%
+Note that a vertex \( v \in V(G) \) can be introduced multiple times,
+but forgotten only once.
+
+\begin{lemma}[\cite{book_parametrized_algorithms}]
+	Any tree decomposition of width at most \( k \) can be converted to
+	a nice tree decomposition of width at most \( k \)
+	in time \( O(k^2 \cdot \max(|V(T)|, |V(G)|)) \).
+	The nice decomposition tree has at most \( O(k|V(G)|) \) nodes.
+\end{lemma}
+
+The problem of finding tree width is NP-complete.
+Luckily, there exist efficient approximation algorithms.
+We consider nice tree decompositions as given along with graph
+and do not consider runtime required by graph decomposition.
+\todo[inline]{Cite NP hardness of tree width and approx algorithms}
 
 % Množinu hran bagu
-% Nice decompozici
 
 \section{Monadic second-order logic}
 
@@ -95,12 +213,12 @@ Lastly we define some terms that will come useful in the following sections.
 
 First we define a state space \( S \) of \emph{configurations}
 that will be used by our cache in our dynamic programming algorithm.
-We operate on a nice tree decomposition \( \mathcal{T} \) of a graph \( G \)
+We operate on a nice tree decomposition \( T \) of a graph \( G \)
 with tree width \( k \).
 
 %
 \begin{definition}[State space]
-	Let \( t \in \mathcal{T} \) be a node in the nice tree decomposition tree and
+	Let \( t \in T \) be a node in the nice tree decomposition tree and
 	\Xt{} be a bag of vertices.
 	% where with \( l \le k+1 \) vertices
 	Take all the factorizations of \Xt{} denoted by \( \mathcal{F}(X_t) \).
@@ -126,19 +244,19 @@ Note that the state space is somewhat large.
 That it is expected as we are trying to solve an NP-complete problem.
 
 We denote cache as function \( c: \mathcal{S} \to \N \)
-where \( \mathcal{S} = \bigcup\{S_t \mid t \in \mathcal{T}\} \).
+where \( \mathcal{S} = \bigcup\{S_t \mid t \in T\} \).
 Cache entry denotes the number of NAC-colorings
 that span \( V_t \) with a configuration \( s \) in \Xt{}.
 
 In the following sections we show different mappings from cache entries
-from child nodes in \( \mathcal{T} \) to cache entries of the parent nodes.
+from child nodes in \( T \) to cache entries of the parent nodes.
 We make sure that invalid states that cannot occur by applying our operation
 get zero cache entry value as they cannot represent any NAC-coloring.
 
 
 \subsection{\IntroduceVertexNode}
 
-Suppose that \( t \in \mathcal{T} \) is
+Suppose that \( t \in T \) is
 the only parent of \( t^\prime\) in \( \mathcal {T} \).
 Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
 Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
@@ -177,8 +295,8 @@ To summarize, already computed values are propagated to the valid states in the 
 
 \subsection{\ForgetVertexNode}
 
-Suppose that \( t \in \mathcal{T} \) is
-the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+Suppose that \( t \in T \) is
+the only parent of \( t^\prime \in T \) in \( \mathcal {T} \).
 Let \( v \) be the only vertex in \( X_{t^\prime} \setminus X_t \).
 Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
 for \( a \in \{\red, \blue\} \) as:
@@ -217,8 +335,8 @@ for \( a \in \{\red, \blue\} \) as:
 
 \subsection{\IntroduceEdgeNode}
 
-Suppose that \( t \in \mathcal{T} \) is
-the only parent of \( t^\prime \in \mathcal{T} \) in \( \mathcal {T} \).
+Suppose that \( t \in T \) is
+the only parent of \( t^\prime \in T \) in \( \mathcal {T} \).
 It holds that \( X_t = X_{t^\prime} \),
 let \( e = \{u, v\} \) be the only edge added in the step, \( e \in E_t \setminus E_{t^\prime} \).
 We will discuss all the possible cases that must be fulfilled for both colors,
@@ -287,8 +405,8 @@ The final entry is \( c[t, s] = c_\red[t, s] + c_\blue[t, s] \).
 
 \subsection{\JoinNode}
 
-Suppose that \( t \in \mathcal{T} \) is
-the only parent of \( t_1, t_2 \in \mathcal{T} \) in \( \mathcal {T} \).
+Suppose that \( t \in T \) is
+the only parent of \( t_1, t_2 \in T \) in \( \mathcal {T} \).
 It holds that \( X_t = X_{t_1} = X_{t_2} \)
 and \( S = S_1 = S_2 \) where \( S_\cdot \) are corresponding cache state spaces.
 
@@ -398,7 +516,7 @@ after the last vertex is forgotten.
 Bell numbers are defined as the number of factorizations of the set.
 They can be upper bounded by \( n^n \), which is what we will use from now on.
 \todo[inline]{Reference?}
-Recall that \( \forall t \in \mathcal{T} : |X_t| \le k+1 \).
+Recall that \( \forall t \in T : |X_t| \le k+1 \).
 
 First, size of the state space used is upper bounded.
 For each color there is up to \( {(k+1)}^{(k+1)} \) factorizations of a bag and
@@ -432,10 +550,10 @@ We go through all the nodes and state complexity of the operations performed in 
 	      \( {k}^{O(k)} \cdot 2^{O(k)} \cdot O(k^2) \).
 \end{description}
 
-There are \( O((n+m)k) \) nodes in \( \mathcal{T} \).
+There are \( O((n+m)k) \) nodes in \( T \).
 The final complexity of the algorithm is therefore
 \( {k}^{O(k)} \cdot O(n^2) \).
-\todo[inline]{Check number of nodes in \( \mathcal{T} \)}
+\todo[inline]{Check number of nodes in \( T \)}
 
 \subsection{\IntroduceVertexWithEdgesNode}
 
@@ -443,11 +561,11 @@ The algorithm as stated above can be improved by avoiding \IntroduceEdgeNode{}s.
 We can add vertex with all its edges in a singe step.
 To simplify our proof we will create a sequence of bags and then replace the
 \IntroduceVertexNode{} with an \JoinNode{} adding our custom bags
-and remove all the edge introduce bags from the original \( \mathcal{T} \).
+and remove all the edge introduce bags from the original \( T \).
 
 Let \( t \in T \) be they \IntroduceVertexNode{} we are trying to replace,
-\( t^\prime \in \mathcal{T} \) its only child,
-\( w \in \mathcal{T} \) its only parent,
+\( t^\prime \in T \) its only child,
+\( w \in T \) its only parent,
 \( v \) be the vertex to be introduced,
 \( B = N(v) \cap X_t \) and
 \( E_v \) edges incident to \( v \) and vertices in \( B \).
@@ -455,13 +573,13 @@ First we create vertex introduce bags for \( v \) and each vertex in \( B \).
 Then we create edge introduce bags for each edge in \( E_v \).
 Let the last bag created be \( b \).
 Note, that \( V_b \) is a star graph with \( v \) as the center.
-Finally, we replace \( t \) in \( \mathcal{T} \) with a join node
+Finally, we replace \( t \) in \( T \) with a join node
 with parent \( w \) and children \( t^\prime \) and \( b \).
-We also remove all the edge introduce bags for edges \( B \) from \( \mathcal{T} \).
+We also remove all the edge introduce bags for edges \( B \) from \( T \).
 Now we join all the bags created in the previous steps including the join node
 into a single new node called \textbf{Intrude vertex with edges node}.
 
-The new tree \( \mathcal{T}^\prime \) is also a nice tree decomposition
+The new tree \( T^\prime \) is also a nice tree decomposition
 of the same graph as the same vertices and edges were added.
 We can repeat this procedure till all the \IntroduceEdgeNode{}s are gone.
 
@@ -483,7 +601,7 @@ sharing the same monochromatic component, and lastly we improve the number of
 operations needed in the Insert vertex with edges node.
 %
 \begin{theorem}
-	For \( t \in \mathcal{T} \) and an edge \( e = \{u, v\} \) in \( E_t \).
+	For \( t \in T \) and an edge \( e = \{u, v\} \) in \( E_t \).
 	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
 	\( \forall a \in {\red, \blue} \forall p \in P_a : u \in p \Rightarrow v \not\in p \)
 	it holds that \( c[t, s] = 0 \).
@@ -505,7 +623,7 @@ See that this is just a generalization of the previous theorem
 as an edge forms a trivial monochromatic class.
 %
 \begin{theorem}
-	For \( t \in \mathcal{T} \),
+	For \( t \in T \),
 	edges \( E_M \subseteq E_t \) such that
 	they share the same connected monochromatic component
 	and vertices \( U \) such that they are end points of the edges in \( E_M \).

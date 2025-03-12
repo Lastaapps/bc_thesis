@@ -10,3 +10,5 @@ subgraph
 irreflexive
 colorings
 subgraphs
+parametrizations
+decompositions

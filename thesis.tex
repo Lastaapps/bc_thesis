@@ -104,11 +104,11 @@
 %% FPT
 \newcommand{\MSO}{\(\text{MSO2}\)}
 \newcommand{\Xt}{\(X_t\)}
-\newcommand{\IntroduceVertexNode}{\textsc{IntroduceVertexNode}}
-\newcommand{\ForgetVertexNode}{\textsc{ForgetVertexNode}}
-\newcommand{\IntroduceEdgeNode}{\textsc{IntroduceEdgeNode}}
-\newcommand{\JoinNode}{\textsc{JoinNode}}
-\newcommand{\IntroduceVertexWithEdgesNode}{\textsc{IntroduceVertexWithEdgesNode}}
+\newcommand{\IntroduceVertexNode}{\textsc{Introduce Vertex Node}}
+\newcommand{\ForgetVertexNode}{\textsc{Forget Vertex Node}}
+\newcommand{\IntroduceEdgeNode}{\textsc{Introduce Edge Node}}
+\newcommand{\JoinNode}{\textsc{Join Node}}
+\newcommand{\IntroduceVertexWithEdgesNode}{\textsc{Introduce Vertex With Edges Node}}
 
 % Math mode macros
 \newcommand{\red}{\text{red}}
@@ -219,7 +219,7 @@
 \begingroup
 \let\clearpage\relax
 \listoftables % list of tables
-\thectufitlistingscommand
+\thectufitlistingscommand{}
 \endgroup
 
 %%%%%%%%%%%%%%%%%%%
@@ -231,21 +231,14 @@
 \chapter{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
-	DFA   & Deterministic Finite Automaton                 \\
-	FA    & Finite Automaton                               \\
-	LPS   & Labelled Prüfer Sequence                       \\
-	NFA   & Nondeterministic Finite Automaton              \\
-	NPS   & Numbered Prüfer Sequence                       \\
-	XML   & Extensible Markup Language                     \\
-	XPath & XML Path Language                              \\
-	XSLT  & eXtensible Stylesheet Language Transformations \\
-	W3C   & World Wide Web Consortium
+	FPT & Fixed-parameter tractable \\
+	NAC & No almost cycles          \\
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%
 % ABBREVIATIONS END
 %%%%%%%%%%%%%%%%%%%
-\resumeTOCentries
-\mainmatter\mainmatterinit % do not remove these two commands
+\resumeTOCentries{}
+\mainmatter\mainmatterinit{} % do not remove these two commands
 %%%%%%%%%%%%%%%%%%%
 % THE THESIS
 % MODIFY ANYTHING BELOW THIS LINE
