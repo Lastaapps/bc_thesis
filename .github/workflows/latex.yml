@@ -1,0 +1,41 @@
+name: LaTeX Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  LuaLaTeX:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build with LuaLaTeX
+        run: latexmk -pdflua thesis.tex
+
+      - name: Upload PDF artifact (LuaLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-lualatex
+          path: thesis.pdf
+
+  XeLaTeX:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build with XeLaTeX
+        run: latexmk -pdfxe thesis.tex
+
+      - name: Upload PDF artifact (XeLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-xelatex
+          path: thesis.pdf
