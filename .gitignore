@@ -28,8 +28,6 @@
 *.url
 *.vtc
 
-build/
-ctufit-thesis.pdf
-_minted-ctufit-thesis/
-/output/
-pdfa.xmpi
+/build/
+
+!assignment.pdf
