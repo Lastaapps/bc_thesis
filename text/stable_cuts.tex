@@ -1,0 +1,128 @@
+
+\chapter{Stable cuts}
+
+\begin{chapterabstract}
+	%
+	We introduce relation between stable cuts and NAC-colorings.
+	We summarize progress done on stable cuts existence and search.
+	Lastly we briefly describe an algorithm that can find a stable cut
+	for any flexible graph.
+	%
+\end{chapterabstract}
+
+\section{Stable cuts}
+
+In this chapter we focus on connected graphs only as graph cuts lose their
+meaning on disconnected graphs.
+%
+\begin{definition}[Stable cut]
+	Independent set of a graph \( G \) is set \( I \subseteq V(G) \)
+	such that \( \forall u, v \in I : \{u, v\} \not\in E(G) \).
+	%
+	Vertex cut of a graph \( G \) is set \( C \subseteq V(G) \)
+	such that \( G \setminus C \) (\( G \) with \( C \) removed)
+	is a disconnected graph.
+	%
+	Stable cut of a graph \( G \) is a set \( S \subseteq V(G) \) such that
+	\( S \) is independent set in \( G \) and also \( S \) is vertex cut in \( G \).
+\end{definition}
+%
+
+The relation to NAC-coloring is quite simple.
+%
+\begin{lemma}
+	Let \( S \) be a stable cut in \( G \).
+	Then \( G \) has a NAC-coloring \( \delta \).
+\end{lemma}
+\todo[inline]{Cite}
+%
+\begin{proof}
+	As \( S \) is a cut in \( G \), let us have corresponding partitions \( A, B \).
+	We know that \( |S| < |A|, |S| < |B| \)
+	as disconnected partitions are nonempty and \( G \) was connected.
+	There is at least one edge incident to vertices in both \( A \) and \( B \).
+	We color \( E(G[A]) \) \( \red \) and \( E(G[B]) \) \( \blue \).
+	Both colors were used, so the coloring is surjective.
+	We also need to show that no almost cycle was created.
+	As~\cite[Lemma 2.4]{legersky_original} states, there is no almost cycle
+	in a graph if and only if components \( G_\red^\delta, G_\blue^\delta \)
+	are induced subgraphs of \( G \).
+	That is the case as there is no edge incident to vertices in \( S \).
+	It holds that \( G_\red^\delta = G[A], G_\blue^\delta = G[B] \).
+	So there are no almost cycles and \( \delta \) is a NAC-coloring.
+\end{proof}
+%
+You can also prove the above lemma from the fact that every cycle that
+uses a vertex in \( S \) must pass
+through at least one vertex in \( A \setminus S \) and \( B \setminus S \).
+Such cycle has at least four edges,
+at least two are \( \red \) and at least two are \( \blue \).
+
+It is known for some classes that stable cut must exists.
+\todo[inline]{Show and cite that \( 2V-4 \) are flexible}
+%
+\begin{theorem}[\cite{stable_cuts_2v_4}]
+	Let \( G \) be a graph with \( |E(G)| \le 2|V(G)|-4 \).
+	Then \( G \) contains a stable cut.
+\end{theorem}
+%
+This result can be extended to graphs \( |E(G)| \le 2|V(G)|-3 \) with exception
+for graphs from graph class \( \GSC \).
+%
+\begin{itemize}
+	\item Triangle and prism are in \( \GSC \).
+	\item If \( H, K \in \GSC \), and \( G \) is a graph
+	      formed from \( H, K \) by an edge identification,
+	      then also \( G \in \GSC \).
+	\item If \( H, K \in \GSC \), and \( G \) is a graph
+	      formed from \( H, K \) by a triangle identification,
+	      then also \( G \in \GSC \).
+\end{itemize}
+%
+%
+\begin{theorem}[\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit}]
+	Let \( G \) be a graph with \( |E(G)| \le 2|V(G)|-3 \). Then \( G \) contains
+	a stable cut or \( G \in \GSC \).
+\end{theorem}
+%
+A 2-tree is a graph formed by merging triangles by edge identification.
+Note that such graphs are in \( \GSC \).
+%
+\begin{lemma}[\cite{stable_cuts_legersky}]
+	For every \( G \in \GSC \), either \( G \) has a NAC-coloring
+	or \( G \) is a 2-tree.
+\end{lemma}
+%
+This shows that the property of having a NAC-coloring and having a stable cut
+are not equivalent.
+
+\section{Algorithms}
+
+As proved in~\cite{stable_cuts_complexity} it is NP-complete
+to decide whether a line graph with maximum degree five admits a stable cut
+-- similar result as we got for NAC-coloring.
+
+The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
+an algorithm to find the stable cut (if present)
+for graphs where \(|E(G)| \le 2|V(G)|-3 \),
+they only provide list of claims
+from whose a stable cut set can be found.
+All the checks can be run in polynomial time.
+Unfortunately, the list is long and beyond the scope of this thesis.
+
+As shown in~\cite[Algorithm 1]{stable_cuts_legersky} a stable cut can be found
+in a polynomial time for any flexible graph.
+As mentioned before, that also includes graphs where \( |E(G)| \le 2|V(G)| - 4 \).
+Rigid component of a graph is maximal induced subgraph such that
+The main idea of the algorithm works as follows:
+%
+\begin{itemize}
+	\item Rigid components of the graphs are found.
+	\item Vertices \( u, v \) from different rigid components are chosen.
+	\item If neighborhood of \( u \) is a stable cut, return it.
+	\item Otherwise, contract one edge of a triangle with \( u \) and start again while preserving \( u \).
+\end{itemize}
+%
+This algorithm is implemented and
+contributed to PyRigi~\cite{pyrigi} as part of this thesis.
+

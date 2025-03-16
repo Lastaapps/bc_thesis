@@ -12,3 +12,11 @@ colorings
 subgraphs
 parametrizations
 decompositions
+Labelings
+Extremal
+Cutsets
+cutset
+Cutset
+cutsets
+PyRigi
+surjective

@@ -4,3 +4,8 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QTo name a few: VertexCover, DominatingSet, LongestPath, ….\\E$"}
 {"rule":"UNLIKELY_OPENING_PUNCTUATION","sentence":"^\\Q: a node \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with one child \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q such that \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"UNLIKELY_OPENING_PUNCTUATION","sentence":"^\\Q: a node \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with two children \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q such that \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide pseudocode to find the stable cutset (if present), they only provide list of claims from whose a stable cut set can be found.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QStable cuts, NAC-colourings and flexible realisations of graphs\\E$"}
+{"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide an algorithm to find the stable cutset (if present), they only provide list of claims from whose a stable cut set can be found.\\E$"}
+{"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide an algorithm to find the stable cutset (if present) for graphs where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, they only provide list of claims from whose a stable cut set can be found.\\E$"}
+{"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide an algorithm to find the stable cut (if present) for graphs where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, they only provide list of claims from whose a stable cut set can be found.\\E$"}
