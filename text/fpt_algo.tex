@@ -113,10 +113,10 @@ let \( r \in T \) be the root node.
 		      \begin{itemize}
 			      \item \IntroduceVertexNode{}: a node \( t \) with one child \( t^\prime \)
 			            such that \( X_t = X_{t^\prime} \cup \{v\} \) where \( v \not\in X_{t^\prime} \).
-			            We say that \( v \) is introduced by \( t \).
+			            We say that \( v \) is \emph{introduced} by \( t \).
 			      \item \ForgetVertexNode{}: a node \( t \) with one child \( t^\prime \)
 			            such that \( X_t = X_{t^\prime} \setminus \{v\} \) where \( v \in X_{t^\prime} \).
-			            We say that \( v \) is forgotten by \( t \).
+			            We say that \( v \) is \emph{forgotten} by \( t \).
 			      \item \JoinNode: a node \( t \) with two children \( t^\prime, t^{\prime\prime} \)
 			            such that \( X_t = X_{t^\prime} \cup X_{t^{\prime\prime}} \).
 		      \end{itemize}
@@ -125,6 +125,8 @@ let \( r \in T \) be the root node.
 %
 Note that a vertex \( v \in V(G) \) can be introduced multiple times,
 but forgotten only once.
+We denote by \( V_t, t \in T \) set of vertices introduced by \( t \)
+and all its child nodes.
 
 \begin{lemma}[\cite{book_parametrized_algorithms}]
 	Any tree decomposition of width at most \( k \) can be converted to
@@ -133,14 +135,48 @@ but forgotten only once.
 	The nice decomposition tree has at most \( O(k|V(G)|) \) nodes.
 \end{lemma}
 
-The problem of finding tree width is NP-complete.
-Luckily, there exist efficient approximation algorithms.
+The problem of finding tree width is NP-complete~\cite{tree_width_np_complete}.
+Luckily, there exist efficient approximation algorithms~\cite{tree_width_approximation}.
 We consider nice tree decompositions as given along with graph
 and do not consider runtime required by graph decomposition.
-\todo[inline]{Cite NP hardness of tree width and approx algorithms}
 
-% Množinu hran bagu
+Currently, in \IntroduceVertexNode{} all the edges connecting it
+to vertices in \( X_{t^\prime} \) be also considered in \( X_t \).
+For some problems it is beneficial to divide this operation further.
+First a vertex is added with no edges using a \IntroduceVertexNode{}
+and later all the edges \( e \) are added using a new \IntroduceEdgeNode{}s.
+We define an edge bag \( E_t, t \in T \) in the same way as bags \( X_t \),
+just with edges instead of vertices.
+%
+\begin{definition}[\IntroduceEdgeNode{}~\cite{book_parametrized_algorithms}]
+	A node \( t \), labeled with an edge \( e = \{u, v\} \in E(G) \)
+	such that \( u, v \in X_t \) and with exactly one child \( t^\prime \)
+	such that \( X_t = X_{t^\prime} \), \( E_t = E_{t^\prime} \cup \{e\} \).
+	We say that \( e \) is \emph{introduced} by \( t \).
+\end{definition}
+%
+Each edge can be introduced at most once.
 
+For edge \( \{u, v\} \) we can transform a nice tree decomposition \( T \)
+by adding \IntroduceEdgeNode{}s \( t \) above \IntroduceVertexNode{}s of \( u, v \)
+and bellow \ForgetVertexNode{}s of \( u, v \) in \( T \).
+
+%
+\begin{lemma}
+	For each \JoinNode{} \( t \in T \) with children \( t_1, t_2 \)
+	it holds that \( E_t = \emptyset \).
+\end{lemma}
+%
+\begin{proof}
+	Assume there is an edge \( e = \{u, v\} \in E_t \).
+	As each edge can be added and removed exactly once
+	and in a \JoinNode{} \( t \) both bags need to be the same,
+	edge \( e \) must have been introduced in both \( t_1 \) and \( t_2 \).
+\end{proof}
+%
+Therefore, the \IntroduceEdgeNode{} for \( e \) must be above \( t \) in \( T \).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Monadic second-order logic}
 
 In this section I'll describe following:
@@ -556,6 +592,8 @@ The final complexity of the algorithm is therefore
 \todo[inline]{Check number of nodes in \( T \)}
 
 \subsection{\IntroduceVertexWithEdgesNode}
+
+\todo[inline]{Make sure that wen Join is used the bags are the same}
 
 The algorithm as stated above can be improved by avoiding \IntroduceEdgeNode{}s.
 We can add vertex with all its edges in a singe step.
