@@ -6,6 +6,10 @@ at Faculty of Information technology, CTU Prague.
 The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflows/latex.yml)
 of the thesis can be found in artifacts in GitHub workflows.
 
+## TODO
+- replace *paper* with *thesis* as I do this mistake all the time
+- Fix line breaks
+
 ## Abstract
 # TODO 
 

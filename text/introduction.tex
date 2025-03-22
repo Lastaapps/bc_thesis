@@ -1,0 +1,121 @@
+
+\chapter{Introduction}
+% uncomment the following line to create an unnumbered chapter
+%\chapter*{Introduction}\addcontentsline{toc}{chapter}{Introduction}\markboth{Introduction}{Introduction}
+\setcounter{page}{1}
+
+% Pohádka
+% Nepřehánět to s definicemi a citacemi -> spíše teoretická část
+% Proč to dělám, význam, návaznost (PyRigi)
+% Jak jsem si to vybral
+% prodat drony
+% Cíle
+% - část úvodu, nebo vlastní kapitola
+% Obsah jen stručně
+
+The core concept of Rigidity Theory is a \emph{framework} of a simple graph \(G\).
+It is a realization of \(G\) into a \(d\)-dimensional plane \(p: V(G) \to \R^d\).
+A framework is \emph{\( d \)-flexible} if there exists a transformation
+that continuously translates some subset of vertices in such a way that
+distances between neighboring vertices are preserved during the transformation.
+Otherwise, the framework is called \emph{\( d \)-rigid}.
+
+For \( d = 1 \) all the vertices are on a line
+and any vertex deviation necessarily changes distances (if the graph is connected).
+%
+For \( d \ge 3 \) we can map all the vertices except one onto a line and
+rotate the vertex around the line.
+%
+The interesting case is when \( d = 2 \) --- a mapping into a plane.
+It is known that a graph has most of the realizations
+either \( 2 \)-flexible, or \( 2 \)-rigid.,
+still there may be some realizations of the other type~\cite{generically_rigid_graphs}
+--- we talk about paradoxical flexibility.
+A graph is \emph{(generically) rigid} if most of the realizations are \( 2 \)-rigid
+and \emph{(generically) flexible} if most of the realizations are \( 2 \)-flexible.
+
+An example application of the Rigidity Theory is a squadron of drones
+where the drones can measure distance to their close neighbors.
+Can we determine the locations of all the drones
+down to translation and rotation of the whole squadron
+just from such information?
+
+For similar problems in the plane,
+one would think that if the graph formed is rigid, the answer is yes, and
+for flexible graphs the answer is no.
+But as stated above, paradoxically even a rigid graph can have a flexible realization,
+and it may just happen that the drones form such a \( 2 \)-flexible framework.
+
+When we focus on the two-dimensional case,
+it is already known for some classes of graphs that they are flexible.
+Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+are flexible~\cite{stable_cuts_2v_4}.
+Another important class of graphs are \emph{minimally rigid} graphs~\cite{laman_1970}.
+Those are rigid graph where removal of any edge results into a flexible graph.
+This class has been studied a lot as it produces relatively large number of flexible
+realizations.
+
+In efforts to find such paradoxical realizations,
+a new edge coloring was defined~\cite{legersky_original}.
+A \emph{NAC-coloring} is an edge coloring of a graph by \( \red \) and \( \blue \)
+such that both the colors are used and there is no almost cycle formed.
+An \emph{almost cycle} is a cycle in the colored graph such that exactly one
+edge of the cycle is colored \( \red \) or exactly one edge is colored \( \blue \).
+Such coloring exists if and only if the graph has a flexible realization.
+This provides a simple but strong tool to decide whenever a graph has
+a flexible realization even if it is rigid.
+As shown later in the thesis, one can check in polynomial time if a coloring
+given is a NAC-coloring.
+Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring.
+
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[rotate=90,scale=1.5]
+		\node[vertex] (a) at (0,0) {};
+		\node[vertex] (b) at (1,0) {};
+		\node[vertex] (c) at (0.5,0.5) {};
+		\node[vertex] (d) at (0,1.5) {};
+		\node[vertex] (e) at (1,1.5) {};
+		\node[vertex] (f) at (0.5,1) {};
+		\draw[bedge] (a)edge(b) (b)edge(c) (c)edge(a) (d)edge(e) (e)edge(f) (f)edge(d) ;
+		\draw[redge] (a)edge(d) (b)edge(e) (c)edge(f);
+	\end{tikzpicture}
+	\qquad
+	\qquad
+	\begin{tikzpicture}[rotate=90,scale=1.5]
+		\node[vertex] (a) at (0.00,0) {};
+		\node[vertex] (b) at (1.00,0) {};
+		\node[vertex] (c) at (0.50,0.5) {};
+		\node[vertex] (d) at (0.25,1) {};
+		\node[vertex] (e) at (1.25,1) {};
+		\node[vertex] (f) at (0.75,1.5) {};
+		\draw[edge] (a)edge(b) (b)edge(c) (c)edge(a) (d)edge(e) (e)edge(f) (f)edge(d) ;
+		\draw[edge] (a)edge(d) (b)edge(e) (c)edge(f);
+	\end{tikzpicture}
+	\caption{The $3$-prism is generically $2$-rigid, but has a flexible realization (right).
+		It has a unique NAC-coloring modulo swapping colors (left).}%
+	\label{fig:3prism}
+\end{figure}
+
+A nice example for NAC-coloring showcase is the prism graph~\Cref{fig:3prism},
+a graph formed from two triangles with three interconnecting edges.
+Such graph is rigid, still it has a NAC-coloring and flexible realizations.
+The flexible realizations are all the realization where
+the triangles are identical except for translation.
+You can check yourself that there are
+no other NAC-colorings except the symmetric one.
+
+The goals of this thesis are to provide an algorithm
+that can find all the NAC-colorings of a graph.
+Multiple heuristics will be used to significantly
+reduce the runtime of the algorithm.
+We also provide parametrized approach where complexity can be reduced for graphs
+with low internal structural complexity.
+We also show that the problem of deciding if a graph has a NAC-coloring
+is NP-complete even on graphs with maximal degree five.
+Lastly we show relation to stable cuts.
+Code implemented in this thesis will enrich the existing PyRigi~\cite{pyrigi}
+library for Rigidity Theory.
+Currently, there are no such algorithms implemented in PyRigi itself,
+the only known implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
+

@@ -20,3 +20,4 @@ Cutset
 cutsets
 PyRigi
 surjective
+FlexRiLoG
