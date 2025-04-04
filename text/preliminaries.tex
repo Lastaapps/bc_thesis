@@ -1,0 +1,131 @@
+
+\chapter{Preliminaries}
+
+\begin{chapterabstract}
+
+	In this chapter we define terms from Rigidity theory with the goal to define
+	NAC-coloring. We also introduce its relation to Rigidity theory and
+	some simple statements considering
+	structure of graphs and NAC-coloring existence.
+
+\end{chapterabstract}
+
+\section{Rigidity theory}
+
+% TODO swiftly introduce rigidity theory
+
+For the rest of the thesis,
+we consider only simple undirected graphs.
+Often, only connected graphs are considered as disconnected graphs
+represent uninteresting trivial cases.
+
+%
+\begin{definition}[\( d \)-realization]
+	\emph{A realization} of a graph \( G \) is a mapping \( p: V(G) \to \R^d \).
+\end{definition}
+%
+\begin{definition}[Framework]
+	\emph{A framework} a pair of a graph \( G \) and its realization.
+\end{definition}
+%
+\begin{definition}[Nontrivial flex]
+	For a framework \( (G, p) \), \emph{a nontrivial flex} of \( p \) for \( 0 \le t \le 1 \)
+	with \( p_0 = p \) such that for all \( 0 < t \le 1 \) we have \( p_t \) such that
+	\( \|p_t(u) − p_t(v)\| = \|p(u) − p(v)\|\) for every \( \{u, v\} \in E(G) \),
+	but \( \|p_t(u) − p_t(v)\| \not= \|p(u) − p(v)\| \) for some \( u, v \in V (G) \).
+\end{definition}
+%
+\begin{definition}[\( d \)-flexible, \( d \)-rigid]
+	A framework is \( d \)-flexible, if it has a nontrivial flex.
+	Otherwise, it is \( d \)-rigid.
+\end{definition}
+%
+A framework is flexible if it can be transformed while preserving lengths of
+edges of the graph.
+
+From now on we consider only \emph{quasi-injective} realizations ---
+two neighboring vertices cannot be mapped to the same position.
+This is guarantied when assigned edge lengths are positive.
+Note that two non-neighboring vertices can be mapped to the same position.
+Similar results can be shown for frameworks with \emph{injective} realizations.
+In this thesis they are of no interest for us.
+
+While it is NP-hard to decide whether a given \( d \)-dimensional framework is
+\( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
+For \( d = 2 \) we can simplify the problem when we talk about \emph{generic}
+behavior.
+%
+\begin{definition}[Flexible \& Rigid graphs~\cite{generically_rigid_graphs}]
+	A graph is \( (generically) flexible \) if for almost all of
+	its \( d \)-realizations are \( 2 \)-flexible.
+	A graph is \( (generically) rigid \) if for almost all of
+	its \( d \)-realizations are \( 2 \)-rigid.
+\end{definition}
+%
+
+From now on we focus on the \( 2 \)-dimensional case,
+it is already known for some classes of graphs that they are flexible.
+Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+are flexible~\cite{stable_cuts_2v_4}.
+
+There is a significant graph class studied in Rigidity theory called minimally rigid graphs.
+%
+\begin{definition}[Pollaczek-Geiringer~\cite{polzacek_1927}, Laman~\cite{laman_1970}]
+	Graph is \emph{minimally \( d \)-generically rigid} if it is \( d \)-rigid
+	and \( (V(G), E(G) \setminus \{e\}) \) for each \( e \in E(G) \).
+\end{definition}
+%
+
+A polynomial algorithm for testing \( 2 \)-rigidity was obtained
+for minimally rigid graphs in~\cite{polynomial-min-rigid}.
+We focus on these graphs in benchmarks.
+
+\todo[inline]{Define injective and quasi-injective frameworks}
+
+% get from the proof article
+
+\section{NAC-coloring}
+
+\begin{definition}[NAC-coloring~\cite{legersky_original}]
+	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
+	be a coloring of edges
+	%
+	\begin{itemize}
+		\item A cycle in \( G \) is a \( \red \) cycle, if all its edges are \( \red \).
+		\item A cycle in \( G \) is an \emph{almost \( \red \) cycle},
+		      if exactly one of its edges is \( \blue \).
+		      \emph{Almost \( \blue \) cycle} is defined analogously.
+	\end{itemize}
+	%
+	A coloring \( \delta \) is called a NAC-coloring, if it is surjective
+	and there are is no almost cycles.
+\end{definition}
+%
+
+It was shown, that it is NP-complete to decide if a graph has a NAC-coloring~\cite{np_complete}.
+We elaborate further on this in later chapters.
+Luckily, the check if a coloring is a NAC-coloring can be done in polynomial time.
+Let \( E_\red\), resp. \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \)
+in an edge coloring \( \delta \).
+%
+\begin{lemma}[\cite{legersky_original}]
+	Let \( G \) be a graph. If \( \delta: E(G) \to \{ \red, \blue \} \) is a coloring of edges,
+	then there are no almost cycles in \( G \) if and only if the connected components
+	of \( G[E_\red] \) and \( G[E_\blue] \) are induced subgraphs of \( G \).
+\end{lemma}
+%
+The idea is quite simple --- if there is a \( \blue \) edge \( e \) incident to
+two vertices \( u, v \) sharing the same connected component in \( G[E_\red] \),
+an almost cycle is formed from a \( u \)-\( v \)-path in \( G[E_\red] \)
+and the edge \( e \).
+
+Now we show relation of NAC-colorings to flexible frameworks.
+%
+\begin{theorem}[\cite{legersky_original}]
+	A connected graph \( G \) with at least one edge has a flexible
+	quasi-injective \( 2 \)-dimensional realization if and only if it has a NAC-coloring.
+\end{theorem}
+%
+
+
+

@@ -11,3 +11,4 @@
 {"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide an algorithm to find the stable cut (if present) for graphs where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, they only provide list of claims from whose a stable cut set can be found.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Qvertex=[circle, draw, fill=black, inner sep=0pt, minimum size=4pt] vertexSig=[circle, draw, fill=colOrange, inner sep=0pt, minimum size=4pt] edge=[line width=1.5pt,ecol] dots=[dotted dash=1.5pt] redge=[edge,colR] bedge=[edge,colB] yedge=[edge,colOrange]\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Qvertex=[circle, draw, fill=black, inner sep=0pt, minimum size=4pt] vertexSig=[circle, draw, fill=colOrange, inner sep=0pt, minimum size=4pt] edge=[line width=1.5pt,ecol] dots=[dotted dash=1.5pt] redge=[edge,colR] bedge=[edge,colB] yedge=[edge,colOrange]\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QIntroduction to .\\E$"}

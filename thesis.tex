@@ -107,7 +107,7 @@
 \newcommand{\Ered}{E_\text{red}}
 \newcommand{\Eblue}{E_\text{blue}}
 %% FPT
-\newcommand{\MSO}{\(\text{MSO2}\)}
+\newcommand{\MSO}{\(\text{MSO}_2\)}
 \newcommand{\Xt}{\(X_t\)}
 \newcommand{\IntroduceVertexNode}{\textsc{Introduce Vertex Node}}
 \newcommand{\ForgetVertexNode}{\textsc{Forget Vertex Node}}
@@ -121,6 +121,7 @@
 \newcommand{\NACG}{\text{NAC} (G)}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\inc}{\text{inc}}
 %% Stable cuts
 \newcommand{\GSC}{\mathcal{G}_{sc}}
 
@@ -256,8 +257,9 @@
 \chapter{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
-	FPT & Fixed-parameter tractable \\
-	NAC & No almost cycles          \\
+	FPT    & Fixed-parameter tractable            \\
+	\MSO{} & Monadic second-order logic on graphs \\
+	NAC    & No almost cycles                     \\
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%
 % ABBREVIATIONS END
@@ -270,6 +272,7 @@
 %%%%%%%%%%%%%%%%%%%
 
 \include{./text/introduction}
+\include{./text/preliminaries}
 \include{./text/fpt_algo}
 \include{./text/stable_cuts}
 \include{./text/examples}

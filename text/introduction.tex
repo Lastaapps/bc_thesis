@@ -28,7 +28,7 @@ rotate the vertex around the line.
 %
 The interesting case is when \( d = 2 \) --- a mapping into a plane.
 It is known that a graph has most of the realizations
-either \( 2 \)-flexible, or \( 2 \)-rigid.,
+either \( 2 \)-flexible, or \( 2 \)-rigid,
 still there may be some realizations of the other type~\cite{generically_rigid_graphs}
 --- we talk about paradoxical flexibility.
 A graph is \emph{(generically) rigid} if most of the realizations are \( 2 \)-rigid
@@ -45,15 +45,6 @@ one would think that if the graph formed is rigid, the answer is yes, and
 for flexible graphs the answer is no.
 But as stated above, paradoxically even a rigid graph can have a flexible realization,
 and it may just happen that the drones form such a \( 2 \)-flexible framework.
-
-When we focus on the two-dimensional case,
-it is already known for some classes of graphs that they are flexible.
-Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
-are flexible~\cite{stable_cuts_2v_4}.
-Another important class of graphs are \emph{minimally rigid} graphs~\cite{laman_1970}.
-Those are rigid graph where removal of any edge results into a flexible graph.
-This class has been studied a lot as it produces relatively large number of flexible
-realizations.
 
 In efforts to find such paradoxical realizations,
 a new edge coloring was defined~\cite{legersky_original}.
@@ -110,12 +101,18 @@ that can find all the NAC-colorings of a graph.
 Multiple heuristics will be used to significantly
 reduce the runtime of the algorithm.
 We also provide parametrized approach where complexity can be reduced for graphs
-with low internal structural complexity.
+with low internal structural complexity (tree width).
 We also show that the problem of deciding if a graph has a NAC-coloring
 is NP-complete even on graphs with maximal degree five.
-Lastly we show relation to stable cuts.
+Later also show relation to stable cuts~\cite{stable_cuts_2v_4}.
 Code implemented in this thesis will enrich the existing PyRigi~\cite{pyrigi}
 library for Rigidity Theory.
 Currently, there are no such algorithms implemented in PyRigi itself,
 the only known implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
+We compare our implementation performance with FlexRiLoG and also compare
+individual heuristics among each other.
+Multiple relevant graph classes will be considered.
+
+We summarize and extend our previous research done
+on the topic in~\cite{my_paper}.
 
