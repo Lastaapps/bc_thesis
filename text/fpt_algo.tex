@@ -18,9 +18,13 @@ and many other graph parametrizations.
 These approaches are used to somehow exploit graphs structure
 and provide algorithms with possibly significantly lower time complexity
 then algorithms considering general graphs only.
-Using this many NP-complete problems can be solved in a time polynomial in \( n \)
+To see other common parametrization approaches
+we recommend seeing~\cite{tree_width_comparision_other_classes}.
+Using these approaches many NP-complete problems can be solved
+in a time polynomial in \( n \)
 for many graph classes that have such a bounded structural property.
-To name a few: \textsc{VertexCover}, \textsc{DominatingSet}, \textsc{LongestPath}, \dots.
+To name a few such problems:
+\textsc{VertexCover}, \textsc{DominatingSet}, \textsc{LongestPath}, \dots.
 
 %
 \begin{definition}[FPT alorithm~\cite{book_parametrized_algorithms}]
@@ -179,14 +183,195 @@ Therefore, the \IntroduceEdgeNode{} for \( e \) must be above \( t \) in \( T \)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Monadic second-order logic}
 
-In this section I'll describe following:
+Monadic second-order logic~(\MSO{}) on graphs is a logical system similar to
+well known propositional or predicate logic.
+In the world of parametrized algorithms,
+it often comes handy --- if we are able to represent a problem using~\MSO{},
+then there exists an FPT algorithm parametrized by tree width
+that can solve the problem~\cite{tree_width_mso}.
 
-\begin{description}
-	\item[Introduce the reader swiftly into~\MSO{}]
-	\item[Tree width]
-	\item[Tree decomposition]
-	\item[Other common parameters]
-\end{description}
+\subsection{Introduction to~\MSO{}}
+
+In the following paragraphs we paraphrase and simplify formal definition
+from~\cite{book_parametrized_algorithms}.
+We presume that reader is already familiar with first-order predicate logic.
+Second-order predicate logic as an extension of first-order predicate logic,
+that adds option to quantify over predicates.
+
+\MSO{}~is an realization of second-order predicate logic.
+\todo[inline]
+{ TODO Switch to footnote, currently, it raises exceptions in NVim ;)
+	% \footnote{
+
+	We need second-order logic as quantification over subsets of vertices or edges
+	corresponds to quantification over predicates separating the subsets.
+	Without this requirement we could talk
+	about monadic first-order logic \( \text{MSO}_1 \).
+}
+
+Formulas can be formed from
+variables, constants, predicates,
+boolean operations \( \lnot, \land, \lor, \Rightarrow, \Leftrightarrow \)
+and quantifiers \( \forall, \exists \).
+Complex formulas are created recursively from atomic formulas
+by applying schema related to each operation or quantifier.
+This process is the same as in first-order predicate logic.
+
+Formulas of \MSO{} can use four types of variables:
+for single vertices, single edges, subsets of vertices, and subsets of edges.
+By \( u^G \) we denote evaluation of variable \( u \) in graph \( G \)
+for some model \( \mathcal{G} \) (a tuple of evaluation function and \( G \)).
+In \MSO{} to form atomic formulas, we allow only following base predicates:
+%
+\begin{itemize}
+	\item For \( u \) representing a vertex (edge) variable
+	      and \( X \) is a vertex (edge) set,
+	      we can write formula \( u \in X \).
+	      For \( G \) the formula is true if \( u^G \in X^G \) is true.
+	\item Let \( u \) be a vertex variable and \( e \) be an edge variable,
+	      then we can write formula \( \inc (u, e) \).
+	      For \( G \) the formula is true if \( u^G \) is an endpoint of \( e^G \).
+	\item For any two variables \( u, v \) of the same type we can write \( u = v \).
+	      For \( G \) the formula is true if \( u^G = v^G \).
+\end{itemize}
+%
+We also allow simplifications like \( \ne, \not\in \).
+As obvious from types of variables, we can quantify over vertices, edges,
+subsets of vertices and subsets of edges.
+
+It is beneficial to define auxiliary predicates to simplify our work.
+We follow by some examples and simplifications taken from~\cite{book_parametrized_algorithms}.
+First we show predicate \( \text{adj} \) representing if two vertices are adjacent.
+%
+\begin{align}
+	\text{adj}(u, v) = (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e)) \notag
+\end{align}
+%
+For a graph \( G = (V, E) \) we can represent connectivity of its induced subgraph
+on vertices \( X \subseteq V \) with the following predicate~\cite{book_parametrized_algorithms}.
+%
+\begin{align}
+	\text{connected}(X) = \, &
+	\forall Y \subseteq V : \Big(
+	(
+	\exists u \in X : u \in Y \land
+	\exists v \in X : v \not\in Y
+	)
+	\notag                     \\ &
+	\Rightarrow
+	(
+	\exists u, v \in X : \text{adj}(u, v) \land u \in Y \land v \not\in Y
+	)\Big). \notag
+\end{align}
+%
+Notice that we used our previously defined predicate as an alias.
+For \( X = V \) the formula would read as:
+``For each separation of graph there exists an edge connecting both partitions''.
+
+\subsection{Relation to tree width}
+
+In the following, for a formula \( \phi \) by \( \|\phi\| \)
+we denote the length of the encoding of \( \phi \) as a string.
+%
+\begin{theorem}[Courcelle's theorem,~\cite{tree_width_mso,book_parametrized_algorithms}]%
+	\label{theorem:courcelles_theorem}%
+	Assume that \( \phi \) is a formula of \MSO{} and
+	\( G \) is an \( n \)-vertex graph equipped
+	with evaluation of all the free variables of \( \phi \).
+	Suppose, moreover, that a tree decomposition of \( G \) of width \( k \) is provided.
+	Then there exists an algorithm that verifies whether \( \phi \)
+	is satisfied in \( G \) in time \( f (\|\phi\|, k) \cdot n \),
+	for some computable function \( f \).
+\end{theorem}
+%
+If we are given a optimal tree decomposition, or we manage to find good enough
+approximation, we know that we can decide any formula in \MSO{} in a time
+polynomial in \( n \) parametrized by tree width.
+
+\subsection{Expressing NAC-colorings using \MSO{}}
+
+In this section we describe results from our paper~\cite{my_paper}.
+We start by defining other auxiliary predicates.
+
+\begin{itemize}
+	\item For \( V \) all vertices and \( E \) subset of edges we define predicate
+	      %
+	      \begin{align}
+		      \text{deg2}(E) = \,
+		       & \forall e \in E : \forall v \in V : \inc (v, e) \Rightarrow \Big( \exists e^\prime \in E : \notag \\
+		       & \big( \inc (v, e^\prime) \land e \ne e^\prime \land (\forall e^{\prime\prime} \in E :
+				      \lnot \inc (v, e^{\prime\prime}) \lor e^{\prime\prime} \not\in \{e, e^\prime\}) \big) \Big). \notag
+	      \end{align}
+	      %
+	\item For \( V \) subset of vertices and \( E \) subset of edges we define predicate
+	      %
+	      \begin{align}
+		      \text{incident}(V, E) = \,
+		       & (\forall v \in V : \exists e \in E : \inc (v, e)) \notag                                                 \\
+		       & \land (\forall e \in E : \exists v_1, v_2 \in V : v_1 \ne v_2 \land \inc (v_1) \land \inc (v_2)). \notag
+	      \end{align}
+	      %
+	\item For \( E \) subset of edges we define predicate
+	      %
+	      \begin{align}
+		      \text{cycle}(E) = \,
+		      \big( \exists X \subseteq V : \text{incident}(X, E) \land \text{connected}(X) \big)
+		      \land \text{deg2}(E). \notag
+	      \end{align}
+	      %
+	\item For \( E_1, E_2 \) subsets of edges we define predicate~\cite{my_paper}.
+	      %
+	      \begin{align}
+		      \text{partition}(E_1, E_2) = \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 ) \notag    \\
+		                                      & \land (\forall e \in E : e \in E_1 \lor e \in E_2 ) \notag          \\
+		                                      & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ). \notag
+	      \end{align}
+	      %
+	      The formula reads as: ``Both the partitions are not empty,
+	      and each edge is in exactly one of the partitions''.
+	\item For \( C, E_\red, E_\blue \) subsets of edges we define predicate~\cite{my_paper}.
+	      %
+	      \begin{align}
+		      \text{NACcond}(C, E_\red, E_\blue) = \,
+		       & C \subseteq E_\red \lor C \subseteq E_\red
+		      \notag                                                          \\
+		       & \lor (\exists e_1, e_2, e_3, e_4 \in E :
+		      e_1 \ne e_2 \land e_3 \ne e_4
+		      \notag                                                          \\
+		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue )
+		      . \notag
+	      \end{align}
+	      %
+\end{itemize}
+
+With the predicates ready, we can proceed approach to the theorem.
+%
+\begin{theorem}[\cite{my_paper}]
+	The problem of existence of a NAC-coloring is fixed parameter
+	tractable when parametrized by tree width.
+\end{theorem}
+%
+\begin{proof}
+	We can express the NAC-coloring problem
+	as a formula \( \phi \) in \MSO{} as follows:
+	%
+	\begin{align}
+		\exists E_\red, E_\blue \subseteq E : \,
+		 & \text{partition}(E_\red, E_\blue) \notag                                                          \\
+		 & \land \big(\forall C \subseteq E : \text{cycle}(C) \land \text{NACcond}(C, E_\red, E_\blue) \big)
+		. \notag
+	\end{align}
+	%
+	As of Courcelle's theorem \Cref{theorem:courcelles_theorem}
+	it holds that there exists an FPT algorithm parametrized by tree width
+	that can resolve \( \phi \) and therefore resolve the question whenever a graph has a NAC-coloring.
+\end{proof}
+%
+The proof shows us that there exists such algorithm,
+but does not give us the algorithm itself.
+In the following sections we define our
+own FPT algorithm that solves the NAC-coloring problem
+while not relying on~\MSO{}.
 
 \section{FPT algorithm}
 
