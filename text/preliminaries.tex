@@ -144,8 +144,10 @@ Therefore, we define a measure where these \emph{congruent} colorings are
 counted as one.
 %
 \begin{definition}
-	By \( \text{NAC}(G) \) we denote the number of NAC-coloring of \( G \)
+	By \( \NAC(G) \) we denote all the NAC-coloring of \( G \).
+	By \( \NACno(G) \) we denote the number of NAC-coloring of \( G \)
 	while only one coloring is considered from each congruent pair.
+	It holds that \( \NACno(G) = | \NAC(G) | / 2 \)
 \end{definition}
 %
 
@@ -206,7 +208,7 @@ For graph \( G \), some vertex \( v \in G \) is an articulation vertex if
 \( \{v\} \) is a vertex cut in \( G \).
 When all the articulation vertices are found,
 graph can be decomposed into blocks
---- vertex \( 2 \)-connected components ---.
+--- vertex \( 2 \)-connected components.
 As no cycles pass through multiple blocks, we can color each block
 independently as long as both colors are used.~\cite{my_paper}.
 We formalize this observation later.

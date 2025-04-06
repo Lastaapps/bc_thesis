@@ -67,16 +67,17 @@ that exploits the tree-likeness of a graph.
 	The \emph{width} of a tree decomposition given by pair
 	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	equals to \( \max_{t\in V(T)} |X_t| - 1 \).
-	The tree width of a graph \( G \) is the minimum such width.
+	The tree width of a graph \( G \) is the minimum such width
+	across all tree decompositions of \( G \).
 \end{definition}
 %
 The width is decreased by one, so the tree width of a tree is one.
 
 Through the chapter we use term \emph{vertex} for vertices of \( G \)
 and \emph{node} for nodes of \( T \).
-We also use shorten \( t \in V(T) \) to \( t \in T \).
+We also shorten \( t \in V(T) \) to \( t \in T \).
 
-We follow with lemma that is important for all the related
+We follow with a lemma that is important for all the related
 dynamic programming approaches running on tree decompositions.
 %
 \begin{definition}[Vertex subset border~\cite{book_parametrized_algorithms}]
@@ -95,15 +96,15 @@ dynamic programming approaches running on tree decompositions.
 	Then \( \delta(A), \delta(B) \subseteq X_a \cap X_b \).
 \end{lemma}
 %
-We can reformulate the lemma as follows:
-\( (A, B) \) is a separation of \( G \) with separator \( X_a \cap X_b \).
+The lemma also reads as:
+``\( (A, B) \) is a separation of \( G \) with separator \( X_a \cap X_b \)''.
 
 We obtained a class of decompositions that can differ significantly.
-There may be multiple nodes with same bags or just a single bag.
-We also have no guarantee how many vertices differ between two neighboring bags.
-Therefore, we want to define a \emph{nice} tree decomposition where nodes
+There may be multiple nodes with same bags or just a single node.
+We also have no guarantee how two neighboring bags differ --- how many vertices changed.
+Therefore, we want to define \emph{a nice tree decomposition} where neighboring nodes
 represent some useful change between two bags.
-First, we want our nice tree to be rooted tree,
+First, we want our nice tree to be a rooted tree,
 let \( r \in T \) be the root node.
 %
 \begin{definition}[Nice tree decomposition~\cite{book_parametrized_algorithms}]
@@ -140,9 +141,10 @@ and all its child nodes.
 \end{lemma}
 
 The problem of finding tree width is NP-complete~\cite{tree_width_np_complete}.
-Luckily, there exist efficient approximation algorithms~\cite{tree_width_approximation}.
-We consider nice tree decompositions as given along with graph
-and do not consider runtime required by graph decomposition.
+Luckily, the problem is studied a lot and
+there exist efficient approximation algorithms~\cite{tree_width_approximation}.
+We consider nice tree decompositions as given along with a graph
+and do not consider runtime required to find it.
 
 Currently, in \IntroduceVertexNode{} all the edges connecting it
 to vertices in \( X_{t^\prime} \) be also considered in \( X_t \).
@@ -387,10 +389,10 @@ our state space is even larger and all the operations work significantly differe
 
 First we want to build the intuition for the upcoming operations.
 Let us have a graph \( G \) and all the NAC-colorings coloring of the graph
-\( NACG \). Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\Gprime.
-We want to extend \( NAC(G) \) to \( \text{NAC} (G^\prime) \).
+\( \NAC (G) \). Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\Gprime{}.
+We want to extend \( \NAC (G) \) to \( \NAC (G^\prime) \).
 
-Let us have \( \delta \in \NACG \).
+Let us have \( \delta \in \NAC (G) \).
 We want to extend it to \( delta^\prime \), suppose \( \delta^\prime(e) = \blue \).
 \( \delta^\prime \) is a NAC-coloring unless an almost cycle is formed.
 In that case one of following cases must be true:
@@ -402,18 +404,20 @@ In that case one of following cases must be true:
 	      and edge \( e \) with \( \blue \) color.
 	\item Vertices \( u, v \) lay in different connected components in \( G[\Eblue] \)
 	      and there is a \( \red \) colored edge connecting some vertices from the components.
-	      We call such an edge a \emph{bridge}.
+	      We call such an edge \emph{a bridge}.
 	      An almost cycle is formed from paths in each component, the bridge and edge \( e \).
 \end{itemize}
 %
-In all other cases an almost cycle cannot be formed by adding an edge.
-Note that if a vertex cannot be in more connected component for the given color
+In all other cases an almost cycle cannot be formed by adding the edge \( e \).
+Note that a vertex cannot be in multiple connected component for the given color
 as this fact would mean that both the components are not maximal.
-Note that for simplicity we do not for now consider
-NAC-colorings of \( G^\prime \)
-where \( e \) is the only edge of its color.
 
-Lastly we define some terms that will come useful in the following sections.
+To create \( \NAC (G^\prime) \), we extend and filter the colorings
+in \( NAC(G) \cup \{ \delta_\red \} \), where \( \delta_\red \)
+colors all the edges in \( G \) with \( \red \) color.
+We do likewise for the case when \( e \) is colored \( \red \).
+
+Before we start, we define some terms that will come useful in the following sections.
 %
 \begin{definition}[Bridge]
 	For a graph \( G \) and two distinct connected components
