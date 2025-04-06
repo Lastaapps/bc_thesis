@@ -7,6 +7,7 @@
 	In this chapter, we present an algorithm that can obtain
 	the number of NAC-coloring of a graph in \({k}^{O(k)} n^{O(1)}\) time,
 	where \(k\) stands for the tree width of the graph.
+	\todo[inline]{add vertex degree to the formula}
 
 \end{chapterabstract}
 
@@ -132,6 +133,7 @@ Note that a vertex \( v \in V(G) \) can be introduced multiple times,
 but forgotten only once.
 We denote by \( V_t, t \in T \) set of vertices introduced by \( t \)
 and all its child nodes.
+By \( G_t, t \in T \) we mean the subgraph of \( G \) induced by \( V_t \).
 
 \begin{lemma}[\cite{book_parametrized_algorithms}]
 	Any tree decomposition of width at most \( k \) can be converted to
@@ -245,26 +247,26 @@ It is beneficial to define auxiliary predicates to simplify our work.
 We follow by some examples and simplifications taken from~\cite{book_parametrized_algorithms}.
 First we show predicate \( \text{adj} \) representing if two vertices are adjacent.
 %
-\begin{align}
-	\text{adj}(u, v) = (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e)) \notag
-\end{align}
+\begin{align*}
+	\text{adj}(u, v) = (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e))
+\end{align*}
 %
 For a graph \( G = (V, E) \) we can represent connectivity of its induced subgraph
 on vertices \( X \subseteq V \) with the following predicate~\cite{book_parametrized_algorithms}.
 %
-\begin{align}
+\begin{align*}
 	\text{connected}(X) = \, &
 	\forall Y \subseteq V : \Big(
 	(
 	\exists u \in X : u \in Y \land
 	\exists v \in X : v \not\in Y
 	)
-	\notag                     \\ &
+	\\ &
 	\Rightarrow
 	(
 	\exists u, v \in X : \text{adj}(u, v) \land u \in Y \land v \not\in Y
-	)\Big). \notag
-\end{align}
+	)\Big).
+\end{align*}
 %
 Notice that we used our previously defined predicate as an alias.
 For \( X = V \) the formula would read as:
@@ -298,51 +300,51 @@ We start by defining other auxiliary predicates.
 \begin{itemize}
 	\item For \( V \) all vertices and \( E \) subset of edges we define predicate
 	      %
-	      \begin{align}
+	      \begin{align*}
 		      \text{deg2}(E) = \,
-		       & \forall e \in E : \forall v \in V : \inc (v, e) \Rightarrow \Big( \exists e^\prime \in E : \notag \\
+		       & \forall e \in E : \forall v \in V : \inc (v, e) \Rightarrow \Big( \exists e^\prime \in E : \\
 		       & \big( \inc (v, e^\prime) \land e \ne e^\prime \land (\forall e^{\prime\prime} \in E :
-				      \lnot \inc (v, e^{\prime\prime}) \lor e^{\prime\prime} \not\in \{e, e^\prime\}) \big) \Big). \notag
-	      \end{align}
+				      \lnot \inc (v, e^{\prime\prime}) \lor e^{\prime\prime} \not\in \{e, e^\prime\}) \big) \Big).
+	      \end{align*}
 	      %
 	\item For \( V \) subset of vertices and \( E \) subset of edges we define predicate
 	      %
-	      \begin{align}
+	      \begin{align*}
 		      \text{incident}(V, E) = \,
-		       & (\forall v \in V : \exists e \in E : \inc (v, e)) \notag                                                 \\
-		       & \land (\forall e \in E : \exists v_1, v_2 \in V : v_1 \ne v_2 \land \inc (v_1) \land \inc (v_2)). \notag
-	      \end{align}
+		       & (\forall v \in V : \exists e \in E : \inc (v, e))                                                 \\
+		       & \land (\forall e \in E : \exists v_1, v_2 \in V : v_1 \ne v_2 \land \inc (v_1) \land \inc (v_2)).
+	      \end{align*}
 	      %
 	\item For \( E \) subset of edges we define predicate
 	      %
-	      \begin{align}
+	      \begin{align*}
 		      \text{cycle}(E) = \,
 		      \big( \exists X \subseteq V : \text{incident}(X, E) \land \text{connected}(X) \big)
-		      \land \text{deg2}(E). \notag
-	      \end{align}
+		      \land \text{deg2}(E).
+	      \end{align*}
 	      %
 	\item For \( E_1, E_2 \) subsets of edges we define predicate~\cite{my_paper}.
 	      %
-	      \begin{align}
-		      \text{partition}(E_1, E_2) = \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 ) \notag    \\
-		                                      & \land (\forall e \in E : e \in E_1 \lor e \in E_2 ) \notag          \\
-		                                      & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ). \notag
-	      \end{align}
+	      \begin{align*}
+		      \text{partition}(E_1, E_2) = \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 )    \\
+		                                      & \land (\forall e \in E : e \in E_1 \lor e \in E_2 )          \\
+		                                      & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ).
+	      \end{align*}
 	      %
 	      The formula reads as: ``Both the partitions are not empty,
 	      and each edge is in exactly one of the partitions''.
 	\item For \( C, E_\red, E_\blue \) subsets of edges we define predicate~\cite{my_paper}.
 	      %
-	      \begin{align}
+	      \begin{align*}
 		      \text{NACcond}(C, E_\red, E_\blue) = \,
 		       & C \subseteq E_\red \lor C \subseteq E_\red
-		      \notag                                                          \\
+		      \\
 		       & \lor (\exists e_1, e_2, e_3, e_4 \in E :
 		      e_1 \ne e_2 \land e_3 \ne e_4
-		      \notag                                                          \\
+		      \\
 		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue )
-		      . \notag
-	      \end{align}
+		      .
+	      \end{align*}
 	      %
 \end{itemize}
 
@@ -357,12 +359,12 @@ With the predicates ready, we can proceed approach to the theorem.
 	We can express the NAC-coloring problem
 	as a formula \( \phi \) in \MSO{} as follows:
 	%
-	\begin{align}
+	\begin{align*}
 		\exists E_\red, E_\blue \subseteq E : \,
-		 & \text{partition}(E_\red, E_\blue) \notag                                                          \\
+		 & \text{partition}(E_\red, E_\blue)                                                                 \\
 		 & \land \big(\forall C \subseteq E : \text{cycle}(C) \land \text{NACcond}(C, E_\red, E_\blue) \big)
-		. \notag
-	\end{align}
+		.
+	\end{align*}
 	%
 	As of Courcelle's theorem \Cref{theorem:courcelles_theorem}
 	it holds that there exists an FPT algorithm parametrized by tree width
@@ -382,7 +384,7 @@ go through each type of node in a tree decomposition and
 determine the complexity of the algorithm.
 Lastly, we optimize the algorithm by empowering using monochromatic components.
 
-Our algorithm will be somewhat similar to Steiner tree search algorithm
+Our algorithm is in its core similar to Steiner tree search algorithm
 as described in~\cite{book_parametrized_algorithms} as both the problems require connectivity
 among vertex partitions. Unlike in the Steiner tree search algorithm,
 our state space is even larger and all the operations work significantly differently.
@@ -434,12 +436,22 @@ Before we start, we define some terms that will come useful in the following sec
 \end{definition}
 %
 
+In the following sections
+we work with a nice tree decomposition \( T \) with tree width \( k \)
+of a graph \( G \) with maximal degree \( \Delta \).
+The algorithm works only for graphs with at least one edge.
+
+We define an \emph{almost NAC-coloring}
+as a \( \red \)-\( \blue \) edge coloring such that there
+are no almost cycles formed. The conditions are the same as for NAC-coloring
+except that the surjectivity criterion is dropped.
+We use almost NAC-coloring for the rest of the section
+except for the \RootNode{} where algorithm's output are read.
+
 \subsection{Dynamic cache}
 
 First we define a state space \( S \) of \emph{configurations}
 that will be used by our cache in our dynamic programming algorithm.
-We operate on a nice tree decomposition \( T \) of a graph \( G \)
-with tree width \( k \).
 
 %
 \begin{definition}[State space]
@@ -456,7 +468,7 @@ with tree width \( k \).
 	and \( R_\red\), resp. \(R_\blue \), is a relation
 	on partitions in \( P_\red\), resp. \(P_\blue \).
 	%
-	All the possible states on \Xt{} to form the state space \( S_t \).
+	All the possible states on \Xt{} form the state space \( S_t \).
 \end{definition}
 %
 Partitions \( P_\red, P_\blue \) represent vertices
@@ -470,14 +482,13 @@ That it is expected as we are trying to solve an NP-complete problem.
 
 We denote cache as function \( c: \mathcal{S} \to \N \)
 where \( \mathcal{S} = \bigcup\{S_t \mid t \in T\} \).
-Cache entry denotes the number of NAC-colorings
-that span \( V_t \) with a configuration \( s \) in \Xt{}.
+Cache entry denotes the number of almost NAC-colorings
+that span \( G_t \) with a configuration~\( s \)~in~\Xt{}.
 
-In the following sections we show different mappings from cache entries
-from child nodes in \( T \) to cache entries of the parent nodes.
-We make sure that invalid states that cannot occur by applying our operation
+In the following sections we show different evaluations
+of child nodes cache entries into cache entries of parent nodes.
+We make sure that invalid states that cannot occur by applying our operation (non-valid states)
 get zero cache entry value as they cannot represent any NAC-coloring.
-
 
 \subsection{\IntroduceVertexNode}
 
@@ -488,14 +499,14 @@ Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue), s \in 
 for \( a \in \{\red, \blue\} \) as:
 %
 \begin{align*}
-	P_a^\prime & \coloneqq P_a \setminus \{\{v\}\}                                                                    \notag \\
-	R_a^\prime & \coloneqq R_a \setminus \{ (p_1, p_2) \mid (p_1, p_2) \in R_a, (\{v\} \in p_1 \lor \{v\} \in p_2) \} \notag \\
+	P_a^\prime & \coloneqq P_a \setminus \{\{v\}\}                                                                                             \\
+	R_a^\prime & \coloneqq R_a \setminus \{ (p_1, p_2) \mid (p_1, p_2) \in R_a, (\{v\} \in p_1 \lor \{v\} \in p_2) \}                          \\
 	c[t, s]    & \coloneqq
 	\begin{cases}
 		0,                                                                           & \text{if } \exists a : \{v\} \not\in P_a                    \\
 		0,                                                                           & \text{if } \exists a \exists p \in P_a : (\{v\}, p) \in R_a \\
 		c[t^\prime, (P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)], & \text{otherwise}
-	\end{cases}
+	\end{cases} \\
 \end{align*}
 %
 %
@@ -526,15 +537,15 @@ Let \( v \) be the only vertex in \( X_{t^\prime} \setminus X_t \).
 Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
 for \( a \in \{\red, \blue\} \) as:
 %
-\begin{align}
-	m(p)          & \coloneqq p \setminus \{v\}   \notag                                                                                                                    \\
-	M(P)          & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\}   \notag                                                                                       \\
-	\mathcal{P}_a & \coloneqq \{ P_a^\prime \mid P_a^\prime \in \mathcal{F}(X_{t^\prime}), M(P_a^\prime) = P_a \}   \notag                                                  \\
-	\mathcal{R}_a & \coloneqq \{ R_a^\prime \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \subseteq P_a^\prime \times P_a^\prime,   \notag                                  \\
-	              & \qquad \forall (p_1, p_2) \in R_a^\prime : (m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset \}   \notag                                     \\
-	S^\prime      & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \in \mathcal{R}_a  \}   \notag \\
+\begin{align*}
+	m(p)          & \coloneqq p \setminus \{v\}                                                                                                                    \\
+	M(P)          & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\}                                                                                       \\
+	\mathcal{P}_a & \coloneqq \{ P_a^\prime \mid P_a^\prime \in \mathcal{F}(X_{t^\prime}), M(P_a^\prime) = P_a \}                                                  \\
+	\mathcal{R}_a & \coloneqq \{ R_a^\prime \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \subseteq P_a^\prime \times P_a^\prime,                                  \\
+	              & \qquad \forall (p_1, p_2) \in R_a^\prime : (m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset \}                                     \\
+	S^\prime      & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \in \mathcal{R}_a  \} \\
 	c[t, s]       & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime]
-\end{align}
+\end{align*}
 %
 %
 \begin{proof}
@@ -587,12 +598,14 @@ We state conditions for a single color, \WLOG{} let the edge \( e \) be \( \blue
 	      are neighbors with \( e \) being the new bridge.
 \end{description}
 %
-Note that either both conditions need to pass.
+Note that both the conditions need to pass.
+One holds for the \( \red \) subgraph, the other for \( \blue \).
 
-Now we state how the cached values is computed for cases when
+Now we state how the cached values are computed for cases when
 the previous conditions pass for both the colors.
-Resulting cache entry is sum of multiple previous states that
-collapse into the new valid state as some components are joined,
+Resulting cache entry is sum of multiple states from the child node
+\( t^\prime \) that collapse into the new valid state
+as some components are joined,
 and some neighboring relations are created:
 %
 \begin{description}
@@ -616,12 +629,12 @@ and some neighboring relations are created:
 
 The resulting cache for \( \blue \) color is then computed as follows:
 %
-\begin{align}
-	c_\blue[t, s] & = c[t^\prime, (P_\red, R_\red, P_\blue, R_\blue)]   \notag                      \\
-	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue, R_\blue)]   \notag               \\
-	              & + c[t^\prime, (P_\red, R_\red, P_\blue^\prime, R_\blue^\prime)]   \notag        \\
-	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)]   \notag
-\end{align}
+\begin{align*}
+	c_\blue[t, s] & = c[t^\prime, (P_\red, R_\red, P_\blue, R_\blue)]                      \\
+	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue, R_\blue)]               \\
+	              & + c[t^\prime, (P_\red, R_\red, P_\blue^\prime, R_\blue^\prime)]        \\
+	              & + c[t^\prime, (P_\red, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)]
+\end{align*}
 %
 If some rule was not matched for \( s \) and \( e \) colored \( \blue \)
 the cache entry results into \( c_\blue[t, s] = 0 \).
@@ -649,10 +662,10 @@ We take original relations \( O_{1, a}, O_{2, a} \)
 from which \( P_{1, a}, P_{2, a} \) were factorizes.
 We set
 %
-\begin{align}
-	O_a & \coloneqq {(O_{1, a} \cup O_{2, a})}^*   \notag \\
+\begin{align*}
+	O_a & \coloneqq {(O_{1, a} \cup O_{2, a})}^* \\
 	P_a & \coloneqq \mathcal{F}_{O_a}(X_t)
-\end{align}
+\end{align*}
 %
 where \( \mathcal{F}_O(X) \) stands for factorization of \( X \)
 according to relation \( O \). This operation represents merging connected
@@ -662,10 +675,10 @@ We continue with neighbors relation. We drop connections that related components
 that were merged (we will get back to them soon).
 Let for \( i \in {1, 2} \)
 %
-\begin{align}
-	R_{i,a}^\prime & \coloneqq \{(p_1, p_2) \mid p_1, p_2 \in P_a,   \notag                                                                                                            \\
-	               & \qquad \exists p_1^\prime, p_2^\prime \in P_{i,a} : (p_1^\prime, p_2^\prime) \in R_{i,a} \land p_1^\prime \subseteq p_1 \land p_2^\prime \subseteq p_2\}   \notag
-\end{align}
+\begin{align*}
+	R_{i,a}^\prime & \coloneqq \{(p_1, p_2) \mid p_1, p_2 \in P_a,                                                                                                            \\
+	               & \qquad \exists p_1^\prime, p_2^\prime \in P_{i,a} : (p_1^\prime, p_2^\prime) \in R_{i,a} \land p_1^\prime \subseteq p_1 \land p_2^\prime \subseteq p_2\}
+\end{align*}
 %
 and \WLOG{} let \( R_a \coloneqq R_{1,a} \).
 Then we define mapping \( M \) as \[ M(s_1, s_2) = (P_\red, R_\red, P_\blue, R_\blue). \]
@@ -708,24 +721,24 @@ if a single one of them fails, the states pair is considered bad.
 We denote set of such bad configurations as \( \mathcal{B}, (s_1, s_2) \in \mathcal{B} \).
 
 %
-\begin{align}
+\begin{align*}
 	N(s_1, s_2) =
 	\begin{cases}
 		0, & \text{if } (s_1, s_2) \in \mathcal{B}                  \\
 		0, & \text{if } \exists a : R_{1,a}^\prime = R_{2,a}^\prime \\
 		1, & \text{otherwise}
-	\end{cases}\notag
-\end{align}
+	\end{cases}
+\end{align*}
 %
 
 Lastly we show formula to compute cache entries based on previously stated mappings.
 It comes from the same idea as coloring product where all the resulting colorings
 are NAC-colorings. The size of such product is multiple of sizes of the original subgraphs.
 %
-\begin{align}
-	\mathcal{S}(s) & \coloneqq \{(s_1, s_2) \mid M(s_1, s_2) = s \}   \notag                                                     \\
-	c[t, s]        & \coloneqq \sum_{(s_1, s_2) \in \mathcal{S}(s)} N(s_1, s_2) \cdot c[t_1, s_1] \cdot c[t_{2}, s_{2}]   \notag
-\end{align}
+\begin{align*}
+	\mathcal{S}(s) & \coloneqq \{(s_1, s_2) \mid M(s_1, s_2) = s \}                                                     \\
+	c[t, s]        & \coloneqq \sum_{(s_1, s_2) \in \mathcal{S}(s)} N(s_1, s_2) \cdot c[t_1, s_1] \cdot c[t_{2}, s_{2}]
+\end{align*}
 %
 
 This finishes our basic dynamic programming algorithm
@@ -733,8 +746,55 @@ for counting NAC-colorings of the graph.
 The number of NAC-colorings is the only value stored in cache
 after the last vertex is forgotten.
 
-\todo[inline]{Don't forget to define \( V_t \)}
+\subsection{\LeafNode{}}
 
+Usually \LeafNode{} is the simplest one. Here we use a special value,
+that needs not trivial explanation.
+In leaf nodes \( t \in T \) we work with not nodes as the bag \Xt{} is empty.
+The only factorization on an empty set is an empty set.
+We assign 1 to the cache entry. This is necessary to start the algorithm.
+%
+\begin{align*}
+	c[t, (\emptyset, \emptyset, \emptyset, \emptyset)] & \coloneqq 1 \\
+\end{align*}
+%
+\begin{proof}
+	We proof that 1 is a good decision.
+	The parent of a \LeafNode{} \( t_1 \) must be an \IntroduceVertexNode{} \( t_2 \).
+	\( t_2 \) now resolves also to only a single almost NAC-coloring.
+	As we stated in our graph preconditions, the graph has at least one edge
+	and therefore at least two vertices.
+
+	After \( t_2 \) two kinds of nodes can follow.
+	Let \( t_2^\prime \) be the unique parent of \( t_2 \).
+	If \( t_2^\prime \) is an \IntroduceVertexNode{}, cache entry for configuration,
+	where vertices are disconnected both in \( \red \) and \( \blue \) subgraphs
+	gets value 1. Such \IntroduceVertexNode{} can occur multiple times
+	while traversing \( T \).
+	Let \( t_2^{\prime\prime} \) be the last such node
+	(possibly \( t_2 = t_2^{\prime\prime}\) or \( t_2^\prime = t_2^{\prime\prime}\) ).
+	Let \( t_3 \) be the parent of \( t_2 \).
+	The only options are that \( t_3 \) either is \IntroduceEdgeNode{} or \JoinNode{}.
+	If \( t_3 \) is an \IntroduceEdgeNode{} introducing edge \( e = \{u, v\} \),
+	the resulting cache entry will store 1 for the configuration,
+	when \( u ,v \) are in the same \( \red  \) component and other vertices are disconnected, or
+	when \( u ,v \) are in the same \( \blue \) component and other vertices are disconnected.
+	This correctly represents almost NAC-colorings in \( G_{t_3} \).
+	If \( t_3 \) is a \JoinNode{}, the number of almost NAC-coloring should not change.
+	As the value are multiplied by 1, this precondition holds.
+\end{proof}
+
+\subsection{\RootNode{}}
+
+Finally, for \( r \in T \) \RootNode{} and its unique child \( t^\prime \)
+we read value from cache entry as follows:
+%
+\begin{align*}
+	\text{output} \coloneqq c[t^\prime, (\emptyset,\emptyset,\emptyset,\emptyset)] - 2.
+\end{align*}
+%
+We need to subtract two as the output of the algorithm are NAC-coloring,
+not almost NAC-colorings. Correctness goes from the previous nodes.
 
 \subsection{Time complexity}
 
@@ -779,45 +839,6 @@ There are \( O((n+m)k) \) nodes in \( T \).
 The final complexity of the algorithm is therefore
 \( {k}^{O(k)} \cdot O(n^2) \).
 \todo[inline]{Check number of nodes in \( T \)}
-
-\subsection{\IntroduceVertexWithEdgesNode}
-
-\todo[inline]{Make sure that wen Join is used the bags are the same}
-
-The algorithm as stated above can be improved by avoiding \IntroduceEdgeNode{}s.
-We can add vertex with all its edges in a singe step.
-To simplify our proof we will create a sequence of bags and then replace the
-\IntroduceVertexNode{} with an \JoinNode{} adding our custom bags
-and remove all the edge introduce bags from the original \( T \).
-
-Let \( t \in T \) be they \IntroduceVertexNode{} we are trying to replace,
-\( t^\prime \in T \) its only child,
-\( w \in T \) its only parent,
-\( v \) be the vertex to be introduced,
-\( B = N(v) \cap X_t \) and
-\( E_v \) edges incident to \( v \) and vertices in \( B \).
-First we create vertex introduce bags for \( v \) and each vertex in \( B \).
-Then we create edge introduce bags for each edge in \( E_v \).
-Let the last bag created be \( b \).
-Note, that \( V_b \) is a star graph with \( v \) as the center.
-Finally, we replace \( t \) in \( T \) with a join node
-with parent \( w \) and children \( t^\prime \) and \( b \).
-We also remove all the edge introduce bags for edges \( B \) from \( T \).
-Now we join all the bags created in the previous steps including the join node
-into a single new node called \textbf{Intrude vertex with edges node}.
-
-The new tree \( T^\prime \) is also a nice tree decomposition
-of the same graph as the same vertices and edges were added.
-We can repeat this procedure till all the \IntroduceEdgeNode{}s are gone.
-
-The benefits of such a node are both theoretical and practical performance increase.
-Also, in the following section we will improve this step by using monochromatic components.
-
-This step can be implemented smarter than by calling the join routine.
-We iterate through product of the state space and all the \( \red, \blue \)
-colorings of edges \( B \). There, we can in \( O(k^2) \) time decide
-how the resulting state after components are joined because of the edges look and
-if the state is even valid.
 
 \subsection{Monochromatic components}
 
@@ -889,6 +910,51 @@ this idea in consideration.
 
 \todo[inline]{Fix monochromatic components notation based on the rest of the thesis}
 
+\subsection{Connectivity}
+
+Along with the cache we can also hold an information about connectivity of
+vertices in bags.
+%
+\begin{definition}
+	Let \( t \in T \) be a node in the nice tree decomposition tree and
+	\Xt{} be a bag of vertices.
+	\emph{A connectivity map} \( C_t \) is a factorization of \Xt{}.
+	For \( u, v \in V_t \) it holds that
+	\( \exists c \in C_t : u \in c \land v \in c \) iff
+	\( u, v \) are in the same connected component in \( G_t \).
+	A configuration \( s \in S_t \) is \emph{in conflict} with \( C_t \)
+	if \( P_\red \) or \( P_\blue \) are not same or finer that \( C_t \).
+\end{definition}
+%
+We show how connectivity map changes for different types of nodes.
+Consider a node \( t \in T \) and its child \( t^\prime \)
+or children \( t_1, t_2 \) in case of a \JoinNode{}.
+%
+For an \IntroduceVertexNode{}
+a new connectivity map is obtained as follows:
+\( C_t \coloneqq C_t^\prime \cup \{\{ v \}\} \).
+%
+For a \ForgetVertexNode{}
+a new connectivity map is obtained as
+\( C_t \coloneqq M(C_t^\prime) \)
+where \( M \) is mapping from the \ForgetVertexNode{}
+deleting occurrences of forgotten vertex from the factorization given.
+%
+For an \IntroduceEdgeNode{}
+where edge \( \{u, v\} \) is introduced
+components of \( u, v \) are merged if they are not merged already.
+%
+For a \JoinNode{}
+connectivity maps \( C_{t_1}, C_{t_2} \) are merged into
+a single connectivity map \( C_t \)
+the same way as when a \JoinNode{} is processed.
+%
+For a \LeafNode{}
+no vertices are connected yet, so the connectivity map \( C_t = \emptyset \).
+
+With such connectivity map we can not reduce the state space by only considering
+factorizations that are finer then the connectivity map.
+
 
 \subsection{Additional considerations}
 
@@ -920,4 +986,5 @@ for problems with connectivity requirements.
 This is unfortunately far beyond the scope of this thesis.
 
 \todo[inline]{Cite/Introduce Monte Carlo algorithms}
+\todo[inline]{Mention connectivity map improvement}
 

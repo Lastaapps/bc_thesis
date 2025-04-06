@@ -12,3 +12,11 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Qvertex=[circle, draw, fill=black, inner sep=0pt, minimum size=4pt] vertexSig=[circle, draw, fill=colOrange, inner sep=0pt, minimum size=4pt] edge=[line width=1.5pt,ecol] dots=[dotted dash=1.5pt] redge=[edge,colR] bedge=[edge,colB] yedge=[edge,colOrange]\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\Qvertex=[circle, draw, fill=black, inner sep=0pt, minimum size=4pt] vertexSig=[circle, draw, fill=colOrange, inner sep=0pt, minimum size=4pt] edge=[line width=1.5pt,ecol] dots=[dotted dash=1.5pt] redge=[edge,colR] bedge=[edge,colB] yedge=[edge,colOrange]\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QIntroduction to .\\E$"}
+{"rule":"EN_A_VS_AN","sentence":"^\\QFor an where edge \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is introduced components of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q are merged if they are not merged already.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QFor an where edge \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is introduced components of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q are merged if they are not merged already.\\E$"}
+{"rule":"DT_DT","sentence":"^\\QFor an a new connectivity map is obtained as follows: \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QFor a a new connectivity map is obtained as \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is mapping from the deleting occurrences of forgotten vertex from the factorization given.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QFor a no vertices are connected yet, so the connectivity map \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QFor a connectivity maps \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q are merged into a single connectivity map \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q the same way as when a is processed.\\E$"}
+{"rule":"EN_A_VS_AN","sentence":"^\\QFor a connectivity maps \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q are merged into a single connectivity map \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q the same way as when a is processed.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QConsider a node \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q and its child \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q or children \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q in case of a .\\E$"}
