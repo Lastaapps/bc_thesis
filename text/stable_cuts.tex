@@ -1,5 +1,6 @@
 
-\chapter{Stable cuts}
+\chapter{Stable cuts}%
+\label{chapter:stable_cuts}
 
 \begin{chapterabstract}
 	%
@@ -28,13 +29,12 @@ meaning on disconnected graphs.
 \end{definition}
 %
 
-The relation to NAC-coloring is quite simple.
+Notice how stable cuts are related to NAC-colorings.
 %
-\begin{lemma}
+\begin{lemma}[\cite{legersky_original}]
 	Let \( S \) be a stable cut in \( G \).
 	Then \( G \) has a NAC-coloring \( \delta \).
 \end{lemma}
-\todo[inline]{Cite}
 %
 \begin{proof}
 	As \( S \) is a cut in \( G \), let us have corresponding partitions \( A, B \).
@@ -52,6 +52,22 @@ The relation to NAC-coloring is quite simple.
 	So there are no almost cycles and \( \delta \) is a NAC-coloring.
 \end{proof}
 %
+
+The statement can be extended to the following simple observation.
+%
+\begin{corollary}[\cite{legersky_original}]
+	Let \( G \) be a connected graph with \( |E(G)| \ge 2 \).
+	If there is a vertex \( v \in V(G) \) such that it is
+	not contained in any triangle \( C_3 \) in \( G \),
+	then the graph \( G \) has a NAC-coloring.
+\end{corollary}
+%
+\begin{proof}
+	If \( v \) is in no triangle, then there is no edge interconnecting
+	vertices in \( N(v) \). Therefore, \( N(v) \) is a stable cut and \( G \)
+	has a NAC-coloring.
+\end{proof}
+
 You can also prove the above lemma from the fact that every cycle that
 uses a vertex in \( S \) must pass
 through at least one vertex in \( A \setminus S \) and \( B \setminus S \).

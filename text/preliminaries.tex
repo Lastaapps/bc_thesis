@@ -12,7 +12,12 @@
 
 \section{Rigidity theory}
 
-% TODO swiftly introduce rigidity theory
+Rigidity theory, often also called Structural rigidity,
+is a branch of combinatorial theory,
+which studies properties of objects formed from flexible hinges and bars.
+These objects can be represented as graphs with
+a mapping into \( d \)-dimensional space.
+Rigidity theory studies if such objects are rigid, or flexible.
 
 For the rest of the thesis,
 we consider only simple undirected graphs.
@@ -20,27 +25,28 @@ Often, only connected graphs are considered as disconnected graphs
 represent uninteresting trivial cases.
 
 %
-\begin{definition}[\( d \)-realization]
+\begin{definition}[\( d \)-realization~\cite{my_paper,np_complete}]
 	\emph{A realization} of a graph \( G \) is a mapping \( p: V(G) \to \R^d \).
 \end{definition}
 %
-\begin{definition}[Framework]
-	\emph{A framework} a pair of a graph \( G \) and its realization.
+\begin{definition}[Framework~\cite{my_paper,np_complete}]
+	\emph{A framework} is a pair of a graph \( G \) and its realization.
 \end{definition}
 %
-\begin{definition}[Nontrivial flex]
-	For a framework \( (G, p) \), \emph{a nontrivial flex} of \( p \) for \( 0 \le t \le 1 \)
-	with \( p_0 = p \) such that for all \( 0 < t \le 1 \) we have \( p_t \) such that
-	\( \|p_t(u) − p_t(v)\| = \|p(u) − p(v)\|\) for every \( \{u, v\} \in E(G) \),
-	but \( \|p_t(u) − p_t(v)\| \not= \|p(u) − p(v)\| \) for some \( u, v \in V (G) \).
+\begin{definition}[Nontrivial flex~\cite{my_paper,np_complete}]
+	For a framework \( (G, p) \), \emph{a nontrivial flex} of
+	\( p_0 = p \) such that for all \( 0 < t \le 1 \) we have \( p_t \) such that
+	\( \|p_t(u) - p_t(v)\| = \|p(u) - p(v)\|\) for every \( \{u, v\} \in E(G) \),
+	but \( \|p_t(u) - p_t(v)\| \ne \|p(u) - p(v)\| \) for some \( u, v \in V (G) \).
 \end{definition}
 %
-\begin{definition}[\( d \)-flexible, \( d \)-rigid]
+\begin{definition}[\( d \)-flexible, \( d \)-rigid~\cite{my_paper}]
 	A framework is \( d \)-flexible, if it has a nontrivial flex.
 	Otherwise, it is \( d \)-rigid.
 \end{definition}
 %
-A framework is flexible if it can be transformed while preserving lengths of
+To summarize all the previous definitions,
+a framework is flexible if it can be transformed while preserving lengths of
 edges of the graph.
 
 From now on we consider only \emph{quasi-injective} realizations ---
@@ -50,9 +56,9 @@ Note that two non-neighboring vertices can be mapped to the same position.
 Similar results can be shown for frameworks with \emph{injective} realizations.
 In this thesis they are of no interest for us.
 
-While it is NP-hard to decide whether a given \( d \)-dimensional framework is
+It is NP-hard to decide whether a given \( d \)-dimensional framework is
 \( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
-For \( d = 2 \) we can simplify the problem when we talk about \emph{generic}
+For \( d = 2 \) we can simplify the problem if we talk about \emph{generic}
 behavior.
 %
 \begin{definition}[Flexible \& Rigid graphs~\cite{generically_rigid_graphs}]
@@ -63,16 +69,17 @@ behavior.
 \end{definition}
 %
 
-From now on we focus on the \( 2 \)-dimensional case,
+From now on we focus only on the \( 2 \)-dimensional case,
 it is already known for some classes of graphs that they are flexible.
 Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
 are flexible~\cite{stable_cuts_2v_4}.
 
-There is a significant graph class studied in Rigidity theory called minimally rigid graphs.
+There is a significant graph class studied in Rigidity theory
+called minimally rigid graphs or Laman graphs.
 %
 \begin{definition}[Pollaczek-Geiringer~\cite{polzacek_1927}, Laman~\cite{laman_1970}]
 	Graph is \emph{minimally \( d \)-generically rigid} if it is \( d \)-rigid
-	and \( (V(G), E(G) \setminus \{e\}) \) for each \( e \in E(G) \).
+	and \( (V(G), E(G) \setminus \{e\}) \) is \(d\)-flexible for each \( e \in E(G) \).
 \end{definition}
 %
 
@@ -80,15 +87,11 @@ A polynomial algorithm for testing \( 2 \)-rigidity was obtained
 for minimally rigid graphs in~\cite{polynomial-min-rigid}.
 We focus on these graphs in benchmarks.
 
-\todo[inline]{Define injective and quasi-injective frameworks}
-
-% get from the proof article
-
 \section{NAC-coloring}
 
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
-	be a coloring of edges
+	be a coloring of edges.
 	%
 	\begin{itemize}
 		\item A cycle in \( G \) is a \( \red \) cycle, if all its edges are \( \red \).
@@ -98,7 +101,7 @@ We focus on these graphs in benchmarks.
 	\end{itemize}
 	%
 	A coloring \( \delta \) is called a NAC-coloring, if it is surjective
-	and there are is no almost cycles.
+	and there are no almost cycles.
 \end{definition}
 %
 
@@ -111,21 +114,100 @@ in an edge coloring \( \delta \).
 \begin{lemma}[\cite{legersky_original}]
 	Let \( G \) be a graph. If \( \delta: E(G) \to \{ \red, \blue \} \) is a coloring of edges,
 	then there are no almost cycles in \( G \) if and only if the connected components
-	of \( G[E_\red] \) and \( G[E_\blue] \) are induced subgraphs of \( G \).
+	of \( G[E_\red] \) and \( G[E_\blue] \)%
+	\footnote{For \(X subseteq E(G)\) by \(G[X]\) we denote induced subgraph of \( G \) on edges \( X \).}
+	are induced subgraphs of \( G \).
 \end{lemma}
 %
-The idea is quite simple --- if there is a \( \blue \) edge \( e \) incident to
+The idea is quite simple --- if there is \WLOG{} \( \blue \) edge \( e \) incident to
 two vertices \( u, v \) sharing the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( u \)-\( v \)-path in \( G[E_\red] \)
 and the edge \( e \).
 
-Now we show relation of NAC-colorings to flexible frameworks.
+Now we present relation of NAC-colorings to flexible frameworks.
 %
 \begin{theorem}[\cite{legersky_original}]
 	A connected graph \( G \) with at least one edge has a flexible
 	quasi-injective \( 2 \)-dimensional realization if and only if it has a NAC-coloring.
 \end{theorem}
 %
+The theorem has a constructive proof from which the related realization can be found.
+The proof itself is nontrivial, and we don't show it here.
+For us the most interesting questions are whether a graph has a NAC-coloring
+and how many NAC-coloring does a graph have.
+For an example have a look at~\Cref{fig:3prism}
+from Introduction.
 
+Note that for a NAC-coloring \( \delta \) there exists a NAC-coloring of the same
+graph where \( \red \) and \( \blue \) colors are swapped.
+Therefore, we define a measure where these \emph{congruent} colorings are
+counted as one.
+%
+\begin{definition}
+	By \( \text{NAC}(G) \) we denote the number of NAC-coloring of \( G \)
+	while only one coloring is considered from each congruent pair.
+\end{definition}
+%
 
+\subsection{NAC-coloring constraints}
+
+In algorithms related to NAC-coloring search it is beneficial
+to reduce the search space. Often we know that if colors differ for some
+set of edges, the resulting coloring cannot be a NAC-coloring.
+
+If there is a \( C_3 \) (a triangle) as a subgraph of \( G \)
+all the edges of \( C_3 \) must map to the same color.
+Otherwise, two edges of \( C_3 \) are \WLOG{} \( \red \) and one is \( \blue \).
+Therefore, \( C_3 \) forms an almost cycle.
+This idea can be expanded further to neighboring images.
+%
+\begin{definition}[\( \triangle \)-connected component~\cite{legersky_original}]
+	Let \( G \) be a graph and \( \sim^\prime_\triangle \) be
+	a relation on \( E(G) \times E(G) \) such that \( e_1 \sim^\prime_\triangle e_2 \)
+	iff there exists a subgraph \( C_3 \) of \( G \)
+	such that \( e_1, e_2 \in E(C_3) \).
+	Let \( \sim_\triangle \) be the reflex-transitive closure of \( \sim^\prime_\triangle \).
+	The graph \( G \) is called \emph{\( \triangle \)-connected} if \( e_1 \sim_\triangle \)
+	for all \( e_1, e_2 \in E(G) \).
+	A \emph{\( \triangle \)-connected component} is a maximal subgraph \( G^\prime \) of \( G \) such
+	that \( G^\prime \) is \( \triangle \)-connected.
+\end{definition}
+%
+\begin{lemma}[\cite{legersky_original}]
+	Let \( \delta \) be a coloring of a graph \( G \) such that there are
+	no almost cycles. If \( G^\prime \) is
+	a \( \triangle \)-connected subgraph of \( G \),
+	then \( \delta(e_1) = \delta(e_2) \) for all \( e_1, e_2 \in E(G^\prime) \).
+\end{lemma}
+%
+The naive algorithm that will be described more in detail in the following chapters
+iterates through all the possible edge colorings of a graph.
+If \( \triangle \)-connected components are employed in the algorithm,
+the whole components can be checked instead of individual edges.
+Later we extend on the idea of \( \triangle \)-connected components.
+
+A stable cut set is an independent set of vertices that is also a vertex cut.
+If there is such set in a graph, a NAC-coloring can be simply found.
+We elaborate more on this case in chapter~\Cref{chapter:stable_cuts}.
+
+%
+\begin{lemma}[\cite{legersky_original}]
+	Let \( G \) be a connected graph, \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
+	edge cut in \( G \) such that \( E_c \) separates \( G \) and the subgraph of \( G \)
+	induced by \( E_c \) contains no path of length four, then \( G \) has a NAC-coloring.
+\end{lemma}
+%
+To construct a NAC-coloring, first consider \( E_c^\prime \) minimal subset of \( E_c \)
+such that it is also an edge cut in \( G \).
+We color edges in \( E_c^\prime \) \( \red \) and the other edges \( \blue \).
+See~\cite{legersky_original} for a complete proof.
+
+For graph \( G \), some vertex \( v \in G \) is an articulation vertex if
+\( \{v\} \) is a vertex cut in \( G \).
+When all the articulation vertices are found,
+graph can be decomposed into blocks
+--- vertex \( 2 \)-connected components ---.
+As no cycles pass through multiple blocks, we can color each block
+independently as long as both colors are used.~\cite{my_paper}.
+We formalize this observation later.
 
