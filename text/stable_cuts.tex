@@ -116,7 +116,7 @@ are not equivalent.
 
 As proved in~\cite{stable_cuts_complexity} it is NP-complete
 to decide whether a line graph with maximum degree five admits a stable cut
--- similar result as we got for NAC-coloring.
+-- similar result as we show for NAC-coloring in a following chapter.
 
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
 an algorithm to find the stable cut (if present)
@@ -128,7 +128,8 @@ Unfortunately, the list is long and beyond the scope of this thesis.
 
 As shown in~\cite[Algorithm 1]{stable_cuts_legersky} a stable cut can be found
 in a polynomial time for any flexible graph.
-As mentioned before, that also includes graphs where \( |E(G)| \le 2|V(G)| - 4 \).
+As mentioned before, that also includes graphs
+where \( |E(G)| \le 2|V(G)| - 4 \) (not for \( |E(G)| \le 2|V(G)| - 3 \)).
 Rigid component of a graph is maximal induced subgraph such that
 The main idea of the algorithm works as follows:
 %
@@ -138,7 +139,65 @@ The main idea of the algorithm works as follows:
 	\item If neighborhood of \( u \) is a stable cut, return it.
 	\item Otherwise, contract one edge of a triangle with \( u \) and start again while preserving \( u \).
 \end{itemize}
+
+Here we show pseudocode of the algorithm as described
+in the original paper~\cite{stable_cuts_legersky}.
 %
-This algorithm is implemented and
-contributed to PyRigi~\cite{pyrigi} as part of this thesis.
+\begin{algorithm}[ht]
+	\caption{\textsc{Stable cut of a connected flexible graph}}%
+	\label{alg:stableCutFlexible}%
+	\begin{algorithmic}[1]
+		\Require{} a connected flexible graph $G$, vertices $u$ and $v$ not in the same rigid component of $G$
+		\Ensure{} a stable cut $S$ of $G$ such that $u$ and $v$ are separated by $S$
+		\If{the neighborhood of $u$ is stable}
+		\State\Return{} the neighborhood of $u$
+		\Else{}
+		\State{} $x_1,x_2 :={}$ neighbors of $u$ such that $(u,x_1,x_2)$  is a $3$-cycle
+		\For{$i\in\{1,2\}$}
+		\State{} $G'_i :={}$ the graph obtained from $G$ by contracting the edge $ux_i$
+		\State{} $u'_i :={}$ the vertex of $G'_i$ corresponding to the contracted edge $ux_i$
+		\EndFor{}
+		\If{$u'_1$ and $v$ are in different rigid components of $G'_1$}
+		\State\Return{} a stable cut of $G'_1$ separating $u'_1$ and $v$
+		\Else{}
+		\State\Return{} a stable cut of $G'_2$ separating $u'_2$ and $v$
+		\EndIf{}
+		\EndIf{}
+	\end{algorithmic}
+\end{algorithm}
+%
+
+\Cref{alg:stableCutFlexible}
+was presented as a practical result of the following theorem.
+%
+\begin{theorem}[\cite{stable_cuts_legersky}]
+	Let \( G \) be a flexible graph and \( u, v \in V (G) \) be such that no rigid component of \( G \)
+	contains both \( u \) and \( v \). Then there is a stable cut \( S \) of \( G \) that separates \( u \) and \( v \), and such that
+	every rigid component of \( G \) contains at most one vertex of \( S \). Moreover, if \( G \) is 2-connected,
+	then for every vertex \( v \in V(G) \), \( G \) has a stable cut avoiding \( v \).
+\end{theorem}
+%
+Notice that \Cref{alg:stableCutFlexible}
+chooses vertices \( u, v \) arbitrary as long as they do not share a rigid component.
+A check ensuring that \( u \) and \( v \) are in different rigid components
+has to be added on top of this seemingly random choice.
+The same check holds when \( u \) is specified.
+
+We may also want to let user choose a vertex \( u \) and find a stable cut
+that avoids it or
+let user choose the vertices \( u, v \) and find a stable cut
+that separates them.
+In this case additional checks are needed. First if only \( u \) is specified,
+it may happen that it may not be avoidable if the vertex is contained
+an intersection of multiple rigid components from which the graph is formed.
+In such case \( u \) is an articulation vertex and the only stable cut in the graph
+and the user is notified.
+When both \( u, v \) are specified,
+it is possible that \( u \) and \( v \) are in the same rigid components.
+In that case the user is also notified.
+
+%
+\Cref{alg:stableCutFlexible}
+is implemented and contributed as part of this thesis
+to PyRigi~\cite{pyrigi} in pull request~\cite{pyrigi_pr_stable_cuts}.
 

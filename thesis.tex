@@ -149,6 +149,7 @@
 \usepackage[nameinlink]{cleveref}
 
 \usepackage{todonotes}
+\usepackage{algorithm,algorithmicx,algpseudocode}
 
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{./text/bib-database.bib}
@@ -204,6 +205,11 @@
 \tikzstyle{redge}=[edge,colR]
 \tikzstyle{bedge}=[edge,colB]
 \tikzstyle{yedge}=[edge,colOrange]
+
+%%%%%%%%%%%%%%%%%
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\union}[1]{\textsc{union} ($#1$)}
 
 %%%%%%%%%%%%%%%%%
 % CUSTOM COMMANDS END

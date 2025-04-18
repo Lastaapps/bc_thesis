@@ -20,6 +20,14 @@ for graph classes with small tree width.
 Also, it is possible that there is a Monte Carlo algorithm with significantly
 lower time complexity compared to the algorithm proposed by us.
 
+For flexible graphs including graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+we can find a stable cut in polynomial time using \Cref{alg:stableCutFlexible},
+that was implemented in this thesis.
+There is no known implementation of an algorithm
+for graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+even though it can be described and implemented
+as shown in~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit}.
+
 \chapter{Results}
 
 To remind you of the goals of the thesis,

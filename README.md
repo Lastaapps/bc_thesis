@@ -7,8 +7,7 @@ The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflow
 of the thesis can be found in artifacts in GitHub workflows.
 
 ## TODO
-- poděkování
-- add dates to citations
+- Thanks
 - replace *paper* with *thesis* as I do this mistake all the time
 - Fix line breaks
 
