@@ -26,3 +26,9 @@ Courcelle
 Laman
 iff
 Zig
+satisfiable
+red-blue-colorings
+Subgraph
+NetworkX
+SageMath
+CPython

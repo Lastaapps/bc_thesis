@@ -1,0 +1,159 @@
+\chapter{Benchmarks}%
+\label{chapter:benchmarks}
+
+\begin{chapterabstract}
+
+	In this chapter we evaluate performance of the algorithm
+	variants proposed in \Cref{sec:alg}.
+	First, we compare the approaches with previous approaches,
+	and then we compare heuristics against each other.
+	We show reduction both in runtime and in the number
+	of \IsNACColoring{} checks.
+
+\end{chapterabstract}
+
+Our implementation is written in Python and uses NetworkX library.
+We provide the code in our PyRigi fork on GitHub~\cite{pyrigi_github_lastaapps}.
+The repository also contains tools required to run and analyze benchmarks
+along with precomputed results and generated graph classes.
+An additional notebook is provided for experiments with the algorithm itself.
+All the NAC-coloring search functions in our algorithm are implemented
+as iterators. Hence, if we want only one or a few of NAC-colorings,
+it can be done without generating all of them.
+
+All the benchmarks bellow were run on Linux
+on a laptop with Intel i7 of the 11th generation
+with CPython 3.12 and SageMath 10.4.
+
+\Cref{tab:allMinRigid} shows the time required for finding all the NAC-colorings
+of all minimally rigid graphs with given size (generated using Nauty~\cite{nauty}
+with a corresponding plugin~\cite{nauty_plugin}).
+We show results of the implementation in \flexrilog{}~\cite{flexrilog_github} (SageMath)
+and compare it to our implementation of the same naive algorithm using $\triangle$-connected components.
+Next we display the timings for the naive algorithm with monochromatic classes
+described in \Cref{sec:NACvalid} using only \IsNACColoring{}
+and then with small cycles optimization.
+The last column is for the \NeighborsDegree{} (each subgraph has $k=4$ monochromatic classes)
+with \MergeLinear{} merging.
+\Cref{fig:graph_time_minimally_rigid} shows timings to compute all NAC-colorings of
+randomly generated (using NetworkX~\cite{networkx} and
+PyRigi~\cite{pyrigi}) minimally rigid graphs depending on the strategy used.
+
+
+\begin{table}[t]
+	\caption{The time (in seconds) needed to find all NAC-colorings for all minimally rigid graphs with a given size.}%
+	\label{tab:allMinRigid}
+	\vspace{0.3cm}
+	\centering
+	\begin{tabular}{ccccccc}
+		\hline
+		\,$|V(G)|$\, & \,\#graphs\, & \,\flexrilog{}\, & \,$\triangle$-comps.\, & \,monochr.\, & \,cycles\, & \,\textsc{NeighDeg.}\, \\
+		\hline
+		% 5        & 3           & 0.007 s      & 0.002 s            & 0.001 s       & 0.001 s & 0.002 s          \\
+		% 6        & 13          & 0.063 s      & 0.030 s            & 0.010 s       & 0.005 s & 0.007 s          \\
+		% 7        & 70          & 0.57 s       & 0.052 s            & 0.047 s       & 0.029 s & 0.041 s          \\
+		8            & 608          & 14               & 1.09                   & 0.97         & 0.36       & 0.49                   \\
+		9            & 7\,222       & 509              & 34                     & 29           & 5.8        & 8.6                    \\
+		10           & 110\,132     & 27k              & 1\,725                 & 1\,446       & 151        & 213                    \\
+		11           & 2\,039\,273  & -                & -                      & -            & 5\,440     & 6\,650                 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+	\centering
+	\scalebox{0.5}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_runtime.pgf}}
+	\caption{Mean running time (ms) to find all NAC-colorings for minimally rigid graphs.}%
+	\label{fig:graph_time_minimally_rigid}
+\end{figure}
+
+In \Cref{fig:graph_summary} we show the relation between the number of checks \IsNACColoring{} that
+would the naive algorithm perform compared to our solution.
+The values are similar for graphs with few monochromatic classes,
+which explains why the cycles improved naive search outperformed
+the \NeighborsDegree{}\&\MergeLinear{} algorithm in \Cref{tab:allMinRigid}. This should improve quickly for larger graphs.
+We can also see how the cycles optimization
+reduces the number of more expensive \IsNACColoring{} calls,
+since these are called only when the small cycles check \CycleMask{} passes.
+For more benchmarks, see \Cref{sec:more_benchmarks} or the notebook in~\cite{pyrigi_github_lastaapps}.
+
+\begin{figure}[ht]
+	\centering
+	\scalebox{0.5}{\input{./figures/graph_export_check-comparision_first_monochromatic_reduction.pgf}}
+	\caption{The number of \IsNACColoring{} calls with respect to the number of monochromatic classes
+		over all graphs used for benchmarking.}%
+	\label{fig:graph_summary}
+\end{figure}
+
+\section{More Benchmarks}%
+\label{sec:more_benchmarks}
+
+In our benchmarks
+we focused on the two main tasks --- listing
+all NAC-colorings of a graph and finding any NAC-coloring of a graph.
+Each benchmark was run three times and the mean was taken.
+The graphs are grouped either by the number of vertices
+or monochromatic classes, see the \(x\)-axis.
+
+\Cref{fig:graph_time_globally_rigid} presents running times of
+searching for a single NAC-coloring on randomly generated globally rigid graphs.
+The idea of monochromatic classes is so effective
+that even large graphs collapse into few monochromatic classes.
+Most of the graphs tested have a NAC-coloring.
+That is also why the cycles improved naive approach outperforms
+our algorithm. It is usually not hard to find some NAC-coloring
+for any of these algorithms, but our algorithm has more significant
+internal overhead.
+The spikes are caused by few graphs that
+were hard for the given strategy.
+
+\begin{figure}[ht]
+	\centering
+	\scalebox{0.5}{\input{./figures/graph_export_globally_rigid_first_vertex_runtime.pgf}}
+	\caption{Mean running time (ms) to find a NAC-coloring for globally rigid graphs.}%
+	\label{fig:graph_time_globally_rigid}
+\end{figure}
+
+We present performance of listing all NAC-colorings
+on larger randomly generated minimally rigid graphs depending on the strategy used.
+The runtimes are in \Cref{fig:graph_time_minimally_rigid}
+and the number of \IsNACColoring{} calls in \Cref{fig:graph_count_minimally_rigid}.
+Here you can see that the naive approach gets significantly worse from twenty monochromatic classes on.
+More graphs for other classes can be seen in the notebook in~\cite{pyrigi_github_lastaapps}.
+
+\begin{figure}[t]
+	\centering
+	\scalebox{0.5}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_chekcs.pgf}}
+	\caption{The number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
+	\label{fig:graph_count_minimally_rigid}
+\end{figure}
+
+You can notice that neighbors based strategies sometimes perform worse
+than doing no subgraphs splitting heuristics considering runtime,
+but better considering the number of checks called.
+That is caused by additional overhead and problem simplicity.
+It can be also seen that \MergeLinear\ is the most reliable one
+while the \SharedVertices\ sometimes performs slightly better,
+namely on globally rigid graphs.
+For listing all NAC-colorings we can see that the neighbors approaches perform
+significantly better.
+
+\begin{figure}[h]
+	\centering
+	\scalebox{0.5}{\input{./figures/graph_export_no_nac_coloring_first_monochromatic_runtime.pgf}}
+	\caption{Mean running time (ms) on graphs without NAC-colorings.}%
+	\label{fig:graph_time_no_nac_coloring}
+\end{figure}
+
+Graphs with no NAC-coloring were also tried, see~\Cref{fig:graph_time_no_nac_coloring}.
+The monochromatic classes generating algorithm is so effective,
+that we managed to find only a few graphs that have no NAC-coloring
+and more than one monochromatic class. Therefore, these benchmarks were run
+using $\triangle$-connected components only as the main algorithm should behave similarly.
+We see more significant influence of the neighbors strategy
+on reducing the number of checks performed,
+still overall runtime stays similar.
+The naive algorithm failed to finish in thirty seconds
+for seventy percent of graphs, mostly with thirty and more components.
+We replace these runs by the time limit even though the actual result would
+be significantly worse.

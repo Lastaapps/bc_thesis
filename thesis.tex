@@ -167,8 +167,23 @@
 \newcommand{\Gprime}{\(G^\prime\)}
 \newcommand{\Ered}{E_\text{red}}
 \newcommand{\Eblue}{E_\text{blue}}
+%% Proof, Algo
+\newcommand{\true}{\textit{True}}
+\newcommand{\false}{\textit{False}}
+\DeclareMathOperator{\CP}{\Pi_{\NAC}}
+\DeclareMathOperator{\partition}{\mathbf{partition}}
+\DeclareMathOperator{\cycle}{\mathbf{cycle}}
+\DeclareMathOperator{\NACcond}{\mathbf{NACcond}}
+\newcommand{\NaiveCycles}{\textsc{NaiveCycles}}
+\newcommand{\None}{\textsc{None}}
+\newcommand{\Neighbors}{\textsc{Neighbors}}
+\newcommand{\NeighborsDegree}{\textsc{NeighborsDegree}}
+\newcommand{\CycleMask}{\textsc{CycleMask}}
+\newcommand{\IsNACColoring}{\textsc{IsNACColoring}}
+\newcommand{\MergeLinear}{\textsc{Linear}}
+\newcommand{\SharedVertices}{\textsc{SharedVertices}}
 %% FPT
-\newcommand{\MSO}{\(\text{MSO}_2\)}
+\newcommand{\MSO}{\textbf{MSO}$_2$}
 \newcommand{\Xt}{\(X_t\)}
 \newcommand{\LeafNode}{\textsc{Leaf Node}}
 \newcommand{\RootNode}{\textsc{Root Node}}
@@ -178,17 +193,27 @@
 \newcommand{\JoinNode}{\textsc{Join Node}}
 \newcommand{\IntroduceVertexWithEdgesNode}{\textsc{Introduce Vertex With Edges Node}}
 
+\newcommand{\flexrilog}{\textsc{FlexRiLoG}}
+\newcommand{\trcon}{$\triangle$-connected}
+
 % Math mode macros
 \newcommand{\red}{\text{red}}
 \newcommand{\blue}{\text{blue}}
-\newcommand{\NAC}{\text{NAC}}
-\newcommand{\NACno}{\text{NAC}_\#}
+\DeclareMathOperator{\NAC}{NAC}
+\newcommand{\nac}[1]{\NAC(#1)}
+\newcommand{\nnac}[1]{\NAC_{\#} (#1)}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\inc}{\text{inc}}
 \newcommand{\pluseq}{\mathrel{+}=}
 %% Stable cuts
 \newcommand{\GSC}{\mathcal{G}_{sc}}
+%% Bitwise operators
+\newcommand*\BitAnd{\mathbin{\&}}
+\newcommand*\BitOr{\mathbin{|}}
+\newcommand*\ShiftLeft{\ll}
+\newcommand*\ShiftRight{\gg}
+\newcommand*\BitNeg{\ensuremath{\mathord{\sim}}}
 
 
 %%%%%%%%%%%%%%%
@@ -209,7 +234,24 @@
 %%%%%%%%%%%%%%%%%
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\Break}{\State \textbf{break} }
+\newcommand{\Continue}{\State \textbf{continue} }
 \newcommand{\union}[1]{\textsc{union} ($#1$)}
+
+%%%%%%%%%%%%%%%%%
+% MatPlotlib graphs
+% colors bright form https://personal.sron.nl/~pault/#sec:qualitative
+\definecolor{currentstroke1}{HTML}{BBBBBB}
+\definecolor{currentstroke2}{HTML}{EE6677}
+\definecolor{currentstroke3}{HTML}{228833}
+\definecolor{currentstroke4}{HTML}{CCBB44}
+\definecolor{currentstroke5}{HTML}{66CCEE}
+\definecolor{currentstroke6}{HTML}{AA3377}
+\definecolor{currentstroke7}{HTML}{4477AA}
+% Required for some Matplotlib (3.9.*) exported graphs to render as
+% its pgd export feature is broken
+% https://github.com/matplotlib/matplotlib/issues/27907
+\providecommand\mathdefault[1]{#1}
 
 %%%%%%%%%%%%%%%%%
 % CUSTOM COMMANDS END
@@ -344,6 +386,9 @@
 \include{./text/introduction}
 \include{./text/preliminaries}
 \include{./text/stable_cuts}
+\include{./text/np}
+\include{./text/algo}
+\include{./text/benchmarks}
 \include{./text/fpt_algo}
 \include{./text/results}
 \include{./text/examples}
