@@ -70,9 +70,9 @@
 \RequirePackage[a-1b]{pdfx}  % PDF/A-1b compliance
 \RequirePackage{babel}[2021/03/03]
 \if@twoside
-    \RequirePackage[top=4.6cm,bottom=4cm,footskip=4em,inner=4.7cm,outer=3.25cm]{geometry}[2020/01/02] %page layout
+	\RequirePackage[top=4.6cm,bottom=4cm,footskip=4em,inner=4.7cm,outer=3.25cm]{geometry}[2020/01/02] %page layout
 \else
-    \RequirePackage[left=3.95cm,right=4.0cm,top=4.6cm,bottom=4cm,footskip=4em]{geometry}[2020/01/02] %page layout
+	\RequirePackage[left=3.95cm,right=4.0cm,top=4.6cm,bottom=4cm,footskip=4em]{geometry}[2020/01/02] %page layout
 \fi
 \RequirePackage{setspace}[2011/12/19] %line spacing in title page
 \RequirePackage[labelsep=space,singlelinecheck=false,font={up,small},labelfont={sf,bf}]{caption}[2020/05/30]
@@ -145,10 +145,10 @@
 }
 \DeclareRobustCommand{\thectufitthesistype}{%
 	\if\@ctufitthesistype B{%
-		\if\@ctufitlang C{Bakal{\' a}{\v r}sk{\' a} pr{\' a}ce}\else\if\@ctufitlang S{Bakal{\' a}rska pr{\' a}ca}\else{Bachelor's thesis}\fi\fi
-	}\else\if\@ctufitthesistype M{%
-		\if\@ctufitlang C{Diplomov{\' a} pr{\' a}ce}\else\if\@ctufitlang S{Diplomov{\' a} pr{\' a}ca}\else{Master's thesis}\fi\fi
-	}\else\if\@ctufitthesistype D{Dissertation thesis}\else{\ClassError{ctufit-thesis}{Thesis type not specified}{Add either `bachelor', `master', or `dissertation' option to this document class}}\fi\fi\fi
+				\if\@ctufitlang C{Bakal{\' a}{\v r}sk{\' a} pr{\' a}ce}\else\if\@ctufitlang S{Bakal{\' a}rska pr{\' a}ca}\else{Bachelor's thesis}\fi\fi
+			}\else\if\@ctufitthesistype M{%
+					\if\@ctufitlang C{Diplomov{\' a} pr{\' a}ce}\else\if\@ctufitlang S{Diplomov{\' a} pr{\' a}ca}\else{Master's thesis}\fi\fi
+				}\else\if\@ctufitthesistype D{Dissertation thesis}\else{\ClassError{ctufit-thesis}{Thesis type not specified}{Add either `bachelor', `master', or `dissertation' option to this document class}}\fi\fi\fi
 }
 
 \DeclareRobustCommand{\thectufituniversity}{\if\@ctufitlang C{{\v C}esk{\' e} vysok{\' e} u{\v c}en{\' i} technick{\' e} v~Praze}\else\if\@ctufitlang S{{\v C}esk{\' e} vysok{\' e} u{\v c}en{\' i} technick{\' e} v~Praze}\else{Czech Technical University in Prague}\fi\fi}
@@ -173,20 +173,20 @@
 
 % title page
 \renewcommand{\maketitle}{\begin{titlepage}%
-\newgeometry{left=67mm,top=80mm,right=40mm}%\thispagestyle{empty}%
-\noindent{\large\noindent\thectufitthesistype}
-\vskip 3mm
-\noindent{\noindent\huge\bfseries\color{black}\begin{flushleft}\begin{onehalfspace}\MakeUppercase{\thectufittitle}\end{onehalfspace}\end{flushleft}}
-\vskip 35mm
-\noindent{\large  \bfseries \thectufitauthorfull}
+		\newgeometry{left=67mm,top=80mm,right=40mm}%\thispagestyle{empty}%
+		\noindent{\large\noindent\thectufitthesistype}
+		\vskip 3mm
+		\noindent{\noindent\huge\bfseries\color{black}\begin{flushleft}\begin{onehalfspace}\MakeUppercase{\thectufittitle}\end{onehalfspace}\end{flushleft}}
+		\vskip 35mm
+		\noindent{\large  \bfseries \thectufitauthorfull}
 
-\vfill
+		\vfill
 
-\noindent{\thectufitfaculty\\
-\thectufitdepartment\\
-\thectufitsupervisorlabelcapital: \thectufitsupervisor\\
-\today}\end{titlepage}
-\restoregeometry
+		\noindent{\thectufitfaculty\\
+			\thectufitdepartment\\
+			\thectufitsupervisorlabelcapital: \thectufitsupervisor\\
+			\today}\end{titlepage}
+	\restoregeometry
 }
 %title page end
 
@@ -194,28 +194,28 @@
 \DeclareRobustCommand{\imprintpage}{
 	\clearpage
 	\thispagestyle{empty}
-	
 
-		~
+
+	~
 	\vfill
-	
+
 	{\small
-			\noindent \thectufituniversity \\
+		\noindent \thectufituniversity \\
 		\noindent \thectufitfaculty \\
-	\noindent \textcopyright{} \thectufityear{} \thectufitauthorfull. \thectufitallrightsreservedlabel\\
+		\noindent \textcopyright{} \thectufityear{} \thectufitauthorfull. \thectufitallrightsreservedlabel\\
 		\noindent \textit{\thectufitcopyrighttext}
-	
-	\vspace{1em}
-	
-	\noindent \thectufitcitationlabel: \thectufitauthorsurnames{} \thectufitauthorgivennames. \textit{\thectufittitle}. \thectufitthesistype. \thectufituniversity, \thectufitfaculty, \thectufityear.
-   }
+
+		\vspace{1em}
+
+		\noindent \thectufitcitationlabel: \thectufitauthorsurnames{} \thectufitauthorgivennames. \textit{\thectufittitle}. \thectufitthesistype. \thectufituniversity, \thectufitfaculty, \thectufityear.
+	}
 }
 % IMPRINT END
 
 % captions settings
 \DeclareCaptionLabelFormat{boxed}{%0.61,0.61,0.61
-  \kern0.05em{\color{decoration}\rule{0.73em}{0.73em}}%
-  \hspace*{0.67em}\bothIfFirst{#1}{~}#2}
+\kern0.05em{\color{decoration}\rule{0.73em}{0.73em}}%
+\hspace*{0.67em}\bothIfFirst{#1}{~}#2}
 \captionsetup{labelformat=boxed}
 % captions settings end
 
@@ -227,29 +227,29 @@
 \setlength\leftmarginv  {1.2em}
 \setlength\leftmarginvi {1.2em}
 \renewcommand\labelenumi{%
-  \textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumi.}}
+	\textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumi.}}
 \renewcommand\labelenumii{%
-  \textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumii.}}
+	\textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumii.}}
 \renewcommand\labelenumiii{%
-  \textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumiii.}}
+	\textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumiii.}}
 \renewcommand\labelenumiv{%
-  \textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumiv.}}
+	\textcolor{enumgray}{\bfseries\upshape\mathversion{bold}\theenumiv.}}
 % \makeatletter
 \renewcommand\labelitemi{%
-  \textcolor{enumgray}{\ifnum\@listdepth=\@ne
-                                  \rule[0.3ex]{0.67em}{0.33em}%
-                                \else
-                                  \rule[0.4ex]{0.45em}{0.225em}%
-                                \fi}}
+	\textcolor{enumgray}{\ifnum\@listdepth=\@ne
+			\rule[0.3ex]{0.67em}{0.33em}%
+		\else
+			\rule[0.4ex]{0.45em}{0.225em}%
+		\fi}}
 % \makeatother
 \renewcommand\labelitemii{%
-  \textcolor{enumgray}{\rule[0.4ex]{0.45em}{0.225em}}}
+	\textcolor{enumgray}{\rule[0.4ex]{0.45em}{0.225em}}}
 \renewcommand\labelitemiii{%
-  \textcolor{enumgray}{\bfseries\textasteriskcentered}}
+	\textcolor{enumgray}{\bfseries\textasteriskcentered}}
 \renewcommand\labelitemiv{%
-  \textcolor{enumgray}{\bfseries\textperiodcentered}}
+	\textcolor{enumgray}{\bfseries\textperiodcentered}}
 \renewcommand*\descriptionlabel[1]{%
-  \hspace\labelsep\textcolor{enumgray}{\bfseries\mathversion{bold}#1}}
+	\hspace\labelsep\textcolor{enumgray}{\bfseries\mathversion{bold}#1}}
 % lists settings end
 
 %%%%%%%%%%%%%%
@@ -257,25 +257,25 @@
 % no need to modify this part
 %%%%%%%%%%%%%%
 \DeclareRobustCommand{\frontmatterinit}{
-\titleformat
-{\chapter} % command
-% [display] % shape
-{} % format
-{} % label
-{} % sep
-{\color{heading}\frontchapterfont \raggedleft} % before-code
-[\vskip -2em] % after-code
+	\titleformat
+	{\chapter} % command
+	% [display] % shape
+	{} % format
+	{} % label
+	{} % sep
+	{\color{heading}\frontchapterfont \raggedleft} % before-code
+	[\vskip -2em] % after-code
 
-\titleformat
-{\section}
-{\frontsectionfont\color{heading}}
-{}
-{}
-{}
+	\titleformat
+	{\section}
+	{\frontsectionfont\color{heading}}
+	{}
+	{}
+	{}
 
-% \makeatletter
-\@openrightfalse
-% \makeatother
+	% \makeatletter
+	\@openrightfalse
+	% \makeatother
 }
 %%%%%%%%%%%%%%
 % FRONTMATTER SETTINGS END
@@ -290,21 +290,21 @@
 
 \setcounter{secnumdepth}{\@ctufitsecdepth} % numbering sections
 \newcommand{\stopTOCentries}{
-  \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+	\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
 }
 
 \newcommand{\resumeTOCentries}{
-  \addtocontents{toc}{\protect\setcounter{tocdepth}{\@ctufitsecdepth}} % table of content depth
+	\addtocontents{toc}{\protect\setcounter{tocdepth}{\@ctufitsecdepth}} % table of content depth
 }
 % frontmatter headings end
 % frontmatter pseudochapters: named part without printing actual chapter heading
 % \makeatletter
 \newcommand{\frontchapternotprinted}[1]{%
-  \begingroup
-  \let\@makechapterhead\@gobble % make \@makechapterhead do nothing
-  \let\cleardoublepage\clearpage
-  \chapter{#1}
-  \endgroup
+	\begingroup
+	\let\@makechapterhead\@gobble % make \@makechapterhead do nothing
+	\let\cleardoublepage\clearpage
+	\chapter{#1}
+	\endgroup
 }
 % \makeatother
 % frontmatter pseudochapters end
@@ -313,28 +313,28 @@
 % \makeatletter
 \let\stdl@chapter\l@chapter
 \renewcommand*{\l@chapter}[2]{%
-  \stdl@chapter{\textcolor{heading}{#1}}{\textcolor{heading}{#2}}}
+	\stdl@chapter{\textcolor{heading}{#1}}{\textcolor{heading}{#2}}}
 % \makeatother
 % table of contents coloured chapters end
 
 % headers and footers
 % \makeatletter
 \def\ps@plain{%chapter beginning
-    \let\@evenhead\@empty%
-    \let\@oddhead\@empty%
-    \def\@evenfoot{\bfseries\color{headgray}\hfill\thepage\hfill}%
-    \def\@oddfoot{\bfseries\color{headgray}\hfill\thepage\hfill}}
+	\let\@evenhead\@empty%
+	\let\@oddhead\@empty%
+	\def\@evenfoot{\bfseries\color{headgray}\hfill\thepage\hfill}%
+	\def\@oddfoot{\bfseries\color{headgray}\hfill\thepage\hfill}}
 % \makeatother
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
 \pagestyle{fancy}
 \fancyhf{}
 \if@twoside
-    \fancyhead[LE]{\leavevmode\smash{\llap{\color{headgray} \bfseries \thepage \hspace*{0em}}}}
-    \fancyhead[RE]{\color{headgray}\bfseries\nouppercase{\leftmark}}
+	\fancyhead[LE]{\leavevmode\smash{\llap{\color{headgray} \bfseries \thepage \hspace*{0em}}}}
+	\fancyhead[RE]{\color{headgray}\bfseries\nouppercase{\leftmark}}
 \else
-    \fancyhead[L]{\leavevmode\smash{\llap{\color{headgray} \bfseries \thepage \hspace*{4em}}}}
-    \fancyhead[R]{\color{headgray}\bfseries\nouppercase{\leftmark}}
+	\fancyhead[L]{\leavevmode\smash{\llap{\color{headgray} \bfseries \thepage \hspace*{4em}}}}
+	\fancyhead[R]{\color{headgray}\bfseries\nouppercase{\leftmark}}
 \fi
 \fancyhead[RO]{\leavevmode\smash{\rlap{\hspace*{0em}\color{headgray}\bfseries\thepage}}}
 \fancyhead[LO]{\color{headgray}\bfseries\nouppercase{\rightmark}}
@@ -345,44 +345,44 @@
 
 
 \newenvironment{abstrakt}{%
-  \vspace*{18mm}
-  \noindent
-  {{\frontchapterfont\begin{flushleft}{\color{heading}Abstrakt}\end{flushleft}}}%
-  \bigskip
-  \noindent\ignorespaces}
+	\vspace*{18mm}
+	\noindent
+	{{\frontchapterfont\begin{flushleft}{\color{heading}Abstrakt}\end{flushleft}}}%
+	% \bigskip % removed by me
+	\noindent\ignorespaces}
 
 \newenvironment{abstract}{%
-  \vspace*{18mm}
-  \noindent
-  {{\frontchapterfont\begin{flushleft}{\color{heading}Abstract}\end{flushleft}}}%
-  \bigskip
-  \noindent\ignorespaces}
-  
+	\vspace*{18mm}
+	\noindent
+	{{\frontchapterfont\begin{flushleft}{\color{heading}Abstract}\end{flushleft}}}%
+	% \bigskip % removed by me
+	\noindent\ignorespaces}
+
 \newenvironment{declaration}{}
 
 % acknowledgement page
 \newenvironment{acknowledgmentpage}{\frontchapternotprinted{\if\@ctufitlang C{Poděkování}\else\if\@ctufitlang E{Acknowledgments}\else{Poďakovanie}\fi\fi}
-~
-\vfill
-\hskip 0cm \begin{minipage}{0.7\textwidth}\itshape}{
-\end{minipage}
+	~
+	\vfill
+	\hskip 0cm \begin{minipage}{0.7\textwidth}\itshape}{
+	\end{minipage}
 
-\vfill
+	\vfill
 
-\vfill}
+	\vfill}
 % acknowledgment page END
 
 % declaration page
 \newenvironment{declarationpage}{\frontchapternotprinted{\thectufitdeclarationlabel}
-~
-\vfill
+	~
+	\vfill
 
-  {{\frontchapterfont\begin{flushright}{\color{heading}\thectufitdeclarationlabel}\end{flushright}}}%
-  \bigskip
-  \noindent\ignorespaces
+	{{\frontchapterfont\begin{flushright}{\color{heading}\thectufitdeclarationlabel}\end{flushright}}}%
+	\bigskip
+	\noindent\ignorespaces
 }{\vskip 1cm
-\noindent
-\if\@ctufitlang E{In}\else{V}\fi~\thectufitdeclarationplace{} \if\@ctufitlang C{dne}\else\if\@ctufitlang S{dňa}\else{on}\fi\fi~\thectufitdeclarationdate{}}
+	\noindent
+	\if\@ctufitlang E{In}\else{V}\fi~\thectufitdeclarationplace{} \if\@ctufitlang C{dne}\else\if\@ctufitlang S{dňa}\else{on}\fi\fi~\thectufitdeclarationdate{}}
 % declaration page END
 
 % abstract page
@@ -391,42 +391,42 @@
 % abstract page END
 
 \newenvironment{summarypage}{\chapter{\if\@ctufitlang C{Shrnutí}\else\if\@ctufitlang E{Summary}\else{Zhrnutie}\fi\fi}
-\setlength{\columnsep}{1cm}
-\begin{multicols}{2}\small
-}{\end{multicols}}
+	\setlength{\columnsep}{1cm}
+	\begin{multicols}{2}\small
+		}{\end{multicols}}
 
 %%%%%%%%%%%%%%%%%%%%
 % MAINMATTER SETTINGS
 % no need to modify this part
 %%%%%%%%%%%%%%%%%%%%
 \DeclareRobustCommand{\mainmatterinit}{
-% \makeatletter
-\@openrighttrue
-% \makeatother
+	% \makeatletter
+	\@openrighttrue
+	% \makeatother
 
-\titleformat
-{\chapter} % command
-[display] % shape
-{ \LARGE \bfseries \raggedleft} % format
-{ \textcolor{headbackgroundgray}{{\titlerule*[1pc]{\rule{0.25em}{0.25em}}}} \hspace{0.5ex} \color{black} \chaptername~\thechapter } % label
-{-0.3cm} % sep
-{\color{heading} \Huge \vskip 0.5cm} % before-code
-[\vskip 1cm] % after-code
+	\titleformat
+	{\chapter} % command
+	[display] % shape
+	{ \LARGE \bfseries \raggedleft} % format
+	{ \textcolor{headbackgroundgray}{{\titlerule*[1pc]{\rule{0.25em}{0.25em}}}} \hspace{0.5ex} \color{black} \chaptername~\thechapter } % label
+	{-0.3cm} % sep
+	{\color{heading} \Huge \vskip 0.5cm} % before-code
+	[\vskip 1cm] % after-code
 
-%vzhled nadpisů sekcí
-\titleformat{\section}
-  {\Large\bfseries\color{heading}}{\colorbox{headbackgroundgray}{{\color{black}\thesection}}}{1em}{}%[\vskip -1em]
-  
-\titleformat{\subsection}
-  {\Large\bfseries\color{heading}}{{{\color{black}\thesubsection}}}{1em}{}%[\vskip -1em]
-  
-\titleformat{\subsubsection}
-  {\large\bfseries\color{heading}}{{{\color{black}\thesubsubsection}}}{1em}{}%[\vskip -1em]
+	%vzhled nadpisů sekcí
+	\titleformat{\section}
+	{\Large\bfseries\color{heading}}{\colorbox{headbackgroundgray}{{\color{black}\thesection}}}{1em}{}%[\vskip -1em]
 
-\ifnum\@ctufitsecdepth=4%if paragraph should be also styled
-  \titleformat{\paragraph}
-    {\bfseries\color{heading}}{{{\color{black}\theparagraph}}}{1em}{}%[\vskip -1em]
-\fi
+	\titleformat{\subsection}
+	{\Large\bfseries\color{heading}}{{{\color{black}\thesubsection}}}{1em}{}%[\vskip -1em]
+
+	\titleformat{\subsubsection}
+	{\large\bfseries\color{heading}}{{{\color{black}\thesubsubsection}}}{1em}{}%[\vskip -1em]
+
+	\ifnum\@ctufitsecdepth=4%if paragraph should be also styled
+		\titleformat{\paragraph}
+		{\bfseries\color{heading}}{{{\color{black}\theparagraph}}}{1em}{}%[\vskip -1em]
+	\fi
 }
 %%%%%%%%%%%%%%%%%%%%
 % MAINMATTER SETTINGS END
@@ -437,14 +437,14 @@
 % no need to modify this part
 %%%%%%%%%%%%%%%%%%%%
 \DeclareRobustCommand{\appendixinit}{
-\titleformat
-{\chapter} % command
-[display] % shape
-{ \LARGE \bfseries \raggedleft} % format
-{ \textcolor{headbackgroundgray}{{\titlerule*[1pc]{\rule{0.25em}{0.25em}}}} \hspace{0.5ex} \color{black} \appendixname~\thechapter } % label
-{-0.3cm} % sep
-{\color{heading} \Huge \vskip 0.5cm} % before-code
-[\vskip 1cm] % after-code
+	\titleformat
+	{\chapter} % command
+	[display] % shape
+	{ \LARGE \bfseries \raggedleft} % format
+	{ \textcolor{headbackgroundgray}{{\titlerule*[1pc]{\rule{0.25em}{0.25em}}}} \hspace{0.5ex} \color{black} \appendixname~\thechapter } % label
+	{-0.3cm} % sep
+	{\color{heading} \Huge \vskip 0.5cm} % before-code
+	[\vskip 1cm] % after-code
 }
 %%%%%%%%%%%%%%%%%%%%
 % APPENDIX SETTINGS END
@@ -456,24 +456,24 @@
 \RequirePackage{amssymb}[2013/01/14]
 
 \thm@headfont{%
-  \textcolor{decoration}{$\blacktriangleright$}\nobreakspace\bfseries}
+	\textcolor{decoration}{$\blacktriangleright$}\nobreakspace\bfseries}
 \def\th@remark{%
-  \thm@headfont{%
-    \textcolor{decoration}{$\blacktriangleright$}\nobreakspace}%
-  \normalfont % body font
-  \thm@preskip\topsep \divide\thm@preskip\tw@
-  \thm@postskip\thm@preskip
+	\thm@headfont{%
+		\textcolor{decoration}{$\blacktriangleright$}\nobreakspace}%
+	\normalfont % body font
+	\thm@preskip\topsep \divide\thm@preskip\tw@
+	\thm@postskip\thm@preskip
 }
 \def\@endtheorem{\endtrivlist}%\@endpefalse
 \renewenvironment{proof}[1][\proofname]{\par
-  \pushQED{\qed}%
-  \normalfont \topsep6\p@\@plus6\p@\relax
-  \trivlist
-  \item[\hskip\labelsep
-        \color{black}\bfseries
-    #1\@addpunct{.}]\ignorespaces
+	\pushQED{\qed}%
+	\normalfont \topsep6\p@\@plus6\p@\relax
+	\trivlist
+	\item[\hskip\labelsep
+	            \color{black}\bfseries
+	            #1\@addpunct{.}]\ignorespaces
 }{%
-  \popQED\endtrivlist%\@endpefalse
+	\popQED\endtrivlist%\@endpefalse
 }
 \theoremstyle{plain}
 \newtheorem{theorem}{\if\@ctufitlang C{Věta}\else\if\@ctufitlang E{Theorem}\else{Veta}\fi\fi}
@@ -492,41 +492,45 @@
 % theorems, proofs, definitions, etc. end
 
 \DeclareRobustCommand{\printabstractpage}{%
-\begin{abstractpage}
-\if\@ctufitlang E{%
-\begin{abstract}%
-\thectufitabstract
-\end{abstract}
+	\begin{abstractpage}
+		\if\@ctufitlang E{%
+					\begin{abstract}%
+						\thectufitabstract
+					\end{abstract}
 
-\vskip 0.5cm
+					\vskip 0.5cm
 
-{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}\else{%
-\begin{abstrakt}%
-\thectufitabstrakt
-\end{abstrakt}
+						{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}%
+			\else{%
+				\begin{abstrakt}%
+					\thectufitabstrakt
+				\end{abstrakt}
 
-\vskip 0.5cm
+				\vskip 0.5cm
 
-{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}\fi
+					{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}%
+		\fi
 
-\vskip 1cm
+		\vskip 1cm
 
-\if\@ctufitlang E{%
-\begin{abstrakt}%
-\thectufitabstrakt
-\end{abstrakt}
+		\if\@ctufitlang E{%
+					\begin{abstrakt}%
+						\thectufitabstrakt
+					\end{abstrakt}
 
-\vskip 0.5cm
+					\vskip 0.5cm
 
-{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}\else{
-\begin{abstract}%
-\thectufitabstract
-\end{abstract}
+						{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}%
+			\else{
+				\begin{abstract}%
+					\thectufitabstract
+				\end{abstract}
 
-\vskip 0.5cm
+				\vskip 0.5cm
 
-{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}\fi
-\end{abstractpage}
+					{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}%
+		\fi
+	\end{abstractpage}
 }
 
 \newenvironment{chapterabstract}{\hfill\begin{minipage}{\dimexpr\textwidth-0.5cm}\itshape}{\end{minipage}\vskip 0.5cm\par\@afterindentfalse\@afterheading}
@@ -537,17 +541,17 @@
 		\DeclareRobustCommand{\lstlistlistingname}{\thectufitlollabel}%
 		\DeclareRobustCommand{\thectufitlistingscommand}{\lstlistoflistings}%
 		\lstset{basicstyle=\small\ttfamily,keywordstyle=\bfseries,%
-				backgroundcolor=\color{backgroundgray},%
-				frame=single,framerule=0pt,xleftmargin=\fboxsep,xrightmargin=\fboxsep}%
+			backgroundcolor=\color{backgroundgray},%
+			frame=single,framerule=0pt,xleftmargin=\fboxsep,xrightmargin=\fboxsep}%
 	}{}%
 	\@ifpackageloaded{minted}{%
 		\DeclareRobustCommand{\listingscaption}{\thectufitlistinglabel}%
-        		\SetupFloatingEnvironment{listing}{name=\listingscaption}
+		\SetupFloatingEnvironment{listing}{name=\listingscaption}
 		\DeclareRobustCommand{\listoflistingscaption}{\thectufitlollabel}%
 		\DeclareRobustCommand{\listlistingname}{\thectufitlollabel}%
 		\DeclareRobustCommand{\thectufitlistingscommand}{\listoflistings}%
 		\ifdefined\@ctufitthesisblackandwhite
- 			\usemintedstyle{bw}%
+			\usemintedstyle{bw}%
 			\setminted{bgcolor=backgroundgray}%
 		\fi
 		\setmintedinline{bgcolor={}}

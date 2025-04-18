@@ -7,11 +7,28 @@ The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflow
 of the thesis can be found in artifacts in GitHub workflows.
 
 ## TODO
+- poděkování
+- add dates to citations
 - replace *paper* with *thesis* as I do this mistake all the time
 - Fix line breaks
 
 ## Abstract
-# TODO 
+
+One of the questions in Rigidity Theory is whether a realization of the
+vertices of a graph in the plane is flexible, namely, if it allows a continuous
+deformation preserving the edge lengths.
+A flexible realization of a connected graph in the plane exists if and only if
+the graph has a NAC-coloring, which is surjective edge coloring by
+two colors such that for each cycle either all the edges have the same color or
+there are at least two edges of each color.
+It is NP-complete to determine is a graph has a NAC-coloring,
+we show that the problem is
+also NP-complete for graphs with maximal degree five.
+We present an algorithm for NAC-coloring search,
+and we discuss related heuristics.
+The performance is compared with previous algorithms and among the heuristics.
+Lastly we present another FPT algorithm for NAC-coloring counting
+parametrized by tree width.
 
 ## Links
 

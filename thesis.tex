@@ -31,10 +31,70 @@
 \ctufityear{2025}
 \ctufitdeclarationplace{Prague}
 \ctufitdeclarationdate{\today} % replace with the date of signature of the declaration
-\ctufitabstractCZE{Fill in the abstract of this thesis in Czech. Lorem ipsum dolor sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.}
-\ctufitabstractENG{Fill in the abstract of this thesis in English. Lorem ipsum dolor sit amet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Suspendisse sagittis ultrices augue.}
-\ctufitkeywordsCZE{enter, comma, separated, list, of, keywords, in, CZECH}
-\ctufitkeywordsENG{enter, comma, separated, list, of, keywords, in, ENGLISH}
+\ctufitabstractCZE{
+    Jedna z otázek v strukturální teorii tuhosti (Rigidity Theory)
+    je, zda realizace vrcholů grafu do roviny je flexibilní,
+    tj.~zda umožňuje spojitou deformaci neměnící délku hran.
+    %
+    Flexibilní realizace souvislého grafu do roviny existuje právě tehdy, když
+    graf má NAC-obarvení, hranové obarvení dvěma barvami takové,
+    že pro každý cyklus jsou všechny hrany obarveny stejnou barvou nebo
+    jsou každou barvou obarveny alespoň dvě hrany.
+    %
+    Je NP-úplné rozhodnout, zda graf má NAC-obarvení, v práci ukazujeme,
+    že problém je NP-úplný i pro grafy s maximálním stupněm pět.
+    %
+    Představujeme značně rychlejší algoritmus na hledání NAC-obarvení společně s různými heuristikami.
+    Srovnáváme ho s předchozími algoritmy a porovnáváme i heuristiky mezi sebou.
+    %
+    Následně představujeme FPT algoritmus na počítání NAC-obarvení
+    parametrizovaný stromovou šířkou.
+    %
+    % Navíc popisujeme vztahy s stable řezy grafu a implementujeme algoritmus
+    % pro jejich hledání v flexible grafech.
+}
+% Also update README.md if any changes are made.
+\ctufitabstractENG{
+    One of the questions in Rigidity Theory is whether a realization of the
+    vertices of a graph in the plane is flexible, namely, if it allows a continuous
+    deformation preserving the edge lengths.
+    %
+    A flexible realization of a connected graph in the plane exists if and only if
+    the graph has a NAC-coloring, which is surjective edge coloring by
+    two colors such that for each cycle either all the edges have the same color or
+    there are at least two edges of each color.
+    %
+    It is \mbox{NP-complete} to determine is a graph has a NAC-coloring,
+    we show that the problem is
+    also NP-complete for graphs with maximal degree five.
+    %
+    We present a significantly faster algorithm for NAC-coloring search,
+    and we discuss related heuristics.
+    The performance is compared with previous algorithms and among the heuristics.
+    %
+    After, we present another FPT algorithm for NAC-coloring counting
+    parametrized by tree width.
+    %
+    % We also discuss relation to stable cuts and algorithm for finding
+    % a stable cut is implemented as part of the thesis.
+}
+
+\ctufitkeywordsCZE{
+    strukturální teorie tuhosti,
+    generická flexibilita,
+    NAC-barvení,
+    stable-cut,
+    parametrizovaná komplexita,
+    NP-úplnost
+}
+\ctufitkeywordsENG{
+    rigidity theory,
+    generic flexibility,
+    NAC-coloring,
+    stable-cut,
+    pa\-rametrized complexity,
+    NP-completeness
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END FILL IN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,7 +258,7 @@
 	121/2000 Coll., the Copyright Act, as amended. In accordance with Section 2373(2) of Act No.
 	89/2012 Coll., the Civil Code, as amended, I hereby grant a non-exclusive authorization (license) to
 	utilize this thesis, including all computer programs that are part of it or attached to it and all
-	documentation thereof (hereinafter collectively referred to as the "Work"), to any and all persons
+	documentation thereof (hereinafter collectively referred to as the ``Work''), to any and all persons
 	who wish to use the Work. Such persons are entitled to use the Work in any manner that does not
 	diminish the value of the Work and for any purpose (including use for profit). This authorization is
 	unlimited in time, territory and quantity
