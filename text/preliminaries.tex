@@ -213,3 +213,25 @@ As no cycles pass through multiple blocks, we can color each block
 independently as long as both colors are used.~\cite{my_paper}.
 We formalize this observation later.
 
+\section{Other useful terms}
+
+Lastly we define some terms that will be used in the following chapters.
+%
+\begin{definition}%
+	\label{def:2-tree}
+	A \emph{2-tree} is a graph formed by merging triangles by edge identification.
+\end{definition}
+
+For the following proof about NAC-coloring search NP-completeness we need
+well known NP-complete problem for reduction, \emph{3-SAT} is used in our reduction.
+For a formula of propositional logic SAT answers the question
+whether the formula is satisfiable ---
+there exists a truth assignment of literals that satisfies the formula.
+3-SAT problem is an alternative formulation of SAT
+where the formula must be in 3-CNF --- conjunction of clauses with three literals.
+For example, \( (A \lor B \lor \lnot C) \land (\lnot A \lor D \lor \lnot E) \)
+is in 3-CNF\@.
+% TODO For simper remembering, the formulas look like a face with a nose \( (\lor)\land(\lor) \).
+It was shown that 3-SAT is NP-complete,
+and it is a common tool for NP-completeness proofs~\cite{3-sat}.
+

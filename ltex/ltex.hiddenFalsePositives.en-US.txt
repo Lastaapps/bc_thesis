@@ -30,3 +30,4 @@
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe strategy with the least overhead costs is to take the chunks of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q consecutive monochromatic classes in the input list (heuristic ).\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe call the following heuristic , its pseudocode is in \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q in \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QWe can also see how the cycles optimization reduces the number of more expensive calls, since these are called only when the small cycles check passes.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qlet the connecting edge corresponding to \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is colored \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

@@ -32,3 +32,5 @@ Subgraph
 NetworkX
 SageMath
 CPython
+Satisfiability
+satisfiability

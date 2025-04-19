@@ -3,30 +3,146 @@
 
 \begin{chapterabstract}
 
-	It has been already shown that it is NP-complete to decide
+	It has been previously shown that it is NP-complete to decide
 	if a graph has a NAC-coloring.
 	One could hope that for graphs with small maximal degree
 	the problem becomes somewhat simpler.
 	In this chapter we show that this is not the case
 	for graphs with maximal degree five --- the problem is still NP-complete.
 	A graph is constructed from gadgets and equivalence
-	with NAC-coloring existence and 3-SAT is proved.
+	with NAC-coloring existence and 3-SAT satisfiability is proved.
+	Later we show the same for graphs with average degree of
+	$4+\varepsilon$ of any $\varepsilon > 0$.
 
 \end{chapterabstract}
 
-In this section we prove that the question
-whether a NAC-coloring exists is NP-complete on the class of graphs with maximum
-degree five and also on the class of graphs with average degree smaller
-than $4+\varepsilon$ of any $\varepsilon >0$.
-We proceed by reduction from the 3-SAT problem,
-namely, the question if a boolean formula
-in conjunctive normal form in which each clause contains exactly three literals is satisfiable.
 The main idea of our proof is inspired by
-the proof of NAC-coloring NP-completeness~\cite{np_complete}.
-We propose a different gadget construction that allows us to limit the maximum
-degree in the constructed graph.
+the proof of NAC-coloring NP-completeness~\cite{np_complete},
+which is described first in this chapter.
+After that, we propose a different gadget construction
+that allows us to limit the maximum
+degree in the constructed graph to five.
 
-\begin{theorem}%
+\section{NAC-coloring NP-completeness}
+
+In this section we describe the main idea and gadgets used
+in the original proof of NAC-coloring NP-completeness~\cite{np_complete}.
+
+First, for a formula \( \phi \) we create a graph \( G_\phi \).
+Alongside the graphs an edge-mapping is introduced mapping into the literals
+of \( \phi \). Recall that for an elementary clause \( x_i \) the literals
+are both \( x_i \) and \( \neg x_i \). We denote \( \lnot x_i \) by \( \bar{x}_i \).
+There are also literals \( t \) and \( f \) for \( \true \) and \( \false \).
+Note, that the end goal is to color literals where \( \true \) is assigned \( \blue \)
+and \( \false \) is assigned \( \red \).
+
+To construct \( G_\phi \) for each literal \( x_i, \bar{x}_i\) and \( t, f \),
+a \emph{connecting edge} labeled by the literal is added to \( G_\phi \).
+For each literal we add a five-cycle \( A_i \) to \( G_\phi \)
+such that the edges are labeled by \( x_i, x_i, \bar{x}_i, \bar{x}_i, t \).
+Then, also for each literal we add a four-cycle \( B_i \) to \( G_\phi \)
+such that the edges are labeled by \( x_i, \bar{x}_i, t, f \).
+Lastly, for each clause a seven-cycle \( C_i \) is added to \( G_\phi \)
+such that the edges are labeled by
+\( \hat{x}_{i,1}, \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,2}, \hat{x}_{i,3}, \hat{x}_{i,3}, t \)
+where \( \hat{x}_{i,j} \) is either \( x_{i,j} \) or \( \bar{x}_{i,j} \)
+depending on the \( i \)th clause.
+
+The paper~\cite{np_complete} then introduces a \emph{connecting element} gadget.
+%
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}[scale=2]
+			\node[vertex] (11) at (0.5, 0.5) {};
+			\node[vertex] (12) at (0.5, 1.0) {};
+			\node[vertex] (21) at (1.0, 0.5) {};
+			\node[vertex] (22) at (1.0, 1.0) {};
+			\node[vertex] (23) at (1.0, 1.5) {};
+			\node[vertex] (m2) at (1.15, 0.75) {};
+			\node[vertex] (m3) at (1.35, 0.75) {};
+			\node[vertex] (31) at (1.5, 0.5) {};
+			\node[vertex] (32) at (1.5, 1.0) {};
+			\node[vertex] (33) at (1.5, 1.5) {};
+			\node[vertex] (41) at (2.0, 0.5) {};
+			\node[vertex] (42) at (2.0, 1.0) {};
+
+			% Horizontal
+			\draw[edge] (11)edge(21) (31)edge(41);
+			\draw[edge] (12)edge(22) (32)edge(42);
+			\draw[edge,dotted] (21)edge(31) (22)edge(32);
+			% Vertical bars
+			\draw[edge] (11)edge(12) (21)edge(22) (31)edge(32) (41)edge(42);
+			% Diagonals
+			\draw[edge] (12)edge(21) (31)edge(42);
+			\draw[edge] (11)edge(22) (32)edge(41);
+			% Chimneys
+			\draw[edge,dotted] (22)edge(23) (32)edge(33) (23)edge(33) (23)edge(32) (22)edge(33);
+			% Center
+			\draw[edge] (22)edge(m2) (21)edge(m2) (31)edge(m3) (32)edge(m3);
+			\draw[edge,dotted] (m2)edge(m3);
+
+			\node[] at (0.25, 0.75) {$x_i$};
+			\node[] at (2.25, 0.75) {$x_i$};
+			\node[] at (1.25, 1.75) {$\bar{x}_i$};
+		\end{tikzpicture}
+	\end{center}
+	\caption{\centering Connecting element gadget as proposed in~\cite{np_complete}.
+		Note that dashed and filled edges need to share same colors in every NAC-coloring.}%
+	\label{fig:np_gadget_connecting}
+\end{figure}
+%
+Now, for each edge in \( G_\phi \) we add a connecting element gadget.
+The edge labeled \WLOG{} by \( x_i \) is identified with the left most
+of the gadget in \Cref{fig:np_gadget_connecting},
+Then the right most edge is identified with the connecting edge corresponding to literal \( x_i \).
+The top most edge is identified with the connecting edge corresponding to literal \( \bar{x}_i \).
+
+We do not provide the full proof from the paper~\cite{np_complete},
+still we outline the main idea.
+First observe, that for any NAC-coloring and literal \( x_i \),
+all the edges labeled by \( x_i \) are colored the same.
+
+First, let us suppose that we have a NAC-coloring \( \delta \) of \( G_\phi \).
+The goal is to create a truth assignment \( \tau \).
+\WLOG{} let the connecting edge corresponding to \( \true \) is colored \( \blue \).
+The elementary formulas colored by \( \blue \) are assigned \( \true \) in \( \tau \),
+the other formulas are assigned \( \false \).
+We show that \( \phi \) is satisfiable with assignment \( \tau \).
+Because of cycles \( A_i \) and \( B_i \) literals \( x_i \) and \( \bar{x}_i \)
+must have different color. In cycles \( C_i \) corresponding to clauses
+at least one of \( \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,3} \) must be colored \( \blue \),
+otherwise an almost cycle is formed as the last edge labeled by \( \true \) is colored \( \blue \).
+Therefore, each in each clause at least one literal is assigned \( \true \)
+and therefore all clauses and \( \phi \) itself are satisfied.
+
+Now, let us assume that we are given satisfiable \( \phi \)
+with truth assignment \( \tau \).
+We want to construct a NAC-coloring \( \delta \) of \( G_\phi \).
+We color edges labeled by \( x_i \) with \( \blue \) if \( \tau(x_i) = \true \)
+and \( \red \) otherwise.
+As there are literals \( \true \) and \( \false \), the coloring is surjective.
+Now we show that there are no almost cycles in \( G_\phi \).
+It can be easily seen (as discussed in the previous paragraph)
+that there are no almost cycles in any of the cycles \( A_i, B_i, C_i \).
+So if there is an almost cycle in \( G_\phi \), it must pass through
+at least two connecting elements.
+If the cycles pass in \Cref{fig:np_gadget_connecting}
+from \( x_i \) section to \( \bar{x}_i \) section, at least one \( \blue \)
+and \( \red \) edge is used. The same holds if the cycle passes
+from \( x_i \) section to \( x_i \) the other \( x_i \) section.
+As there are at least two connecting elements, at least two edges of each color are in the cycle.
+Therefore, the cycle is not an almost cycle.
+
+
+\section{Graphs with maximal degree five}
+
+In the previous proof there are not guaranties about
+degree of vertices in the graph. The vertices incident to the connecting edges
+have high degree, propositional to the number of clauses.
+We propose different gadgets where we bound the maximal degree.
+We already presented this proof in our previous paper~\cite{my_paper}.
+
+\begin{theorem}[\cite{my_paper}]%
 	\label{theorem:nac-deg-5}
 	%
 	The question whether a graph has a NAC-coloring is NP-complete
@@ -119,7 +235,7 @@ degree in the constructed graph.
 			\node[] (42d) at (2.25, 1.0) {};
 			\draw[edge] (11d)edge(11) (12d)edge(12) (41d)edge(41) (42d)edge(42);
 
-			\begin{scope}[yshift=-1cm,xshift=-0.25cm]
+			\begin{scope}[shift={(-0.25,-1)}]
 				\node[] (ar) at (1.5, 1.25) {$\downarrow$};
 				\node[vertex] (11) at (0.5, 0.5) {};
 				\node[vertex] (12) at (0.5, 1.0) {};
@@ -149,7 +265,7 @@ degree in the constructed graph.
 				\draw[edge] (11d)edge(11) (12d)edge(12) (51d)edge(51) (52d)edge(52);
 			\end{scope}
 		\end{tikzpicture}
-		\caption{A train (left) is formed by gluing braced ladders so that
+		\caption{\centering A train (left) is formed by gluing braced ladders so that
 			the maximum degree is 5. The right figure shows how it can be extended.}
 		\label{fig:proof_trains}
 	\end{figure}
@@ -308,7 +424,7 @@ degree in the constructed graph.
 
 			\end{scope}
 		\end{tikzpicture}
-		\caption{The gadgets for every variable $x_i$.
+		\caption{\centering The gadgets for every variable $x_i$.
 			For all variables together they enforce that the trains $x_i$ and $\bar{x}_i$ have different colors.}%
 		\label{fig:proof_enforce_true_false}
 	\end{figure}
@@ -478,7 +594,7 @@ degree in the constructed graph.
 			\node[] at (4.125, 2.375) {$t$};
 
 		\end{tikzpicture}
-		\caption{The gadget for the clause
+		\caption{\centering The gadget for the clause
 			$(\hat{x}_{i,1} \lor \hat{x}_{i,2} \lor \hat{x}_{i,3})$, index $i$ omitted in the labels.}%
 		\label{fig:proof_clause}
 	\end{figure}
@@ -560,6 +676,14 @@ degree in the constructed graph.
 	But in this case $C$ cannot be an almost cycle either since both triangles in each 3-prism are colored the same.
 	%
 \end{proof}
+
+
+\section{Average degree of \( 4 + \varepsilon \)}
+
+The previous result can be extended further.
+We can extend ladder parts of the graph by adding
+edges and vertices with degree four.
+By doing this, we can decrease the average degree as close to four as we need.
 
 \begin{theorem}%
 	\label{theorem:nac-eps}
