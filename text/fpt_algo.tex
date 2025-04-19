@@ -117,13 +117,13 @@ let \( r \in T \) be the root node.
 		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every leaf node \( l \in T \).
 		\item Every non-leaf node is one of the following types:
 		      \begin{itemize}
-			      \item \IntroduceVertexNode{}: a node \( t \) with one child \( t^\prime \)
+			      \item \IntroduceVertexNode{} --- a node \( t \) with one child \( t^\prime \)
 			            such that \( X_t = X_{t^\prime} \cup \{v\} \) where \( v \not\in X_{t^\prime} \).
 			            We say that \( v \) is \emph{introduced} by \( t \).
-			      \item \ForgetVertexNode{}: a node \( t \) with one child \( t^\prime \)
+			      \item \ForgetVertexNode{} --- a node \( t \) with one child \( t^\prime \)
 			            such that \( X_t = X_{t^\prime} \setminus \{v\} \) where \( v \in X_{t^\prime} \).
 			            We say that \( v \) is \emph{forgotten} by \( t \).
-			      \item \JoinNode: a node \( t \) with two children \( t^\prime, t^{\prime\prime} \)
+			      \item \JoinNode --- a node \( t \) with two children \( t^\prime, t^{\prime\prime} \)
 			            such that \( X_t = X_{t^\prime} \cup X_{t^{\prime\prime}} \).
 		      \end{itemize}
 	\end{itemize}
@@ -295,8 +295,8 @@ polynomial in \( n \) parametrized by tree width.
 \subsection{Expressing NAC-colorings using \MSO{}}
 
 In this section we describe results from our paper~\cite{my_paper}.
-We start by defining other auxiliary predicates.
-
+We start by defining other auxiliary predicates:
+%
 \begin{itemize}
 	\item For \( V \) all vertices and \( E \) subset of edges we define predicate
 	      %
@@ -342,11 +342,11 @@ We start by defining other auxiliary predicates.
 		       & \lor (\exists e_1, e_2, e_3, e_4 \in E :
 		      e_1 \ne e_2 \land e_3 \ne e_4
 		      \\
-		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue )
-		      .
+		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue ).
 	      \end{align*}
 	      %
 \end{itemize}
+%
 
 With the predicates ready, we can proceed approach to the theorem.
 %
@@ -860,7 +860,7 @@ with no behavior changes.
 Let us describe how \IntroduceVertexWithEdgesNode{} processes cache entries.
 Before, when a single edge was added,
 we checked if there is some constraint violation
--- if an almost cycle was formed.
+--- if an almost cycle was formed.
 The same is also done for \IntroduceVertexWithEdgesNode{},
 but you can think of the process as
 multiple such constrains checked at the same time.
@@ -1061,5 +1061,4 @@ for problems with connectivity requirements.
 This is unfortunately far beyond the scope of this thesis.
 
 \todo[inline]{Cite/Introduce Monte Carlo algorithms}
-\todo[inline]{Mention connectivity map improvement}
 
