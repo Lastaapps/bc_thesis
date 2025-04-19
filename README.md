@@ -11,7 +11,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 - make sure I cite my own paper
 - replace *paper* with *thesis* as I do this mistake all the time
 - Fix line breaks
-- Add/Uncomment Easter eggs
+- Sladit formát hran a obdobností v textu z článku
 
 ## Abstract
 

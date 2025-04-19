@@ -204,7 +204,7 @@ that adds option to quantify over predicates.
 
 \MSO{}~is an realization of second-order predicate logic.
 \todo[inline]
-{ TODO Switch to footnote, currently, it raises exceptions in NVim ;)
+{ TODO Switch to footnote, currently, it raises exceptions in NVim ;-P
 	% \footnote{
 
 	We need second-order logic as quantification over subsets of vertices or edges
@@ -795,6 +795,8 @@ we read value from cache entry as follows:
 %
 We need to subtract two as the output of the algorithm are NAC-coloring,
 not almost NAC-colorings. Correctness goes from the previous nodes.
+From that it can be clearly observed that the algorithm
+will never give you up~\cite{never_gonna_give_you_up}.
 
 \subsection{Time complexity}
 
@@ -840,13 +842,87 @@ The final complexity of the algorithm is therefore
 \( {k}^{O(k)} \cdot O(n^2) \).
 \todo[inline]{Check number of nodes in \( T \)}
 
+\subsection{\IntroduceVertexWithEdgesNode{}}
+
+As also described above, FPT algorithms parametrized by tree width
+often use \IntroduceVertexNode{} that also introduces edges,
+for this section we call this node \IntroduceVertexWithEdgesNode{}.
+The original algorithm can be modified to use this node.
+We outline the proof of correctness of such operation and the show
+that it is actually asymptotically slower than the originally proposed algorithm.
+
+The previous expression tree is modified by
+replacing every \IntroduceVertexNode{} by \IntroduceVertexWithEdgesNode{}
+and removing every \IntroduceEdgeNode{}.
+The other nodes including \ForgetVertexNode{} and \JoinNode{} stay unchanged
+with no behavior changes.
+
+Let us describe how \IntroduceVertexWithEdgesNode{} processes cache entries.
+Before, when a single edge was added,
+we checked if there is some constraint violation
+-- if an almost cycle was formed.
+The same is also done for \IntroduceVertexWithEdgesNode{},
+but you can think of the process as
+multiple such constrains checked at the same time.
+
+As it is nontrivial and confusing to describe this operation
+by using predicate logic, we stick to natural language for simplicity.
+Suppose that \( t \in T \) is
+the only parent of \( t^\prime\) in \( \mathcal {T} \).
+Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
+Let \( E_\Delta \) be edges added,
+\( E_\Delta = \{ \{ u, v \} \mid u \in X_t \} \cap E(G) \).
+Let us have set \( \Lambda \) of all \( \red \)-\( \blue \)-colorings on \( E_\Delta \).
+We define mapping \( m: S^\prime \times \Lambda \to S \)
+that represents how state changes for a coloring of edges in \( E_\delta \).
+Let us have some \( s^\prime \in S^\prime \) and \( \lambda \in \Lambda \)
+and \( m(s^\prime, \lambda) = s, s \in S \).
+
+Vertices \( u, v \in X_t \) share the same \( \blue \) connected component if either:
+%
+\begin{itemize}
+	\item They shared the same connected component in \( s^\prime \).
+	\item There is a \( \blue \) path in \( E_\Delta \) with coloring \( \lambda \).
+\end{itemize}
+%
+Note that \( \blue \) connected components created by following this procedure
+are same as in \( s^\prime \) or merged \( \blue \) components of \( s^\prime \)
+except for \( v \) as it is not yet in \( X_{t^\prime} \).
+Such \( \blue \) connected components are neighboring if either:
+%
+\begin{itemize}
+	\item They or their predecessors in \( s^\prime \)
+	      were neighbors in \( s^\prime \).
+	\item There is a path in \( E_\Delta \) with
+	      one \( \blue \) and one \( \red \) edge
+	      according to coloring \( \lambda \).
+	      The \( \red \) edge becomes a bridge.
+\end{itemize}
+%
+Now the same is done for \( \red \).
+We ensure that all the rules described in \IntroduceEdgeNode{}
+still hold for \( s \). If so, \( c[t, s] \pluseq c[t^\prime, s^\prime] \).
+This all is done for each combination in \( S^\prime \time \Lambda \).
+
+For the original algorithm for each \( v \)
+\IntroduceEdgeNode{} is used \( |E_\Delta| \) times
+and \( \IntroduceVertexNode{} \) once, therefore added complexity for \( v \)
+is \( {k}^{O(k)} \cdot 2^{O(k)} \cdot (|E_\Delta| + 1) \).
+%
+For \IntroduceVertexWithEdgesNode{} we iterate
+through all the colorings in \( \Lambda \) for each state.
+As size of \( \Lambda \) is \( |\Lambda| = 2^|E_\Delta| \),
+the required runtime added for \( v \) is
+\( {k}^{O(k)} \cdot 2^{O(k)} \cdot 2^{|E_\Delta|}\)
+which is asymptotically higher and therefore slower.
+
 \subsection{Monochromatic components}
 
 Monochromatic components can be used to significantly reduce state space
 that needs to be searched. First we introduce state space reduction when
 there is an edge in a bag, then we extend the result to multiple edges
 sharing the same monochromatic component, and lastly we improve the number of
-operations needed in the Insert vertex with edges node.
+operations needed in the \IntroduceVertexNode{}.
 %
 \begin{theorem}
 	For \( t \in T \) and an edge \( e = \{u, v\} \) in \( E_t \).
@@ -955,15 +1031,14 @@ no vertices are connected yet, so the connectivity map \( C_t = \emptyset \).
 With such connectivity map we can not reduce the state space by only considering
 factorizations that are finer then the connectivity map.
 
-
 \subsection{Additional considerations}
 
 \subsubsection{NAC-coloring certificate}
 
 To obtain a NAC-coloring certificate or all the NAC-colorings of the graph
 given we need to traverse the cache backwards recursively.
-The only step where edges were added to the graph are either Insert edge node
-or Insert vertex with edges node. In both cases the given cache entry correspond
+The only step where edges were added to the graph are either \IntroduceEdgeNode{}
+or \IntroduceVertexWithEdgesNode{}. In both cases the given cache entry correspond
 to some color given to the edge. From the recursive step we can obtain
 all the NAC-colorings of \( V_{t^\prime} \) and add our edge.
 Note that the whole cache has to be stored in memory the whole time unless
