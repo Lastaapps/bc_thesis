@@ -33,11 +33,11 @@
 \ctufitdeclarationdate{\today} % replace with the date of signature of the declaration
 \ctufitabstractCZE{
     Jedna z otázek v strukturální teorii tuhosti (Rigidity Theory)
-    je, zda realizace vrcholů grafu do roviny je flexibilní,
+    je, zda realizace vrcholů grafu do roviny je pohyblivá,
     tj.~zda umožňuje spojitou deformaci neměnící délku hran.
     %
-    Flexibilní realizace souvislého grafu do roviny existuje právě tehdy, když
-    graf má NAC-obarvení, hranové obarvení dvěma barvami takové,
+    Pohyblivá realizace souvislého grafu v rovině existuje právě tehdy, když
+    graf má NAC-obarvení, což je hranové obarvení dvěma barvami takové,
     že pro každý cyklus jsou všechny hrany obarveny stejnou barvou nebo
     jsou každou barvou obarveny alespoň dvě hrany.
     %
@@ -64,15 +64,16 @@
     two colors such that for each cycle either all the edges have the same color or
     there are at least two edges of each color.
     %
-    It is \mbox{NP-complete} to determine is a graph has a NAC-coloring,
+    While it is known that it is \mbox{NP-complete}
+    to decide if a graph has a NAC-coloring,
     we show that the problem is
-    also NP-complete for graphs with maximal degree five.
+    also NP-complete for graphs with maximum degree five.
     %
-    We present a significantly faster algorithm for NAC-coloring search,
+    We present a significantly faster algorithm implementation for NAC-coloring search,
     and we discuss related heuristics.
     The performance is compared with previous algorithms and among the heuristics.
     %
-    After, we present another FPT algorithm for NAC-coloring counting
+    We also present fixed-parameter tractable (FPT) algorithm for NAC-coloring counting
     parametrized by tree width.
     %
     % We also discuss relation to stable cuts and algorithm for finding
@@ -388,15 +389,19 @@
 % MODIFY ANYTHING BELOW THIS LINE
 %%%%%%%%%%%%%%%%%%%
 
+\listoftodos{}
+\newpage{}
+
 \include{./text/introduction}
 \include{./text/preliminaries}
-\include{./text/stable_cuts}
 \include{./text/np}
+\include{./text/fpt_algo}
+\include{./text/stable_cuts}
 % \include{./text/algo}
 % \include{./text/benchmarks}
-\include{./text/fpt_algo}
 \include{./text/results}
 % \include{./text/examples}
+\todo[inline]{Sjednotit reference - jména lidí a časopisů}
 
 \appendix\appendixinit{} % do not remove these two commands
 

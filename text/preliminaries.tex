@@ -3,8 +3,8 @@
 
 \begin{chapterabstract}
 
-	In this chapter we define terms from Rigidity theory with the goal to define
-	NAC-coloring. We also introduce its relation to Rigidity theory and
+	In this chapter we define terminology from Rigidity theory including NAC-coloring.
+	We also introduce its relation to Rigidity theory and
 	some simple statements considering
 	structure of graphs and NAC-coloring existence.
 
@@ -14,7 +14,7 @@
 
 Rigidity theory, often also called Structural rigidity,
 is a branch of combinatorial theory,
-which studies properties of objects formed from flexible hinges and bars.
+which studies properties of objects formed from flexible joins and rigid bars.
 These objects can be represented as graphs with
 a mapping into \( d \)-dimensional space.
 Rigidity theory studies if such objects are rigid, or flexible.
@@ -23,71 +23,97 @@ For the rest of the thesis,
 we consider only simple undirected graphs.
 Often, only connected graphs are considered as disconnected graphs
 represent uninteresting trivial cases.
+By \( V(G) \) we denote vertices of a graph \( G \) and
+by \( E(G) \) we denote edges of a graph \( G \).
+The following definitions are inspired by~\cite{np_complete,my_paper}.
 
 %
-\begin{definition}[\( d \)-realization~\cite{my_paper,np_complete}]
-	\emph{A realization} of a graph \( G \) is a mapping \( p: V(G) \to \R^d \).
+\begin{definition}[\( d \)-realization]
+	\emph{A \( d \)-realization} of a graph \( G \) is a mapping \( p: V(G) \to \R^d \).
 \end{definition}
 %
-\begin{definition}[Framework~\cite{my_paper,np_complete}]
+\begin{definition}[Framework]
 	\emph{A framework} is a pair of a graph \( G \) and its realization.
 \end{definition}
 %
-\begin{definition}[Nontrivial flex~\cite{my_paper,np_complete}]
+\begin{definition}[Nontrivial flex]
 	For a framework \( (G, p) \), \emph{a nontrivial flex} of
 	\( p_0 = p \) such that for all \( 0 < t \le 1 \) we have \( p_t \) such that
 	\( \|p_t(u) - p_t(v)\| = \|p(u) - p(v)\|\) for every \( \{u, v\} \in E(G) \),
 	but \( \|p_t(u) - p_t(v)\| \ne \|p(u) - p(v)\| \) for some \( u, v \in V (G) \).
 \end{definition}
 %
-\begin{definition}[\( d \)-flexible, \( d \)-rigid~\cite{my_paper}]
+\begin{definition}[\( d \)-flexible, \( d \)-rigid]
 	A framework is \( d \)-flexible, if it has a nontrivial flex.
 	Otherwise, it is \( d \)-rigid.
 \end{definition}
 %
 To summarize all the previous definitions,
-a framework is flexible if it can be transformed while preserving lengths of
+a framework is flexible if it can be deformed while preserving lengths of
 edges of the graph.
 
 From now on we consider only \emph{quasi-injective} realizations ---
 two neighboring vertices cannot be mapped to the same position.
-This is guarantied when assigned edge lengths are positive.
+This is guarantied when distances of neighboring vertices are positive.
 Note that two non-neighboring vertices can be mapped to the same position.
-Similar results can be shown for frameworks with \emph{injective} realizations.
+Similar results can be shown for frameworks with \emph{injective} realizations
+\todo[inline]{Footnote
+	% \footnote{
+	For example, it is also NP-complete to
+	recognize graphs that have a generically rigid injective realization in \( \R^1 \).
+	% }.
+}
 In this thesis they are of no interest for us.
 
 It is NP-hard to decide whether a given \( d \)-dimensional framework is
 \( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
-For \( d = 2 \) we can simplify the problem if we talk about \emph{generic}
+We can simplify the problem if we talk about \emph{generic}
 behavior.
 %
 \begin{definition}[Flexible \& Rigid graphs~\cite{generically_rigid_graphs}]
-	A graph is \( (generically) flexible \) if for almost all of
-	its \( d \)-realizations are \( 2 \)-flexible.
-	A graph is \( (generically) rigid \) if for almost all of
-	its \( d \)-realizations are \( 2 \)-rigid.
+	A graph is \( (generically) flexible \) if almost all of
+	its \( 2 \)-realizations are \( 2 \)-flexible.
+	A graph is \( (generically) rigid \) if almost all of
+	its \( 2 \)-realizations are \( 2 \)-rigid.
 \end{definition}
 %
 
 From now on we focus only on the \( 2 \)-dimensional case,
-it is already known for some classes of graphs that they are flexible.
-Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
-are flexible~\cite{stable_cuts_2v_4}.
+in which there is a combinatorial characterization of rigid graphs.
 
 There is a significant graph class studied in Rigidity theory
 called minimally rigid graphs or Laman graphs.
+This class was described by Pollaczek-Geiringer~\cite{polzacek_1927}
+and Laman~\cite{laman_1970} independently.
 %
-\begin{definition}[Pollaczek-Geiringer~\cite{polzacek_1927}, Laman~\cite{laman_1970}]
-	Graph is \emph{minimally \( d \)-generically rigid} if it is \( d \)-rigid
-	and \( (V(G), E(G) \setminus \{e\}) \) is \(d\)-flexible for each \( e \in E(G) \).
+\begin{definition}
+	Graph is \emph{minimally generically \( d \)-rigid} if it is \( d \)-rigid
+	and \( G - e \)\footnote{
+		\( G - e \) denotes a graph formed from \( G \) by removing an edge \( e \).
+		Formally, \( G - e = (V(G), E(G) \setminus \{e\}) \).
+	}
+	is \(d\)-flexible for each \( e \in E(G) \).
 \end{definition}
 %
+% \begin{theorem}[Pollaczek-Geiringer/Laman]
+% 	There is a polynomial time algorithm for deciding if a graph is minimally
+% \end{theorem}
+
+It is already known for some classes of graphs that they are flexible.
+Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+are flexible~\cite{stable_cuts_2v_4}.
 
 A polynomial algorithm for testing \( 2 \)-rigidity was obtained
 for minimally rigid graphs in~\cite{polynomial-min-rigid}.
 We focus on these graphs in benchmarks.
 
 \section{NAC-coloring}
+
+It is algorithmically hard to find flexible realizations of a graph
+just by trying realizations and checking if they are flexible
+as the plane is continuous.
+In~\cite{legersky_original} a new edge coloring is proposed
+that corresponds with existence of a flexible realization.
 
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
@@ -100,74 +126,87 @@ We focus on these graphs in benchmarks.
 		      \emph{Almost \( \blue \) cycle} is defined analogously.
 	\end{itemize}
 	%
+	By \emph{an almost cycle} we denote both almost \( \red \) and almost \( \blue \) cycles.
 	A coloring \( \delta \) is called a NAC-coloring, if it is surjective
 	and there are no almost cycles.
 \end{definition}
 %
 
-It was shown, that it is NP-complete to decide if a graph has a NAC-coloring~\cite{np_complete}.
+It was shown in~\cite{np_complete}, that it is NP-complete to decide if a graph has a NAC-coloring.
 We elaborate further on this in later chapters.
-Luckily, the check if a coloring is a NAC-coloring can be done in polynomial time.
-Let \( E_\red\), resp. \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \)
+Thanks to the following \Cref{lemma:is_nac_coloring},
+the check if a coloring is a NAC-coloring can be done in polynomial time.
+Let \( E_\red\), resp. \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \),
 in an edge coloring \( \delta \).
 %
-\begin{lemma}[\cite{legersky_original}]
+\begin{lemma}[\cite{legersky_original}]%
+	\label{lemma:is_nac_coloring}
 	Let \( G \) be a graph. If \( \delta: E(G) \to \{ \red, \blue \} \) is a coloring of edges,
 	then there are no almost cycles in \( G \) if and only if the connected components
 	of \( G[E_\red] \) and \( G[E_\blue] \)%
-	\footnote{For \(X subseteq E(G)\) by \(G[X]\) we denote induced subgraph of \( G \) on edges \( X \).}
+	\footnote{
+		For \(X \subseteq V(G)\), by \(G[X]\) we denote
+		the induced subgraph of \( G \) on vertices \( X \),
+		\( G[X] = (X, \{ \{u, v\} \mid u, v \in X\}) \).
+		%
+		For \(Y \subseteq E(G)\), by \(G[Y]\) we denote
+		the induced subgraph of \( G \) on edges \( Y \),
+		\( G[Y] = (\{ v \mid \exists u \in V(G) : \{u, v\} \in Y\}, Y) \).
+	}
 	are induced subgraphs of \( G \).
 \end{lemma}
 %
 The idea is quite simple --- if there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} \)
 and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( u \)-\( v \)-path in \( G[E_\red] \)
-and the edge \( e \).
+and the edge \( \{u, v\} \).
 
-Now we present relation of NAC-colorings to flexible frameworks.
+Now we present relation of NAC-colorings and flexible frameworks.
 %
 \begin{theorem}[\cite{legersky_original}]
 	A connected graph \( G \) with at least one edge has a flexible
 	quasi-injective \( 2 \)-dimensional realization if and only if it has a NAC-coloring.
 \end{theorem}
 %
-The theorem has a constructive proof from which the related realization can be found.
-The proof itself is nontrivial, and we don't show it here.
+The theorem has a constructive proof from which a flexible realization
+can be found for a given NAC-coloring.
+The proof itself is nontrivial, and we do not show it here.
 For us the most interesting questions are whether a graph has a NAC-coloring
 and how many NAC-coloring does a graph have.
 For an example have a look at~\Cref{fig:3prism}
 from Introduction.
 
-Note that for a NAC-coloring \( \delta \) there exists a NAC-coloring of the same
-graph where \( \red \) and \( \blue \) colors are swapped.
-Therefore, we define a measure where these \emph{congruent} colorings are
-counted as one.
+Note that for each NAC-coloring \( \delta \) on graph \( G \)
+there exists a NAC-coloring \( \delta^\prime \) on \( G \)
+where \( \red \) and \( \blue \) colors are swapped.
 %
 \begin{definition}
-	By \( \nac{G} \) we denote all the NAC-coloring of \( G \).
-	By \( \nnac{G} \) we denote the number of NAC-coloring of \( G \)
-	while only one coloring is considered from each congruent pair.
-	It holds that \( \nnac{G} = | \nac{G} | / 2 \)
+	By \( \nac{G} \) we denote the set of all the NAC-coloring of graph \( G \).
+	By \( \nnac{G} \) we denote the number of NAC-colorings of \( G \)
+	up to swapping the colors.
+	That is \( \nnac{G} = | \nac{G} | / 2 \)
 \end{definition}
 %
 
 \subsection{NAC-coloring constraints}
 
 In algorithms related to NAC-coloring search it is beneficial
-to reduce the search space. Often we know that if colors differ for some
-set of edges, the resulting coloring cannot be a NAC-coloring.
+to reduce the search space.
+It can be often seen from the graph's structure
+that if colors differ for some set of edges,
+the resulting coloring cannot be a NAC-coloring.
 
 All the edges of a 3-cycle subgraph \( C_3 \) must map to the same color.
 Otherwise, two edges of \( C_3 \) are w.l.o.g.\ \( \red \) and one is \( \blue \).
 Therefore, \( C_3 \) forms an almost cycle.
-This idea can be expanded further to neighboring images.
+This idea can be expanded further to neighboring triangles.
 %
 \begin{definition}[\( \triangle \)-connected component~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \sim^\prime_\triangle \) be
 	a relation on \( E(G) \times E(G) \) such that \( e_1 \sim^\prime_\triangle e_2 \)
-	iff there exists a subgraph \( C_3 \) of \( G \)
+	iff there exists a 3-cycle subgraph \( C_3 \) of \( G \)
 	such that \( e_1, e_2 \in E(C_3) \).
-	Let \( \sim_\triangle \) be the reflex-transitive closure of \( \sim^\prime_\triangle \).
+	Let \( \sim_\triangle \) be the reflexive-transitive closure of \( \sim^\prime_\triangle \).
 	The graph \( G \) is called \emph{\( \triangle \)-connected} if \( e_1 \sim_\triangle \)
 	for all \( e_1, e_2 \in E(G) \).
 	A \emph{\( \triangle \)-connected component} is a maximal subgraph \( G^\prime \) of \( G \) such
@@ -181,16 +220,46 @@ This idea can be expanded further to neighboring images.
 	then \( \delta(e_1) = \delta(e_2) \) for all \( e_1, e_2 \in E(G^\prime) \).
 \end{lemma}
 %
-The naive algorithm that will be described more in detail in the following chapters
+The naive algorithm that is described in more detail in the following chapters
 iterates through all the possible edge colorings of a graph.
 If \( \triangle \)-connected components are employed in the algorithm,
-the whole components can be checked instead of individual edges.
-Later we extend on the idea of \( \triangle \)-connected components.
+the whole \( \triangle \)-connected components can be checked instead of individual edges.
+Later we further improve the idea of \( \triangle \)-connected components.
 
-A stable cut set is an independent set of vertices that is also a vertex cut.
-If there is such set in a graph, a NAC-coloring can be simply found.
+Now we define common terminology with the goal to define stable cuts in a graph.
+%
+\begin{definition}[Independent set]
+	\emph{An independent set} of a graph \( G \) is a set \( I \subseteq V(G) \) such that
+	\( \forall u, v \in I : \{u, v\} \not\in E(G) \).
+\end{definition}
+%
+\begin{definition}[Vertex cut]
+	\emph{A vertex cut} of a graph \( G \) is a set \( I \subseteq V(G) \) such that
+	\( G \setminus I \) (\( G \) with \( I \) removed) is a disconnected graph.
+\end{definition}
+%
+\begin{definition}[Edge cut]
+	\emph{An edge cut} of a graph \( G \) is a set \( I \subseteq E(G) \) such that
+	\( G \setminus I \) (\( G \) with \( I \) removed) is a disconnected graph.
+\end{definition}
+%
+\begin{definition}[Partitions of a vertex cut]
+	For a vertex cut \( I \subseteq V(G) \),
+	let \( G^\prime \) be a subgraph of \( G \), \( G^\prime = G \setminus I \).
+	Nonempty sets \( A, B \subsetneq V(G^\prime) \) are called \emph{partitions} of the cut
+	if \( A \cup B = V(G), A \cap B = S \) and for each \( v \in A \setminus S, u \in B \setminus S \)
+	there exists no \( u \)--\( v \)--path in \( G^\prime \).
+\end{definition}
+%
+\begin{definition}[Stable cut]
+	\emph{A stable cut} is an independent set of vertices that is also a vertex cut.
+\end{definition}
+%
+If there is a stable cut in a graph, a NAC-coloring can be simply found.
 We elaborate more on this case in chapter~\Cref{chapter:stable_cuts}.
 
+We continue by other lemmas that are useful in our algorithm.
+They are able to find a NAC-coloring of a graph in polynomial time for some graph classes.
 %
 \begin{lemma}[\cite{legersky_original}]
 	Let \( G \) be a connected graph, \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
@@ -198,12 +267,12 @@ We elaborate more on this case in chapter~\Cref{chapter:stable_cuts}.
 	induced by \( E_c \) contains no path of length four, then \( G \) has a NAC-coloring.
 \end{lemma}
 %
-To construct a NAC-coloring, first consider \( E_c^\prime \) minimal subset of \( E_c \)
+The idea is to construct a NAC-coloring, first consider \( E_c^\prime \) minimal subset of \( E_c \)
 such that it is also an edge cut in \( G \).
 We color edges in \( E_c^\prime \) \( \red \) and the other edges \( \blue \).
 See~\cite{legersky_original} for a complete proof.
 
-For graph \( G \), some vertex \( v \in G \) is an articulation vertex if
+For graph \( G \), some vertex \( v \in G \) is \emph{an articulation} vertex if
 \( \{v\} \) is a vertex cut in \( G \).
 When all the articulation vertices are found,
 graph can be decomposed into blocks
@@ -212,25 +281,24 @@ As no cycles pass through multiple blocks, we can color each block
 independently as long as both colors are used.~\cite{my_paper}.
 We formalize this observation later.
 
-\section{Other useful terms}
+\section{Other useful terminology}
 
-Lastly we define some terms that will be used in the following chapters.
-%
-\begin{definition}%
-	\label{def:2-tree}
-	A \emph{2-tree} is a graph formed by merging triangles by edge identification.
-\end{definition}
+Lastly, we define some terms that will be used in the following chapters.
 
-For the following proof about NAC-coloring search NP-completeness we need
-well known NP-complete problem for reduction, \emph{3-SAT} is used in our reduction.
-For a formula of propositional logic SAT answers the question
+For the proof about NAC-coloring search NP-completeness,
+a NP-complete problem for reduction is needed.
+We use well known \emph{3-SAT} problem in our reduction.
+Propositional logic SAT answers the question
 whether the formula is satisfiable ---
-there exists a truth assignment of literals that satisfies the formula.
+there exists a truth assignment of variables that satisfies the formula.
 3-SAT problem is an alternative formulation of SAT
-where the formula must be in 3-CNF --- conjunction of clauses with three literals.
+where the formula must be in the conjunctive normal form (CNF), namely in 3-CNF
+--- conjunction of clauses with three literals.
 For example, \( (A \lor B \lor \lnot C) \land (\lnot A \lor D \lor \lnot E) \)
 is in 3-CNF\@.
-% TODO For simper remembering, the formulas look like a face with a nose \( (\lor)\land(\lor) \).
+% TODO CNF formulas look like a face with a nose in the middle \( (\lor)\land(\lor) \).
 It was shown that 3-SAT is NP-complete,
 and it is a common tool for NP-completeness proofs~\cite{3-sat}.
 
+There are other useful graph properties related to stable cuts
+that will be introduced later in \Cref{chapter:stable_cuts}.

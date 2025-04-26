@@ -203,10 +203,9 @@ Second-order predicate logic as an extension of first-order predicate logic,
 that adds option to quantify over predicates.
 
 \MSO{}~is an realization of second-order predicate logic.
-\todo[inline]
-{ TODO Switch to footnote, currently, it raises exceptions in NVim ;-P
-	% \footnote{
-
+\todo[inline]{TODO Convert to footnote, currently, it raises exceptions in NVim}
+\emph{
+% \footnote{
 	We need second-order logic as quantification over subsets of vertices or edges
 	corresponds to quantification over predicates separating the subsets.
 	Without this requirement we could talk
@@ -1031,9 +1030,7 @@ no vertices are connected yet, so the connectivity map \( C_t = \emptyset \).
 With such connectivity map we can not reduce the state space by only considering
 factorizations that are finer then the connectivity map.
 
-\subsection{Additional considerations}
-
-\subsubsection{NAC-coloring certificate}
+\subsection{NAC-coloring certificate}
 
 To obtain a NAC-coloring certificate or all the NAC-colorings of the graph
 given we need to traverse the cache backwards recursively.
@@ -1046,7 +1043,7 @@ NAC-colorings are materialized while the algorithm runs.
 This kills our performance as we process up to \( 2^{O(n^2)} \) colorings
 in each node of the tree.
 
-\subsubsection{Other optimizations}
+\subsection{Other optimizations}
 
 First it is trivial to see that if the input graph has an articulation,
 we can once again run our algorithm on each block of the graph separately

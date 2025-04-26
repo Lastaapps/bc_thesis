@@ -11,47 +11,47 @@
 	%
 \end{chapterabstract}
 
-\section{Stable cuts}
-
-In this chapter we focus on connected graphs only as graph cuts lose their
-meaning on disconnected graphs.
+In this chapter we focus on connected graphs only as for us graph cuts
+lose their importance on disconnected graphs.
+We recall the definition of stable cut
 %
 \begin{definition}[Stable cut]
-	Independent set of a graph \( G \) is set \( I \subseteq V(G) \)
-	such that \( \forall u, v \in I : \{u, v\} \not\in E(G) \).
-	%
-	Vertex cut of a graph \( G \) is set \( C \subseteq V(G) \)
-	such that \( G \setminus C \) (\( G \) with \( C \) removed)
-	is a disconnected graph.
-	%
-	Stable cut of a graph \( G \) is a set \( S \subseteq V(G) \) such that
+	\emph{A stable cut} of a graph \( G \) is a set \( S \subseteq V(G) \) such that
 	\( S \) is independent set in \( G \) and also \( S \) is vertex cut in \( G \).
 \end{definition}
 %
 
+\section{Properties}
+
 Notice how stable cuts are related to NAC-colorings.
 %
 \begin{lemma}[\cite{legersky_original}]
-	Let \( S \) be a stable cut in \( G \).
-	Then \( G \) has a NAC-coloring \( \delta \).
+	Let \( S \) be a stable cut in a connected graph \( G \).
+	Then \( G \) has a NAC-coloring.
 \end{lemma}
 %
 \begin{proof}
-	As \( S \) is a cut in \( G \), let us have corresponding partitions \( A, B \).
+	As \( S \) is a cut in \( G \), let us have some partitions \( A, B \).
 	We know that \( |S| < |A|, |S| < |B| \)
 	as disconnected partitions are nonempty and \( G \) was connected.
 	There is at least one edge incident to vertices in both \( A \) and \( B \).
 	We color \( E(G[A]) \) \( \red \) and \( E(G[B]) \) \( \blue \).
-	Both colors were used, so the coloring is surjective.
+	Both colors are used, so the coloring is surjective.
 	We also need to show that no almost cycle was created.
-	As~\cite[Lemma 2.4]{legersky_original} states, there is no almost cycle
-	in a graph if and only if components \( G_\red^\delta, G_\blue^\delta \)
+	As~\Cref{lemma:is_nac_coloring}
+	states, there is no almost cycle in a graph if and only
+	if components \( G_\red^\delta, G_\blue^\delta \)
 	are induced subgraphs of \( G \).
-	That is the case as there is no edge incident to vertices in \( S \).
-	It holds that \( G_\red^\delta = G[A], G_\blue^\delta = G[B] \).
-	So there are no almost cycles and \( \delta \) is a NAC-coloring.
+	That is the case as there is no edge with both the endpoints in \( S \)
+	as \( S \) is an independent set.
+	So there are no almost cycles and a NAC-coloring is created.
 \end{proof}
 %
+You can also prove the above lemma from the fact that every cycle that
+uses a vertex in \( S \) must pass
+through at least one vertex in \( A \setminus S \) and \( B \setminus S \).
+Such cycle has at least four edges,
+at least two are \( \red \) and at least two are \( \blue \).
 
 The statement can be extended to the following simple observation.
 %
@@ -68,13 +68,17 @@ The statement can be extended to the following simple observation.
 	has a NAC-coloring.
 \end{proof}
 
-You can also prove the above lemma from the fact that every cycle that
-uses a vertex in \( S \) must pass
-through at least one vertex in \( A \setminus S \) and \( B \setminus S \).
-Such cycle has at least four edges,
-at least two are \( \red \) and at least two are \( \blue \).
+In the following paragraphs we construct graph classes by joining graphs
+that are already in the class.
+Graph \( G \) is created from graphs \( G_1, G_2 \) by an \emph{edge identification}
+on an edge \( \{u, v\} \)
+if \( V(G_1) \cap V(G_2) = \{u, v\}, E(G_1) \cap E(G_2) = \{\{u, v\}\} \)
+and \( G = (V(G_1) \cup V(G_2), E(G_1) \cup E(G_2)) \).
+Graph \( G \) is created from graphs \( G_1, G_2 \) by a \emph{triangle identification}
+if \( V(G_1) \cap V(G_2) = \{u, v, w\}, E(G_1) \cap E(G_2) = \{\{u, v\}, \{v, w\}, \{w, u\}\} \)
+and \( G = (V(G_1) \cup V(G_2), E(G_1) \cup E(G_2)) \).
 
-It is known for some classes that stable cut must exists.
+It is known for some classes that a stable cut must exists.
 \todo[inline]{Show and cite that \( 2V-4 \) are flexible}
 %
 \begin{theorem}[\cite{stable_cuts_2v_4}]
@@ -101,6 +105,7 @@ for graphs from graph class \( \GSC \):
 	a stable cut or \( G \in \GSC \).
 \end{theorem}
 %
+\todo[inline]{Fix references to definitions showing as theorem}
 Note that 2-trees (\Cref{def:2-tree})
 are in \( \GSC \) by definition.
 %
@@ -109,32 +114,34 @@ are in \( \GSC \) by definition.
 	or \( G \) is a 2-tree.
 \end{lemma}
 %
-This shows that the property of having a NAC-coloring and having a stable cut
+This shows that the properties of having a NAC-coloring and having a stable cut
 are not equivalent.
 
 \section{Algorithms}
 
 As proved in~\cite{stable_cuts_complexity} it is NP-complete
 to decide whether a line graph with maximum degree five admits a stable cut
---- similar result as we show for NAC-coloring in a following chapter.
+--- similar result as we show for NAC-colorings in \Cref{chapter:np}.
 
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
-an algorithm to find the stable cut (if present)
+an algorithm to find a stable cut (if present)
 for graphs where \(|E(G)| \le 2|V(G)|-3 \),
 they only provide list of claims
 from whose a stable cut set can be found.
 All the checks can be run in polynomial time.
-Unfortunately, the list is long and beyond the scope of this thesis.
+Unfortunately, the list is long,
+and it is beyond the scope of this thesis
+to describe and implement such algorithm.
 
-As shown in~\cite[Algorithm 1]{stable_cuts_legersky} a stable cut can be found
+As shown in~\cite[Algorithm 1]{stable_cuts_legersky}, a stable cut can be found
 in a polynomial time for any flexible graph.
 As mentioned before, that also includes graphs
 where \( |E(G)| \le 2|V(G)| - 4 \) (not for \( |E(G)| \le 2|V(G)| - 3 \)).
-Rigid component of a graph is maximal induced subgraph such that
+Rigid component of a graph is maximal induced subgraph that is rigid.
 The main idea of the algorithm works as follows:
 %
 \begin{itemize}
-	\item Rigid components of the graphs are found.
+	\item Rigid components of the graphs are found in a polynomial time.
 	\item Vertices \( u, v \) from different rigid components are chosen.
 	\item If neighborhood of \( u \) is a stable cut, return it.
 	\item Otherwise, contract one edge of a triangle with \( u \) and start again while preserving \( u \).
@@ -177,27 +184,32 @@ was presented as a practical result of the following theorem.
 	then for every vertex \( v \in V(G) \), \( G \) has a stable cut avoiding \( v \).
 \end{theorem}
 %
-Notice that \Cref{alg:stableCutFlexible}
-chooses vertices \( u, v \) arbitrary as long as they do not share a rigid component.
-A check ensuring that \( u \) and \( v \) are in different rigid components
-has to be added on top of this seemingly random choice.
-The same check holds when \( u \) is specified.
 
-We may also want to let user choose a vertex \( u \) and find a stable cut
-that avoids it or
-let user choose the vertices \( u, v \) and find a stable cut
-that separates them.
-In this case additional checks are needed. First if only \( u \) is specified,
-it may happen that it may not be avoidable if the vertex is contained
-an intersection of multiple rigid components from which the graph is formed.
-In such case \( u \) is an articulation vertex and the only stable cut in the graph
-and the user is notified.
-When both \( u, v \) are specified,
-it is possible that \( u \) and \( v \) are in the same rigid components.
-In that case the user is also notified.
+\subsection{Implementation}
+
+Notice that~\Cref{alg:stableCutFlexible}
+accepts vertices \( u, v \) arbitrary as long as they do not share a rigid component.
+In an implementation, a check ensuring that \( u \) and \( v \)
+are in different rigid components has to be added.
+
+In the implementation it is also beneficial to offer an option to choose
+vertices \( u \) and/or \(  v \) for a user automatically.
+First in the user specifies only vertex \( u \), the goal is to find a stable cut
+that avoids it. Our algorithm finds \( v \)
+such that it is not in a same rigid component with \( u \).
+This is always possible unless \( u \) is the only articulation vertex
+and blocks are rigid components. In this case an error is reported back to the user.
+
+If neither of \( u, v \) is given by the user,
+we need to choose vertices in such a way
+that a stable cut is always found even if it is only the single articulation vertex.
+This can be done by choosing a vertex that is not in all the rigid components of the graph.
 
 %
 \Cref{alg:stableCutFlexible}
 is implemented and contributed as part of this thesis
-to PyRigi~\cite{pyrigi} in pull request~\cite{pyrigi_pr_stable_cuts}.
+to PyRigi~\cite{pyrigi} in pull request~\cite{pyrigi_pr_stable_cuts}
+as method \texttt{stable\_separating\_set}.
+Other helper and cuts related function
+were also implemented in the module \texttt{separating\_set.py}.
 

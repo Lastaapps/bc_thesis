@@ -13,31 +13,33 @@
 % - část úvodu, nebo vlastní kapitola
 % Obsah jen stručně
 
-The core concept of Rigidity Theory is a \emph{framework} of a simple graph \(G\).
-It is a realization of \(G\) into a \(d\)-dimensional plane \(p: V(G) \to \R^d\).
-A framework is \emph{\( d \)-flexible} if there exists a transformation
-that continuously translates some subset of vertices in such a way that
+The core concept of Rigidity Theory is a \emph{framework} which is
+a simple graph \(G\) with its a realization of \(G\)
+into a \(d\)-dimensional space \(p: V(G) \to \R^d\).
+A framework is \emph{\( d \)-flexible} if there exists
+a continuous deformation of \( p \) such that
 distances between neighboring vertices are preserved during the transformation.
 Otherwise, the framework is called \emph{\( d \)-rigid}.
 
-For \( d = 1 \) all the vertices are on a line
+It is known that for a graph either almost all realizations are \( d \)-flexible,
+or almost all realizations are \( d \)-rigid~\cite{generically_rigid_graphs}.
+A graph is \emph{(generically) rigid} if most of the realizations are \( 2 \)-rigid
+and \emph{(generically) flexible} if most of the realizations are \( 2 \)-flexible.
+As there may be some realizations of the other type,
+we talk about paradoxical flexibility.
+
+For \( d = 1 \), all the vertices are on a line
 and any vertex deviation necessarily changes distances (if the graph is connected).
 %
 For \( d \ge 3 \) we can map all the vertices except one onto a line and
 rotate the vertex around the line.
 %
 The interesting case is when \( d = 2 \) --- a mapping into a plane.
-It is known that a graph has most of the realizations
-either \( 2 \)-flexible, or \( 2 \)-rigid,
-still there may be some realizations of the other type~\cite{generically_rigid_graphs}
---- we talk about paradoxical flexibility.
-A graph is \emph{(generically) rigid} if most of the realizations are \( 2 \)-rigid
-and \emph{(generically) flexible} if most of the realizations are \( 2 \)-flexible.
 
-An example application of the Rigidity Theory is a squadron of drones
+An illustrative application of the Rigidity Theory is a squadron of drones
 where the drones can measure distance to their close neighbors.
 Can we determine the locations of all the drones
-down to translation and rotation of the whole squadron
+up to translation and rotation of the whole squadron
 just from such information?
 
 For similar problems in the plane,
@@ -48,16 +50,17 @@ and it may just happen that the drones form such a \( 2 \)-flexible framework.
 
 In efforts to find such paradoxical realizations,
 a new edge coloring was defined~\cite{legersky_original}.
-A \emph{NAC-coloring} is an edge coloring of a graph by \( \red \) and \( \blue \)
+A \emph{NAC-coloring} (where NAC stands for ``no almost cycle'')
+is an~edge coloring of a graph by \( \red \) and \( \blue \)
 such that both the colors are used and there is no almost cycle formed.
 An \emph{almost cycle} is a cycle in the colored graph such that exactly one
 edge of the cycle is colored \( \red \) or exactly one edge is colored \( \blue \).
-Such coloring exists if and only if the graph has a flexible realization.
+Such coloring exists if and only if the graph has a flexible realization~\cite{legersky_original}.
 This provides a simple but strong tool to decide whenever a graph has
-a flexible realization even if it is rigid.
-As shown later in the thesis, one can check in polynomial time if a coloring
-given is a NAC-coloring.
-Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring.
+a flexible realization even if it is (generically) rigid.
+As shown later in the thesis, one can check in polynomial time
+if a given coloring is a NAC-coloring.
+Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring~\cite{np_complete}.
 
 \begin{figure}[ht]
 	\centering
@@ -88,30 +91,33 @@ Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring.
 	\label{fig:3prism}
 \end{figure}
 
-A nice example for NAC-coloring showcase is the prism graph~\Cref{fig:3prism},
+A nice example for NAC-coloring showcase is the 3-prism graph in~\Cref{fig:3prism},
 a graph formed from two triangles with three interconnecting edges.
 Such graph is rigid, still it has a NAC-coloring and flexible realizations.
 The flexible realizations are all the realization where
 the triangles are identical except for translation.
-You can check yourself that there are
-no other NAC-colorings except the symmetric one.
+It can be easily seen that there are
+no other NAC-colorings except for the one, where the colors are swapped.
 
-The goals of this thesis are to provide an algorithm
+Among the goals of this thesis is to provide an algorithm
 that can find all the NAC-colorings of a graph.
-Multiple heuristics will be used to significantly
+Multiple heuristics are used to significantly
 reduce the runtime of the algorithm.
 We also provide parametrized approach where complexity can be reduced for graphs
 with low internal structural complexity (tree width).
 We also show that the problem of deciding if a graph has a NAC-coloring
 is NP-complete even on graphs with maximal degree five.
-Later also show relation to stable cuts~\cite{stable_cuts_2v_4}.
-Code implemented in this thesis will enrich the existing PyRigi~\cite{pyrigi}
-library for Rigidity Theory.
+%
+The relation of NAC-coloring with stable cuts~\cite{stable_cuts_2v_4} is presented
+and algorithm for stable cut search is described and implemented.
+%
+The code implemented in this thesis enriches PyRigi~\cite{pyrigi}
+library used for research in Rigidity Theory.
 Currently, there are no such algorithms implemented in PyRigi itself,
-the only known implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
+the only available implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
 We compare our implementation performance with FlexRiLoG and also compare
 individual heuristics among each other.
-Multiple relevant graph classes will be considered.
+Multiple relevant graph classes are considered.
 
 We summarize and extend our previous research done
 on the topic in~\cite{my_paper}.

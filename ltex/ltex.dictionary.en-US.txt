@@ -34,3 +34,4 @@ SageMath
 CPython
 Satisfiability
 satisfiability
+Pollaczek-Geiringer

@@ -1,5 +1,5 @@
 \chapter{NP-completeness on graphs with maximal degree five}%
-\label{chapter:NP}
+\label{chapter:np}
 
 \begin{chapterabstract}
 
@@ -29,11 +29,11 @@ In this section we describe the main idea and gadgets used
 in the original proof of NAC-coloring NP-completeness~\cite{np_complete}.
 
 First, for a formula \( \phi \) we create a graph \( G_\phi \).
-Alongside the graphs an edge-mapping is introduced mapping into the literals
+Alongside the graph an edge-map is introduced mapping into the literals
 of \( \phi \). Recall that for an elementary clause \( x_i \) the literals
 are both \( x_i \) and \( \neg x_i \). We denote \( \lnot x_i \) by \( \bar{x}_i \).
 There are also literals \( t \) and \( f \) for \( \true \) and \( \false \).
-Note, that the end goal is to color literals where \( \true \) is assigned \( \blue \)
+Note, that the goal is to color literals where \( \true \) is assigned \( \blue \)
 and \( \false \) is assigned \( \red \).
 
 To construct \( G_\phi \) for each literal \( x_i, \bar{x}_i\) and \( t, f \),
@@ -92,7 +92,7 @@ The paper~\cite{np_complete} then introduces a \emph{connecting element} gadget.
 \end{figure}
 %
 Now, for each edge in \( G_\phi \) we add a connecting element gadget.
-The edge labeled \WLOG{} by \( x_i \) is identified with the left most
+The edge labeled by \( x_i \) is identified with the left most edge
 of the gadget in \Cref{fig:np_gadget_connecting},
 Then the right most edge is identified with the connecting edge corresponding to literal \( x_i \).
 The top most edge is identified with the connecting edge corresponding to literal \( \bar{x}_i \).
@@ -133,6 +133,8 @@ from \( x_i \) section to \( x_i \) the other \( x_i \) section.
 As there are at least two connecting elements, at least two edges of each color are in the cycle.
 Therefore, the cycle is not an almost cycle.
 
+\todo[inline]{Analyze maximal degree in the graph}
+
 
 \section{Graphs with maximal degree five}
 
@@ -141,6 +143,13 @@ degree of vertices in the graph. The vertices incident to the connecting edges
 have high degree, propositional to the number of clauses.
 We propose different gadgets where we bound the maximal degree.
 We already presented this proof in our previous paper~\cite{my_paper}.
+
+%
+\begin{definition}%
+	\label{def:2-tree}
+	A \emph{2-tree} is a graph formed by merging triangles by edge identification.
+\end{definition}
+%
 
 \begin{theorem}[\cite{my_paper}]%
 	\label{theorem:nac-deg-5}
