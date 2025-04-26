@@ -578,7 +578,7 @@ let \( e = \{u, v\} \) be the only edge added in the step, \( e \in E_t \setminu
 We will discuss all the possible cases that must be fulfilled for both colors,
 otherwise the resulting value for the state given is zero.
 Interactions between components of different colors are of no interest for us.
-We state conditions for a single color, \WLOG{} let the edge \( e \) be \( \blue \):
+We state conditions for a single color, w.l.o.g.\ let the edge \( e \) be \( \blue \):
 %
 \begin{description}
 	\item[Edge lies in a \( \blue \) connected component]
@@ -680,7 +680,7 @@ Let for \( i \in {1, 2} \)
 	               & \qquad \exists p_1^\prime, p_2^\prime \in P_{i,a} : (p_1^\prime, p_2^\prime) \in R_{i,a} \land p_1^\prime \subseteq p_1 \land p_2^\prime \subseteq p_2\}
 \end{align*}
 %
-and \WLOG{} let \( R_a \coloneqq R_{1,a} \).
+and w.l.o.g.\ let \( R_a \coloneqq R_{1,a} \).
 Then we define mapping \( M \) as \[ M(s_1, s_2) = (P_\red, R_\red, P_\blue, R_\blue). \]
 
 We follow with mapping \( N \) that states if the merge done by \( M \) is valid.
@@ -934,7 +934,7 @@ operations needed in the \IntroduceVertexNode{}.
 %
 \begin{proof}
 	For contradiction suppose that such state is valid. The edge \( e \)
-	has to be either \( \red \) or \( \blue \). Let \WLOG{} \( e \) be colored \( \blue \).
+	has to be either \( \red \) or \( \blue \). Let w.l.o.g.\ \( e \) be colored \( \blue \).
 	That means that both \( u, v \) are in the same \( \blue \) connected component.
 	But the state \( s \) states that \( u, v \) do not share a \( \blue \) connected component.
 	This is contradiction and such state \( s \) is therefore not acceptable
@@ -960,7 +960,7 @@ as an edge forms a trivial monochromatic class.
 \begin{proof}
 	For contradiction suppose that such state is valid. The edges \( E_M \)
 	has to be either \( \red \) or \( \blue \).
-	Let \WLOG{} edges in \( E_M \) be colored \( \blue \).
+	Let w.l.o.g.\ edges in \( E_M \) be colored \( \blue \).
 	That means that all vertices in \( U \) are in the same \( \blue \) connected component
 	and the edges are from a connected monochromatic component.
 	But the state \( s \) states that there is a vertex \( u \in U \)

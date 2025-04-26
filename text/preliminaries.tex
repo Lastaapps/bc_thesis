@@ -119,8 +119,8 @@ in an edge coloring \( \delta \).
 	are induced subgraphs of \( G \).
 \end{lemma}
 %
-The idea is quite simple --- if there is \WLOG{} \( \blue \) edge \( e \) incident to
-two vertices \( u, v \) sharing the same connected component in \( G[E_\red] \),
+The idea is quite simple --- if there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} \)
+and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( u \)-\( v \)-path in \( G[E_\red] \)
 and the edge \( e \).
 
@@ -157,9 +157,8 @@ In algorithms related to NAC-coloring search it is beneficial
 to reduce the search space. Often we know that if colors differ for some
 set of edges, the resulting coloring cannot be a NAC-coloring.
 
-If there is a \( C_3 \) (a triangle) as a subgraph of \( G \)
-all the edges of \( C_3 \) must map to the same color.
-Otherwise, two edges of \( C_3 \) are \WLOG{} \( \red \) and one is \( \blue \).
+All the edges of a 3-cycle subgraph \( C_3 \) must map to the same color.
+Otherwise, two edges of \( C_3 \) are w.l.o.g.\ \( \red \) and one is \( \blue \).
 Therefore, \( C_3 \) forms an almost cycle.
 This idea can be expanded further to neighboring images.
 %
