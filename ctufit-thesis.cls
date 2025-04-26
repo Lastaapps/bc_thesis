@@ -122,8 +122,6 @@
 \fi
 % colours end
 
-% \RequirePackage{hyperref}[2020/05/15]
-
 \DeclareRobustCommand{\ctufittitle}[1]{
 	\def\thectufittitle{#1}
 	\title{#1}

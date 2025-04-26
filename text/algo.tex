@@ -28,7 +28,7 @@ and check each of them in polynomial time using the following lemma.
 We call this check \IsNACColoring{}$(G, E_r, E_b)$.
 
 \begin{lemma}[{\cite[Lemma~2.4]{GLS2019}}]
-	\label{lemma:is_NAC_coloring}
+	\label[lemma]{lemma:is_NAC_coloring}
 	%
 	Let $G$ be a graph and $\delta: E(G) \to \{\red, \blue\}$ be a surjective edge coloring.
 	Let $E_r$ and $E_b$ be the red and blue edges of $G$ respectively.
@@ -53,7 +53,7 @@ Namely, we aim to find a partition of the edge set such that each part is necess
 in every NAC-coloring and the number of parts is as small as possible.
 
 \begin{definition}%
-	\label{def:NACvalid}
+	\label[definition]{def:NACvalid}
 	%
 	An equivalence relation $\sim$ on the edge set
 	of a graph $G$ is called \emph{NAC-valid}
@@ -70,7 +70,7 @@ The following lemma describes a way how to construct a new NAC-valid relation fr
 with possibly less monochromatic classes.
 
 \begin{lemma}%
-	\label{lemma:two_edges_and_component}
+	\label[lemma]{lemma:two_edges_and_component}
 	%
 	Let $\sim$ be a NAC-valid relation on $G$ and
 	$\sim^\prime$ be a relation on $E(G)$ given by
