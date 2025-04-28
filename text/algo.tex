@@ -13,11 +13,6 @@
 
 \end{chapterabstract}
 
-% Attack plan
-% smart split?
-% merging
-
-
 The goal of this section is to propose algorithms to find some or all NAC-colorings of a given graph.
 After recalling the solution used in \flexrilog{},
 we describe an improvement of the idea of \trcon{} components in \Cref{sec:NACvalid}
@@ -323,7 +318,9 @@ To apply the idea on a graph $G$, we:
 	      and filter it to get $\nac{G}$.
 \end{enumerate}
 %
-\todo[inline]{Make sure we say it is simpler when there is only a single vertex as intersection}
+It is also important to note that in case the merged subgraphs
+have no vertices in common, we get the whole NAC-product.
+No filtering is needed in such case.
 %
 In the following two subsections we discuss possible heuristics
 for these two phases.
@@ -563,26 +560,22 @@ all the subgraph creation strategies and therefore can be easily added.
 \subsection{Subgraph merging}%
 \label{sec:merging}
 
-% linear
-% log
-% promising cycles
-% min max
-
 After constructing the list of edge-disjoint subgraphs,
 we compute all the NAC-colorings for each of them using
 the naive algorithm with monochromatic classes
 and improved check on cycles.
 Then the results need to be merged to obtain the NAC-colorings of the original graph
 using the NAC-product.
+
 Since checking every coloring in the NAC-product is a costly operation,
 we try to minimize the work that has to be done.
 The complexity of the task grows with the size of
 the merged subgraphs (as \IsNACColoring{} depends on the size of the graph checked)
-and also with the number of NAC-colorings found in each subgraph.
-It is also important to note that in case the merged subgraphs
-have no vertices in common, we get the whole NAC-product.
+and also with the number of NAC-colorings found in each subgraph
+(which can grow exponentially).
 
-We describe two strategies.
+We describe multiple merging strategies.
+As before, we extend on the list we presented in~\cite{my_paper}.
 The first approach \MergeLinear{} is
 to take the sequence of subgraphs and merge them one by one.
 We merge the first and the second subgraph, then we merge this result with the
@@ -593,3 +586,56 @@ Another approach called \SharedVertices{} always merges the two subgraphs that
 have the most vertices in common with the goal
 to create as many new cycles as possible.
 
+Next approach called \Log{} tries to merge subgraphs in a tree like manner.
+Consider we have an order list of subgraphs,
+for simplicity let its size be \( 2^c \) for some \( c \in \N \).
+Now, the list is split into pairs of subgraphs and NAC-colorings
+of the subgraphs in pairs are merged. With that, a new list is created.
+The continues until we have the original graph and all its NAC-colorings.
+Note, that the approach makes little sense if~\Cref{alg:smart_split}
+is not also enabled.
+
+We consider the number of monochromatic components
+that induces a given subgraph as its size.
+One heuristic is that runtime can be reduced
+when first small subgraphs are merged with large subgraphs
+rather than large graphs with large subgraphs, as merging large graphs is expensive.
+This is what \MinMax{} strategy does.
+First smallest subgraph is merged with the largest one,
+then second smallest with the second largest and so on.
+A new list is created, and the same procedure is run on repeatedly.
+
+Following strategy is called \PromissingCycles{}.
+The strategy tries to guess which subgraphs
+have the most potential almost cycles when joined.
+For each pair of subgraphs we find cycles in joined subgraph using
+the same routine as in \Cref{sec:small_cycles}.
+A joined graph with the maximal number of cycles is chosen,
+otherwise we score as follows:
+%
+\begin{itemize}
+	\item If subgraphs share a vertex, the score grows.
+	\item Smaller joined graphs get higher priority.
+	\item Subgraphs with more common vertices get higher priority.
+\end{itemize}
+%
+
+All the previous merging strategies did not employ the number of NAC-colorings
+of individual subgraphs in merging decisions.
+That is on purpose as we do not know the number of NAC-colorings in advance.
+With that, if only a single NAC-coloring is needed,
+in our implementation we can use lazy iterators that
+find a NAC-coloring of a subgraph and wait till another coloring is requested.
+If all the NAC-colorings are desired or if we expect the graph to have no NAC-coloring,
+all NAC-colorings of subgraphs need to be found anyway.
+In such cases we can employ heuristics that take advantage of such additional knowledge.
+
+Our preferred strategy of this kind is called \Score{}
+In each iteration a score is computed for each pair of subgraphs in the current list.
+For subgraphs \( G_1, G_2 \) the score is computed by formula
+\( \nnac{G_1} \cdot \nnac{G_2} \cdot \text{sizeof}(G_1 \cup G_2) \).
+The score approximates the amount of work needed,
+therefore the pair with the lowest score is chosen.
+
+We also tried approaches based on dynamic programming and recursive optimization.
+Unfortunately, these approached do not scale well to larger instances.

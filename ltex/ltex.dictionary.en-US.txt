@@ -35,3 +35,4 @@ CPython
 Satisfiability
 satisfiability
 Pollaczek-Geiringer
+Subgraphs
