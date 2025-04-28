@@ -152,7 +152,9 @@
 \usepackage{hyperref}
 \usepackage[nameinlink]{cleveref}
 \usepackage{todonotes}
-\usepackage{algorithm,algorithmicx,algpseudocode}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{./text/bib-database.bib}
@@ -176,10 +178,14 @@
 \DeclareMathOperator{\partition}{\mathbf{partition}}
 \DeclareMathOperator{\cycle}{\mathbf{cycle}}
 \DeclareMathOperator{\NACcond}{\mathbf{NACcond}}
+
 \newcommand{\NaiveCycles}{\textsc{NaiveCycles}}
 \newcommand{\None}{\textsc{None}}
 \newcommand{\Neighbors}{\textsc{Neighbors}}
 \newcommand{\NeighborsDegree}{\textsc{NeighborsDegree}}
+\newcommand{\CyclesMatchChunks}{\textsc{CyclesMatchChunks}}
+\newcommand{\KernighanLin}{\textsc{Kernighan-Lin}}
+\newcommand{\Cuts}{\textsc{Cuts}}
 \newcommand{\CycleMask}{\textsc{CycleMask}}
 \newcommand{\IsNACColoring}{\textsc{IsNACColoring}}
 \newcommand{\MergeLinear}{\textsc{Linear}}
@@ -390,14 +396,14 @@
 \listoftodos{}
 \newpage{}
 
-\include{./text/introduction}
+%\include{./text/introduction}
 \include{./text/preliminaries}
-\include{./text/np}
-\include{./text/fpt_algo}
-\include{./text/stable_cuts}
-% \include{./text/algo}
-% \include{./text/benchmarks}
-\include{./text/results}
+%\include{./text/np}
+%\include{./text/fpt_algo}
+%\include{./text/stable_cuts}
+\include{./text/algo}
+%\include{./text/benchmarks}
+%\include{./text/results}
 % \include{./text/examples}
 \todo[inline]{Sjednotit reference - jména lidí a časopisů}
 

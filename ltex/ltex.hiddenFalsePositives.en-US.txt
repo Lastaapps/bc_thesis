@@ -47,3 +47,8 @@
 {"rule":"IT_IS","sentence":"^\\QThe core concept of Rigidity Theory is a framework which is a simple graph \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with its a realization of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q into a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q-dimensional plane \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"IT_IS","sentence":"^\\QThe core concept of Rigidity Theory is a framework which is a simple graph \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with its a realization of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q into a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q-dimensional space \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"WHOSE_DT","sentence":"^\\QThe papers \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q do not provide an algorithm to find a stable cut (if present) for graphs where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, they only provide list of claims from whose a stable cut set can be found.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qmonochromatic classes.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe strategy with the least overhead costs is to take the chunks of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q consecutive monochromatic classes in the vertex input list (heuristic ).\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe start with a heuristic that we call , its pseudocode is in \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"COMMA_PERIOD","sentence":"^\\Q., .\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe also tried approach , where Kernighan-Lin algorithm is replaced by more classical flow based edge cuts to split graph into parts.\\E$"}

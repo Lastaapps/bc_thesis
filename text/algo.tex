@@ -3,15 +3,22 @@
 
 \begin{chapterabstract}
 
-	As shown before it is NP-complete to decide if a graph has a NAC-coloring.
-	The trivial idea how to search for a NAC-coloring is to try all the colorings
+	As shown before it is NP-complete to decide if a graph has a NAC-coloring,
+	therefore we cannot hope for an algorithm that can solve this problem in polynomial time.
+	The trivial idea how to search for NAC-colorings is to
+	try all the \( \red \)-\( \blue \)-edge colorings
 	and check in polynomial time if a coloring given is a NAC-coloring.
-	In this chapter we propose multiple optimizations
+	In this chapter we propose multiple optimizations to the naive approach
 	and an algorithm that significantly outperforms naive approach in general case.
 
 \end{chapterabstract}
 
-The goal of this section is to propose algorithms to find one or all NAC-colorings of a given graph.
+% Attack plan
+% smart split?
+% merging
+
+
+The goal of this section is to propose algorithms to find some or all NAC-colorings of a given graph.
 After recalling the solution used in \flexrilog{},
 we describe an improvement of the idea of \trcon{} components in \Cref{sec:NACvalid}
 and checking whether a coloring is a NAC-coloring in \Cref{sec:small_cycles}.
@@ -22,37 +29,56 @@ in \Cref{sec:decomposition,sec:merging} respectively.
 Although the proposed approaches are written so that all NAC-colorings are generated,
 the existence of a NAC-coloring can be checked easily by stopping after finding a first one.
 
+This chapter is based on our previous work in~\cite{my_paper},
+here we describe the approaches used more in detail
+and also describe other approaches that do not work as well the approaches also
+shown in the paper. We evaluate performance of the algorithm in \Cref{chapter:benchmarks}.
+
+\section{Naive approach}
+
 A naive approach to list all NAC-colorings is to consider
 all $2^{|E(G)|}$ surjective edge colorings of graph $G$ by red and blue
-and check each of them in polynomial time using the following lemma.
+and check each of them in polynomial time using \Cref{lemma:is_nac_coloring}.
 We call this check \IsNACColoring{}$(G, E_r, E_b)$.
+To remind the reader, the idea is quite simple
+--- first we create subgraphs \( G[E_\red], G[E_\blue] \).
+If there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} \)
+and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
+an almost cycle is formed from a \( \red \) \( u \)-\( v \)-path in \( G[E_\red] \)
+and the \( \blue \) edge \( \{u, v\} \).
 
-\begin{lemma}[{\cite[Lemma~2.4]{GLS2019}}]
-	\label[lemma]{lemma:is_NAC_coloring}
-	%
-	Let $G$ be a graph and $\delta: E(G) \to \{\red, \blue\}$ be a surjective edge coloring.
-	Let $E_r$ and $E_b$ be the red and blue edges of $G$ respectively.
-	The coloring~$\delta $ is a NAC-coloring if and only if
-	the connected components of $G[E_r]$ and $G[E_b]$\footnote{
-		By $G[F]$ for $F\subset E(G)$ we mean the edge-induced subgraph,
-		namely, the subgraph of $G$ having the edges $F$ and the vertex set
-		being the end vertices of the edges in $F$.}
-	are induced subgraphs of $G$.
-	%
-\end{lemma}
+This algorithm runs in \( O(2^{|E(G)|}) \) time.
+It can be sped up dramatically by considering sets of edges instead of individual edges.
+For some sets of edges, we can easily see that all the edges in the set need to share
+the same color in every NAC-coloring.
+Now we can color the whole sets at once
+and therefore reduce the time complexity to \( O(2^{c}) \)
+where \( c \) is the number of described sets.
+One example of such set are \trcon{} components
+as defined in~\Cref{def:triangle_connected_component}.
+In the following section we extend upon the idea of \trcon{} components
+to reduce the search space even further.
+
+Another simple but important observation is that the whole search space \( O(2^{c}) \)
+does not need to be traversed as a NAC-coloring with colors swapped is again a NAC-coloring.
+Therefore, we fix color of one set of edges and also generate NAC-colorings with colors swapped.
+This cuts our runtime in half to \( O(2^{c-1}) \).
+% TODO cite https://www.youtube.com/watch?v=FZ4qeJly1g0
 
 The algorithm implemented in \flexrilog{}
-considers only colorings such that \trcon{} components are monochromatic.
+considers only colorings such that \trcon{} components are monochromatic
+and also ignores NAC-colorings with colors swapped.
 
-\subsection{NAC-valid relations}%
+\section{NAC-valid relations}%
 \label{sec:NACvalid}
 
 While the idea of \trcon{} components is that 3-cycles are monochromatic,
-there are other cases when two edge have to have the same color, which can further reduce the search space.
+there are other cases when two edges have to have the same color,
+which can further reduce the search space.
 Namely, we aim to find a partition of the edge set such that each part is necessarily monochromatic
 in every NAC-coloring and the number of parts is as small as possible.
 
-\begin{definition}%
+\begin{definition}[NAC-valid~\cite{my_paper}]%
 	\label[definition]{def:NACvalid}
 	%
 	An equivalence relation $\sim$ on the edge set
@@ -61,15 +87,34 @@ in every NAC-coloring and the number of parts is as small as possible.
 	$\forall e_1, e_2 \in E(G) :
 		e_1 \sim e_2 \Rightarrow \delta (e_{1}) = \delta (e_{2})$.
 	An equivalence class of a NAC-valid relation is called a \emph{monochromatic class}.
-	The \emph{vertices} of a monochromatic class $M$ are the vertices of the subgraph $G[M]$.
 	%
 \end{definition}
+%
+With that, we also define terms used with monochromatic classes:
+%
+\begin{itemize}
+	\item The \emph{vertices} of a monochromatic class $M$
+	      are the vertices of the subgraph $G[M]$.
+	\item We call two distinct monochromatic classes \( M_1, M_2 \) \emph{neighboring},
+	      if they share at least one common vertex.
+	      % if the intersection of the vertices of \( M_1, M_2 \) is non-empty.
+	\item The \emph{degree} of a monochromatic class \( M \) is the number of
+	      monochromatic classes that are neighbors of \( M \).
+\end{itemize}
+%
+\begin{observation}%
+	\label[observation]{observ:monochromatic_classes_graph}
+	Monochromatic classes behave like a graph
+	where monochromatic classes are vertices and there is an edge incident to
+	two monochromatic classes if they are neighboring.
+\end{observation}
+%
 
 Clearly, the relation inducing \trcon{} components is NAC-valid.
 The following lemma describes a way how to construct a new NAC-valid relation from another one
 with possibly less monochromatic classes.
 
-\begin{lemma}%
+\begin{lemma}[\cite{my_paper}]%
 	\label[lemma]{lemma:two_edges_and_component}
 	%
 	Let $\sim$ be a NAC-valid relation on $G$ and
@@ -81,6 +126,7 @@ with possibly less monochromatic classes.
 	and all other edges are in the same monochromatic class of $\sim$.
 	Then the reflexive-transitive closure of $\sim^\prime$ is NAC-valid.
 \end{lemma}
+%
 \begin{proof}
 	%
 	The condition in \Cref{def:NACvalid} is preserved under taking reflexive-transitive closure,
@@ -89,70 +135,118 @@ with possibly less monochromatic classes.
 	%
 \end{proof}
 
-Note that various situations can occur: $e_1$ or $e_2$ is in the same a monochromatic class of~$\sim$ as the rest of $C$,
-or none if them is.
-% , see \Cref{fig:two_edges_and_component}.
+Note that various situations can occur:
+$e_1$ or $e_2$ is in the same a monochromatic class of~$\sim$ as the rest of $C$,
+or neither of them is, see \Cref{fig:two_edges_and_component}.
 If each monochromatic class of $\sim$ induces a connected subgraph,
 then the edges $e_1$ and $e_2$ can be supposed to be incident,
 but this is not the case in general.
 For instance one could introduce a NAC-valid relation such that both triangles in a 3-prism subgraph
 are in the same monochromatic class, since they have the same color in all NAC-colorings of the 3-prism.
 
-% \begin{figure}[h]
-% 	\centering
-% 	\begin{tikzpicture}[scale=2]
-% 		\node[vertex] (0) at (0, 0) {};
-% 		\node[vertex] (1) at (1, 0.5) {};
-% 		\node[vertex] (2) at (2, 0) {};
-% 		\node[vertex] (3) at (0.5, 0.866) {};
-% 		\node[vertex] (4) at (1.5, 0.866) {};
-% 		\draw[redge] (0)edge(1) (1)edge(2) (0)edge(3) (1)edge(3) (1)edge(4) (2)edge(4) (3)edge(4)  ;
-% 		\draw[edge]  (0)edge(2)  ;
-% 	\end{tikzpicture}
-% 	\qquad
-% 	\begin{tikzpicture}[scale=2]
-% 		\node[vertex] (0) at (0, 0) {};
-% 		\node[vertex] (1) at (1, 0.5) {};
-% 		\node[vertex] (2) at (2, 0) {};
-% 		\node[vertex] (3) at (0.5, 0.866) {};
-% 		\node[vertex] (4) at (1.5, 0.866) {};
-% 		\node[vertex,label={north:$v$}] (5) at (1, 0) {};
-% 		\draw[redge] (0)edge(1) (1)edge(2) (0)edge(3) (1)edge(3) (1)edge(4) (2)edge(4) (3)edge(4)  ;
-% 		\draw[edge]  (0)edge(5) (2)edge(5)  ;
-% 	\end{tikzpicture}
-% 	\caption{An edge with adjacent vertices in a monochromatic class (left) and
-% 		two edges with adjacent vertices in a monochromatic class (right).}%
-% 	\label{fig:two_edges_and_component}
-% \end{figure}
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}[scale=2]
+		\node[vertex] (0) at (0, 0) {};
+		\node[vertex] (1) at (1, 0.5) {};
+		\node[vertex] (2) at (2, 0) {};
+		\node[vertex] (3) at (0.5, 0.866) {};
+		\node[vertex] (4) at (1.5, 0.866) {};
+		\draw[redge] (0)edge(1) (1)edge(2) (0)edge(3) (1)edge(3) (1)edge(4) (2)edge(4) (3)edge(4)  ;
+		\draw[edge]  (0)edge(2)  ;
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}[scale=2]
+		\node[vertex] (0) at (0, 0) {};
+		\node[vertex] (1) at (1, 0.5) {};
+		\node[vertex] (2) at (2, 0) {};
+		\node[vertex] (3) at (0.5, 0.866) {};
+		\node[vertex] (4) at (1.5, 0.866) {};
+		\node[vertex,label={north:$v$}] (5) at (1, 0) {};
+		\draw[redge] (0)edge(1) (1)edge(2) (0)edge(3) (1)edge(3) (1)edge(4) (2)edge(4) (3)edge(4)  ;
+		\draw[edge]  (0)edge(5) (2)edge(5)  ;
+	\end{tikzpicture}
+	\caption{An edge with adjacent vertices in a monochromatic class (left) and
+		two edges with adjacent vertices in a monochromatic class (right).}%
+	\label{fig:two_edges_and_component}
+\end{figure}
 
 Notice that application of \Cref{lemma:two_edges_and_component} corresponds
 to merging the monochromatic classes of $e_1$ and $e_2$.
 We propose to use the following NAC-valid relation:
 we start with the \trcon{} components and then apply the following two steps
 as long as there is some change:
+%
 \begin{enumerate}
-	\item If there is an edge $uv$ such that $u$ and $v$ are vertices of
-	      the same monochromatic class $M$, then merge $M$ with the monochromatic class of $uv$.
-	\item If there are edges $uv$ and $vw$ such that $u$ and $w$ are vertices of
-	      the same monochromatic class, then merge the monochromatic classes of $uv$ and $vw$.
+	\item If there is an edge \( \{u, v\} \) such that $u$ and $v$ are vertices of
+	      the same monochromatic class $M$, then merge $M$ with the monochromatic class of \( \{u, v\} \).
+	\item If there are edges \( \{u, v\} \) and \( \{v, w\} \) such that $u$ and $w$ are vertices of
+	      the same monochromatic class, then merge the monochromatic classes of \( \{u, v\} \) and \( \{v, w\} \).
 \end{enumerate}
+%
 Every \trcon{} component induces a connected subgraph and also the two operations preserve
 the fact that each monochromatic class induces a connected subgraph.
 Hence, the resulting partition indeed forms monochromatic classes
 of a NAC-valid relation by \Cref{lemma:two_edges_and_component}.
 The construction can be done in polynomial time
-and implemented efficiently using a Union-find data structure,
-see also \Cref{alg:create_monochromatic classes} in \Cref{sec:pseudocode}.
+and implemented efficiently using a Union-find data structure
+as presented in the pseudocode of \Cref{alg:create_monochromatic classes}.
+\todo[inline]{Consider moving \Cref{alg:create_monochromatic classes} to attachments}
 
-Searching all NAC-colorings naively, we have to test $2^{m-1}$ colorings,
-where $m$ is the number of monochromatic classes (we can fix the color of one class).
-Hence, using a good NAC-valid relation can reduce the computation time significantly.
+\begin{algorithm}
+	\caption{Create Monochromatic classes~\cite{my_paper}}%
+	\label{alg:create_monochromatic classes}
+	\begin{algorithmic}[1]
+		\Require{} $G$
 
-\subsection{Small cycles}%
+		\Ensure{} $P \gets ()$
+		\Comment{} list of monochromatic classes
+
+		\State{} $U \gets \Call{CreateUnionFind}{E(G)}$
+		\Comment{} create Union-find data structure
+
+		\ForAll{$e_{1},e_{2},e_{3} \in \Call{FindAllTriangles}{G}$}
+		\State{} $U \gets \Call{Join}{U, e_{1}, e_{2}, e_{3}}$
+		\EndFor{}
+
+		\State{} $U^\prime \gets \emptyset$
+		\While{$U^\prime \not= U$}
+		\State{} $U^\prime \gets U$
+		\Comment{} as long as changes happen
+
+		\State{} $\lambda : V(G) \to \mathcal{P}(E(G))$
+		\Comment{} monochromatic classes a vertex is member of,
+		\State{}
+		\Comment{} classes are represented by a single edge, defaults to $\emptyset$
+
+		\ForAll{$uv \in E(G)$}
+		\State{} $e^\prime \gets \Call{Find}{U, uv}$
+		\State{} $\lambda(u) \gets \lambda(u) \cup \{e^\prime\}$
+		\State{} $\lambda(v) \gets \lambda(v) \cup \{e^\prime\}$
+		\EndFor{}
+
+		\ForAll{$v \in V(G)$}
+		\If{$\exists u, w \in N(v) : \lambda(u) \cap \lambda(w) \not= \emptyset$}
+		\State{} $U \gets \Call{Join}{U, vu, vw}$
+		\Comment{} edges are over a same component
+		\EndIf{}
+		\EndFor{}
+		\EndWhile{}
+
+		\State{} $P \gets \Call{Sets}{U}$
+
+	\end{algorithmic}
+\end{algorithm}
+
+With these improvements the complexity of the naive algorithm can be often
+reduced even further.
+
+\section{Small cycles}%
 \label{sec:small_cycles}
 
 The check \IsNACColoring{} can be quite computationally expensive
-considering it is called for every possible coloring.
+considering it is called for every possible coloring,
+even though it can be implemented as simple breadth-first-search.
 An optimization we use is to keep a list of shorter cycles in the graph and
 check if they are almost monochromatic cycles before doing the full check.
 
@@ -161,23 +255,33 @@ in the number of monochromatic classes using bitwise arithmetic.
 One cycle $C$ can reject up to $\frac{1}{|E(C)|}$ colorings,
 which can be significant for small cycles.
 
+There are often multiple and many cycles of different lengths in the graph
+and for the algorithm, only a subset of them can be chosen.
+If we choose too few, performance is left on the table, if too much,
+we spend too much time checking the masks while saving little
+by avoiding \IsNACColoring{} checks.
+The number of cycles should also grow with the number of edges,
+resp.\ monochromatic classes.
+As stated above, smaller cycles are preferred.
+
+Following that, we propose the following strategy.
 Given a graph $G$ and $k,\ell\in \mathbb{N}$,
 we adopt the idea to monochromatic classes as follows:
 for every monochromatic class $M$ in $G$,
-we consider all edges $uv\in M$ such that there is a path from $u$ to $v$
+we consider all edges $\{u, v\} \in M$ such that there is a path from $u$ to $v$
 in $G - M$ that uses at most $k$ monochromatic classes.
 We pick up to $l$ cycles constructed from $uv$ with the corresponding
 path with the least number of used monochromatic classes.
 In our implementation, we take $k=4$ and $l=2$ cycles for every monochromatic class.
 
-\subsection{Combining NAC-colorings of subgraphs}%
+\section{Combining NAC-colorings of subgraphs}%
 \label{sec:combining}
 
-In some cases, a graph can be decomposed into subgraphs so that
+In our algorithm a graph is decomposed into subgraphs so that
 the NAC-colorings of the graph can be obtained from the NAC-colorings of the subgraphs.
 We introduce notation for this process of combining NAC-colorings of suitable subgraphs.
 
-\begin{definition}
+\begin{definition}[\cite{my_paper}]
 	%
 	Let $G$ be a graph with subgraphs $G_1, \dots, G_k$
 	s.\ t.\ $\bigcup_{i=1}^k E(G_i) =E(G)$.
@@ -194,7 +298,8 @@ We introduce notation for this process of combining NAC-colorings of suitable su
 	%
 \end{definition}
 
-Since the restriction of a NAC-coloring to a subgraph is a NAC-coloring or monochromatic,
+Since the restriction of a NAC-coloring of a graph
+to its subgraph is either a NAC-coloring or monochromatic,
 we have $\nac{G_{1} \cup G_{2}} \subseteq \CP(G_{1}, G_{2})$.
 If $G_1, \dots, G_k$ are the connected components of $G$,
 then $\nac{G} = \CP(G_1,\ldots, G_k)$.
@@ -207,19 +312,54 @@ In order to design a faster algorithm for searching for all NAC-colorings,
 we exploit the fact that for edge-disjoint graphs $G_1$ and $G_2$,
 it is straightforward to construct $\CP(G_{1}, G_{2})$ once we know $\nac{G_1}$ and $\nac{G_2}$.
 Then, we can get $\nac{G_{1} \cup G_{2}}$ by applying \IsNACColoring{}
-to each coloring in $\CP(G_{1}, G_{2})$, see also \Cref{alg:coloring_product} in \Cref{sec:pseudocode}.
+to each coloring in $\CP(G_{1}, G_{2})$, see also \Cref{alg:coloring_product}.
 This can significantly reduce the number of \IsNACColoring{} calls
-comparing to testing all red-blue-colorings of $G_{1} \cup G_{2}$.
+compared to testing all red-blue-colorings of $G_{1} \cup G_{2}$.
 To apply the idea on a graph $G$, we:
+%
 \begin{enumerate}
 	\item decompose $G$ into pairwise edge-disjoint subgraphs $G_1, \ldots, G_\ell$, and
 	\item compute the NAC-product $\CP(G_1, \dots, G_\ell)$ using $\nac{G_1}, \ldots, \nac{G_\ell}$
 	      and filter it to get $\nac{G}$.
 \end{enumerate}
+%
+\todo[inline]{Make sure we say it is simpler when there is only a single vertex as intersection}
+%
 In the following two subsections we discuss possible heuristics
 for these two phases.
 
+\begin{algorithm}
+	\caption{NAC-product with filtering}%
+	\label{alg:coloring_product}
+	\begin{algorithmic}[1]
+		\Require{} $G_1, G_2$
+		\Comment{} subgraphs
+		\Require{} $N_1, N_2$
+		\Comment{} NAC-colorings of the subgraphs (pairs of sets of edges)
 
+		\Ensure{} $G$
+		\Comment{} merged subgraphs
+		\Ensure{} $S \gets \emptyset$
+		\Comment{} the NAC-colorings of $G$
+
+		\State{} $G = (V(G_1)\cup V(G_2), E(G_1) \cup E(G_2))$
+
+		\State{} $N_1 \gets N_1 \cup \{(E(G_1), \emptyset), (\emptyset, E(G_1))\}$
+		\Comment{} the subgraphs can also be monochromatic
+		\State{} $N_2 \gets N_2 \cup \{(E(G_2), \emptyset), (\emptyset, E(G_2))\}$
+
+		\ForAll{$(E_{r_{1}}, E_{b_{1}}) \in N_1$}
+		\ForAll{$(E_{r_{2}}, E_{b_{2}}) \in N_2$}
+		\State{} $E_r \gets E_{r_{1}} \cup E_{r_{2}}$
+		\State{} $E_b \gets E_{b_{1}} \cup E_{b_{2}}$
+		\If{$\Call{IsNACColoring}{G, E_r, E_b}$}
+		% \Comment{} cycles check can be also used here
+		\State{} $S \gets S \cup \{(E_r, E_b)\}$
+		\EndIf{}
+		\EndFor{}
+		\EndFor{}
+	\end{algorithmic}
+\end{algorithm}
 
 \subsection{Subgraph decomposition}%
 \label{sec:decomposition}
@@ -227,24 +367,34 @@ for these two phases.
 On the input, we assume the list of monochromatic classes
 and an integer $k\geq 1$, and we output a list of subgraphs
 such that each has at most $k$ monochromatic classes.
-We describe some heuristics how to split a graph into edge disjoint subgraphs
-that perform well with the idea of the previous subsection.
+We describe some heuristics how to split a graph into edge disjoint subgraphs.
+Here in contrast with~\cite{my_paper} we also discuss heuristics
+that did not perform well.
+
+\subsubsection{\None{}}
 
 The strategy with the least overhead costs is to take the chunks of $k$ consecutive
-monochromatic classes in the input list (heuristic \None{}).
+monochromatic classes in the vertex input list (heuristic \None{}).
+Some synthetically generated graphs are formed in such a way
+that \None{} ends up performing as good as the other strategies,
+this strategy usually fails when the vertex input list is shuffled.
 
-Our goal is to maximize the number of suitable cycles in each
-subgraph as cycles may form almost cycles and those help us to reduce the search
-space.
-We call the following heuristic \Neighbors{},
-its pseudocode is in \Cref{alg:neighbors} in \Cref{sec:pseudocode}.
+Our general goal for the following strategies
+is to maximize the number of suitable cycles in each
+subgraph as cycles may form almost cycles and those help us
+to reduce the search space.
+
+\subsubsection{\Neighbors{}}
+
+We start with a heuristic that we call \Neighbors{},
+its pseudocode is in \Cref{alg:neighbors}.
 The algorithm aims to mimic breadth-first-search
 behavior while respecting monochromatic classes.
 The goal is to find monochromatic classes that are close together.
 Let $P$ be the list on monochromatic classes,
 for simplicity we assume that $k$ divides $|P|$.
 We will gradually divide the monochromatic classes into bags,
-the output are the subgraphs induced by the edges in each bag.
+the output are the subgraphs induced by the monochromatic classes in each bag.
 
 We start with $\frac{|P|}{k}$ empty bags
 and all vertices of the graph labelled $open$.
@@ -264,11 +414,159 @@ The other strategy \NeighborsDegree{} is based
 on the first and adds another rule ---
 if the number of neighbors match, the vertex with lower degree is chosen.
 
-Several other strategies have been tried, but they performed worse.
+\begin{algorithm}
+	\caption{Heuristic \Neighbors}%
+	\label{alg:neighbors}
+	\begin{algorithmic}[1]
+
+		\Require{} $G$
+		\Comment{} a graph
+		\Require{} $P$
+		\Comment{} monochromatic classes of $G$
+		\Require{} $k$, $b \gets |P|/k$
+		\Comment{} target size of bags, the number of bags
+
+		\Ensure{} $O \gets (B_1, \ldots, B_b)$
+		\Comment{} bags with monochromatic classes
+
+		\While{$P \ne \emptyset$}
+		\State{} $p \gets p \in P$
+		\State{} $P \gets P \setminus \{p\}$
+		\Comment{} random monochromatic class
+
+		\State{} $B \gets \underset{B_i \in O}{\arg\min} |B_i|$
+		\Comment{} the most empty bag
+
+		\State{} $used \gets \{{v \in M} \mid {M \in B } \}$
+		\Comment{} vertices already used by this bag
+		\State{} $open \gets  \{w \in N(u) \mid u \in used\} \setminus used $
+		\Comment{} neighbors, candidates for addition
+
+		\While{$|open| > 0 \land |B| < k$}
+
+		\State{} $best \gets \underset{u \in open}{\arg\max}|used \cap N(u)|$
+		\Comment{} vertices with the largest neighborhood
+
+		\For{$n \in N(best) \land |B| < k$}
+		\State{} $p \gets p \in P$ such that $\{best, n\} \in p$
+		\State{} $P \gets P \setminus \{p\}$
+
+		\State{} $B \gets B \cup \{p\}$
+
+		\State{} $used \gets used \cup \{v \mid {v \in p} \}$
+		\State{} $open \gets  \{w \in N(u) \mid u \in used\} \setminus used $
+		\EndFor{}
+		\EndWhile{}
+		\EndWhile{}
+	\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{\CyclesMatchChunks{}}
+
+Monochromatic classes are first ordered descending by their degree.
+Then cycles are found for each monochromatic class with the same procedure
+as described in \Cref{sec:small_cycles}.
+The algorithm, modified version of the breadth-first-search, goes as follows:
+when a stage starts, we take a component with the highest degree
+that has not been marked as used yet and add it to a queue.
+While the queue is non-empty, we pop the first monochromatic class,
+add it the result list and mark it as used.
+Then we traverse all the cycles (that we obtained before)
+corresponding to the component
+and add monochromatic components from the cycles to the queue.
+The stage ends when the queue is empty or when \( k \) monochromatic classes
+were marked as used. The whole process is repeated until
+all monochromatic classes are marked as used.
+
+\todo[inline]{Pseudocode, maybe?}
+
+\subsubsection{\KernighanLin{}, \Cuts{}}
+
+Kernighan-Lin algorithm~\cite{kernighan_lin} proposes a heuristic based algorithm
+for partitioning a graph into two parts. It tires to minimize the edge cut between
+the parts by iteratively swapping pairs of vertices from the parts.
+
+As noted in~\Cref{observ:monochromatic_classes_graph},
+monochromatic classes can be converted into a graph.
+In this strategy \KernighanLin{},
+Kernighan-Lin algorithm is recursively run to split the graph into parts till
+parts smaller than \( k \) are reached.
+We hope that smaller edge cuts will preserve more cycles among
+the monochromatic classes, that often also represent cycles in the real graph.
+
+We also tried approach \Cuts{}, where Kernighan-Lin algorithm is replaced by
+more classical flow based edge cuts to split graph into parts.
+With that, we loose the guarantee that the parts in recursive step
+are similar in size. The resulting components should still remain similar.
+
+Other strategies based on
+sorting monochromatic components by their degree
+or breadth-first-search were also tried,
+but with no meaningful results.
+
+\subsubsection{Smart split}
+
+We already talked how important is that the subgraphs have something in common
+while we perform the filtering of the coloring product. We also talked about the order of
+subgraphs and how do merging strategies interact with them.
+Goal of the following algorithm is to create and order subgraphs in a way that they usually
+share property that reduces the output size while running
+the filtering of the coloring product.
+
+The strategies for subgraph creation are generic --- they accept a graph and
+the list of sizes as input and output subgraphs. We exploit this property here. We use
+these strategies to divide the graph given in half by giving it appropriate
+sizes (the sum of first half of subgraph sizes and the sum of the rest).
+Then we split the subgraphs further until we reach desired graph sizes.
+We order the created subgraphs in the tree traversal order.
+By doing that we hope to ensure that most of the neighboring subgraph pairs share
+some vertices and therefore more cycles appear in the merged subgraph.
+
+Also note that \Cref{alg:smart_split} has compatible interface with
+all the subgraph creation strategies and therefore can be easily added.
+
+\begin{algorithm}
+	\caption{Smart Split}%
+	\label{alg:smart_split}
+	\begin{algorithmic}[1]
+		\Require{} $G$
+		\Comment{} Subgraph to work on
+		\Require{} $P$
+		\Comment{} Monochromatic classes of the subgraph $G$
+		\Require{} $S$, $s \gets |S|$
+		\Comment{} List of the sizes of subgraphs and their number
+
+		\Ensure{} $O \gets ()$
+		\Comment{} List of ordered vertices
+
+		\If{$s \le 2$}
+		\State{} $O \gets \Call{MergeStrategy}{G, P, S}$
+		\State{}
+		\Return{}
+		\EndIf{}
+
+		\State{} $S_1, S_2 \gets S[:\lfloor\frac{s}{2}\rfloor], S[\lfloor\frac{s}{2}\rfloor:]$
+		\State{} $P \gets \Call{SubgraphStrategy}{G, P, (\sum S_{1}, \sum S_{2})}$
+
+		\State{} $P_1 \gets P[:(\sum S_1)]$
+		\State{} $P_2 \gets P[(\sum S_1):]$
+		\State{} $G_1 \gets \Call{InducedSubgraphOnEdges}{G, \bigcup P_1}$
+		\State{} $G_2 \gets \Call{InducedSubgraphOnEdges}{G, \bigcup P_2}$
+
+		\State{} $O_1 \gets \Call{SmartSplit}{G_1, P_1, S_1}$
+		\State{} $O_2 \gets \Call{SmartSplit}{G_2, P_2, S_2}$
+		\State{} $O \gets O_{1}.O_{2}$
+	\end{algorithmic}
+\end{algorithm}
 
 
 \subsection{Subgraph merging}%
 \label{sec:merging}
+
+% linear
+% log
+% promising cycles
+% min max
 
 After constructing the list of edge-disjoint subgraphs,
 we compute all the NAC-colorings for each of them using
