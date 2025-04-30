@@ -12,6 +12,11 @@
 
 \end{chapterabstract}
 
+% TODO run more tests fro graphs up to 110 vertices
+% TODO run smart split with log
+% TODO popsat strukturu kódu
+% TODO popsat použité knihovny
+
 Our implementation is written in Python and uses NetworkX library.
 We provide the code in our PyRigi fork on GitHub~\cite{pyrigi_github_lastaapps}.
 The repository also contains tools required to run and analyze benchmarks
@@ -41,7 +46,8 @@ PyRigi~\cite{pyrigi}) minimally rigid graphs depending on the strategy used.
 
 
 \begin{table}[t]
-	\caption{The time (in seconds) needed to find all NAC-colorings for all minimally rigid graphs with a given size.}%
+	\caption[Running times on minimally rigid graphs.]{
+		The time (in seconds) needed to find all NAC-colorings for all minimally rigid graphs with a given size.}%
 	\label{tab:allMinRigid}
 	\vspace{0.3cm}
 	\centering
@@ -63,7 +69,8 @@ PyRigi~\cite{pyrigi}) minimally rigid graphs depending on the strategy used.
 \begin{figure}[t]
 	\centering
 	\scalebox{0.5}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_runtime.pgf}}
-	\caption{Mean running time (ms) to find all NAC-colorings for minimally rigid graphs.}%
+	\caption[Running time for minimally rigid graphs.]{
+		Mean running time (ms) to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_time_minimally_rigid}
 \end{figure}
 
@@ -80,7 +87,8 @@ For more benchmarks, see \Cref{sec:more_benchmarks} or the notebook in~\cite{pyr
 \begin{figure}[ht]
 	\centering
 	\scalebox{0.5}{\input{./figures/graph_export_check-comparision_first_monochromatic_reduction.pgf}}
-	\caption{The number of \IsNACColoring{} calls with respect to the number of monochromatic classes
+	\caption[The number of \IsNACColoring{} calls.]{
+		The number of \IsNACColoring{} calls with respect to the number of monochromatic classes
 		over all graphs used for benchmarking.}%
 	\label{fig:graph_summary}
 \end{figure}
@@ -110,13 +118,14 @@ were hard for the given strategy.
 \begin{figure}[ht]
 	\centering
 	\scalebox{0.5}{\input{./figures/graph_export_globally_rigid_first_vertex_runtime.pgf}}
-	\caption{Mean running time (ms) to find a NAC-coloring for globally rigid graphs.}%
+	\caption[Running time for globally rigid graphs.]{
+		Mean running time (ms) to find a NAC-coloring for globally rigid graphs.}%
 	\label{fig:graph_time_globally_rigid}
 \end{figure}
 
 We present performance of listing all NAC-colorings
 on larger randomly generated minimally rigid graphs depending on the strategy used.
-The runtimes are in \Cref{fig:graph_time_minimally_rigid}
+The running times are in \Cref{fig:graph_time_minimally_rigid}
 and the number of \IsNACColoring{} calls in \Cref{fig:graph_count_minimally_rigid}.
 Here you can see that the naive approach gets significantly worse from twenty monochromatic classes on.
 More graphs for other classes can be seen in the notebook in~\cite{pyrigi_github_lastaapps}.
@@ -124,7 +133,8 @@ More graphs for other classes can be seen in the notebook in~\cite{pyrigi_github
 \begin{figure}[t]
 	\centering
 	\scalebox{0.5}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_chekcs.pgf}}
-	\caption{The number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
+	\caption[Checks performed or minimally rigid graphs.]{
+		The number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_count_minimally_rigid}
 \end{figure}
 
@@ -141,7 +151,8 @@ significantly better.
 \begin{figure}[h]
 	\centering
 	\scalebox{0.5}{\input{./figures/graph_export_no_nac_coloring_first_monochromatic_runtime.pgf}}
-	\caption{Mean running time (ms) on graphs without NAC-colorings.}%
+	\caption[Running time on graphs without NAC-colorings.]{
+		Mean running time (ms) on graphs without NAC-colorings.}%
 	\label{fig:graph_time_no_nac_coloring}
 \end{figure}
 

@@ -25,12 +25,12 @@ Using these approaches many NP-complete problems can be solved
 in a time polynomial in \( n \)
 for many graph classes that have such a bounded structural property.
 To name a few such problems:
-\textsc{VertexCover}, \textsc{DominatingSet}, \textsc{LongestPath}, \dots.
+\textsc{Vertex Cover}, \textsc{Dominating Set}, \textsc{Longest Path}, \dots.
 
 %
 \begin{definition}[FPT alorithm~\cite{book_parametrized_algorithms}]
 	Algorithms with running time \( f(k)\cdot n^c \), for a constant \( c \),
-	are called \emph{fixed-parameter algorithms}, of FPT algorithms.
+	are called \emph{fixed-parameter tractable (FPT) algorithms}.
 \end{definition}
 %
 In parametrized algorithmic, \( k \) stands for different parameters
@@ -48,7 +48,7 @@ that exploits the tree-likeness of a graph.
 
 %
 \begin{definition}[Tree decomposition~\cite{book_parametrized_algorithms}]
-	A tree decomposition of a graph \( G \) is
+	A \emph{tree decomposition} of a graph \( G \) is
 	a pair \( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	where \( T \) is decomposition tree and every node \( t \)
 	is assigned a bag \( X_t \subseteq V(G) \) such that the following hold:
@@ -68,7 +68,7 @@ that exploits the tree-likeness of a graph.
 	The \emph{width} of a tree decomposition given by pair
 	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	equals to \( \max_{t\in V(T)} |X_t| - 1 \).
-	The tree width of a graph \( G \) is the minimum such width
+	The \emph{tree width} of a graph \( G \) is the minimum such width
 	across all tree decompositions of \( G \).
 \end{definition}
 %
@@ -420,18 +420,15 @@ We do likewise for the case when \( e \) is colored \( \red \).
 
 Before we start, we define some terms that will come useful in the following sections.
 %
-\begin{definition}[Bridge]
+\begin{definition}[Bridge, Neighboring parts]
 	For a graph \( G \) and two distinct connected components
-	in \( G[\Ered] \), resp. \( G[\Eblue] \)
-	spanning vertices \( U, V \),
-	a \emph{bridge} is an edge \( e = \{u, v\} \in E(G) \) such that \( u \in U \land v \in V \).
-\end{definition}
-%
-%
-\begin{definition}[Neighboring components]
-	For a graph \( G \), two distinct connected components
-	in \( G[\Ered] \), resp. \( G[\Eblue] \)
-	are neighboring if there exists a bridge over these two components.
+	with vertices \( U \) and \( V \)
+	in \( G[\Ered] \), resp. \( G[\Eblue] \),
+	a \emph{bridge} is an edge \( e = \{u, v\} \in E(G) \)
+	such that \( u \in U \land v \in V \).
+	%
+	The components are \emph{neighboring} if there exists
+	a bridge for these two components.
 \end{definition}
 %
 
@@ -467,7 +464,7 @@ that will be used by our cache in our dynamic programming algorithm.
 	and \( R_\red\), resp. \(R_\blue \), is a relation
 	on partitions in \( P_\red\), resp. \(P_\blue \).
 	%
-	All the possible states on \Xt{} form the state space \( S_t \).
+	All the possible states on \Xt{} form the \emph{state space} \( S_t \).
 \end{definition}
 %
 Partitions \( P_\red, P_\blue \) represent vertices
@@ -990,10 +987,10 @@ this idea in consideration.
 Along with the cache we can also hold an information about connectivity of
 vertices in bags.
 %
-\begin{definition}
-	Let \( t \in T \) be a node in the nice tree decomposition tree and
+\begin{definition}[Connectivity map]
+	Let \( t \in T \) be a node in a nice tree decomposition tree and
 	\Xt{} be a bag of vertices.
-	\emph{A connectivity map} \( C_t \) is a factorization of \Xt{}.
+	A \emph{connectivity map} \( C_t \) is a factorization of \Xt{}.
 	For \( u, v \in V_t \) it holds that
 	\( \exists c \in C_t : u \in c \land v \in c \) iff
 	\( u, v \) are in the same connected component in \( G_t \).

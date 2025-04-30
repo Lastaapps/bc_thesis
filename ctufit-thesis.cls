@@ -283,7 +283,7 @@
 \renewcommand\labelitemiv{%
 	\textcolor{enumgray}{\bfseries\textperiodcentered}}
 \renewcommand*\descriptionlabel[1]{%
-	\hspace\labelsep\textcolor{enumgray}{\bfseries\mathversion{bold}#1}}
+	\hspace\labelsep\textcolor{enumgray}{\bfseries\mathversion{bold}#1:}}
 % lists settings end
 
 %%%%%%%%%%%%%%
@@ -591,7 +591,26 @@
 		\fi
 		\setmintedinline{bgcolor={}}
 	}{}%
+	\@ifpackageloaded{algorithm}{%
+		\DeclareRobustCommand{\thectufitlistingscommand}{\listofalgorithms}%
+	}{}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My custom commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% table of contents - remove indents
+\RequirePackage[titles]{tocloft} % 'titles' preserves the original titles formatting
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{0pt}
+\setlength{\cftsubsubsecindent}{0pt}
+
+% Number algorithms using chapter numbers
+\RequirePackage[chapter]{algorithm}
+\RequirePackage{algorithmicx}
+\RequirePackage{algpseudocode}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 % Should be last as it apparently causes problems with some other packages
 \RequirePackage[a-1b]{pdfx}  % PDF/A-1b compliance

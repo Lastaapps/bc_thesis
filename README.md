@@ -9,6 +9,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 ## TODO
 - Thanks
 - resolve todos
+- přidat emph do definic
 - make sure I cite my own paper
 - replace *paper* with *thesis* as I do this mistake all the time
 - Fix line breaks

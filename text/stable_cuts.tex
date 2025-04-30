@@ -11,27 +11,29 @@
 	%
 \end{chapterabstract}
 
+
 In this chapter we focus on connected graphs only as for us graph cuts
 lose their importance on disconnected graphs.
-We recall the definition of stable cut
-%
-\begin{definition}[Stable cut]
-	\emph{A stable cut} of a graph \( G \) is a set \( S \subseteq V(G) \) such that
-	\( S \) is independent set in \( G \) and also \( S \) is vertex cut in \( G \).
-\end{definition}
-%
+We recall the definition of
+stable cut in~\Cref{def:stable_cut}.
 
 \section{Properties}
 
 Notice how stable cuts are related to NAC-colorings.
 %
 \begin{lemma}[\cite{legersky_original}]
+	\label[lemma]{lemma:stable_cut_implies_nac_coloring}
 	Let \( S \) be a stable cut in a connected graph \( G \).
 	Then \( G \) has a NAC-coloring.
 \end{lemma}
 %
 \begin{proof}
-	As \( S \) is a cut in \( G \), let us have some partitions \( A, B \).
+	For a vertex cut \( S \subseteq V(G) \), let us have \( G^\prime = G \setminus S \).
+	Nonempty sets \( A, B \subsetneq V(G) \) are called \emph{partitions} of the cut \( S \)
+	if \( A \cup B = V(G), A \cap B = S \) and for each \( v \in A \setminus S, u \in B \setminus S \)
+	there exists no \( u \)--\( v \)--path in \( G^\prime \).
+	%
+	As \( S \) is a cut in \( G \), let us have some partitions \( A, B \),
 	We know that \( |S| < |A|, |S| < |B| \)
 	as disconnected partitions are nonempty and \( G \) was connected.
 	There is at least one edge incident to vertices in both \( A \) and \( B \).
@@ -43,7 +45,7 @@ Notice how stable cuts are related to NAC-colorings.
 	if components \( G_\red^\delta, G_\blue^\delta \)
 	are induced subgraphs of \( G \).
 	That is the case as there is no edge with both the endpoints in \( S \)
-	as \( S \) is an independent set.
+	as \( S \) is a stable set.
 	So there are no almost cycles and a NAC-coloring is created.
 \end{proof}
 %
@@ -53,7 +55,8 @@ through at least one vertex in \( A \setminus S \) and \( B \setminus S \).
 Such cycle has at least four edges,
 at least two are \( \red \) and at least two are \( \blue \).
 
-The statement can be extended to the following simple observation.
+The following simple observation can be deduced
+from~\Cref{lemma:stable_cut_implies_nac_coloring}.
 %
 \begin{corollary}[\cite{legersky_original}]
 	Let \( G \) be a connected graph with \( |E(G)| \ge 2 \).
@@ -79,7 +82,7 @@ if \( V(G_1) \cap V(G_2) = \{u, v, w\}, E(G_1) \cap E(G_2) = \{\{u, v\}, \{v, w\
 and \( G = (V(G_1) \cup V(G_2), E(G_1) \cup E(G_2)) \).
 
 It is known for some classes that a stable cut must exists.
-\todo[inline]{Show and cite that \( 2V-4 \) are flexible}
+Flexibility of such graphs can be seen from~\Cref{lemma:laman_characterization}.
 %
 \begin{theorem}[\cite{stable_cuts_2v_4}]
 	Let \( G \) be a graph with \( |E(G)| \le 2|V(G)|-4 \).

@@ -28,6 +28,20 @@ degree in the constructed graph to five.
 In this section we describe the main idea and gadgets used
 in the original proof of NAC-coloring NP-completeness~\cite{np_complete}.
 
+For a reduction from other NP-complete problem
+we use well known \emph{3-SAT} problem.
+Propositional logic SAT answers the question
+whether the formula is satisfiable ---
+there exists a truth assignment of variables that satisfies the formula.
+3-SAT problem is an alternative formulation of SAT
+where the formula must be in the conjunctive normal form (CNF), namely in 3-CNF
+--- conjunction of clauses with three literals.
+For example, \( (A \lor B \lor \lnot C) \land (\lnot A \lor D \lor \lnot E) \)
+is in 3-CNF\@.
+% TODO CNF formulas look like a face with a nose in the middle \( (\lor)\land(\lor) \).
+It was shown that 3-SAT is NP-complete,
+and it is a common tool for NP-completeness proofs~\cite{3-sat}.
+
 First, for a formula \( \phi \) we create a graph \( G_\phi \).
 Alongside the graph an edge-map is introduced mapping into the literals
 of \( \phi \). Recall that for an elementary clause \( x_i \) the literals
@@ -86,7 +100,8 @@ The paper~\cite{np_complete} then introduces a \emph{connecting element} gadget.
 			\node[] at (1.25, 1.75) {$\bar{x}_i$};
 		\end{tikzpicture}
 	\end{center}
-	\caption{\centering Connecting element gadget as proposed in~\cite{np_complete}.
+	\caption[Connecting element gadget.]{
+		\centering Connecting element gadget as proposed in~\cite{np_complete}.
 		Note that dashed and filled edges need to share same colors in every NAC-coloring.}%
 	\label{fig:np_gadget_connecting}
 \end{figure}
@@ -274,7 +289,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 				\draw[edge] (11d)edge(11) (12d)edge(12) (51d)edge(51) (52d)edge(52);
 			\end{scope}
 		\end{tikzpicture}
-		\caption{\centering A train (left) is formed by gluing braced ladders so that
+		\caption[Train and its extension.]{
+			\centering A train (left) is formed by gluing braced ladders so that
 			the maximum degree is 5. The right figure shows how it can be extended.}
 		\label{fig:proof_trains}
 	\end{figure}
@@ -433,7 +449,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 
 			\end{scope}
 		\end{tikzpicture}
-		\caption{\centering The gadgets for every variable $x_i$.
+		\caption[{Gadgets for literals with cycles \( A_i \) and \( B_i \).}]{
+			\centering The gadgets for every variable $x_i$.
 			For all variables together they enforce that the trains $x_i$ and $\bar{x}_i$ have different colors.}%
 		\label{fig:proof_enforce_true_false}
 	\end{figure}
@@ -603,7 +620,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 			\node[] at (4.125, 2.375) {$t$};
 
 		\end{tikzpicture}
-		\caption{\centering The gadget for the clause
+		\caption[Gadget for a clause with the cycle \( C_i \).]{
+			\centering The gadget for the clause
 			$(\hat{x}_{i,1} \lor \hat{x}_{i,2} \lor \hat{x}_{i,3})$, index $i$ omitted in the labels.}%
 		\label{fig:proof_clause}
 	\end{figure}
@@ -688,6 +706,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 
 
 \section{Average degree of \( 4 + \varepsilon \)}
+
+\todo[inline]{Cite stable cuts also have this}
 
 The previous result can be extended further.
 We can extend ladder parts of the graph by adding
