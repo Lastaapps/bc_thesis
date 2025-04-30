@@ -148,7 +148,13 @@ from \( x_i \) section to \( x_i \) the other \( x_i \) section.
 As there are at least two connecting elements, at least two edges of each color are in the cycle.
 Therefore, the cycle is not an almost cycle.
 
-\todo[inline]{Analyze maximal degree in the graph}
+Notice high degree of vertices of the connecting edges.
+For \( i \)th literal edges base degree is thirteen: one from the connecting edge itself,
+eight from \( A_i \) cycle and four from the \( B_i \) cycle.
+Now for every occurrence of \( x_i \) in a clause degree is increased by four.
+Similar holds for the \( \true \) and \( \false \) connecting edges.
+The degrees of vertices in the cycles are bounded by six
+and the degrees of vertices inside connecting elements are bounded by seven.
 
 
 \section{Graphs with maximal degree five}
