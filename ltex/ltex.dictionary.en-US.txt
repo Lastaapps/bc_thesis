@@ -36,3 +36,5 @@ Satisfiability
 satisfiability
 Pollaczek-Geiringer
 Subgraphs
+Nauty
+Pytest

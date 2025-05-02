@@ -176,6 +176,7 @@
 \DeclareMathOperator{\cycle}{\mathbf{cycle}}
 \DeclareMathOperator{\NACcond}{\mathbf{NACcond}}
 
+\newcommand{\Naive}{\textsc{Naive}}
 \newcommand{\NaiveCycles}{\textsc{NaiveCycles}}
 \newcommand{\None}{\textsc{None}}
 \newcommand{\Neighbors}{\textsc{Neighbors}}
@@ -379,6 +380,7 @@
 
 \begin{tabular}{rl}
 	CNF    & Conjunctive normal form              \\
+	CSV    & Comma-separated values               \\
 	FPT    & Fixed-parameter tractable            \\
 	\MSO{} & Monadic second-order logic on graphs \\
 	NAC    & No almost cycles                     \\
@@ -403,10 +405,19 @@
 \include{./text/fpt_algo}
 \include{./text/stable_cuts}
 \include{./text/algo}
-%\include{./text/benchmarks}
+\include{./text/benchmarks}
 \include{./text/results}
 % \include{./text/examples}
 \todo[inline]{Sjednotit reference - jména lidí a časopisů}
+\todo[inline]{howpublished = online}
+% @misc{norvig,
+%   author       = {Norvig, Peter},
+%   title        = {How to Write a Spelling Corrector},
+%   year         = {2007},
+%   url          = {https://norvig.com/spell-correct.html},
+%   howpublished = {online},
+%   note         = {[Accessed 2025-04-19]}
+% }
 
 \appendix\appendixinit{} % do not remove these two commands
 

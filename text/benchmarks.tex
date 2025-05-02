@@ -1,30 +1,103 @@
-\chapter{Benchmarks}%
+\chapter{Implementation \& Benchmarks}%
 \label{chapter:benchmarks}
 
 \begin{chapterabstract}
 
-	In this chapter we evaluate performance of the algorithm
-	variants proposed in \Cref{sec:alg}.
+	In this chapter we first describe the structure of the project
+	and discuss some of the design choices.
+	After that, we evaluate performance of the algorithm
+	variants proposed in \Cref{chapter:alg}.
 	First, we compare the approaches with previous approaches,
-	and then we compare heuristics against each other.
+	and then we compare heuristics with each other
+	for different use-cases.
 	We show reduction both in runtime and in the number
-	of \IsNACColoring{} checks.
+	of \IsNACColoring{} checks performed.
 
 \end{chapterabstract}
 
+\section{Implementation}
+
+\todo[inline]{Popsat, jak/kde je kód přiložen}
+
+In this section we first describe the structure of the project containing
+the code of the algorithm.
+Next, we mention libraries, relation to PyRigi and
+some worth mentioning implementation details.
+
+The code is written in Python, minimal supported version is Python 3.12.
+To set up the project, create a virtual environment and install packages
+from \texttt{requirements.txt}. On NixOS, you can use \texttt{shell.nix}.
+See \texttt{README.md} for additional instructions.
+We go through the main folders and files of the project.
+
+In \texttt{graphs\_store} we store datasets used for benchmarking.
+Graphs are either obtained from~\cite{extremal_graphs},
+generated using Nauty~\cite{nauty} and related plugin~\cite{nauty_plugin}
+or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}.
+Graph are usually stored in Graph6 format.
+Code for reading graphs from the store can be found in \texttt{benchmarks/dataset.py}.
+In the \texttt{benchmark} directory, there are all the benchmarks we run
+during the project development. The most relevant is the CSV file
+in \texttt{precomputed} directory storing large number of run benchmarks.
+The base directory also contains tooling for running, visualizing and exporting benchmarks.
+File \texttt{NAC\_playground.ipynb} in the root directory presents a simple case
+to visualize how the API can be used.
+File \texttt{NAC\_presentation.ipynb} shows how the basic benchmarks are run
+without related helper functions.
+
+The code of the algorithm described in~\Cref{sec:stable_cuts_implementation}
+with additional helper functions is implemented in directory \texttt{stablecut}.
+Note that just some changes were done, when the code was merged into PyRigi.
+The code of the algorithm described in~\Cref{chapter:alg}
+is stored in directory \texttt{nac}.
+Subdirectory \texttt{util} stores helper functions and classes like the \textsc{UnionFind} data structure.
+File \texttt{check.py} implements \IsNACColoring{} check.
+File \texttt{monochromatic\_classes.py} is used to find \trcon{} components
+and monochromatic classes in a graph. With this, we can compare performance
+between using monochromatic classes, \trcon{} components or just edges.
+File \texttt{cycle\_detection.py} holds algorithms for finding cycles
+used in \Cref{sec:small_cycles}
+and related heuristics as described in \Cref{chapter:alg}.
+In the algorithm we presented some checks that can find
+a NAC-coloring or determine that there is none in polynomial time for some graph classes.
+These checks are implemented in \texttt{existence.py} and
+used mostly from \texttt{single.py} that is responsible for finding a single NAC-coloring of a graph.
+General NAC-coloring searching is implemented in \texttt{search.py}
+along with parameter processing, graph vertices relabeling,
+optimizations like search for articulation vertices are performed.
+After that, the correct algorithm (\Naive{}, \NaiveCycles{} or \todo{idk jak jsem to pojmenoval})
+is chosen from \texttt{algorithms.py} and called.
+Heuristics for the main algorithm are stored in \texttt{strategies.py}.
+Lastly tests of the whole code are stored in directory \texttt{test}.
+
+Common function parameters are:
+\textsc{graph} repressing the graph where NAC-colorings should be found,
+\textsc{comp\_graph} where vertices are some integer IDs of monochromatic classes
+and edges exists if the classes are neighboring.
+An ID of a monochromatic class also serves as index into \textsc{component\_to\_edges}
+that maps an ID of a monochromatic class to its edges.
+NAC-colorings are represented as bit-masks where bits correspond to component IDs.
+
+In implementation of \IsNACColoring{}, subgraphs from \( \red \) and \( \blue \) edges are created.
+To create such subgraphs in code, edges can be added to an empty graph
+using NetworkX's function \textsc{add\_edges\_from}.
+This is rather slow as creating new vertices in the empty graph causes noticeable overhead.
+Therefore, we create a graph with no edges and the same vertex set as the original graph,
+cache it and reuse it for the checks. First edges are added, the check is run, and the edges are removed.
+By doing this, the performance of \IsNACColoring{} is increased by roughly forty percent.
+Another way how the performance could be increased is by reserving space in lists
+when the final size is known. This is unfortunately not possible in Python.
+
+The code uses \textsc{Graph} class and related algorithms from NetworkX~\cite{networkx}
+as the base of all operations. We use some utility functions from PyRigi~\cite{pyrigi}
+related to rigidity tests and rigidity components search.
+Otherwise, the code is not dependent on PyRigi.
+Pytest is used for testing.
+
+\section{Benchmarks}
+
 % TODO run more tests fro graphs up to 110 vertices
 % TODO run smart split with log
-% TODO popsat strukturu kódu
-% TODO popsat použité knihovny
-
-Our implementation is written in Python and uses NetworkX library.
-We provide the code in our PyRigi fork on GitHub~\cite{pyrigi_github_lastaapps}.
-The repository also contains tools required to run and analyze benchmarks
-along with precomputed results and generated graph classes.
-An additional notebook is provided for experiments with the algorithm itself.
-All the NAC-coloring search functions in our algorithm are implemented
-as iterators. Hence, if we want only one or a few of NAC-colorings,
-it can be done without generating all of them.
 
 All the benchmarks bellow were run on Linux
 on a laptop with Intel i7 of the 11th generation
