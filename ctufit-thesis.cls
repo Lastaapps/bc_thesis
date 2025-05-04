@@ -607,8 +607,11 @@
 		\setmintedinline{bgcolor={}}
 	}{}%
 	\@ifpackageloaded{algorithm}{%
-		\DeclareRobustCommand{\thectufitlistingscommand}{\listofalgorithms}%
-	}{}%
+		\numberwithin{algorithm}{chapter}%
+		\DeclareRobustCommand{\thectufitlistofalgorithms}{\listofalgorithms}%
+	}{%
+		\DeclareRobustCommand{\thectufitlistofalgorithms}{}%
+	}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -619,11 +622,6 @@
 \setlength{\cftsecindent}{0pt}
 \setlength{\cftsubsecindent}{0pt}
 \setlength{\cftsubsubsecindent}{0pt}
-
-% Number algorithms using chapter numbers
-\RequirePackage[chapter]{algorithm}
-\RequirePackage{algorithmicx}
-\RequirePackage{algpseudocode}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

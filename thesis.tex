@@ -155,6 +155,10 @@
 \usepackage[nameinlink]{cleveref}
 \usepackage{todonotes}
 
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
 \usepackage[style=iso-numeric]{biblatex}
 \addbibresource{./text/bib-database.bib}
 %%%%%%%%%%%%%%%%%%%%%%
@@ -370,7 +374,8 @@
 \begingroup
 \let\clearpage\relax
 \listoftables % list of tables
-\thectufitlistingscommand{}
+% \thectufitlistingscommand{}
+\thectufitlistofalgorithms{}
 \endgroup
 
 %%%%%%%%%%%%%%%%%%%
