@@ -17,11 +17,22 @@ jobs:
       - name: Build with LuaLaTeX
         run: latexmk -pdflua thesis.tex
 
+      - name: Build with LuaLaTeX twosided
+        run: |
+          sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+          latexmk -pdflua thesis-twoside.tex
+
       - name: Upload PDF artifact (LuaLaTeX)
         uses: actions/upload-artifact@v4
         with:
           name: thesis-lualatex
           path: thesis.pdf
+
+      - name: Upload PDF artifact (twoside) (LuaLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-twoside-lualatex
+          path: thesis-twoside.pdf
 
   XeLaTeX:
     runs-on: ubuntu-latest
@@ -34,8 +45,19 @@ jobs:
       - name: Build with XeLaTeX
         run: latexmk -pdfxe thesis.tex
 
+      - name: Build with XeLaTeX twosided
+        run: |
+          sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+          latexmk -pdfxe thesis-twoside.tex
+
       - name: Upload PDF artifact (XeLaTeX)
         uses: actions/upload-artifact@v4
         with:
           name: thesis-xelatex
           path: thesis.pdf
+
+      - name: Upload PDF artifact (twoside) (XeLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-twoside-xelatex
+          path: thesis-twoside.pdf
