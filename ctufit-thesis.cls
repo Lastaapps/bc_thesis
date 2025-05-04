@@ -144,6 +144,12 @@
 \DeclareRobustCommand{\ctufitdepartment}[1]{
 	\def\thectufitdepartment{#1}
 }
+\DeclareRobustCommand{\ctufitprogram}[1]{
+	\def\thectufitprogram{#1}
+}
+\DeclareRobustCommand{\ctufitspecialisation}[1]{
+	\def\thectufitspecialisation{#1}
+}
 \DeclareRobustCommand{\ctufityear}[1]{
 	\def\thectufityear{#1}
 	\date{#1}
@@ -178,6 +184,10 @@
 
 \DeclareRobustCommand{\thectufitfaculty}{\if\@ctufitlang C{Fakulta informa{\v c}n{\' i}ch technologi{\' i}}\else\if\@ctufitlang S{Fakulta informa{\v c}n{\' i}ch technologi{\' i}}\else{Faculty of Information Technology}\fi\fi}
 
+\DeclareRobustCommand{\thectufitprogramlabelcapital}{\if\@ctufitlang C{Studijní program}\else\if\@ctufitlang S{Študijný program}\else{Study program}\fi\fi}
+
+\DeclareRobustCommand{\thectufitspecialisationlabelcapital}{\if\@ctufitlang C{Specializace}\else\if\@ctufitlang S{Špecializácia}\else{Specialisation}\fi\fi}
+
 \DeclareRobustCommand{\thectufitsupervisorlabelcapital}{\if\@ctufitlang C{Vedouc{\' i}}\else\if\@ctufitlang S{Ved\'uci}\else{Supervisor}\fi\fi}
 
 \DeclareRobustCommand{\thectufitcitationlabel}{\if\@ctufitlang C{Odkaz na tuto pr{\' a}ci}\else\if\@ctufitlang S{Odkaz na t\'uto pr{\' a}cu}\else{Citation of this thesis}\fi\fi}
@@ -210,18 +220,19 @@
 		\newgeometry{left=67mm,top=80mm,right=40mm}%\thispagestyle{empty}%
 		\noindent
 		\includegraphics[width=3cm]{./assets/logoCVUT.pdf}
-		\vskip 2cm
-		\noindent{\large\noindent\thectufitthesistype}
-		\vskip 3mm
+		\vskip 1.5mm
 		\noindent{\noindent\huge\bfseries\color{black}\begin{flushleft}\begin{onehalfspace}\MakeUppercase{\thectufittitle}\end{onehalfspace}\end{flushleft}}
-		\vskip 35mm
+		\vskip 20mm
 		\noindent{\large  \bfseries \thectufitauthorfull}
 
 		\vfill
 
-		\noindent{\thectufitfaculty\\
+		\noindent{\thectufitthesistype\\
+			\thectufitfaculty\\
 			\thectufituniversity\\
 			\thectufitdepartment\\
+			\thectufitprogramlabelcapital: \thectufitprogram\\
+			\thectufitspecialisationlabelcapital: \thectufitspecialisation\\
 			\thectufitsupervisorlabelcapital: \thectufitsupervisor\\
 			\today}\end{titlepage}
 	\restoregeometry
@@ -539,7 +550,7 @@
 
 					\vskip 0.5cm
 
-						{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}%
+						{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}\vfill}%
 			\else{%
 				\begin{abstrakt}%
 					\thectufitabstrakt
@@ -547,7 +558,7 @@
 
 				\vskip 0.5cm
 
-					{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}%
+					{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}\vfill}%
 		\fi
 
 		\vskip 1cm
@@ -559,7 +570,7 @@
 
 					\vskip 0.5cm
 
-						{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}}%
+						{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}\vfill}%
 			\else{
 				\begin{abstract}%
 					\thectufitabstract
@@ -567,7 +578,7 @@
 
 				\vskip 0.5cm
 
-					{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}}%
+					{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}\vfill}%
 		\fi
 	\end{abstractpage}
 }
