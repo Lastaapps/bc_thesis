@@ -14,6 +14,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 - replace *paper* with *thesis* as I do this mistake all the time
 - Fix line breaks
 - Sladit formát hran a obdobností v textu z článku
+- Fix twoside on CI
 
 ## Abstract
 

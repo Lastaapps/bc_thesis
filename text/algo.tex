@@ -42,7 +42,7 @@ and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( \red \) \( u \)-\( v \)-path in \( G[E_\red] \)
 and the \( \blue \) edge \( \{u, v\} \).
 
-This algorithm runs in \( O(2^{|E(G)|}) \) time.
+This algorithm we call \Naive{} runs in \( O(2^{|E(G)|}) \) time.
 It can be sped up dramatically by considering sets of edges instead of individual edges.
 For some sets of edges, we can easily see that all the edges in the set need to share
 the same color in every NAC-coloring.
@@ -245,6 +245,7 @@ considering it is called for every possible coloring,
 even though it can be implemented as simple breadth-first-search.
 An optimization we use is to keep a list of shorter cycles in the graph and
 check if they are almost monochromatic cycles before doing the full check.
+We call this improved \Naive{} algorithm \NaiveCycles{}.
 
 The check for a single cycle can be done in linear time
 in the number of monochromatic classes using bitwise arithmetic.
@@ -273,7 +274,7 @@ In our implementation, we take $k=4$ and $l=2$ cycles for every monochromatic cl
 \section{Combining NAC-colorings of subgraphs}%
 \label{sec:combining}
 
-In our algorithm a graph is decomposed into subgraphs so that
+In our algorithm called \Subgraphs{} a graph is decomposed into subgraphs so that
 the NAC-colorings of the graph can be obtained from the NAC-colorings of the subgraphs.
 We introduce notation for this process of combining NAC-colorings of suitable subgraphs.
 
@@ -502,7 +503,8 @@ sorting monochromatic components by their degree
 or breadth-first-search were also tried,
 but with no meaningful results.
 
-\subsubsection{Smart split}
+\subsubsection{Smart split}%
+\label{sec:smart_split}
 
 We already talked how important is that the subgraphs have something in common
 while we perform the filtering of the coloring product. We also talked about the order of
@@ -641,6 +643,10 @@ therefore the pair with the lowest score is chosen.
 We also tried approaches based on dynamic programming and recursive optimization.
 Unfortunately, these approached do not scale well to larger instances.
 
-\section{Polynomial optimizations}
+\section{Polynomial optimizations}%
+\label{sec:polynomial_optimizations}
 \todo[inline]{Write the section}
-
+% stable cut observation
+% to many edges
+% to few edges -> stable cut
+% minimally rigid if not certificate is needed
