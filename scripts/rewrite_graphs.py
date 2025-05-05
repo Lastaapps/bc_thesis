@@ -28,13 +28,21 @@ def fix_methods(text: str) -> str:
     patterns = [
         (r" CycleMask", r" \CycleMask{}"),
         (r" IsNACColoring", r" \IsNACColoring{}"),
+        ##########################################
         (r"naive cycles", r"\NaiveCycles{}"),
+        ##########################################
         (r"none", r"\None{}"),
         # this must come before neighbors
         (r"neighbors\_degree", r"\NeighborsDegree{}"),
         (r"neighbors", r"\Neighbors{}"),
+        (r"cycles\_match\_chunks", r"\CyclesMatchChunks{}"),
+        (r"cuts", r"\Cuts{}"),
+        (r"kernighan\_lin", r"\KernighanLin{}"),
+        ##########################################
         (r"shared\_vertices", r"\SharedVertices{}"),
         (r"linear", r"\MergeLinear{}"),
+        (r"log", r"\Log{}"),
+        (r"promising\_cycles", r"\PromisingCycles{}"),
     ]
     for pattern, replacement in patterns:
         text = text.replace(pattern, replacement)

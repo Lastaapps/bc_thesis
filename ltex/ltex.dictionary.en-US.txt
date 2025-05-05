@@ -38,3 +38,4 @@ Pollaczek-Geiringer
 Subgraphs
 Nauty
 Pytest
+Haslegrave
