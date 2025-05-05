@@ -198,6 +198,10 @@
 
 \DeclareRobustCommand{\thectufitlollabel}{\if\@ctufitlang C{Seznam v{\'y}pis{\r u} k{\'o}du}\else\if\@ctufitlang S{Zoznam v{\'y}pisov k{\'o}du}\else{List of code listings}\fi\fi}
 
+\DeclareRobustCommand{\thectufitalgorithmlabel}{\if\@ctufitlang C{Pseudokód}\else\if\@ctufitlang S{Pseudokód}\else{Algorithm}\fi\fi}
+
+\DeclareRobustCommand{\thectufitloalabel}{\if\@ctufitlang C{Seznam pseudokódů}\else\if\@ctufitlang S{Zoznam pseudokódov}\else{List of algorithms}\fi\fi}
+
 \DeclareRobustCommand{\thectufitdeclarationlabel}{\if\@ctufitlang C{Prohlášení}\else\if\@ctufitlang E{Declaration}\else{Vyhlásenie}\fi\fi}
 
 \DeclareRobustCommand{\thectufitabbreviationlabel}{\if\@ctufitlang C{Seznam zkratek}\else\if\@ctufitlang E{List of abbreviations}\else{Zoznam skratiek}\fi\fi}
@@ -608,9 +612,11 @@
 	}{}%
 	\@ifpackageloaded{algorithm}{%
 		\numberwithin{algorithm}{chapter}%
-		\DeclareRobustCommand{\thectufitlistofalgorithms}{\listofalgorithms}%
+		\DeclareRobustCommand{\listalgorithmname}{\thectufitloalabel}%
+		\DeclareRobustCommand{\ALG@name}{\thectufitalgorithmlabel}%
+		\DeclareRobustCommand{\thectufitlistofalgorithmscommand}{\listofalgorithms}%
 	}{%
-		\DeclareRobustCommand{\thectufitlistofalgorithms}{}%
+		\DeclareRobustCommand{\thectufitlistofalgorithmscommand}{}%
 	}%
 }
 
