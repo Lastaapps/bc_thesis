@@ -39,3 +39,7 @@ Subgraphs
 Nauty
 Pytest
 Haslegrave
+treewidth
+Treewidth
+pathwidth
+cliquewidth

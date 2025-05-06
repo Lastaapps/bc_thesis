@@ -4,44 +4,45 @@
 \begin{chapterabstract}
 
 	It can be easily shown that the NAC-coloring existence as an NP-complete
-	problem can be parametrized by tree width by using \MSO{} logic.
+	problem can be parametrized by treewidth by using \MSO{} logic.
 	In this chapter, we present an algorithm that can obtain
-	the number of NAC-coloring of a graph in \({k}^{O(k)} n^{O(1)}\) time,
-	where \(k\) stands for the tree width of the graph.
-	\todo[inline]{add vertex degree to the formula}
+	the number of NAC-coloring of a graph in \({k}^{O(k)} 2^{O(k^2)} n^{O(1)}\) time,
+	where \(k\) stands for the treewidth of the graph.
 
 \end{chapterabstract}
 
-\section{Tree width}
+\section{Treewidth}
 
 We use notation as used in~\cite{book_parametrized_algorithms}.
-Tree with alongside path with, clique, maximal degree width
-and many other graph parametrizations.
+Treewidth is one of many graph parametrizations like
+pathwidth, cliquewidth, maximal degree and many others.
 These approaches are used to somehow exploit graphs structure
 and provide algorithms with possibly significantly lower time complexity
 then algorithms considering general graphs only.
-To see other common parametrization approaches
-we recommend seeing~\cite{tree_width_comparision_other_classes}.
-Using these approaches many NP-complete problems can be solved
-in a time polynomial in \( n \)
+For a list of other common parametrization approaches,
+we recommend~\cite{tree_width_comparision_other_classes}.
+Using these approaches, many NP-complete problems can be solved
+in a time polynomial in \( n \) where \( n = |V| \)
 for many graph classes that have such a bounded structural property.
 To name a few such problems:
-\textsc{Vertex Cover}, \textsc{Dominating Set}, \textsc{Longest Path}, \dots.
+\textsc{Vertex Cover}, \textsc{Dominating Set}, \textsc{Longest Path}, \dots
 
 %
 \begin{definition}[FPT alorithm~\cite{book_parametrized_algorithms}]
-	Algorithms with running time \( f(k)\cdot n^c \), for a constant \( c \),
+	Algorithms with running time \( f(k)\cdot n^c \)
+	where \( k \) is a parameter dependent on the instance
+	and for a constant \( c \),
 	are called \emph{fixed-parameter tractable (FPT) algorithms}.
 \end{definition}
 %
-In parametrized algorithmic, \( k \) stands for different parameters
+In parametrized algorithms, \( k \) stands for different parameters
 representing some form on internal graph structure as noted before.
 
 For many problems it is quite simple to find a fast solution on trees.
 Often a dynamic programming approach is needed for that.
 %
 One of the most popular and simple approaches
-is the use of tree width and tree decomposition.
+is the use of treewidth and tree decomposition.
 The metric tries to show how similar a graph is to a tree.
 %
 The usual goal of algorithms is to develop a dynamic programming algorithm
@@ -55,9 +56,9 @@ that exploits the tree-likeness of a graph.
 	is assigned a bag \( X_t \subseteq V(G) \) such that the following hold:
 	%
 	\begin{enumerate}
-		\item \( \bigcup_{\{t \in V(T)\}} X_t = V(G) \).
-		      Each vertex is in at least one bag.
-		\item For every \( \{u,v\} \in E(G) \) there exists
+		\item \( \bigcup_{t \in V(T)} X_t = V(G) \),
+		      i.e., each vertex is in at least one bag.
+		\item For every \( \{u,v\} \in E(G) \), there exists
 		      a node \( t \in T \) such that both \( u, v \in X_t \).
 		\item For every \( u \in V(G) \),
 		      the set \( T_u = \{t \in V(T) \mid u \in X_t\} \)
@@ -65,17 +66,17 @@ that exploits the tree-likeness of a graph.
 	\end{enumerate}
 \end{definition}
 %
-\begin{definition}[Tree width~\cite{book_parametrized_algorithms}]
+\begin{definition}[Treewidth~\cite{book_parametrized_algorithms}]
 	The \emph{width} of a tree decomposition given by pair
 	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	equals to \( \max_{t\in V(T)} |X_t| - 1 \).
-	The \emph{tree width} of a graph \( G \) is the minimum such width
+	The \emph{treewidth} of a graph \( G \) is the minimum such width
 	across all tree decompositions of \( G \).
 \end{definition}
 %
-The width is decreased by one, so the tree width of a tree is one.
+The width is decreased by one, so the treewidth of a tree is one.
 
-Through the chapter we use term \emph{vertex} for vertices of \( G \)
+Throughout the chapter we use term \emph{vertex} for vertices of \( G \)
 and \emph{node} for nodes of \( T \).
 We also shorten \( t \in V(T) \) to \( t \in T \).
 
@@ -84,11 +85,11 @@ dynamic programming approaches running on tree decompositions.
 %
 \begin{definition}[Vertex subset border~\cite{book_parametrized_algorithms}]
 	Let \( A \subseteq V(G) \). Then the \emph{border} of \( A \) denoted by \( \delta(A) \)
-	is the set of vertices \( u \in A \)
-	such that \( \exists v \in V(G) \setminus A : \{u, v\} \in E(G) \).
+	is the set of vertices
+	\( \{u \in A \mid \exists v \in V(G) \setminus A : \{u, v\} \in E(G) \} \).
 \end{definition}
 %
-\begin{lemma}[Separators in tree decomposition~\cite{book_parametrized_algorithms}]
+\begin{lemma}[\cite{book_parametrized_algorithms}]
 	Let \( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	be a tree decomposition of a graph \( G \)
 	and let \( \{a, b\} \in E(T) \).
@@ -99,10 +100,11 @@ dynamic programming approaches running on tree decompositions.
 \end{lemma}
 %
 The lemma also reads as:
-``\( (A, B) \) is a separation of \( G \) with separator \( X_a \cap X_b \)''.
+``\( X_a \cap X_b \) is a vertex cut in \( G \) and \( A, B \)
+are distinct connected components''.
 
-We obtained a class of decompositions that can differ significantly.
-There may be multiple nodes with same bags or just a single node.
+For a graph, many different tree decompositions can be obtained.
+There may for example be multiple nodes with same bags or just a single node.
 We also have no guarantee how two neighboring bags differ --- how many vertices changed.
 Therefore, we want to define \emph{a nice tree decomposition} where neighboring nodes
 represent some useful change between two bags.
@@ -110,8 +112,8 @@ First, we want our nice tree to be a rooted tree,
 let \( r \in T \) be the root node.
 %
 \begin{definition}[Nice tree decomposition~\cite{book_parametrized_algorithms}]
-	A rooted tree decomposition
-	\( (T, {\{X_t\}}_{t \in V ( T )}) \)
+	A tree decomposition
+	\( (T, {\{X_t\}}_{t \in V ( T )}) \) rooted at \( r \in T \)
 	is \emph{nice} if the following conditions are satisfied:
 	%
 	\begin{itemize}
@@ -124,17 +126,31 @@ let \( r \in T \) be the root node.
 			      \item \ForgetVertexNode{} --- a node \( t \) with one child \( t^\prime \)
 			            such that \( X_t = X_{t^\prime} \setminus \{v\} \) where \( v \in X_{t^\prime} \).
 			            We say that \( v \) is \emph{forgotten} by \( t \).
-			      \item \JoinNode --- a node \( t \) with two children \( t^\prime, t^{\prime\prime} \)
-			            such that \( X_t = X_{t^\prime} \cup X_{t^{\prime\prime}} \).
+			      \item \JoinNode --- a node \( t \) with two children \( t_1, t_2 \)
+			            such that \( X_t = X_1 = X_2 \).
 		      \end{itemize}
 	\end{itemize}
+	%
+	We denote the root node by \RootNode{} and leaf nodes by \LeafNode{}.
+	Vertex bags of these nodes are empty.
 \end{definition}
 %
+\begin{figure}[ht]
+	\begin{center}
+		\includegraphics[width=0.80\textwidth]{./assets/nice_tree_decomposition.png}
+	\end{center}
+	\caption[Nice tree decomposition]{An example of a nice tree decomposition~\cite{nice_tree_decomposition_img}.
+		In (A) you can see the decomposed graph, in (B) the nice tree decomposition
+		with \LeafNode{}s on the right and the \RootNode{} on the left.
+	}%
+	% \label{fig:nice_tree_decomposition}
+\end{figure}
+\todo[inline]{Do in Tikz or SVG, maybe}
+
 Note that a vertex \( v \in V(G) \) can be introduced multiple times,
 but forgotten only once.
-We denote by \( V_t, t \in T \) set of vertices introduced by \( t \)
+By \( V_t, t \in T \), we denote the set of vertices introduced by \( t \)
 and all its child nodes.
-By \( G_t, t \in T \) we mean the subgraph of \( G \) induced by \( V_t \).
 
 \begin{lemma}[\cite{book_parametrized_algorithms}]
 	Any tree decomposition of width at most \( k \) can be converted to
@@ -143,24 +159,34 @@ By \( G_t, t \in T \) we mean the subgraph of \( G \) induced by \( V_t \).
 	The nice decomposition tree has at most \( O(k|V(G)|) \) nodes.
 \end{lemma}
 
-The problem of finding tree width is NP-complete~\cite{tree_width_np_complete}.
+The problem of finding treewidth is NP-complete~\cite{tree_width_np_complete}.
 Luckily, the problem is studied a lot and
 there exist efficient approximation algorithms~\cite{tree_width_approximation}.
 We consider nice tree decompositions as given along with a graph
 and do not consider runtime required to find it.
 
-Currently, in \IntroduceVertexNode{} all the edges connecting it
-to vertices in \( X_{t^\prime} \) be also considered in \( X_t \).
+In \IntroduceVertexNode{}, all the edges connecting it
+to vertices in \( X_{t^\prime} \) are usually considered while processing \( t \).
+%
 For some problems it is beneficial to divide this operation further.
 First a vertex is added with no edges using a \IntroduceVertexNode{}
-and later all the edges \( e \) are added using a new \IntroduceEdgeNode{}s.
-We define an edge bag \( E_t, t \in T \) in the same way as bags \( X_t \),
-just with edges instead of vertices.
+and later all the edges corresponding to the vertex are added using new \IntroduceEdgeNode{}s.
+We define an edge bag \( Y_t, t \in T \) similarly as vertex bags \( X_t \).
+%
+Let \( t^\prime \) be a direct ancestor of \( t \).
+For \IntroduceVertexNode{}, we define \( Y_t = Y_{t^\prime} \).
+For \ForgetVertexNode{} forgetting vertex \( v \),
+we define \( Y_t = Y_{t^\prime} \setminus \{ e \in E(G) \mid v \in e\} \).
+For a \JoinNode{}, the condition \( Y_t = Y_{t_1} = Y_{t_2} \) must hold.
+%
+By \( E_t, t \in T \), we denote the set of edges introduced by \( t \)
+and all its child nodes.
+By \( G_t, t \in T \), we mean the graph \( G_t = (V_t, E_t) \).
 %
 \begin{definition}[\IntroduceEdgeNode{}~\cite{book_parametrized_algorithms}]
 	A node \( t \), labeled with an edge \( e = \{u, v\} \in E(G) \)
 	such that \( u, v \in X_t \) and with exactly one child \( t^\prime \)
-	such that \( X_t = X_{t^\prime} \), \( E_t = E_{t^\prime} \cup \{e\} \).
+	such that \( X_t = X_{t^\prime} \), \( Y_t = Y_{t^\prime} \cup \{e\} \).
 	We say that \( e \) is \emph{introduced} by \( t \).
 \end{definition}
 %
@@ -173,26 +199,25 @@ and bellow \ForgetVertexNode{}s of \( u, v \) in \( T \).
 %
 \begin{lemma}
 	For each \JoinNode{} \( t \in T \) with children \( t_1, t_2 \)
-	it holds that \( E_t = \emptyset \).
+	it holds that \( Y_t = \emptyset \).
 \end{lemma}
 %
 \begin{proof}
-	Assume there is an edge \( e = \{u, v\} \in E_t \).
+	Assume there is an edge \( e = \{u, v\} \in Y_t \).
 	As each edge can be added and removed exactly once
 	and in a \JoinNode{} \( t \) both bags need to be the same,
 	edge \( e \) must have been introduced in both \( t_1 \) and \( t_2 \).
 \end{proof}
 %
-Therefore, the \IntroduceEdgeNode{} for \( e \) must be above \( t \) in \( T \).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Monadic second-order logic}
 
-Monadic second-order logic~(\MSO{}) on graphs is a logical system similar to
-well known propositional or predicate logic.
+Monadic second-order logic~(\MSO{}) on graphs is a logical system based on
+well known predicate logic.
 In the world of parametrized algorithms,
 it often comes handy --- if we are able to represent a problem using~\MSO{},
-then there exists an FPT algorithm parametrized by tree width
+then there exists an FPT algorithm parametrized by treewidth
 that can solve the problem~\cite{tree_width_mso}.
 
 \subsection{Introduction to~\MSO{}}
@@ -206,11 +231,11 @@ that adds option to quantify over predicates.
 \MSO{}~is an realization of second-order predicate logic.
 \todo[inline]{TODO Convert to footnote, currently, it raises exceptions in NVim}
 \emph{
-% \footnote{
+	% \footnote{
 	We need second-order logic as quantification over subsets of vertices or edges
-	corresponds to quantification over predicates separating the subsets.
-	Without this requirement we could talk
-	about monadic first-order logic \( \text{MSO}_1 \).
+	corresponds to quantification over predicates defining the subsets.
+	Without this requirement, we could talk
+	about the monadic first-order logic \( \text{MSO}_1 \).
 }
 
 Formulas can be formed from
@@ -219,17 +244,18 @@ boolean operations \( \lnot, \land, \lor, \Rightarrow, \Leftrightarrow \)
 and quantifiers \( \forall, \exists \).
 Complex formulas are created recursively from atomic formulas
 by applying schema related to each operation or quantifier.
-This process is the same as in first-order predicate logic.
+This process is the same as in the first-order predicate logic.
 
 Formulas of \MSO{} can use four types of variables:
 for single vertices, single edges, subsets of vertices, and subsets of edges.
+An evaluation function is a mapping from variables to truth assignments.
 By \( u^G \) we denote evaluation of variable \( u \) in graph \( G \)
 for some model \( \mathcal{G} \) (a tuple of evaluation function and \( G \)).
 In \MSO{} to form atomic formulas, we allow only following base predicates:
 %
 \begin{itemize}
 	\item For \( u \) representing a vertex (edge) variable
-	      and \( X \) is a vertex (edge) set,
+	      and \( X \) is a vertex (edge) subset,
 	      we can write formula \( u \in X \).
 	      For \( G \) the formula is true if \( u^G \in X^G \) is true.
 	\item Let \( u \) be a vertex variable and \( e \) be an edge variable,
@@ -245,17 +271,17 @@ subsets of vertices and subsets of edges.
 
 It is beneficial to define auxiliary predicates to simplify our work.
 We follow by some examples and simplifications taken from~\cite{book_parametrized_algorithms}.
-First we show predicate \( \text{adj} \) representing if two vertices are adjacent.
+First we show predicate \( \text{adj} \) represents if two vertices are adjacent.
 %
 \begin{align*}
-	\text{adj}(u, v) = (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e))
+	\text{adj}(u, v) \coloneqq (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e))
 \end{align*}
 %
 For a graph \( G = (V, E) \) we can represent connectivity of its induced subgraph
 on vertices \( X \subseteq V \) with the following predicate~\cite{book_parametrized_algorithms}.
 %
 \begin{align*}
-	\text{connected}(X) = \, &
+	\text{connected}(X) \coloneqq \, &
 	\forall Y \subseteq V : \Big(
 	(
 	\exists u \in X : u \in Y \land
@@ -270,9 +296,9 @@ on vertices \( X \subseteq V \) with the following predicate~\cite{book_parametr
 %
 Notice that we used our previously defined predicate as an alias.
 For \( X = V \) the formula would read as:
-``For each separation of graph there exists an edge connecting both partitions''.
+``For each separation of a graph, there exists an edge connecting both partitions''.
 
-\subsection{Relation to tree width}
+\subsection{Relation to treewidth}
 
 In the following, for a formula \( \phi \) by \( \|\phi\| \)
 we denote the length of the encoding of \( \phi \) as a string.
@@ -288,55 +314,62 @@ we denote the length of the encoding of \( \phi \) as a string.
 	for some computable function \( f \).
 \end{theorem}
 %
-If we are given a optimal tree decomposition, or we manage to find good enough
+If we are given an optimal tree decomposition, or we manage to find good enough
 approximation, we know that we can decide any formula in \MSO{} in a time
-polynomial in \( n \) parametrized by tree width.
+polynomial in \( n \), we are given no guaranties about the complexity of \( f \).
 
 \subsection{Expressing NAC-colorings using \MSO{}}
 
-In this section we describe results from our paper~\cite{my_paper}.
+In this section we present results from our paper previous~\cite{my_paper}.
 We start by defining other auxiliary predicates:
 %
 \begin{itemize}
 	\item For \( V \) all vertices and \( E \) subset of edges we define predicate
 	      %
 	      \begin{align*}
-		      \text{deg2}(E) = \,
+		      \text{deg2}(E) \coloneqq \,
 		       & \forall e \in E : \forall v \in V : \inc (v, e) \Rightarrow \Big( \exists e^\prime \in E : \\
 		       & \big( \inc (v, e^\prime) \land e \ne e^\prime \land (\forall e^{\prime\prime} \in E :
 				      \lnot \inc (v, e^{\prime\prime}) \lor e^{\prime\prime} \not\in \{e, e^\prime\}) \big) \Big).
 	      \end{align*}
 	      %
+	      The predicate says that all vertices incident to edges in \( E \) have degree two.
+	      %
 	\item For \( V \) subset of vertices and \( E \) subset of edges we define predicate
 	      %
 	      \begin{align*}
-		      \text{incident}(V, E) = \,
+		      \text{incident}(V, E) \coloneqq \,
 		       & (\forall v \in V : \exists e \in E : \inc (v, e))                                                 \\
 		       & \land (\forall e \in E : \exists v_1, v_2 \in V : v_1 \ne v_2 \land \inc (v_1) \land \inc (v_2)).
 	      \end{align*}
 	      %
+	      The predicate says that \( V \) are vertices of the subgraph induced by \( E \)
+	      and that \( E \) are edges of the subgraph induced by \( V \).
+	      %
 	\item For \( E \) subset of edges we define predicate
 	      %
 	      \begin{align*}
-		      \text{cycle}(E) = \,
+		      \text{cycle}(E) \coloneqq \,
 		      \big( \exists X \subseteq V : \text{incident}(X, E) \land \text{connected}(X) \big)
 		      \land \text{deg2}(E).
 	      \end{align*}
 	      %
-	\item For \( E_1, E_2 \) subsets of edges we define predicate~\cite{my_paper}.
+	      The predicate says that edges \( E \) form a cycle.
+	      %
+	\item For \( E_1, E_2 \) subsets of edges we define predicate
 	      %
 	      \begin{align*}
-		      \text{partition}(E_1, E_2) = \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 )    \\
-		                                      & \land (\forall e \in E : e \in E_1 \lor e \in E_2 )          \\
-		                                      & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ).
+		      \text{partition}(E_1, E_2) \coloneqq \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 )    \\
+		                                              & \land (\forall e \in E : e \in E_1 \lor e \in E_2 )          \\
+		                                              & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ).
 	      \end{align*}
 	      %
 	      The formula reads as: ``Both the partitions are not empty,
 	      and each edge is in exactly one of the partitions''.
-	\item For \( C, E_\red, E_\blue \) subsets of edges we define predicate~\cite{my_paper}.
+	\item For \( C, E_\red, E_\blue \) subsets of edges we define predicate
 	      %
 	      \begin{align*}
-		      \text{NACcond}(C, E_\red, E_\blue) = \,
+		      \text{NACcond}(C, E_\red, E_\blue) \coloneqq \,
 		       & C \subseteq E_\red \lor C \subseteq E_\red
 		      \\
 		       & \lor (\exists e_1, e_2, e_3, e_4 \in E :
@@ -345,6 +378,8 @@ We start by defining other auxiliary predicates:
 		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue ).
 	      \end{align*}
 	      %
+	      The predicate says that the cycles \( C \) is not an almost cycle.
+	      %
 \end{itemize}
 %
 
@@ -352,7 +387,7 @@ With the predicates ready, we can proceed approach to the theorem.
 %
 \begin{theorem}[\cite{my_paper}]
 	The problem of existence of a NAC-coloring is fixed parameter
-	tractable when parametrized by tree width.
+	tractable when parametrized by treewidth.
 \end{theorem}
 %
 \begin{proof}
@@ -366,14 +401,16 @@ With the predicates ready, we can proceed approach to the theorem.
 		.
 	\end{align*}
 	%
-	As of Courcelle's theorem \Cref{theorem:courcelles_theorem}
-	it holds that there exists an FPT algorithm parametrized by tree width
+	By \Cref{theorem:courcelles_theorem},
+	there exists an FPT algorithm parametrized by treewidth
 	that can resolve \( \phi \) and therefore resolve the question whenever a graph has a NAC-coloring.
 \end{proof}
 %
-The proof shows us that there exists such algorithm,
-but does not give us the algorithm itself.
-In the following sections we define our
+The proof shows us that there exists such an algorithm,
+but it does not give us explicit steps to follow
+(even tough they can be deduced from the original proof of \Cref{theorem:courcelles_theorem}).
+Still, the complexity guaranties of the algorithm are not very clear.
+In the following section we define our
 own FPT algorithm that solves the NAC-coloring problem
 while not relying on~\MSO{}.
 
@@ -434,7 +471,7 @@ Before we start, we define some terms that will come useful in the following sec
 %
 
 In the following sections
-we work with a nice tree decomposition \( T \) with tree width \( k \)
+we work with a nice tree decomposition \( T \) with treewidth \( k \)
 of a graph \( G \) with maximal degree \( \Delta \).
 The algorithm works only for graphs with at least one edge.
 
@@ -571,7 +608,7 @@ for \( a \in \{\red, \blue\} \) as:
 Suppose that \( t \in T \) is
 the only parent of \( t^\prime \in T \) in \( \mathcal {T} \).
 It holds that \( X_t = X_{t^\prime} \),
-let \( e = \{u, v\} \) be the only edge added in the step, \( e \in E_t \setminus E_{t^\prime} \).
+let \( e = \{u, v\} \) be the only edge added in the step, \( e \in T_t \setminus Y_{t^\prime} \).
 We will discuss all the possible cases that must be fulfilled for both colors,
 otherwise the resulting value for the state given is zero.
 Interactions between components of different colors are of no interest for us.
@@ -841,7 +878,7 @@ The final complexity of the algorithm is therefore
 
 \subsection{\IntroduceVertexWithEdgesNode{}}
 
-As also described above, FPT algorithms parametrized by tree width
+As also described above, FPT algorithms parametrized by treewidth
 often use \IntroduceVertexNode{} that also introduces edges,
 for this section we call this node \IntroduceVertexWithEdgesNode{}.
 The original algorithm can be modified to use this node.
@@ -922,7 +959,7 @@ sharing the same monochromatic component, and lastly we improve the number of
 operations needed in the \IntroduceVertexNode{}.
 %
 \begin{theorem}
-	For \( t \in T \) and an edge \( e = \{u, v\} \) in \( E_t \).
+	For \( t \in T \) and an edge \( e = \{u, v\} \) in \( Y_t \).
 	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
 	\( \forall a \in {\red, \blue} \forall p \in P_a : u \in p \Rightarrow v \not\in p \)
 	it holds that \( c[t, s] = 0 \).
@@ -945,7 +982,7 @@ as an edge forms a trivial monochromatic class.
 %
 \begin{theorem}
 	For \( t \in T \),
-	edges \( E_M \subseteq E_t \) such that
+	edges \( E_M \subseteq Y_t \) such that
 	they share the same connected monochromatic component
 	and vertices \( U \) such that they are end points of the edges in \( E_M \).
 	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
