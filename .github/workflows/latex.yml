@@ -19,7 +19,7 @@ jobs:
 
       - name: Build with LuaLaTeX twosided
         run: |
-          sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+          sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
           latexmk -pdflua thesis-twoside.tex
 
       - name: Upload PDF artifact (LuaLaTeX)
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build with XeLaTeX twosided
         run: |
-          sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+          sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
           latexmk -pdfxe thesis-twoside.tex
 
       - name: Upload PDF artifact (XeLaTeX)

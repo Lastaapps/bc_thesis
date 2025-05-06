@@ -2,7 +2,7 @@ image: texlive/texlive:latest
 
 LuaLaTeX:
     script: 
-        - sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+        - sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
         - latexmk -pdflua thesis.tex
         - latexmk -pdflua thesis-twoside.tex
     artifacts:
@@ -12,7 +12,7 @@ LuaLaTeX:
 
 XeLaTeX:
     script: 
-        - sed 's/oneside\]/twoside\]/' thesis.tex > thesis-twoside.tex
+        - sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
         - latexmk -pdfxe thesis.tex
         - latexmk -pdfxe thesis-twoside.tex
     artifacts:
