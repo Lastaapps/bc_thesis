@@ -196,11 +196,11 @@
 
 \DeclareRobustCommand{\thectufitlistinglabel}{\if\@ctufitlang C{V{\'y}pis k{\'o}du}\else\if\@ctufitlang S{V{\'y}pis k{\'o}du}\else{Code listing}\fi\fi}
 
-\DeclareRobustCommand{\thectufitlollabel}{\if\@ctufitlang C{Seznam v{\'y}pis{\r u} k{\'o}du}\else\if\@ctufitlang S{Zoznam v{\'y}pisov k{\'o}du}\else{List of code listings}\fi\fi}
+\DeclareRobustCommand{\thectufitlollabel}{\if\@ctufitlang C{Seznam v{\'y}pis{\r u} k{\'o}du}\else\if\@ctufitlang S{Zoznam v{\'y}pisov k{\'o}du}\else{List of Code listings}\fi\fi}
 
 \DeclareRobustCommand{\thectufitalgorithmlabel}{\if\@ctufitlang C{Pseudokód}\else\if\@ctufitlang S{Pseudokód}\else{Algorithm}\fi\fi}
 
-\DeclareRobustCommand{\thectufitloalabel}{\if\@ctufitlang C{Seznam pseudokódů}\else\if\@ctufitlang S{Zoznam pseudokódov}\else{List of algorithms}\fi\fi}
+\DeclareRobustCommand{\thectufitloalabel}{\if\@ctufitlang C{Seznam pseudokódů}\else\if\@ctufitlang S{Zoznam pseudokódov}\else{List of Algorithms}\fi\fi}
 
 \DeclareRobustCommand{\thectufitdeclarationlabel}{\if\@ctufitlang C{Prohlášení}\else\if\@ctufitlang E{Declaration}\else{Vyhlásenie}\fi\fi}
 
@@ -439,7 +439,7 @@
 % declaration page END
 
 % abstract page
-\newenvironment{abstractpage}{\frontchapternotprinted{\if\@ctufitlang E{Abstract}\else{Abstrakt}\fi}
+\newenvironment{abstractpage}[1]{\frontchapternotprinted{#1}
 }{}
 % abstract page END
 
@@ -545,46 +545,45 @@
 \numberwithin{theorem}{chapter}
 % theorems, proofs, definitions, etc. end
 
+\DeclareRobustCommand{\printczechabstractpage}{%
+	\begin{abstrakt}%
+		\thectufitabstrakt
+	\end{abstrakt}
+		
+	\vskip 0.5cm
+		
+	{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}\vfill
+}
+
+\DeclareRobustCommand{\printenglishabstractpage}{%
+	\begin{abstract}%
+		\thectufitabstract
+	\end{abstract}
+	
+	\vskip 0.5cm
+	
+	{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}
+	\vfill
+}
+
 \DeclareRobustCommand{\printabstractpage}{%
-	\begin{abstractpage}
-		\if\@ctufitlang E{%
-					\begin{abstract}%
-						\thectufitabstract
-					\end{abstract}
+	\if\@ctufitlang E{%	
+		\begin{abstractpage}{Abstract}
+			\printenglishabstractpage
+		\end{abstractpage}
 
-					\vskip 0.5cm
+		\begin{abstractpage}{Abstrakt}
+			\printczechabstractpage
+		\end{abstractpage}
+	}\else{%
+		\begin{abstractpage}{Abstrakt}
+			\printczechabstractpage
+		\end{abstractpage}
 
-						{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}\vfill}%
-			\else{%
-				\begin{abstrakt}%
-					\thectufitabstrakt
-				\end{abstrakt}
-
-				\vskip 0.5cm
-
-					{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}\vfill}%
-		\fi
-
-		\vskip 1cm
-
-		\if\@ctufitlang E{%
-					\begin{abstrakt}%
-						\thectufitabstrakt
-					\end{abstrakt}
-
-					\vskip 0.5cm
-
-						{\noindent\color{heading}\bfseries Klíčová slova\hspace{1em}}{\thectufitklicovaslova}\vfill}%
-			\else{
-				\begin{abstract}%
-					\thectufitabstract
-				\end{abstract}
-
-				\vskip 0.5cm
-
-					{\noindent\color{heading}\bfseries Keywords\hspace{1em}}{\thectufitkeywords}\vfill}%
-		\fi
-	\end{abstractpage}
+		\begin{abstractpage}{Abstract}
+			\printenglishabstractpage
+		\end{abstractpage}
+	}\fi
 }
 
 \newenvironment{chapterabstract}{\hfill\begin{minipage}{\dimexpr\textwidth-0.5cm}\itshape}{\end{minipage}\vskip 0.5cm\par\@afterindentfalse\@afterheading}
@@ -624,10 +623,10 @@
 % My custom commands
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % table of contents - remove indents
-\RequirePackage[titles]{tocloft} % 'titles' preserves the original titles formatting
-\setlength{\cftsecindent}{0pt}
-\setlength{\cftsubsecindent}{0pt}
-\setlength{\cftsubsubsecindent}{0pt}
+% \RequirePackage[titles]{tocloft} % 'titles' preserves the original titles formatting
+% \setlength{\cftsecindent}{0pt}
+% \setlength{\cftsubsecindent}{0pt}
+% \setlength{\cftsubsubsecindent}{0pt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

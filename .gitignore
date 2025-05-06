@@ -31,4 +31,5 @@
 
 /build/
 
-!assignment.pdf
+*.pdf
+!assets/*.pdf
