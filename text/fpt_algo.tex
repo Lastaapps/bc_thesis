@@ -117,7 +117,7 @@ let \( r \in T \) be the root node.
 	is \emph{nice} if the following conditions are satisfied:
 	%
 	\begin{itemize}
-		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every leaf node \( l \in T \).
+		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every \LeafNode{} \( l \in T \).
 		\item Every non-leaf node is one of the following types:
 		      \begin{itemize}
 			      \item \IntroduceVertexNode{} --- a node \( t \) with one child \( t^\prime \)
@@ -139,7 +139,7 @@ let \( r \in T \) be the root node.
 	\begin{center}
 		\includegraphics[width=0.80\textwidth]{./assets/nice_tree_decomposition.png}
 	\end{center}
-	\caption[Nice tree decomposition]{An example of a nice tree decomposition~\cite{nice_tree_decomposition_img}.
+	\caption[Nice tree decomposition]{An example of a nice tree decomposition with width three~\cite{nice_tree_decomposition_img}.
 		In (A) you can see the decomposed graph, in (B) the nice tree decomposition
 		with \LeafNode{}s on the right and the \RootNode{} on the left.
 	}%
@@ -426,40 +426,11 @@ as described in~\cite{book_parametrized_algorithms} as both the problems require
 among vertex partitions. Unlike in the Steiner tree search algorithm,
 our state space is even larger and all the operations work significantly differently.
 
-First we want to build the intuition for the upcoming operations.
-Let us have a graph \( G \) and all the NAC-colorings coloring of the graph
-\( \NAC (G) \). Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\Gprime{}.
-We want to extend \( \NAC (G) \) to \( \NAC (G^\prime) \).
-
-Let us have \( \delta \in \NAC (G) \).
-We want to extend it to \( delta^\prime \), suppose \( \delta^\prime(e) = \blue \).
-\( \delta^\prime \) is a NAC-coloring unless an almost cycle is formed.
-In that case one of following cases must be true:
-%
-\begin{itemize}
-	\item Both vertices \( u, v \) share the same connected component in \( G[\Ered] \).
-	      An almost cycle is formed
-	      from \( \red \) \( u \)-\( v \)-path in the connected component
-	      and edge \( e \) with \( \blue \) color.
-	\item Vertices \( u, v \) lay in different connected components in \( G[\Eblue] \)
-	      and there is a \( \red \) colored edge connecting some vertices from the components.
-	      We call such an edge \emph{a bridge}.
-	      An almost cycle is formed from paths in each component, the bridge and edge \( e \).
-\end{itemize}
-%
-In all other cases an almost cycle cannot be formed by adding the edge \( e \).
-Note that a vertex cannot be in multiple connected component for the given color
-as this fact would mean that both the components are not maximal.
-
-To create \( \NAC (G^\prime) \), we extend and filter the colorings
-in \( NAC(G) \cup \{ \delta_\red \} \), where \( \delta_\red \)
-colors all the edges in \( G \) with \( \red \) color.
-We do likewise for the case when \( e \) is colored \( \red \).
-
-Before we start, we define some terms that will come useful in the following sections.
+Before we start, we define some terms that will come useful soon.
 %
 \begin{definition}[Bridge, Neighboring parts]
-	For a graph \( G \) and two distinct connected components
+	For a graph \( G \) with NAC-coloring \( \delta \)
+	and two distinct connected components
 	with vertices \( U \) and \( V \)
 	in \( G[\Ered] \), resp. \( G[\Eblue] \),
 	a \emph{bridge} is an edge \( e = \{u, v\} \in E(G) \)
@@ -470,119 +441,222 @@ Before we start, we define some terms that will come useful in the following sec
 \end{definition}
 %
 
+First we want to build the intuition for the upcoming operations.
+Let us have a graph \( G \) and all the NAC-colorings of the graph \( \nac{G} \).
+Let us add an edge \( e = \{u, v\}, e \not\in E(G) \) to form graph~\( G^\prime \).
+We want to obtain \( \nac{G^\prime} \) based on \( \NAC (G) \).
+%
+Let us have \( \delta \in \nac{G} \),
+we want to extend it to \( \delta^\prime \) where w.l.o.g.\ \( \delta^\prime(e) = \blue \).
+Coloring \( \delta^\prime \) is a NAC-coloring unless an almost cycle is formed in \( G^\prime \).
+In that case one of the following cases must be true:
+%
+\begin{itemize}
+	\item Both vertices \( u, v \) are in the same connected component in \( G[\Ered] \).
+	      An almost cycle is formed
+	      from \( \red \) \( u \)-\( v \)-path in the connected component
+	      and edge \( e \) with \( \blue \) color.
+	\item Vertices \( u, v \) lay in different connected components in \( G[\Eblue] \)
+	      and there is a \( \red \) colored edge connecting some vertices from the components.
+	      We call such an edge \emph{bridge}.
+	      An almost cycle is formed from \( \blue \) paths in each component,
+	      the \( \red \) bridge and \( \blue \) edge \( e \).
+\end{itemize}
+%
+In all other cases an almost cycle cannot be formed by adding \( \blue \) colored edge \( e \).
+Note that a vertex cannot be in multiple connected component for the given color
+as this fact would mean that both the components are not maximal.
+
+To create \( \nac{G^\prime} \), we extend the colorings
+in \( \nac{G} \cup \{ \delta_\red \} \), where \( \delta_\red \)
+colors all the edges in \( G \) with \( \red \) color.
+We do likewise for the case when \( e \) is colored \( \red \).
+Then we keep only the colorings that did not form an almost cycle.
+
 In the following sections
 we work with a nice tree decomposition \( T \) with treewidth \( k \)
-of a graph \( G \) with maximal degree \( \Delta \).
+of a graph \( G \).
 The algorithm works only for graphs with at least one edge.
 
 We define an \emph{almost NAC-coloring}
 as a \( \red \)-\( \blue \) edge coloring such that there
 are no almost cycles formed. The conditions are the same as for NAC-coloring
 except that the surjectivity criterion is dropped.
-We use almost NAC-coloring for the rest of the section
-except for the \RootNode{} where algorithm's output are read.
+We use almost NAC-coloring for the rest of the section.
+Later when output is read in a \RootNode{},
+we switch back from almost NAC-colorings to NAC-colorings.
 
-\subsection{Dynamic cache}
+\todo[inline]{Make sure all the mentions of ``factorization'' are removed.}
 
-First we define a state space \( S \) of \emph{configurations}
+\emph{Dynamic programming} is a well-known technique for solving problems
+where the problem can be subdivided into smaller sub-problems.
+Usually, some base cases are solved trivially and then a sub-problem
+is solved based on the solution of its smaller sub-problems.
+Often it is a case, that a smaller sub-problem is solved multiple times
+as it is a part of multiple larger sub-problems.
+Its result is therefore cached and reused reducing the running time.
+There are many popular dynamic programming algorithms
+like \textsc{Edit Distance}, \textsc{Matrix Chain Multiplication} or \textsc{Longest Common Subsequence}.
+
+We define a state space \( S \) of \emph{states}
 that will be used by our cache in our dynamic programming algorithm.
+We denote all partitions of a set \( X \) by \( \mathcal{F}(X) \).
+Note that it always holds that \( \emptyset \in \mathcal{F}(X) \).
 
 %
 \begin{definition}[State space]
 	Let \( t \in T \) be a node in the nice tree decomposition tree and
 	\Xt{} be a bag of vertices.
 	% where with \( l \le k+1 \) vertices
-	Take all the factorizations of \Xt{} denoted by \( \mathcal{F}(X_t) \).
-	For each partitioning take all the possible
-	symmetric irreflexive relations on partitions.
-	We do these operations twice (for each color).
 	%
-	A configuration is formed by a tuple \( s = (P_\red, R_\red, P_\blue, R_\blue) \)
-	where \( P_\red\), resp. \( P_\blue \), is a partitioning of \Xt{}
-	and \( R_\red\), resp. \(R_\blue \), is a relation
-	on partitions in \( P_\red\), resp. \(P_\blue \).
+	A state is formed by a tuple \( s = (P_\red, R_\red, P_\blue, R_\blue) \)
+	where \( P_\red \in \mathcal{F}(X)\), resp. \( P_\blue \), is a partition of \Xt{}
+	and \( R_\red\), resp. \(R_\blue \), is a symmetric irreflexive relation
+	on parts in \( P_\red\), resp. \(P_\blue \).
 	%
-	All the possible states on \Xt{} form the \emph{state space} \( S_t \).
+	For \( t \), all such states on \Xt{} form the \emph{state space} \( S_t \).
 \end{definition}
 %
 Partitions \( P_\red, P_\blue \) represent vertices
-that share the same connected component in the subgraph of \( V_t \)
+that are in the same connected component in the subgraph of \( G_t \)
 induced by edges of the specified color.
+It is sort of a projection of NAC-colorings of \( G_t \) narrowed to \( X_t \)
 Relations \( R_\red, R_\blue \) represent
 whenever the connected components are neighboring.
+This plays major role for detecting almost cycles.
+%
+An almost NAC-coloring \( \delta \) is \emph{consistent} with a state \( (P_\red, R_\red, P_\blue, R_\blue) \in S_t \)
+if \( \red \) and \( \blue \) connected components of \( \delta \) form \( P_\red \) and \( P_\blue \)
+when intersected with \( X_t \) and
+there are bridges between the components as in \( R_\red \) and \( R_\blue \).
+%
+Note that the state space is somewhat large, we evaluate the size in~\Cref{sec:fpt_time_complexity}.
 
-Note that the state space is somewhat large.
-That it is expected as we are trying to solve an NP-complete problem.
+For the following definitions, lemmas, proofs and theorems, let us fix
+a nice tree decomposition \( T \).
 
-We denote cache as function \( c: \mathcal{S} \to \N \)
-where \( \mathcal{S} = \bigcup\{S_t \mid t \in T\} \).
-Cache entry denotes the number of almost NAC-colorings
-that span \( G_t \) with a configuration~\( s \)~in~\Xt{}.
+\begin{definition}[Cache function]
+	Let us have a mapping \( c: \mathcal{S} \to \N \)
+	where \( \mathcal{S} = \{ (t,s): t \in T, s \in S_t \} \).
+	If it holds, that for \( c(t, s) \) maps to the number of almost NAC-colorings of \( G_t \)
+	consistent with \( s \), we call \( c \) a \emph{cache function}.
+	By \emph{cache entry} we denote a pair \( (t, s) \in \mathcal{S} \).
+\end{definition}
+%
+\begin{observation}
+	For each almost NAC-coloring \( \delta \) on \( G_t \)
+	there is single state \( s \in S_t \) consistent with it.
+	It holds that \( |\nac{G_t}| + 2 = \sum_{s \in S_t} c(t, s) \).
+\end{observation}
 
-In the following sections we show different evaluations
-of child nodes cache entries into cache entries of parent nodes.
+In the following sections we show how to construct a cache function \( c \)
+based on values of child nodes.
 We make sure that invalid states that cannot occur by applying our operation (non-valid states)
-get zero cache entry value as they cannot represent any NAC-coloring.
+get zero cache entry value as they cannot represent any almost NAC-coloring.
+We prove the algorithm's correctness by induction.
+The base case is for \LeafNode{}s, for other nodes we split the reasoning for cases where
+there is or is not at least one edge in \( G_t \).
+Next few lemmas work as follows: for a state \( s \in S_t \)
+we derive states \( s^\prime \in S_{t^\prime} \) from whose cache entry \( (t, s) \)
+can be computed based on values \( c[t^\prime, s^\prime] \).
 
-\subsection{\IntroduceVertexNode}
-
-Suppose that \( t \in T \) is
-the only parent of \( t^\prime\) in \( \mathcal {T} \).
-Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
-Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
-for \( a \in \{\red, \blue\} \) as:
-%
-\begin{align*}
-	P_a^\prime & \coloneqq P_a \setminus \{\{v\}\}                                                                                             \\
-	R_a^\prime & \coloneqq R_a \setminus \{ (p_1, p_2) \mid (p_1, p_2) \in R_a, (\{v\} \in p_1 \lor \{v\} \in p_2) \}                          \\
-	c[t, s]    & \coloneqq
-	\begin{cases}
-		0,                                                                           & \text{if } \exists a : \{v\} \not\in P_a                    \\
-		0,                                                                           & \text{if } \exists a \exists p \in P_a : (\{v\}, p) \in R_a \\
-		c[t^\prime, (P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime)], & \text{otherwise}
-	\end{cases} \\
-\end{align*}
-%
+\begin{lemma}
+	Let us have a \LeafNode{} \( t \in T \).
+	It holds that \( c[t, s] \coloneqq 0 \) for all \( s \in S_t \).
+\end{lemma}
 %
 \begin{proof}
-	If vertex \( v \) is in a connected component with other vertex,
-	the configuration cannot be valid as \( v \) is an isolated vertex
-	and therefore cannot be in a connected component with other vertices.
-	%
-	Also, as \( v \) is an isolated vertex, there cannot be a bridge
-	connecting this and another component.
-	Thus, all the configurations where there exists
-	a connected component neighboring \( v \) are invalid.
-	%
-	We need to ensure both the previous statements hold for both the colors.
-	%
-	No new NAC-coloring can be created by adding an isolated vertex,
-	therefore the number of NAC-coloring for a state \( s \) must be the same
-	as for the state with \( v \) and related relations removed.
+	There are no edges as \( X_t \) has no edges.
+	By definition of the cache function \( c \) must hold \( 0 \)
+	for each state.
 \end{proof}
 %
-To summarize, already computed values are propagated to the valid states in the next iteration.
+Note that for \( t \in T \) \LeafNode{},
+the only state in \( S_t \) is \( (\emptyset, \emptyset, \emptyset, \emptyset) \).
 
-\subsection{\ForgetVertexNode}
-
-Suppose that \( t \in T \) is
-the only parent of \( t^\prime \in T \) in \( \mathcal {T} \).
-Let \( v \) be the only vertex in \( X_{t^\prime} \setminus X_t \).
-Then we define cost function for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
-for \( a \in \{\red, \blue\} \) as:
+\begin{lemma}
+	Let an \IntroduceVertexNode{} \( t \in T \) be
+	the only parent of \( t^\prime\) in \( T \) and let \( s \in S_t \).
+	Let \( v \) be the only vertex in \( X_t \setminus X_{t^\prime} \).
+	%
+	If there is no edge in the graph \( G_t \), then \( c[t, s] \coloneqq 0 \).
+	%
+	Otherwise, we define cache function value for \( s=(P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
+	for \( a \in \{\red, \blue\} \) as:
+	%
+	\begin{align*}
+		c[t, s] & \coloneqq
+		\begin{cases}
+			0,                                                                                       & \text{if } \exists a : \{v\} \not\in P_a,                    \\
+			0,                                                                                       & \text{if } \exists a \exists p \in P_a : (\{v\}, p) \in R_a, \\
+			c[t^\prime, (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue)], & \text{otherwise},
+		\end{cases} \\
+	\end{align*}
+\end{lemma}
 %
-\begin{align*}
-	m(p)          & \coloneqq p \setminus \{v\}                                                                                                                    \\
-	M(P)          & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\}                                                                                       \\
-	\mathcal{P}_a & \coloneqq \{ P_a^\prime \mid P_a^\prime \in \mathcal{F}(X_{t^\prime}), M(P_a^\prime) = P_a \}                                                  \\
-	\mathcal{R}_a & \coloneqq \{ R_a^\prime \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \subseteq P_a^\prime \times P_a^\prime,                                  \\
-	              & \qquad \forall (p_1, p_2) \in R_a^\prime : (m(p_1), m(p_2)) \in R_a \lor m(p_1) \cup m(p_2) = \emptyset \}                                     \\
-	S^\prime      & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P}_a, R_a^\prime \in \mathcal{R}_a  \} \\
-	c[t, s]       & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime]
-\end{align*}
+The state \( (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue) \)
+represents the state where \( v \) is not present in any connected component
+and where the same connected components are neighbors.
+%
+\begin{proof}
+	By definition, there are no almost NAC-colorings
+	in \( G_t \) if \( G_t \) has no edges.
+	%
+	If vertex \( v \) is in a part of \( P_\red \) or \( P_\blue \) with other vertices,
+	the cache value must be zero as \( v \) is an isolated vertex in \( G_t \)
+	and therefore no almost NAC-colorings consistent with such state exists.
+	Therefore, there must be a part \( \{v\} \).
+	%
+	Also, as \( v \) is an isolated vertex in \( G_t \), there cannot be a bridge
+	connecting this and another component.
+	Thus, for all states where there exists
+	a part neighboring \( \{v\} \), there are no consistent almost NAC-colorings
+	and therefore the cache value must be also zero.
+	Remember that \( R_\red, R_\blue \) are relations --- sets of pairs.
+	%
+	By adding a vertex to \( G_{t^\prime} \), we cannot create new almost cycles
+	or extend existing almost NAC-colorings as no new edge was added.
+	Therefore, the number of almost NAC-coloring for a state \( s \) must be the same
+	as for the state \( (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue) \).
+\end{proof}
+%
+To summarize, already computed values are propagated to the consistent states.
+
+\begin{lemma}
+	Let a \ForgetVertexNode{} \( t \in T \) be
+	the only parent of \( t^\prime \in T \) and let \( s \in S_t \).
+	Let \( v \) be the only vertex in \( X_{t^\prime} \setminus X_t \).
+	%
+	If there are no edges in the graph \( G_t \), then \( c[t, s] \coloneqq 0 \).
+	%
+	Otherwise, we define the cache function value for \( s=(P_\red, R_\red, P_\blue, R_\blue) \)
+	for \( a \in \{\red, \blue\} \) as:
+	%
+	\begin{align*}
+		c[t, s]                        & \coloneqq \sum_{s^\prime \in S^\prime} c[t^\prime, s^\prime],                                                                                                         \\
+		\text{where}                                                                                                                                                                                           \\
+		m(p)                           & \coloneqq p \setminus \{v\},                                                                                                                                          \\
+		M(P)                           & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\},                                                                                                             \\
+		\mathcal{P^\prime}_a           & \coloneqq \{ P_a^\prime \in \mathcal{F}(X_{t^\prime}) \mid M(P_a^\prime) = P_a \},                                                                                    \\
+		\mathcal{R^\prime}(P_a^\prime) & \coloneqq \{ R_a^\prime \subseteq P_a^\prime \times P_a^\prime \mid \forall (p_1, p_2) \in R_a^\prime :                                                                                                    \\
+		                               & \qquad (m(p_1), m(p_2)) \in R_a \lor m(p_1) = \emptyset \lor m(p_2) = \emptyset \},                                               \\
+		S^\prime                       & \coloneqq \{(P_\red^\prime, R_\red^\prime, P_\blue^\prime, R_\blue^\prime) \mid P_a^\prime \in \mathcal{P^\prime}_a, R^\prime \in \mathcal{R^\prime}(P_a^\prime)  \}. \\
+	\end{align*}
+	\( m(p) \) denotes deleting the vertex \( v \) from part \( p \).
+	\( M(P) \) denotes deleting the vertex \( v \) from all the parts in partition \( P \)
+	--- if \( \{v\} in P \), resulting \( \emptyset \) is also cleared.
+	\( \mathcal{P^\prime}_a \) denotes all the partitions such that removing \( v \) from them gives \( P_a \).
+	\( \mathcal{R^\prime}(P_a^\prime) \) denotes all the relations \( R_a^\prime \)
+	for \( P_a^\prime \in \mathcal{P^\prime}_a \) that correspond with \( R_a \) when \( v \) is removed
+	--- parts are updated or relations to \( \{v\} \) is removed.
+	\( S^\prime \) are all the states that correspond to state \( s \).
+\end{lemma}
 %
 %
 \begin{proof}
+	If there were no edges in \( G_t \), none were added by a \ForgetVertexNode{}.
+	Therefore, \( c[t, s] \coloneqq 0 \).
+	%
 	If state is invalid, all the previous states that collapse into it by removing \( v \)
 	are also invalid, therefore the resulting value is zero.
 	%
@@ -599,14 +673,14 @@ for \( a \in \{\red, \blue\} \) as:
 	Therefore, the number of NAC-colorings stays the same if we remove \( v \)
 	from  partitions.
 	%
-	The resulting cache entry holds values from both the configuration types.
+	The resulting cache entry holds values from both the state types.
 \end{proof}
 %
 
 \subsection{\IntroduceEdgeNode}
 
 Suppose that \( t \in T \) is
-the only parent of \( t^\prime \in T \) in \( \mathcal {T} \).
+the only parent of \( t^\prime \in T \).
 It holds that \( X_t = X_{t^\prime} \),
 let \( e = \{u, v\} \) be the only edge added in the step, \( e \in T_t \setminus Y_{t^\prime} \).
 We will discuss all the possible cases that must be fulfilled for both colors,
@@ -645,12 +719,12 @@ and some neighboring relations are created:
 \begin{description}
 	\item[Edge lies in a \( \blue \) connected component]
 	      First we query the previous cache state with
-	      the same partition and neighbors configuration.
-	      Then we also need to add configurations where
+	      the same partition and neighbors state.
+	      Then we also need to add states where
 	      both the components were not neighbors as no almost cycle was created
 	      and both the separate connected components
 	      are now joined into a single component.
-	      We denote \( \blue \) components of such configuration
+	      We denote \( \blue \) components of such state
 	      as \( P_\blue^\prime \) and \( R_\blue^\prime \).
 	      Note, that other relations between partitions need to match.
 	\item[Edge connects two neighboring \( \red \) connected components]
@@ -678,7 +752,7 @@ The final entry is \( c[t, s] = c_\red[t, s] + c_\blue[t, s] \).
 \subsection{\JoinNode}
 
 Suppose that \( t \in T \) is
-the only parent of \( t_1, t_2 \in T \) in \( \mathcal {T} \).
+the only parent of \( t_1, t_2 \in T \).
 It holds that \( X_t = X_{t_1} = X_{t_2} \)
 and \( S = S_1 = S_2 \) where \( S_\cdot \) are corresponding cache state spaces.
 
@@ -744,7 +818,7 @@ To formalize let \( a \in \{\red, \blue \}  \) and \( b \in \{\red, \blue \} \se
 Let \( \mathcal{P} \subseteq P_{1, a} \)
 and \( p \in P_{a} \) such that \( \bigcup_{p^\prime \in \mathcal{P}} p^\prime = p \).
 If there exists \( p_1, p_2 \in \mathcal{P} : (p_1, p_2) \in R_{1, a} \),
-this configuration is not acceptable as an almost cycle is created
+this state is not acceptable as an almost cycle is created
 using a \( \red \) bridge connecting \( p_1 \) and \( p_2 \).
 
 This is the only way an almost cycle can be created as no edges are added.
@@ -752,7 +826,7 @@ Note that each vertex in \( X_t \) is part of both \( \red \) and \( \blue \)
 components even if the components have just a single vertex.
 All the checks for both sides (\( 1, 2 \)) and colors are run and
 if a single one of them fails, the states pair is considered bad.
-We denote set of such bad configurations as \( \mathcal{B}, (s_1, s_2) \in \mathcal{B} \).
+We denote set of such bad states as \( \mathcal{B}, (s_1, s_2) \in \mathcal{B} \).
 
 %
 \begin{align*}
@@ -801,7 +875,7 @@ We assign 1 to the cache entry. This is necessary to start the algorithm.
 
 	After \( t_2 \) two kinds of nodes can follow.
 	Let \( t_2^\prime \) be the unique parent of \( t_2 \).
-	If \( t_2^\prime \) is an \IntroduceVertexNode{}, cache entry for configuration,
+	If \( t_2^\prime \) is an \IntroduceVertexNode{}, cache entry for state,
 	where vertices are disconnected both in \( \red \) and \( \blue \) subgraphs
 	gets value 1. Such \IntroduceVertexNode{} can occur multiple times
 	while traversing \( T \).
@@ -810,7 +884,7 @@ We assign 1 to the cache entry. This is necessary to start the algorithm.
 	Let \( t_3 \) be the parent of \( t_2 \).
 	The only options are that \( t_3 \) either is \IntroduceEdgeNode{} or \JoinNode{}.
 	If \( t_3 \) is an \IntroduceEdgeNode{} introducing edge \( e = \{u, v\} \),
-	the resulting cache entry will store 1 for the configuration,
+	the resulting cache entry will store 1 for the state,
 	when \( u ,v \) are in the same \( \red  \) component and other vertices are disconnected, or
 	when \( u ,v \) are in the same \( \blue \) component and other vertices are disconnected.
 	This correctly represents almost NAC-colorings in \( G_{t_3} \).
@@ -832,7 +906,8 @@ not almost NAC-colorings. Correctness goes from the previous nodes.
 From that it can be clearly observed that the algorithm
 will never give you up~\cite{never_gonna_give_you_up}.
 
-\subsection{Time complexity}
+\subsection{Time complexity}%
+\label{sec:fpt_time_complexity}
 
 Bell numbers are defined as the number of factorizations of the set.
 They can be upper bounded by \( n^n \), which is what we will use from now on.
@@ -1032,7 +1107,7 @@ vertices in bags.
 	For \( u, v \in V_t \) it holds that
 	\( \exists c \in C_t : u \in c \land v \in c \) iff
 	\( u, v \) are in the same connected component in \( G_t \).
-	A configuration \( s \in S_t \) is \emph{in conflict} with \( C_t \)
+	A state \( s \in S_t \) is \emph{in conflict} with \( C_t \)
 	if \( P_\red \) or \( P_\blue \) are not same or finer that \( C_t \).
 \end{definition}
 %
