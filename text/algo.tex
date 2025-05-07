@@ -278,7 +278,8 @@ In our algorithm called \Subgraphs{} a graph is decomposed into subgraphs so tha
 the NAC-colorings of the graph can be obtained from the NAC-colorings of the subgraphs.
 We introduce notation for this process of combining NAC-colorings of suitable subgraphs.
 
-\begin{definition}[\cite{my_paper}]
+\begin{definition}[\cite{my_paper}]%
+	\label[definition]{def:NACproduct}
 	%
 	Let $G$ be a graph with subgraphs $G_1, \dots, G_k$
 	s.\ t.\ $\bigcup_{i=1}^k E(G_i) =E(G)$.
@@ -507,11 +508,11 @@ but with no meaningful results.
 \label{sec:smart_split}
 
 We already talked how important is that the subgraphs have something in common
-while we perform the filtering of the coloring product. We also talked about the order of
+while we perform the filtering of the NAC-product. We also talked about the order of
 subgraphs and how do merging strategies interact with them.
 Goal of the following algorithm is to create and order subgraphs in a way that they usually
 share property that reduces the output size while running
-the filtering of the coloring product.
+the filtering of the NAC-product.
 
 The strategies for subgraph creation are generic --- they accept a graph and
 the list of sizes as input and output subgraphs. We exploit this property here. We use
