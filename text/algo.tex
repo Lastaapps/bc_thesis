@@ -57,8 +57,14 @@ to reduce the search space even further.
 Another simple but important observation is that the whole search space \( O(2^{c}) \)
 does not need to be traversed as a NAC-coloring with colors swapped is again a NAC-coloring.
 Therefore, we fix color of one set of edges and also generate NAC-colorings with colors swapped.
-This cuts our runtime in half to \( O(2^{c-1}) \).
-% TODO cite https://www.youtube.com/watch?v=FZ4qeJly1g0
+This cuts our runtime in half %
+todo[inline]{Uncomment footnote
+		% \footnote{
+		To learn more on the topic of cutting in half, we recommend
+		\href{https://youtu.be/FZ4qeJly1g0}{youtu.be/FZ4qeJly1g0}.
+	}%
+to \( O(2^{c-1}) \).
+
 
 The algorithm implemented in \flexrilog{}
 considers only colorings such that \trcon{} components are monochromatic
