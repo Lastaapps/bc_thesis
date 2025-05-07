@@ -1204,18 +1204,27 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 
 \subsection{\IntroduceVertexWithEdgesNode{}}
 
-As also described above, FPT algorithms parametrized by treewidth
-often use \IntroduceVertexNode{} that also introduces edges,
-for this section we call this node \IntroduceVertexWithEdgesNode{}.
-The original algorithm can be modified to use this node.
-We outline the proof of correctness of such operation and the show
+As we also mentioned before, FPT algorithms parametrized by treewidth
+often use \IntroduceVertexNode{} in such a way
+that edges incident to the introduced edge and to
+the vertices in the bag are also considered.
+For this section, we call such behaving node an \IntroduceVertexWithEdgesNode{}.
+Our original algorithm can be modified to use this node instead.
+We outline the proof of correctness of such operation and show
 that it is actually asymptotically slower than the originally proposed algorithm.
 
-The previous expression tree is modified by
-replacing every \IntroduceVertexNode{} by \IntroduceVertexWithEdgesNode{}
-and removing every \IntroduceEdgeNode{}.
-The other nodes including \ForgetVertexNode{} and \JoinNode{} stay unchanged
-with no behavior changes.
+We consider a nice tree decomposition \( T \) as defined originally
+with no \IntroduceEdgeNode{}s.
+There are no behaving changes for
+\LeafNode{}, \RootNode{}, \ForgetVertexNode{} nor \JoinNode{}
+todo[inline]{Uncomment footnote}{
+% \footnote{
+In the proof of lemma \Cref{lemma:fpt_join_node}
+regarding \JoinNode{} we required that \( Y_t = \emptyset \).
+This is not a requirement as if an edge in \( Y_t \) is assigned two colors
+by \( \delta_1', \delta_2' \), the endpoints are in common parts for both colors
+and a contradiction is still detected.
+}.
 
 Let us describe how \IntroduceVertexWithEdgesNode{} processes cache entries.
 Before, when a single edge was added,
@@ -1223,26 +1232,28 @@ we checked if there is some constraint violation
 --- if an almost cycle was formed.
 The same is also done for \IntroduceVertexWithEdgesNode{},
 but you can think of the process as
-multiple such constrains checked at the same time.
+multiple such constrains checks at the same time.
 
 As it is nontrivial and confusing to describe this operation
 by using predicate logic, we stick to natural language for simplicity.
 Suppose that \( t \in T \) is
-the only parent of \( t'\) in \( \mathcal {T} \).
+the only parent of \( t' \in T \).
 Let \( v \) be the only vertex in \( X_t \setminus X_{t'} \).
-Let \( E_\Delta \) be edges added,
-\( E_\Delta = \{ \{ u, v \} \mid u \in X_t \} \cap E(G) \).
-Let us have set \( \Lambda \) of all \( \red \)-\( \blue \)-colorings on \( E_\Delta \).
+Let \( F \) be the introduced edges,
+\( F = \{ \{ u, v \} \mid u \in X_t \} \cap E(G) \).
+%
+Let us have a set \( \Lambda \) of all almost NAC-colorings on \( F \)
+(trivially found for a star).
 We define mapping \( m: S' \times \Lambda \to S \)
-that represents how state changes for a coloring of edges in \( E_\delta \).
+that represents how state changes for a coloring of edges in \( F \).
 Let us have some \( s' \in S' \) and \( \lambda \in \Lambda \)
-and \( m(s', \lambda) = s, s \in S \).
+and \( m(s', \lambda) = s \in S \).
 
 Vertices \( u, v \in X_t \) share the same \( \blue \) component if either:
 %
 \begin{itemize}
 	\item They shared the same component in \( s' \).
-	\item There is a \( \blue \) path in \( E_\Delta \) with coloring \( \lambda \).
+	\item There is a \( \blue \) path in \( F \) with coloring \( \lambda \).
 \end{itemize}
 %
 Note that \( \blue \) components created by following this procedure
@@ -1253,7 +1264,7 @@ Such \( \blue \) components are neighboring if either:
 \begin{itemize}
 	\item They or their predecessors in \( s' \)
 	      were neighbors in \( s' \).
-	\item There is a path in \( E_\Delta \) with
+	\item There is a path in \( F \) with
 	      one \( \blue \) and one \( \red \) edge
 	      according to coloring \( \lambda \).
 	      The \( \red \) edge becomes a bridge.
@@ -1265,86 +1276,93 @@ still hold for \( s \). If so, \( c[t, s] \pluseq c[t', s'] \).
 This all is done for each combination in \( S' \time \Lambda \).
 
 For the original algorithm for each \( v \)
-\IntroduceEdgeNode{} is used \( |E_\Delta| \) times
+\IntroduceEdgeNode{} is used \( |F| \) times
 and \( \IntroduceVertexNode{} \) once, therefore added complexity for \( v \)
-is \( {k}^{O(k)} \cdot 2^{O(k)} \cdot (|E_\Delta| + 1) \).
+is \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot (|F| + 1) \).
 %
 For \IntroduceVertexWithEdgesNode{} we iterate
 through all the colorings in \( \Lambda \) for each state.
-As size of \( \Lambda \) is \( |\Lambda| = 2^|E_\Delta| \),
+The size of \( \Lambda \) is \( |\Lambda| = 2^{|F|} = 2^{O(k)} \),
 the required runtime added for \( v \) is
-\( {k}^{O(k)} \cdot 2^{O(k)} \cdot 2^{|E_\Delta|}\)
-which is asymptotically higher and therefore slower.
+\( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot 2^{O(k)} = {k}^{O(k)} \cdot 2^{O(k^3)}\)
+which is asymptotically higher.
+
+
 
 \subsection{Monochromatic components}
 
-Monochromatic components can be used to significantly reduce state space
-that needs to be searched. First we introduce state space reduction when
+Monochromatic components can be used to significantly reduce the state space
+that needs to be searched as for some cache entries we can say that
+they resolve to zero without solving related sub-problems.
+%
+First we introduce state space reduction when
 there is an edge in a bag, then we extend the result to multiple edges
 sharing the same monochromatic component, and lastly we improve the number of
-operations needed in the \IntroduceVertexNode{}.
+operations needed in the \IntroduceVertexWithEdgesNode{}.
 %
-\begin{theorem}
-	For \( t \in T \) and an edge \( e = \{u, v\} \) in \( Y_t \).
-	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
-	\( \forall a \in {\red, \blue} \forall p \in P_a : u \in p \Rightarrow v \not\in p \)
-	it holds that \( c[t, s] = 0 \).
-\end{theorem}
+\begin{lemma}
+	Let us have \( t \in T \) and an edge \( e = \{u, v\} \) in \( Y_t \).
+	For a state \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
+	such that it holds that
+	\( {\forall a \in \{\red, \blue\}} : {\forall p_a \in P_a} : {u \in p_a \Rightarrow v \not\in p_a} \),
+	it then also holds that \( c[t, s] = 0 \).
+\end{lemma}
 %
 %
 \begin{proof}
-	For contradiction suppose that such state is valid. The edge \( e \)
-	has to be either \( \red \) or \( \blue \). Let w.l.o.g.\ \( e \) be colored \( \blue \).
+	For contradiction, suppose that such state corresponds
+	to some almost NAC-coloring \( \delta \).
+	The edge \( e \) has to be either \( \red \) or \( \blue \).
+	Let w.l.o.g.\ \( e \) be colored \( \blue \).
 	That means that both \( u, v \) are in the same \( \blue \) component.
 	But the state \( s \) states that \( u, v \) do not share a \( \blue \) component.
-	This is contradiction and such state \( s \) is therefore not acceptable
-	and the cache entry should store zero.
+	Then \( \delta \) does not correspond to the state \( s \).
+	This is a contradiction.
 \end{proof}
 %
 
-We extend the result for monochromatic components as follows.
-See that this is just a generalization of the previous theorem
+We extend the result for monochromatic components as follows:
+see that this is just a generalization of the previous theorem
 as an edge forms a trivial monochromatic class.
 %
 \begin{theorem}
 	For \( t \in T \),
-	edges \( E_M \subseteq Y_t \) such that
+	edges \( F \subseteq Y_t \) such that
 	they share the same monochromatic component
-	and vertices \( U \) such that they are end points of the edges in \( E_M \).
-	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \) such that
-	\( \forall a \in {\red, \blue} \forall p \in P_a : U \not\subseteq p \)
-	it holds that \( c[t, s] = 0 \).
+	and vertices \( U \) such that they are end points of the edges in \( F \).
+	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \)
+	such that it holds that
+	\( \forall a \in {\red, \blue}: \forall p_a \in P_a : U \not\subseteq p_a \),
+	it then also holds that \( c[t, s] = 0 \).
 \end{theorem}
 %
 %
 \begin{proof}
-	For contradiction suppose that such state is valid. The edges \( E_M \)
-	has to be either \( \red \) or \( \blue \).
-	Let w.l.o.g.\ edges in \( E_M \) be colored \( \blue \).
-	That means that all vertices in \( U \) are in the same \( \blue \) component
-	and the edges are from a monochromatic component.
+	For contradiction suppose that such state corresponds to an almost NAC-coloring \( \delta \).
+	The edges \( F \) has to be either \( \red \) or \( \blue \).
+	Let w.l.o.g.\ edges in \( F \) be colored \( \blue \).
+	That means that all vertices in \( U \) are in the same \( \blue \) component (and part)
+	as the edges are from a monochromatic component.
 	But the state \( s \) states that there is a vertex \( u \in U \)
-	that does not share a \( \blue \) component with the other.
-	This is contradiction and such state \( s \) is therefore not acceptable
-	and the cache entry should store zero.
+	that does not share a \( \blue \) component with the other vertices in \( U \).
+	Then \( \delta \) does not correspond to the state \( s \).
+	This is a contradiction.
 \end{proof}
 %
 
-Lastly, we describe how \IntroduceVertexWithEdgesNode{} can be optimized.
-First, while traversing all the colorings of the edges incident to the added vertex \( E_N \)
+Lastly, we show how \IntroduceVertexWithEdgesNode{} can be optimized.
+First, while traversing all the colorings of the edges \( F \) incident to the added vertex,
 we do not try all the color combinations as usual. If there are some edges
-in \( E_{t'} \cup E_N \) that are part of a monochromatic component,
+in \( Y_{t'} \cup F \) that are part of a monochromatic component,
 the same as above applies. We cannot create a contradicting state with non-zero
 cache entry. But by using monochromatic classes
-we can enforce that both the edges should always have the same color.
+we can enforce that all such edges should always have the same color.
 We can also enforce the color by using an edge of the same monochromatic class
-that is a part of \( E_{t'} \).
-For example if the edge in \( E_{t'} \) is part of a \( \blue \) class,
-the other edges from the same monochromatic component can be added with
-this idea in consideration.
+that is a part of \( Y_{t'} \).
+For example, if the edge in \( Y_{t'} \) lies in a \( \blue \) part,
+the other edges from the same monochromatic component
+can be added and checked as \( \blue \).
 
-
-\todo[inline]{Fix monochromatic components notation based on the rest of the thesis}
 
 \subsection{Connectivity}
 
@@ -1355,12 +1373,27 @@ vertices in bags.
 	Let \( t \in T \) be a node in a nice tree decomposition tree and
 	\Xt{} be a bag of vertices.
 	A \emph{connectivity map} \( C_t \) is a partition of \Xt{}.
-	For \( u, v \in V_t \) it holds that
+	For each \( u, v \in X_t \), it holds that
 	\( \exists c \in C_t : u \in c \land v \in c \) iff
 	\( u, v \) are in the same component in \( G_t \).
-	A state \( s \in S_t \) is \emph{in conflict} with \( C_t \)
-	if \( P_\red \) or \( P_\blue \) are not same or finer that \( C_t \).
 \end{definition}
+%
+\begin{lemma}
+	A state \( s \in S_t \) is \emph{in conflict} with \( C_t \)
+	if both \( P_\red \) and \( P_\blue \) are not same or finer that \( C_t \).
+	For such states we have \( c[t, s] = 0 \).
+\end{lemma}
+%
+\begin{proof}
+	For contradiction, suppose that such state \( s \)
+	corresponds to an almost NAC-coloring \( \delta \).
+	It must hold that \( C_t \ne \{X_t\} \), otherwise \( s \) cannot be in conflict.
+	For each \( c_1, c_2 \in C_t, c_1 \ne c_2, u \in c_1, v \in c_2 \)
+	there is no \( u \)--\( v \)--path in \( G_t \).
+	But state \( s \) states that there is such a path for some \( u, v \) as it is not finer.
+	Therefore, \( s \) does not correctly describe situation in \( G_t \)
+	and cannot therefore correspond \( \delta \).
+\end{proof}
 %
 We show how connectivity map changes for different types of nodes.
 Consider a node \( t \in T \) and its child \( t' \)
@@ -1373,23 +1406,24 @@ a new connectivity map is obtained as follows:
 For a \ForgetVertexNode{}
 a new connectivity map is obtained as
 \( C_t \coloneqq M(C_t') \)
-where \( M \) is mapping from the \ForgetVertexNode{}
+where \( M \) is mapping from \Cref{lemma:fpt_forget_vertex_node} 
 deleting occurrences of forgotten vertex from the partition given.
 %
 For an \IntroduceEdgeNode{}
 where edge \( \{u, v\} \) is introduced
-components of \( u, v \) are merged if they are not merged already.
+parts of \( u, v \) are merged if they are not merged already.
 %
 For a \JoinNode{}
 connectivity maps \( C_{t_1}, C_{t_2} \) are merged into
 a single connectivity map \( C_t \)
-the same way as when a \JoinNode{} is processed.
+the same way as when a \JoinNode{} is processed using mapping \( M \).
 %
 For a \LeafNode{}
-no vertices are yet, so the connectivity map \( C_t = \emptyset \).
+no vertices are present yet, so for the connectivity map it holds that \( C_t = \emptyset \).
 
-With such connectivity map we can not reduce the state space by only considering
+With such connectivity map, we can not reduce the state space by only considering
 partitions that are finer then the connectivity map.
+
 
 \subsection{NAC-coloring certificate}
 
@@ -1398,15 +1432,16 @@ given we need to traverse the cache backwards recursively.
 The only step where edges were added to the graph are either \IntroduceEdgeNode{}
 or \IntroduceVertexWithEdgesNode{}. In both cases the given cache entry correspond
 to some color given to the edge. From the recursive step we can obtain
-all the NAC-colorings of \( V_{t'} \) and add our edge.
+all NAC-colorings of \( G_{t'} \) and add our edge.
 Note that the whole cache has to be stored in memory the whole time unless
 NAC-colorings are materialized while the algorithm runs.
-This kills our performance as we process up to \( 2^{O(n^2)} \) colorings
-in each node of the tree.
+This would harm our performance as we would
+process up to \( 2^{O(n^2)} \) colorings in each node of the tree.
+
 
 \subsection{Other optimizations}
 
-First it is trivial to see that if the input graph has an articulation,
+It is trivial to see that if the input graph has an articulation,
 we can once again run our algorithm on each block of the graph separately
 and then multiply the results together to get the final result
 while also considering monochromatic colorings of each block.
@@ -1416,7 +1451,8 @@ There is possibility that the algorithm can be further improved by creating
 a Monte Carlo algorithm or a linear algebra based algorithm that can run
 in \( O(c^k), c \in \N \) time as~\cite{book_parametrized_algorithms} suggests
 for problems with connectivity requirements.
+Monte Carlo algorithms are randomized algorithms whole output may be incorrect
+with some probability. As they are often faster, they are run many times
+to obtain trustworthy results.
 This is unfortunately far beyond the scope of this thesis.
-
-\todo[inline]{Cite/Introduce Monte Carlo algorithms}
 
