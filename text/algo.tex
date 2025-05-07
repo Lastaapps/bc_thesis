@@ -650,10 +650,33 @@ therefore the pair with the lowest score is chosen.
 We also tried approaches based on dynamic programming and recursive optimization.
 Unfortunately, these approached do not scale well to larger instances.
 
+
 \section{Polynomial optimizations}%
 \label{sec:polynomial_optimizations}
-\todo[inline]{Write the section}
-% stable cut observation
-% to many edges
-% to few edges -> stable cut
-% minimally rigid if not certificate is needed
+
+In this section, we present and recall some polynomial checks
+that can detect if a graph has a NAC-coloring and often also provide a certificate.
+
+We start by recalling some statements from \Cref{chapter:preliminaries}.
+%
+First, if a graph \( G \) with no isolated vertices is not connected,
+a NAC-coloring can be found by coloring different connected components differently.
+%
+If a graph \( G \) has an articulation vertex or a bridge edge,
+a NAC-coloring can be found in \( O(|V(G)|+|E(G)|) \) time.
+Connectivity can be also checked using the same algorithms.
+
+All algorithms and approaches described in \Cref{chapter:stable_cuts}
+are also relevant here as a NAC-coloring can be constructed from a stable cut easily.
+An important algorithm goes from \Cref{cor:vertex_no_triangle_stable_cut}.
+If a graph is flexible (which always holds for \( |E(G)| \le 2|V(G)|-4 \)),
+a stable cut can be found in polynomial time using \Cref{alg:stable_cut_flexible}.
+This also holds for minimally rigid graphs that are not 2-trees as shown in \Cref{lemma:stable_cut_or_2_tree}.
+%
+As shown in~\cite{legersky_original}, there are no flexible realizations
+of graphs with \( |E(G)| > \frac{n(n-1)}{2} - (n-2) \) where \( n = |V(G)| \).
+There graphs always form a \trcon{} component.
+%
+Another polynomial algorithm goes from \Cref{lemma:weird_four_cycle}
+(it is not implemented as part of the thesis).
+

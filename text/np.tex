@@ -710,11 +710,29 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	%
 \end{proof}
 
-\todo[inline]{Explain why the 3-prisms are needed}
+It may not be obvious why 3-prisms in clause gadget
+(\Cref{fig:proof_clause})
+are really needed. We present a counter example.
+Let us have a 3-CNF formula \( \phi = (A \lor B \lor C) \land (\lnot A \lor D \lor B) \).
+For each satisfiable truth assignment, there should be a NAC-coloring in \( G_\phi \).
+%
+This formula is satisfiable for example if \( C \) and \( D \) are assigned \( \true \)
+and all the other literals are assigned \( \false \).
+If we create corresponding \( \red \)-\( \blue \)-coloring in \( G_\phi \)
+where the cause gadgets do not have the 3-prisms, an almost cycle is created:
+%
+the cycle starts at \( A \) in the first cause, goes through connecting
+train to \( A \) section in the second cause. There, it uses the \( \blue \)
+\( \true \) edge and goes to \( B \). Using a connecting train,
+it goes back to the \( B \) segment in the first cause.
+Here, it joins back to \( A \) as the segments share a vertex.
+All edges corresponding to \( A \) and \( B \)
+are \( \red \), and we used only a single \( \blue \) edge.
+Therefore, an almost cycle exists, and the coloring is not a NAC-coloring.
+If the prisms are used, four more blue edges are visited with an analogous cycle.
+
 
 \section{Average degree of \( 4 + \varepsilon \)}
-
-\todo[inline]{Cite stable cuts also have this}
 
 The previous result can be extended further.
 We can extend ladder parts of the graph by adding
@@ -744,3 +762,6 @@ By doing this, we can decrease the average degree as close to four as we need.
 	the required inequality holds for any  $k\geq\left\lceil V\frac{1-2\varepsilon}{4\varepsilon}\right\rceil$.
 	%
 \end{proof}
+
+Complexity relation to stable cuts is described in \Cref{chapter:stable_cuts}.
+

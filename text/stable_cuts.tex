@@ -58,7 +58,9 @@ at least two are \( \red \) and at least two are \( \blue \).
 The following simple observation can be deduced
 from~\Cref{lemma:stable_cut_implies_nac_coloring}.
 %
-\begin{corollary}[\cite{legersky_original}]
+\begin{corollary}[\cite{legersky_original}]%
+	\label[corollary]{cor:vertex_no_triangle_stable_cut}
+	%
 	Let \( G \) be a connected graph with \( |E(G)| \ge 2 \).
 	If there is a vertex \( v \in V(G) \) such that it is
 	not contained in any triangle \( C_3 \) in \( G \),
@@ -111,7 +113,9 @@ for graphs from graph class \( \GSC \):
 Note that 2-trees (\Cref{def:2-tree})
 are in \( \GSC \) by definition.
 %
-\begin{lemma}[\cite{stable_cuts_legersky}]
+\begin{lemma}[\cite{stable_cuts_legersky}]%
+	\label[lemma]{lemma:stable_cut_or_2_tree}
+	%
 	For every \( G \in \GSC \), either \( G \) has a NAC-coloring
 	or \( G \) is a 2-tree.
 \end{lemma}
@@ -119,11 +123,19 @@ are in \( \GSC \) by definition.
 This shows that the properties of having a NAC-coloring and having a stable cut
 are not equivalent.
 
-\section{Algorithms}
+There are other notable similarities between NAC-colorings and stable cuts.
+Namely, as proved in~\cite{stable_cuts_complexity_base} it is NP-complete
+to decide whether a graph has a stable cut.
+After, it was shown in~\cite{stable_cuts_complexity_deg_five} that
+it is NP-complete to decide whether a \emph{line} graph with maximum degree five
+admits a stable cut.
+%
+Also, it is NP-complete to decide whether a graph with average degree of
+$4+\varepsilon$ of any $\varepsilon > 0$ admits a stable cut~\cite{stable_cuts_complexity_deg_five}.
+Both results are similar to what we show for NAC-colorings in \Cref{chapter:np}.
+%
 
-As proved in~\cite{stable_cuts_complexity} it is NP-complete
-to decide whether a line graph with maximum degree five admits a stable cut
---- similar result as we show for NAC-colorings in \Cref{chapter:np}.
+\section{Algorithms}
 
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
 an algorithm to find a stable cut (if present)
@@ -154,7 +166,7 @@ in the original paper~\cite{stable_cuts_legersky}.
 %
 \begin{algorithm}[ht]
 	\caption{\textsc{Stable cut of a connected flexible graph}}%
-	\label{alg:stableCutFlexible}%
+	\label{alg:stable_cut_flexible}%
 	\begin{algorithmic}[1]
 		\Require{} a connected flexible graph $G$, vertices $u$ and $v$ not in the same rigid component of $G$
 		\Ensure{} a stable cut $S$ of $G$ such that $u$ and $v$ are separated by $S$
@@ -176,7 +188,7 @@ in the original paper~\cite{stable_cuts_legersky}.
 \end{algorithm}
 %
 
-\Cref{alg:stableCutFlexible}
+\Cref{alg:stable_cut_flexible}
 was presented as a practical result of the following theorem.
 %
 \begin{theorem}[\cite{stable_cuts_legersky}]
@@ -190,7 +202,7 @@ was presented as a practical result of the following theorem.
 \subsection{Implementation}%
 \label{sec:stable_cuts_implementation}
 
-Notice that~\Cref{alg:stableCutFlexible}
+Notice that~\Cref{alg:stable_cut_flexible}
 accepts vertices \( u, v \) arbitrary as long as they do not share a rigid component.
 In an implementation, a check ensuring that \( u \) and \( v \)
 are in different rigid components has to be added.
@@ -209,7 +221,7 @@ that a stable cut is always found even if it is only the single articulation ver
 This can be done by choosing a vertex that is not in all the rigid components of the graph.
 
 %
-\Cref{alg:stableCutFlexible}
+\Cref{alg:stable_cut_flexible}
 is implemented and contributed as part of this thesis
 to PyRigi~\cite{pyrigi} in pull request~\cite{pyrigi_pr_stable_cuts}
 as method \texttt{stable\_separating\_set}.

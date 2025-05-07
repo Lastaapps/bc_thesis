@@ -1,5 +1,6 @@
 
-\chapter{Preliminaries}
+\chapter{Preliminaries}%
+\label{chapter:preliminaries}
 
 \begin{chapterabstract}
 
@@ -113,7 +114,7 @@ Pollaczek, Geiringer and later Laman gave characterization of minimally $2$-rigi
 	\( E(H) \le 2|V(H)| - 3 \) for any \( H \) subgraph of \( G \).
 	%
 	Therefore, for a graph \( G \) where \( |E(G)| < 2|V(G)| - 3 \) or
-	where \( |E(G)| = 2|V(G)| - 3 \) and there exists a subgraph \( H \) such that \( E(H) > 2|V(H)| - 3 \), 
+	where \( |E(G)| = 2|V(G)| - 3 \) and there exists a subgraph \( H \) such that \( E(H) > 2|V(H)| - 3 \),
 	there exists a flexible realization of \( G \).
 \end{lemma}
 %
@@ -278,7 +279,9 @@ We elaborate more on this case in~\Cref{chapter:stable_cuts}.
 We continue by other lemmas that are useful in our algorithm.
 They are able to find a NAC-coloring of a graph in polynomial time for some graph classes.
 %
-\begin{lemma}[\cite{legersky_original}]
+\begin{lemma}[\cite{legersky_original}]%
+	\label[lemma]{lemma:weird_four_cycle}
+	%
 	Let \( G \) be a connected graph, \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
 	edge cut in \( G \) such that \( E_c \) separates \( G \) and the subgraph of \( G \)
 	induced by \( E_c \) contains no path of length four, then \( G \) has a NAC-coloring.
