@@ -56,3 +56,4 @@
 {"rule":"REP_PASSIVE_VOICE","sentence":"^\\QFollowing strategy is called .\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QFor a graph, many different tree decompositions can be obtained.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[lemma]lemma:fpt_join_node Lastly we show formula to compute cache entries based on previously stated mappings.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QI managed to gain all the knowledge required for this thesis thanks to all the great professors and teachers at Faculty of Information Technology and Gymnázium Pelhřimov.\\E$"}

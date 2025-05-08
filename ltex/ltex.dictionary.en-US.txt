@@ -44,3 +44,4 @@ Treewidth
 pathwidth
 cliquewidth
 surjectivity
+Gymnázium
