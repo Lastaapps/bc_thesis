@@ -7,11 +7,12 @@ The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflow
 of the thesis can be found in artifacts in GitHub workflows.
 
 ## TODO
-- Discuss thanks
-- Grammarly
 - resolve todos
-- Fix line breaks
+- more examples
+- Fix line breaks & typography
 - Comment code
+- update precomputed benchmarks
+- pregenerate graphs in notebooks
 
 ## Abstract
 

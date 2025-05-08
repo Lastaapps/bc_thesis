@@ -38,7 +38,7 @@ Graph are usually stored in Graph6 format.
 Code for reading graphs from the store can be found in \texttt{benchmarks/dataset.py},
 code for generating some graph classes can be found in  \texttt{benchmarks/generators.py},
 In the \texttt{benchmark} directory, there are all result of the benchmarks that we run
-during the project development. The most relevant for a reader is the CSV file
+during the project development. The most relevant for a reader is the compressed CSV file
 stored in \texttt{precomputed} directory containing individual benchmark results.
 The base directory contains tooling for running, visualizing and exporting benchmarks.
 File \texttt{NAC\_playground.ipynb} in the root directory presents a simple case
@@ -228,6 +228,10 @@ since these are called only when the small cycles check \CycleMask{} passes
 
 \subsection{Performance on graph classes}%
 
+\todo[inline]{Explain how graphs are formed --- grouping and aggregation. Point to all graphs in figures}
+\todo[inline]{Ensure \MinMax{} is shown in benchmarks}
+\todo[inline]{Document notebook utils}
+
 \todo[inline]{Consider Laman deg 3+}
 \todo[inline]{Consider line graphs of 3 nor 4 cycles}
 
@@ -392,6 +396,7 @@ namely on globally rigid graphs.
 Splitting strategies \None{}, \CycleMask{}, \Neighbors{} and \NeighborsDegree{}
 performs similarly.
 
+
 \subsection{Performance on graphs with no NAC-colorings}
 
 In the previous section, the \Subgraphs{} algorithm performed worse considering runtime
@@ -408,8 +413,8 @@ As this search was slow and unsuccessful, we searched only for
 graphs with more than \( 2\sqrt{|V(G)|} \) \trcon{} components.
 This once again shows how effective monochromatic classes are
 in comparison with \trcon{} components.
-We generated ten thousand of such graphs from 40 to 140 vertices in size.
-Less than 30 of them had more than one monochromatic class.
+We generated five thousand of such graphs from 40 to 140 vertices in size.
+Less than twenty of them had more than one monochromatic class.
 The following benchmarks are run with monochromatic classes disabled.
 
 For these graphs, \NaiveCycles{} algorithm needs to traverse all \( 2^{t-1} \)

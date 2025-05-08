@@ -1329,7 +1329,7 @@
 \pgfpathlineto{\pgfqpoint{2.346325in}{1.739652in}}%
 \pgfpathlineto{\pgfqpoint{2.640746in}{1.800881in}}%
 \pgfpathlineto{\pgfqpoint{2.812491in}{1.797656in}}%
-\pgfpathlineto{\pgfqpoint{2.886097in}{1.914371in}}%
+\pgfpathlineto{\pgfqpoint{2.886097in}{1.899001in}}%
 \pgfpathlineto{\pgfqpoint{3.008772in}{1.799988in}}%
 \pgfpathlineto{\pgfqpoint{3.106912in}{1.739117in}}%
 \pgfpathlineto{\pgfqpoint{3.229588in}{1.633634in}}%
@@ -1432,7 +1432,7 @@
 \pgfpathlineto{\pgfqpoint{2.640746in}{1.497321in}}%
 \pgfpathlineto{\pgfqpoint{2.763421in}{1.573669in}}%
 \pgfpathlineto{\pgfqpoint{2.812491in}{1.589314in}}%
-\pgfpathlineto{\pgfqpoint{2.886097in}{1.740621in}}%
+\pgfpathlineto{\pgfqpoint{2.886097in}{1.721517in}}%
 \pgfpathlineto{\pgfqpoint{3.008772in}{1.623232in}}%
 \pgfpathlineto{\pgfqpoint{3.106912in}{1.752741in}}%
 \pgfpathlineto{\pgfqpoint{3.229588in}{1.704055in}}%
@@ -1575,7 +1575,7 @@
 \pgfpathlineto{\pgfqpoint{1.242247in}{1.257204in}}%
 \pgfpathlineto{\pgfqpoint{1.315852in}{2.161235in}}%
 \pgfpathlineto{\pgfqpoint{1.364922in}{2.440512in}}%
-\pgfpathlineto{\pgfqpoint{1.438527in}{2.353039in}}%
+\pgfpathlineto{\pgfqpoint{1.438527in}{2.321463in}}%
 \pgfpathlineto{\pgfqpoint{1.512133in}{2.282906in}}%
 \pgfpathlineto{\pgfqpoint{1.831089in}{1.870911in}}%
 \pgfpathlineto{\pgfqpoint{2.812491in}{1.612713in}}%
