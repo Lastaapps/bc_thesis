@@ -74,7 +74,7 @@ Heuristics for \Subgraphs{} algorithm are stored in \texttt{strategies.py}.
 Tests of the whole code are stored in directory \texttt{test}.
 
 Common function parameters are:
-\textsc{graph} repressing the (sub)graph where NAC-colorings should be found,
+\textsc{graph} repressing the subgraph where NAC-colorings should be found,
 \textsc{comp\_graph} where vertices are some integer IDs of monochromatic classes
 and edges exists if the classes are neighboring.
 An ID of a monochromatic class also serves as index into \textsc{component\_to\_edges}
@@ -88,7 +88,7 @@ using NetworkX's function \textsc{add\_edges\_from}.
 This is rather slow as creating new vertices in the empty graph causes noticeable overhead.
 Therefore, we create a graph with no edges and the same vertices as the original graph,
 cache it and reuse it for the checks. First edges are added, the check is run, and the edges are cleared.
-By doing this, the performance of \IsNACColoring{} is increased by roughly forty percent.
+By doing this, the performance of \IsNACColoring{} is increased by roughly 40\%.
 Another way how the performance could be increased is by reserving space in lists
 when the final size is known. This is unfortunately not possible in Python.
 
@@ -324,15 +324,15 @@ for larger graphs then \None{}.
 
 We also randomly generated a dataset of globally rigid graphs
 up to 57 vertices.
-We used formula from yet unpublished work of John Haslegrave
+We used a formula from yet unpublished work of John Haslegrave
 that for a number of vertices gives a number of edges,
 such that graphs have no or just few NAC-colorings.
 For such random graphs, we checked if they are globally rigid using PyRigi~\cite{pyrigi}.
 %
 The idea of monochromatic classes is so effective
-that even large graphs collapse into just few monochromatic classes.
-Most of the graphs in this dataset have a NAC-coloring
-and the graph that do not often have only a single monochromatic class.
+that even large graphs collapse into just a few monochromatic classes.
+Most of the graphs in this dataset have a NAC-coloring,
+and the other graphs often have only a single monochromatic class.
 The statements from other graph classes in this section hold
 --- \NaiveCycles{} is faster for finding some NAC-coloring
 as shown in \Cref{fig:graph_globally_rigid_first_runtime}
@@ -401,7 +401,7 @@ As explained, it is caused by additional overhead and problem simplicity.
 
 For many NP-complete problems, interesting instances are usually
 those where there are only few or no solutions.
-In this section we focus on graphs with no NAC-colorings.
+In this section, we focus on graphs with no NAC-colorings.
 We searched for random graphs where \( |E| \ge 2|V(G)| - 2 \) that have
 multiple monochromatic classes, but no NAC-coloring.
 As this search was slow and unsuccessful, we searched only for
@@ -409,20 +409,20 @@ graphs with more than \( 2\sqrt{|V(G)|} \) \trcon{} components.
 This once again shows how effective monochromatic classes are
 in comparison with \trcon{} components.
 We generated ten thousand of such graphs from 40 to 140 vertices in size.
-Less than 30 of them had more than one monochromatic components.
+Less than 30 of them had more than one monochromatic class.
 The following benchmarks are run with monochromatic classes disabled.
 
 For these graphs, \NaiveCycles{} algorithm needs to traverse all \( 2^{t-1} \)
 where \( t \) is the number of \trcon{} components. It can be clearly seen that
 this is not suitable for graphs as large as we use in this benchmark,
-therefore they are not present as they did not finish in reasonable time.
+therefore, they are not present as they did not finish in reasonable time.
 It can be seen from \Cref{fig:graph_no_nac_coloring_first_runtime}
 that \SharedVertices{} is faster than \MergeLinear{},
 for runtime and also for the number of checks performed
 shown in \Cref{fig:graph_no_nac_coloring_first_checks}.
 It can be also seen that \NeighborsDegree{} strategy is
 faster than the other strategies, and it holds for both merging strategies.
-Also notice, that in contrast with the previous section,
+Also notice that in contrast with the previous section,
 runtime grows strictly exponentially. This was not the case for search for a single NAC-coloring.
 
 \begin{figure}[p]
@@ -443,7 +443,7 @@ runtime grows strictly exponentially. This was not the case for search for a sin
 In \Subgraphs{} algorithm description, an important parameter was the size of subgraphs \( k \).,
 almost all the benchmarks in the previous section were run with \( k = 4 \).
 Now we show the impact of	\( k \) on runtime and number of checks.
-Note, that you see averages over all the strategies used for benchmarking
+Note that you see averages over all the strategies used for benchmarking
 graphs with no NAC-colorings.
 From graphs in \Cref{fig:graph_no_nac_coloring_first_runtime_subgraph_size,fig:graph_no_nac_coloring_first_checks_subgraph_size},
 it can be seen that the algorithm benefits from smaller \( k \) significantly.
@@ -470,13 +470,13 @@ the strategies for \Subgraphs{} perform so similarly.
 \subsubsection{Failing strategies}%
 \label{sec:failing_strategies}
 
-In this section we show performance of other strategies described in \Cref{chapter:alg}.
+In this section, we show the performance of other strategies described in \Cref{chapter:alg}.
 We do not show these strategies in previous graphs as they would influence
 the scale and would make graphs and legends unreadable.
 
 Some of these strategies performed as well as our preferred strategies for some graph classes,
-bug fail for other and therefore are not universal enough.
-First we show in \Cref{fig:graph_mimimally_rigid_failing_merging_first_runtime, fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
+but fail for others and therefore are not universal enough.
+First, we show in \Cref{fig:graph_mimimally_rigid_failing_merging_first_runtime, fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
 how strategies like \Log{} and \PromisingCycles{} fails compared to the others.
 We fixed a single strategy, but behavior is similar for other strategies.
 We also show in \Cref{fig:graph_mimimally_rigid_failing_split_first_runtime}

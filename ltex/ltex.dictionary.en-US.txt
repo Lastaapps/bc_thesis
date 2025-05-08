@@ -45,3 +45,4 @@ pathwidth
 cliquewidth
 surjectivity
 Gymnázium
+NACproduct

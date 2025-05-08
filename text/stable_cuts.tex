@@ -5,14 +5,14 @@
 \begin{chapterabstract}
 	%
 	We introduce relation between stable cuts and NAC-colorings.
-	We summarize progress done on stable cuts existence and search.
-	Lastly we briefly describe an algorithm that can find a stable cut
+	We summarize the progress done on stable cuts existence, search and complexity.
+	Lastly, we briefly describe an algorithm that can find a stable cut
 	for any flexible graph.
 	%
 \end{chapterabstract}
 
 
-In this chapter we focus on connected graphs only as for us graph cuts
+In this chapter, we focus on connected graphs only as for us graph cuts
 lose their importance on disconnected graphs.
 We recall the definition of
 stable cut in~\Cref{def:stable_cut}.
@@ -35,7 +35,7 @@ Notice how stable cuts are related to NAC-colorings.
 	%
 	As \( S \) is a cut in \( G \), let us have some partitions \( A, B \),
 	We know that \( |S| < |A|, |S| < |B| \)
-	as disconnected partitions are nonempty and \( G \) was connected.
+	as disconnected partitions are nonempty and \( G \) is connected.
 	There is at least one edge incident to vertices in both \( A \) and \( B \).
 	We color \( E(G[A]) \) \( \red \) and \( E(G[B]) \) \( \blue \).
 	Both colors are used, so the coloring is surjective.
@@ -49,10 +49,10 @@ Notice how stable cuts are related to NAC-colorings.
 	So there are no almost cycles and a NAC-coloring is created.
 \end{proof}
 %
-You can also prove the above lemma from the fact that every cycle that
+The above lemma can be also proven from the fact that every cycle that
 uses a vertex in \( S \) must pass
 through at least one vertex in \( A \setminus S \) and \( B \setminus S \).
-Such cycle has at least four edges,
+Such a cycle has at least four edges,
 at least two are \( \red \) and at least two are \( \blue \).
 
 The following simple observation can be deduced
@@ -73,7 +73,7 @@ from~\Cref{lemma:stable_cut_implies_nac_coloring}.
 	has a NAC-coloring.
 \end{proof}
 
-In the following paragraphs we construct graph classes by joining graphs
+In the following paragraphs, we construct graph classes by joining graphs
 that are already in the class.
 Graph \( G \) is created from graphs \( G_1, G_2 \) by an \emph{edge identification}
 on an edge \( \{u, v\} \)
@@ -83,7 +83,7 @@ Graph \( G \) is created from graphs \( G_1, G_2 \) by a \emph{triangle identifi
 if \( V(G_1) \cap V(G_2) = \{u, v, w\}, E(G_1) \cap E(G_2) = \{\{u, v\}, \{v, w\}, \{w, u\}\} \)
 and \( G = (V(G_1) \cup V(G_2), E(G_1) \cup E(G_2)) \).
 
-It is known for some classes that a stable cut must exists.
+It is known for some classes that a stable cut must exist.
 Flexibility of such graphs can be seen from~\Cref{lemma:laman_characterization}.
 %
 \begin{theorem}[\cite{stable_cuts_2v_4}]
@@ -126,12 +126,12 @@ are not equivalent.
 There are other notable similarities between NAC-colorings and stable cuts.
 Namely, as proved in~\cite{stable_cuts_complexity_base} it is NP-complete
 to decide whether a graph has a stable cut.
-After, it was shown in~\cite{stable_cuts_complexity_deg_five} that
+After it was shown in~\cite{stable_cuts_complexity_deg_five} that
 it is NP-complete to decide whether a \emph{line} graph with maximum degree five
 admits a stable cut.
 %
 Also, it is NP-complete to decide whether a graph with average degree of
-$4+\varepsilon$ of any $\varepsilon > 0$ admits a stable cut~\cite{stable_cuts_complexity_deg_five}.
+$4+\varepsilon$ for any $\varepsilon > 0$ admits a stable cut~\cite{stable_cuts_complexity_deg_five}.
 Both results are similar to what we show for NAC-colorings in \Cref{chapter:np}.
 %
 
@@ -140,18 +140,18 @@ Both results are similar to what we show for NAC-colorings in \Cref{chapter:np}.
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
 an algorithm to find a stable cut (if present)
 for graphs where \(|E(G)| \le 2|V(G)|-3 \),
-they only provide list of claims
-from whose a stable cut set can be found.
+they only provide a list of claims
+from which a stable cut set can be found.
 All the checks can be run in polynomial time.
 Unfortunately, the list is long,
 and it is beyond the scope of this thesis
-to describe and implement such algorithm.
+to describe and implement such an algorithm.
 
 As shown in~\cite[Algorithm 1]{stable_cuts_legersky}, a stable cut can be found
 in a polynomial time for any flexible graph.
 As mentioned before, that also includes graphs
 where \( |E(G)| \le 2|V(G)| - 4 \) (not for \( |E(G)| \le 2|V(G)| - 3 \)).
-Rigid component of a graph is maximal induced subgraph that is rigid.
+A rigid component of a graph is maximal induced subgraph that is rigid.
 The main idea of the algorithm works as follows:
 %
 \begin{itemize}
@@ -207,13 +207,13 @@ accepts vertices \( u, v \) arbitrary as long as they do not share a rigid compo
 In an implementation, a check ensuring that \( u \) and \( v \)
 are in different rigid components has to be added.
 
-In the implementation it is also beneficial to offer an option to choose
+In the implementation, it is also beneficial to offer an option to choose
 vertices \( u \) and/or \(  v \) for a user automatically.
 First in the user specifies only vertex \( u \), the goal is to find a stable cut
 that avoids it. Our algorithm finds \( v \)
-such that it is not in a same rigid component with \( u \).
+such that it is not in the same rigid component with \( u \).
 This is always possible unless \( u \) is the only articulation vertex
-and blocks are rigid components. In this case an error is reported back to the user.
+and blocks are rigid components. In this case, an error is reported back to the user.
 
 If neither of \( u, v \) is given by the user,
 we need to choose vertices in such a way

@@ -57,3 +57,9 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QFor a graph, many different tree decompositions can be obtained.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[lemma]lemma:fpt_join_node Lastly we show formula to compute cache entries based on previously stated mappings.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QI managed to gain all the knowledge required for this thesis thanks to all the great professors and teachers at Faculty of Information Technology and Gymnázium Pelhřimov.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QIn this strategy , Kernighan-Lin algorithm is recursively run to split the graph into parts till parts smaller than \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q are reached.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe also tried approach , where Kernighan-Lin algorithm is replaced by more classical flow-based edge cuts to split graph into parts.\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe call this improved algorithm .\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qto \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[definition]def:NACvalid An equivalence relation \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q on the edge set of a graph \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q is called NAC-valid if for every NAC-coloring \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q of \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q it holds that \\E(?:Dummy|Ina|Jimmy-|Dummy-|Maniquí-|Maniquíes-)[0-9]+\\Q.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[observation]observ:monochromatic_classes_graph Monochromatic classes behave like a graph, where monochromatic classes are vertices and there is an edge incident to two monochromatic classes if they are neighboring.\\E$"}

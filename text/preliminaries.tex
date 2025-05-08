@@ -4,10 +4,10 @@
 
 \begin{chapterabstract}
 
-	In this chapter we define terminology from Rigidity theory including NAC-coloring.
+	In this chapter, we define terminology from Rigidity theory including NAC-coloring.
 	We also introduce its relation to Rigidity theory and
 	some simple statements considering
-	structure of graphs and NAC-coloring existence.
+	the structure of graphs and NAC-coloring existence.
 
 \end{chapterabstract}
 
@@ -57,7 +57,7 @@ The following definitions are taken from~\cite{np_complete,my_paper}.
 	we have \( p_t \) such that
 	\( \|p_t(u) - p_t(v)\| = \|p(u) - p(v)\|\) for every \( \{u, v\} \in E(G) \),
 	but \( \|p_t(u) - p_t(v)\| \ne \|p(u) - p(v)\| \) for some \( u, v \in V (G) \).
-	We call such family of maps a \emph{non-trivial flex} of framework \( (G, p) \).
+	We call such a family of maps a \emph{non-trivial flex} of framework \( (G, p) \).
 \end{definition}
 %
 \begin{definition}[\( d \)-flexible, \( d \)-rigid]
@@ -79,7 +79,7 @@ This is equivalent to the distances between adjacent vertices being positive.
 Note that two non-neighboring vertices can be mapped to the same position.
 \emph{Injective} realizations have been also studied~\cite{injective_realizations},
 but they are of no interest for us in this thesis
-as there are no known combinatorial characterization of them.
+as there is no known combinatorial characterization of them.
 
 It is NP-hard to decide whether a given \( d \)-dimensional framework is
 \( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
@@ -94,14 +94,14 @@ behavior.
 \end{definition}
 %
 
-From now on we focus only on the \( 2 \)-dimensional case,
+From now on, we focus only on the \( 2 \)-dimensional case,
 in which there is a combinatorial characterization of rigid graphs.
 
 There is a significant graph class studied in Rigidity theory
 called minimally rigid graphs or Laman graphs.
 %
 \begin{definition}
-	Graph is \emph{minimally generically \( d \)-rigid} if it is \( d \)-rigid
+	A graph is \emph{minimally generically \( d \)-rigid} if it is \( d \)-rigid
 	and \( G - e \) is \(d\)-flexible for each \( e \in E(G) \).
 \end{definition}
 %
@@ -118,7 +118,7 @@ Pollaczek, Geiringer and later Laman gave characterization of minimally $2$-rigi
 	there exists a flexible realization of \( G \).
 \end{lemma}
 %
-Base on \Cref{lemma:laman_characterization}, a polynomial algorithm
+Based on \Cref{lemma:laman_characterization}, a polynomial algorithm
 for testing $2$-rigidity~\cite{polynomial-min-rigid},
 while a combinatorial classification of $d$-rigid graphs for $d\geq 3$ remains an open problem.
 
@@ -136,7 +136,7 @@ It is algorithmically hard to find flexible realizations of a graph
 just by trying realizations and checking if they are flexible
 as the plane is continuous.
 In~\cite{legersky_original} a new edge coloring is proposed
-that corresponds with existence of a flexible realization.
+that corresponds with the existence of a flexible realization.
 
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
@@ -194,12 +194,12 @@ Now we present relation of NAC-colorings and flexible frameworks.
 The theorem has a constructive proof from which a flexible realization
 can be found for a given NAC-coloring.
 The proof itself is nontrivial, and we do not show it here.
-For us the most interesting questions are whether a graph has a NAC-coloring
+For us, the most interesting questions are whether a graph has a NAC-coloring
 and how many NAC-coloring does a graph have.
-For an example have a look at~\Cref{fig:3prism}
+For example, have a look at~\Cref{fig:3prism}
 from Introduction.
 
-Note that for each NAC-coloring \( \delta \) on graph \( G \)
+Note that for each NAC-coloring \( \delta \) on a graph \( G \),
 there exists a NAC-coloring \( \delta^\prime \) on \( G \)
 where \( \red \) and \( \blue \) colors are swapped.
 %
@@ -211,9 +211,9 @@ where \( \red \) and \( \blue \) colors are swapped.
 \end{definition}
 %
 
-In algorithms related to NAC-coloring search it is beneficial
+In algorithms related to NAC-coloring search, it is beneficial
 to reduce the search space.
-It can be often seen from the graph's structure
+It can often be seen from the graph's structure
 that if colors differ for some set of edges,
 the resulting coloring cannot be a NAC-coloring.
 
@@ -246,7 +246,7 @@ The naive algorithm that is described in more detail in the following chapters
 iterates through all the possible edge colorings of a graph.
 If \( \triangle \)-connected components are employed in the algorithm,
 the whole \( \triangle \)-connected components can be checked instead of individual edges.
-Later we further improve the idea of \( \triangle \)-connected components.
+Later, we further improve the idea of \( \triangle \)-connected components.
 
 Now we define common terminology with the goal to define stable cuts in a graph.
 
@@ -276,13 +276,13 @@ Stable set is also often called an \emph{independent set}.
 If there is a stable cut in a graph, a NAC-coloring can be simply found.
 We elaborate more on this case in~\Cref{chapter:stable_cuts}.
 
-We continue by other lemmas that are useful in our algorithm.
+We continue with other lemmas that are useful in our algorithm.
 They are able to find a NAC-coloring of a graph in polynomial time for some graph classes.
 %
 \begin{lemma}[\cite{legersky_original}]%
 	\label[lemma]{lemma:weird_four_cycle}
 	%
-	Let \( G \) be a connected graph, \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
+	Let \( G \) be a connected graph such that \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
 	edge cut in \( G \) such that \( E_c \) separates \( G \) and the subgraph of \( G \)
 	induced by \( E_c \) contains no path of length four, then \( G \) has a NAC-coloring.
 \end{lemma}
@@ -295,7 +295,7 @@ See~\cite{legersky_original} for a complete proof.
 For graph \( G \), some vertex \( v \in G \) is \emph{an articulation} vertex if
 \( \{v\} \) is a vertex cut in \( G \).
 When all the articulation vertices are found,
-graph can be decomposed into blocks
+the graph can be decomposed into blocks
 --- vertex \( 2 \)-connected components.
 As no cycles pass through multiple blocks, we can color each block
 independently as long as both colors are used.~\cite{my_paper}.

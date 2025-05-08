@@ -33,3 +33,4 @@ _minted/
 
 *.pdf
 !assets/*.pdf
+styles
