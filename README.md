@@ -6,7 +6,13 @@ at Faculty of Information technology, CTU Prague.
 The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflows/latex.yml)
 of the thesis can be found in artifacts in GitHub workflows.
 
+## Done
+- run no 3 nor 4 cycles with cycle match chunks and neighbors degree
+
 ## TODO
+- run score on no NAC coloring
+- run no NAC coloring with larger subgraphs as I misinterpreted the results
+- smart split jenom na linear a log
 - resolve todos
 - more examples
 - Fix line breaks & typography

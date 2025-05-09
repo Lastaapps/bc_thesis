@@ -34,7 +34,7 @@
 %%     \setsansfont{DejaVuSans.ttf}[Path=\detokenize{/home/petr/Projects/PyRigi/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/}]
 %%     \setmonofont{DejaVuSansMono.ttf}[Path=\detokenize{/home/petr/Projects/PyRigi/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/}]
 %%   \fi
-%%   \makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
+%%   \makeatletter\@ifpackageloaded{under\Score{}}{}{\usepackage[strings]{under\Score{}}}\makeatother
 %%
 \begingroup%
 \makeatletter%
@@ -1528,7 +1528,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=6.365602in,y=1.957475in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& min\_max}}%
+\pgftext[x=6.365602in,y=1.957475in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& \MinMax{}}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetrectcap%
@@ -1579,7 +1579,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=6.365602in,y=1.396623in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& sorted\_size}}%
+\pgftext[x=6.365602in,y=1.396623in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& \SortedSize{}}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetrectcap%
@@ -1596,7 +1596,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=6.365602in,y=1.209673in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& sorted\_bits}}%
+\pgftext[x=6.365602in,y=1.209673in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Neighbors{} \& \SortedBits{}}}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%

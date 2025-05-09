@@ -34,7 +34,7 @@
 %%     \setsansfont{DejaVuSans.ttf}[Path=\detokenize{/home/petr/Projects/PyRigi/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/}]
 %%     \setmonofont{DejaVuSansMono.ttf}[Path=\detokenize{/home/petr/Projects/PyRigi/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/}]
 %%   \fi
-%%   \makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
+%%   \makeatletter\@ifpackageloaded{under\Score{}}{}{\usepackage[strings]{under\Score{}}}\makeatother
 %%
 \begingroup%
 \makeatletter%

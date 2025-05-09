@@ -3,12 +3,12 @@
 
 \begin{chapterabstract}
 
-	As shown before it is NP-complete to decide if a graph has a NAC-coloring,
-	therefore we cannot hope for an algorithm that can solve this problem in polynomial time.
+	As shown before, it is NP-complete to decide if a graph has a NAC-coloring.
+	Therefore, we cannot hope for an algorithm that can solve this problem in polynomial time.
 	The trivial idea how to search for NAC-colorings is to
 	try all the \( \red \)-\( \blue \)-edge colorings
 	and check in polynomial time if a coloring given is a NAC-coloring.
-	In this chapter we propose multiple optimizations to the naive approach
+	In this chapter, we propose multiple optimizations to the naive approach
 	and an algorithm that significantly outperforms naive approach in general case.
 
 \end{chapterabstract}
@@ -26,43 +26,44 @@ the existence of a NAC-coloring can be checked easily by stopping after finding 
 
 This chapter is based on our previous work in~\cite{my_paper},
 here we describe the approaches used more in detail
-and also describe other approaches that do not work as well the approaches also
-shown in the paper. We evaluate performance of the algorithm in \Cref{chapter:benchmarks}.
+and also describe other approaches that do not work as well as the approaches
+shown in the paper. We evaluate the performance
+of the algorithms and related heuristics in \Cref{chapter:benchmarks}.
 
 \section{Naive approach}
 
 A naive approach to list all NAC-colorings is to consider
-all $2^{|E(G)|}$ surjective edge colorings of graph $G$ by red and blue
+all $2^{|E(G)|} - 2$ surjective \( \red \)-\( \blue \)-edge colorings of graph $G$
 and check each of them in polynomial time using \Cref{lemma:is_nac_coloring}.
 We call this check \IsNACColoring{}$(G, E_r, E_b)$.
 To remind the reader, the idea is simple
 --- first we create subgraphs \( G[E_\red], G[E_\blue] \).
 If there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} \)
-and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
+and vertices \( u, v \) share the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( \red \) \( u \)-\( v \)-path in \( G[E_\red] \)
 and the \( \blue \) edge \( \{u, v\} \).
 
-This algorithm we call \Naive{} runs in \( O(2^{|E(G)|}) \) time.
+The algorithm we call \Naive{} runs in \( O(2^{|E(G)|}) \) time.
 It can be sped up dramatically by considering sets of edges instead of individual edges.
 For some sets of edges, we can easily see that all the edges in the set need to share
 the same color in every NAC-coloring.
 Now we can color the whole sets at once
 and therefore reduce the time complexity to \( O(2^{c}) \)
 where \( c \) is the number of described sets.
-One example of such set are \trcon{} components
+One example of such a set are \trcon{} components
 as defined in~\Cref{def:triangle_connected_component}.
 In the following section, we extend upon the idea of \trcon{} components
 to reduce the search space even further.
 
 Another simple but important observation is that the whole search space \( O(2^{c}) \)
 does not need to be traversed, as a NAC-coloring with colors swapped is again a NAC-coloring.
-Therefore, we fix color of one set of edges and also generate NAC-colorings with colors swapped.
-This cuts our runtime in half %
-todo[inline]{Uncomment footnote
-		% \footnote{
-		To learn more on the topic of cutting in half, we recommend
-		\href{https://youtu.be/FZ4qeJly1g0}{youtu.be/FZ4qeJly1g0}.
-	}%
+Therefore, we fix the color of one set of edges and additionally generate NAC-colorings with colors swapped.
+This cuts runtime in half %
+\todo[inline]{Uncomment footnote
+	% \footnote{
+	To learn more on the topic of cutting in half, we recommend
+	\href{https://youtu.be/FZ4qeJly1g0}{youtu.be/FZ4qeJly1g0}.
+}%
 to \( O(2^{c-1}) \).
 
 
@@ -70,7 +71,7 @@ The algorithm implemented in \flexrilog{}
 considers only colorings such that \trcon{} components are monochromatic,
 and also ignores NAC-colorings with colors swapped.
 
-\section{NAC-valid relations}
+\section{NAC-valid relations}%
 \label{sec:NACvalid}
 
 While the idea of \trcon{} components is that 3-cycles are monochromatic,
@@ -95,7 +96,7 @@ With that, we also define terms used with monochromatic classes:
 %
 \begin{itemize}
 	\item The \emph{vertices} of a monochromatic class $M$
-	      are the vertices of the subgraph $G[M]$.
+	      are the vertices of subgraph $G[M]$.
 	\item We call two distinct monochromatic classes \( M_1, M_2 \) \emph{neighboring},
 	      if they share at least one common vertex.
 	      % if the intersection of the vertices of \( M_1, M_2 \) is non-empty.
@@ -106,7 +107,7 @@ With that, we also define terms used with monochromatic classes:
 \begin{observation}%
 	\label[observation]{observ:monochromatic_classes_graph}
 	Monochromatic classes behave like a graph,
-	where monochromatic classes are vertices and there is an edge incident to
+	where monochromatic classes are vertices, and there is an edge incident to
 	two monochromatic classes if they are neighboring.
 \end{observation}
 %
@@ -131,7 +132,7 @@ with possibly less monochromatic classes.
 \begin{proof}
 	%
 	The condition in \Cref{def:NACvalid}
-	is preserved undertaking reflexive-transitive closure,
+	is preserved by undertaking reflexive-transitive closure,
 	so it suffices to check it only for $\sim^\prime$: if $e_1$ and $e_2$ had different colors in some NAC-coloring,
 	then $C$ would be an almost cycle since $C - \{e_1,e_2\}$ is monochromatic as the relation $\sim$ is NAC-valid.
 	%
@@ -259,11 +260,11 @@ in the number of monochromatic classes using bitwise arithmetic.
 One cycle $C$ can reject up to $\frac{1}{|E(C)|}$ colorings,
 which can be significant for small cycles.
 
-There are often many cycles of different lengths in the graph
+There are often many cycles of different lengths in the graph,
 and for the algorithm, only a subset of them can be chosen.
-If we choose too few, performance is left on the table, if too much,
+If we choose too few, the whole potential of the approach is not used, if too much,
 we spend too much time checking the masks while saving little
-by avoiding \IsNACColoring{} checks.
+by avoiding \IsNACColoring{} checks and performance degrades.
 The number of cycles should also grow with the number of edges,
 resp.\ monochromatic classes.
 As stated above, smaller cycles are preferred.
@@ -375,16 +376,17 @@ On the input, we assume the list of monochromatic classes
 and an integer $k\geq 1$, and we output a list of subgraphs
 such that each has at most $k$ monochromatic classes.
 We describe some heuristics how to split a graph into edge disjoint subgraphs.
-Here, in contrast with~\cite{my_paper} we also discuss heuristics
-that did not perform well.
+In contrast with~\cite{my_paper}, we also discuss heuristics
+that did not perform well or have other specific limitations.
 
 \subsubsection{\None{}}
 
-The strategy with the least overhead costs is to take the chunks of $k$ consecutive
-monochromatic classes in the vertex input list (heuristic \None{}).
+The strategy with the least overhead costs called \None{}
+is to take the chunks of $k$ consecutive
+monochromatic classes in the vertex input list.
 Some synthetically generated graphs are formed in such a way
 that \None{} ends up performing as good as the other strategies,
-this strategy usually fails when the vertex input list is shuffled.
+this strategy degrades when the vertex input list is shuffled.
 
 Our general goal for the following strategies
 is to maximize the number of suitable cycles in each
@@ -420,6 +422,9 @@ neighboring vertices of a vertex in the $used$ set.
 The other strategy \NeighborsDegree{} is based
 on the first and adds another rule ---
 if the number of neighbors matches, the vertex with lower degree is chosen.
+%
+Other variations of this approach were also tried,
+but the performance was not better.
 
 \begin{algorithm}
 	\caption{Heuristic \Neighbors}%
@@ -485,7 +490,7 @@ The stage ends when the queue is empty or when \( k \) monochromatic classes
 were marked as used. The whole process is repeated until
 all monochromatic classes are marked as used.
 
-\todo[inline]{Pseudocode, maybe?}
+\todo[inline]{Consider pseudocode for \CyclesMatchChunks{}}
 
 \subsubsection{\KernighanLin{}, \Cuts{}}
 
@@ -495,41 +500,139 @@ the parts by iteratively swapping pairs of vertices from the parts.
 
 As noted in~\Cref{observ:monochromatic_classes_graph},
 monochromatic classes can be converted into a graph.
-In this strategy \KernighanLin{},
-Kernighan-Lin algorithm is recursively run to split the graph into parts till
-parts smaller than \( k \) are reached.
+In strategy \KernighanLin{},
+Kernighan-Lin bisection algorithm is recursively run to split the graph
+into subgraphs till the subgraphs are smaller than \( k \) in the number of vertices.
 We hope that smaller-edge cuts will preserve more cycles among
 the monochromatic classes that often also represent cycles in the real graph.
 
 We also tried approach \Cuts{}, where Kernighan-Lin algorithm is replaced by
 more classical flow-based edge cuts to split graph into parts.
 With that, we lose the guarantee that the parts in recursive step
-are similar in size. The resulting components should still remain similar.
+are similar in size. Therefore, the recursive tree may be unbalanced.
 
 Other strategies based on
 sorting monochromatic components by their degree
 or breadth-first-search were also tried,
 but with no meaningful results.
 
+
+
+\subsection{Subgraph merging}%
+\label{sec:merging}
+
+After constructing the ordered list of edge-disjoint subgraphs,
+we compute all the NAC-colorings for each of them using
+the naive algorithm with monochromatic classes
+and improved check on cycles.
+Then the results need to be merged to obtain the NAC-colorings of the original graph
+using the NAC-product.
+
+Since checking every coloring in the NAC-product is a costly operation,
+we try to minimize the work that has to be done.
+The complexity of the task grows with the size of
+the merged subgraphs (as \IsNACColoring{} depends on the size of the graph checked)
+and also with the number of NAC-colorings found in each subgraph
+(which can grow exponentially).
+We describe multiple merging strategies.
+As before, we extend the list we presented in~\cite{my_paper}.
+
+The first approach \MergeLinear{} is
+to take the sequence of subgraphs and merge them one by one.
+We merge the first and the second subgraph, then we merge this result with the
+third one and so on.
+%
+Another approach called \SharedVertices{} always merges the two subgraphs that
+have the most vertices in common with the goal
+to create as many new cycles as possible.
+
+Next approach called \Log{} tries to merge subgraphs in a tree-like manner.
+For an ordered list of subgraphs,
+for simplicity let its size be \( 2^c \) for some \( c \in \N \).
+The list is split into pairs of consequent subgraphs and NAC-colorings
+of the subgraphs in pairs are merged. With that, a new list is created.
+This continues until we have the original graph and all its NAC-colorings.
+
+For the following strategies,
+we consider the number of monochromatic components
+that induces a given subgraph as its size.
+%
+One heuristic is that runtime can be reduced
+when we first merge smaller subgraphs as less processing power is
+required for smaller graphs.
+Subgraphs are always sorted by their size and two smallest are merged
+till we obtain the original graph.
+%
+The other heuristic \MinMax{} based on an opposite idea
+merges small subgraphs with large subgraphs.
+First, the smallest subgraph is merged with the largest one,
+then second smallest with the second largest and so on.
+The idea is that work is minimized on average
+as we prevent merges of large graphs.
+
+Following strategy is called \PromisingCycles{}.
+The strategy tries to guess which subgraphs
+have the most potential almost cycles when joined.
+For each pair of subgraphs we find cycles in joined subgraph using
+the same routine as in \Cref{sec:small_cycles}.
+A joined graph with the maximal number of cycles is chosen,
+otherwise we score as follows:
+%
+\begin{itemize}
+	\item If subgraphs share a vertex, the score grows.
+	\item Smaller joined graphs get higher priority.
+	\item Subgraphs with more common vertices get higher priority.
+\end{itemize}
+%
+
+All the previous merging strategies did not use the number of NAC-colorings
+of individual subgraphs in merging decisions.
+That is on purpose as we do not know the number of NAC-colorings in advance.
+With that, if only a single NAC-coloring is requested by a user,
+we can use lazy iterators in our implementation that
+find a NAC-coloring of a subgraph and wait till another coloring is requested.
+If all the NAC-colorings are desired or if we expect the graph to have no NAC-coloring,
+all NAC-colorings of subgraphs need to be traversed.
+In such cases, we can list all coloring of subgraphs first
+and employ heuristics that take advantage of this additional knowledge.
+
+The first proposed heuristic is called \SortedSize{}
+that sorts initial subgraphs by the number of NAC-colorings found,
+and merges the subgraphs with the smallest number of NAC-colorings.
+%
+Our preferred strategy of this heuristic family is called \Score{}.
+In each iteration, a score is computed for each pair of subgraphs in the current list.
+For subgraphs \( G_1, G_2 \), formula computes the score
+\( \nnac{G_1} \cdot \nnac{G_2} \cdot \text{sizeof}(G_1 \cup G_2) \).
+The score approximates the amount of work needed.
+The pair with the lowest score is chosen.
+
+We also tried approaches based on dynamic programming and recursive optimization,
+these approached do not scale well to larger instances.
+
 \subsubsection{Smart split}%
 \label{sec:smart_split}
 
-We already talked about how important it is that the subgraphs have something in common
-while we perform the filtering of the NAC-product. We also talked about the order of
-subgraphs and how do merging strategies interact with them.
+We already talked about the importance of subgraphs having vertices in common,
+while we perform the filtering of the NAC-product.
+We also stressed the order of subgraphs and
+how do merging strategies interact with them.
 The goal of the following algorithm is to create and order subgraphs in a way that they usually
 share property that reduces the output size while running
 the filtering of the NAC-product.
 
 The strategies for subgraph creation are generic --- they accept a graph and
-the list of sizes as input and output subgraphs. We exploit this property here. We use
-these strategies to divide the graph given in half by giving it appropriate
+the list of target subgraphs sizes bounded by \( k \) as input and output final subgraphs.
+We exploit this property here.
+We use these strategies to divide the graph divided in half by giving it appropriate
 sizes (the sum of the first half of subgraph sizes and the sum of the rest).
 Then we split the subgraphs further until we reach desired graph sizes.
 We order the created subgraphs in the tree traversal order.
 By doing that, we hope to ensure that most of the neighboring subgraph pairs share
 some vertices and therefore more cycles appear in the merged subgraph.
 
+Not all merging strategies as described above do use the order of subgraphs heavily,
+for these strategies we do not expect significant gains.
 Also note that \Cref{alg:smart_split} has a compatible interface with
 all the subgraph creation strategies and therefore can be easily added.
 
@@ -540,7 +643,7 @@ all the subgraph creation strategies and therefore can be easily added.
 		\Require{} $G$
 		\Comment{} Subgraph to work on
 		\Require{} $P$
-		\Comment{} Monochromatic classes of the subgraph $G$
+		\Comment{} Monochromatic classes of subgraph $G$
 		\Require{} $S$, $s \gets |S|$
 		\Comment{} List of the sizes of subgraphs and their number
 
@@ -568,89 +671,6 @@ all the subgraph creation strategies and therefore can be easily added.
 \end{algorithm}
 
 
-\subsection{Subgraph merging}%
-\label{sec:merging}
-
-After constructing the list of edge-disjoint subgraphs,
-we compute all the NAC-colorings for each of them using
-the naive algorithm with monochromatic classes
-and improved check on cycles.
-Then the results need to be merged to obtain the NAC-colorings of the original graph
-using the NAC-product.
-
-Since checking every coloring in the NAC-product is a costly operation,
-we try to minimize the work that has to be done.
-The complexity of the task grows with the size of
-the merged subgraphs (as \IsNACColoring{} depends on the size of the graph checked)
-and also with the number of NAC-colorings found in each subgraph
-(which can grow exponentially).
-
-We describe multiple merging strategies.
-As before, we extend on the list we presented in~\cite{my_paper}.
-The first approach \MergeLinear{} is
-to take the sequence of subgraphs and merge them one by one.
-We merge the first and the second subgraph, then we merge this result with the
-third one and so on. We have tried also tree-like approach, that is to merge consecutive pairs
-and then recursively again, but the performance was worse.
-
-Another approach called \SharedVertices{} always merges the two subgraphs that
-have the most vertices in common with the goal
-to create as many new cycles as possible.
-
-Next approach called \Log{} tries to merge subgraphs in a tree like manner.
-Consider we have an order list of subgraphs,
-for simplicity let its size be \( 2^c \) for some \( c \in \N \).
-Now, the list is split into pairs of subgraphs and NAC-colorings
-of the subgraphs in pairs are merged. With that, a new list is created.
-This continues until we have the original graph and all its NAC-colorings.
-Note that the approach makes little sense if~\Cref{alg:smart_split}
-is not also enabled.
-
-We consider the number of monochromatic components
-that induces a given subgraph as its size.
-One heuristic is that runtime can be reduced
-when first small subgraphs are merged with large subgraphs
-rather than large graphs with large subgraphs, as merging large graphs is expensive.
-This is what \MinMax{} strategy does.
-First, the smallest subgraph is merged with the largest one,
-then second smallest with the second largest and so on.
-A new list is created, and the same procedure is run on repeatedly.
-
-Following strategy is called \PromisingCycles{}.
-The strategy tries to guess which subgraphs
-have the most potential almost cycles when joined.
-For each pair of subgraphs we find cycles in joined subgraph using
-the same routine as in \Cref{sec:small_cycles}.
-A joined graph with the maximal number of cycles is chosen,
-otherwise we score as follows:
-%
-\begin{itemize}
-	\item If subgraphs share a vertex, the score grows.
-	\item Smaller joined graphs get higher priority.
-	\item Subgraphs with more common vertices get higher priority.
-\end{itemize}
-%
-
-All the previous merging strategies did not use the number of NAC-colorings
-of individual subgraphs in merging decisions.
-That is on purpose as we do not know the number of NAC-colorings in advance.
-With that, if only a single NAC-coloring is needed,
-in our implementation we can use lazy iterators that
-find a NAC-coloring of a subgraph and wait till another coloring is requested.
-If all the NAC-colorings are desired or if we expect the graph to have no NAC-coloring,
-all NAC-colorings of subgraphs need to be found anyway.
-In such cases, we can employ heuristics that take advantage of such additional knowledge.
-
-Our preferred strategy of this kind is called \Score{}
-In each iteration a score is computed for each pair of subgraphs in the current list.
-For subgraphs \( G_1, G_2 \), formula computes the score
-\( \nnac{G_1} \cdot \nnac{G_2} \cdot \text{sizeof}(G_1 \cup G_2) \).
-The score approximates the amount of work needed.
-The pair with the lowest score is chosen.
-
-We also tried approaches based on dynamic programming and recursive optimization.
-Unfortunately, these approached do not scale well to larger instances.
-
 
 \section{Polynomial optimizations}%
 \label{sec:polynomial_optimizations}
@@ -668,7 +688,7 @@ a NAC-coloring can be found in \( O(|V(G)|+|E(G)|) \) time.
 Connectivity can be also checked using the same algorithms.
 
 All algorithms and approaches described in \Cref{chapter:stable_cuts}
-are also relevant here as a NAC-coloring can be constructed from a stable cut easily.
+are also relevant here as a NAC-coloring can be constructed from a stable cut.
 An important algorithm goes from \Cref{cor:vertex_no_triangle_stable_cut}.
 If a graph is flexible (which always holds for \( |E(G)| \le 2|V(G)|-4 \)),
 a stable cut can be found in polynomial time using \Cref{alg:stable_cut_flexible}.
@@ -676,7 +696,7 @@ This also holds for minimally rigid graphs that are not 2-trees as shown in \Cre
 %
 As shown in~\cite{legersky_original}, there are no flexible realizations
 of graphs with \( |E(G)| > \frac{n(n-1)}{2} - (n-2) \) where \( n = |V(G)| \).
-There graphs always form a \trcon{} component.
+These graphs always form a \trcon{} component.
 %
 Another polynomial algorithm goes from \Cref{lemma:weird_four_cycle}
 (it is not implemented as part of the thesis).

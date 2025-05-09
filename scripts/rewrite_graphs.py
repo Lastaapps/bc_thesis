@@ -36,13 +36,17 @@ def fix_methods(text: str) -> str:
         (r"neighbors\_degree", r"\NeighborsDegree{}"),
         (r"neighbors", r"\Neighbors{}"),
         (r"cycles\_match\_chunks", r"\CyclesMatchChunks{}"),
-        (r"cuts", r"\Cuts{}"),
         (r"kernighan\_lin", r"\KernighanLin{}"),
+        (r"cuts", r"\Cuts{}"),
         ##########################################
         (r"shared\_vertices", r"\SharedVertices{}"),
         (r"linear", r"\MergeLinear{}"),
         (r"log", r"\Log{}"),
+        (r"min\_max", r"\MinMax{}"),
+        (r"sorted\_bits", r"\SortedBits{}"),
+        (r"sorted\_size", r"\SortedSize{}"),
         (r"promising\_cycles", r"\PromisingCycles{}"),
+        (r"score", r"\Score{}"),
     ]
     for pattern, replacement in patterns:
         text = text.replace(pattern, replacement)

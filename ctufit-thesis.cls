@@ -627,6 +627,9 @@
 % \setlength{\cftsecindent}{0pt}
 % \setlength{\cftsubsecindent}{0pt}
 % \setlength{\cftsubsubsecindent}{0pt}
+
+% Make the table of contents more compact
+\setcounter{tocdepth}{2}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
