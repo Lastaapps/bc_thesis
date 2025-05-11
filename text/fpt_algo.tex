@@ -423,15 +423,14 @@ our FPT algorithm for NAC-coloring counting,
 define a cache function,
 show and prove the correct value of the cache function for each node in a tree decomposition
 and determine the complexity of the algorithm.
-Lastly, we propose optimizations to the algorithm by empowering monochromatic components
-and by using other tricks.
+Lastly, we propose optimizations to the algorithm by also empowering monochromatic components.
 
 \subsection{The algorithm}
 
 Our algorithm is slightly similar to Steiner tree search algorithm
 as described in~\cite{book_parametrized_algorithms} as both the problems require connectivity
 among vertex partitions. Unlike in the Steiner tree search algorithm,
-our state space is even larger and all the operations work significantly differently.
+our state space is even larger and all the state mapping operations are significantly different.
 
 Before we start, we define some terms that come useful later.
 When we talk about a component, we mean a connected component.
@@ -470,7 +469,7 @@ In that case one of the following cases must be true:
 	      the \( \red \) bridge and \( \blue \) edge \( e \).
 \end{itemize}
 %
-In all other cases an almost cycle cannot be formed by adding \( \blue \) colored edge \( e \).
+In all other cases, an almost cycle cannot be formed by adding a \( \blue \) edge \( e \).
 Note that a vertex cannot be in multiple component for the given color
 as this fact would mean that both the components are not maximal.
 
@@ -480,7 +479,7 @@ colors all the edges in \( G \) with \( \red \) color.
 We do likewise for the case when \( e \) is colored \( \red \).
 Then we keep only the colorings that did not form an almost cycle.
 
-In the following sections
+In the following sections,
 we work with a nice tree decomposition \( T \) with treewidth \( k \)
 of a graph \( G \).
 %
@@ -488,7 +487,8 @@ We define an \emph{almost NAC-coloring}
 as a \( \red \)-\( \blue \) edge coloring such that there
 are no almost cycles formed. The conditions are the same as for NAC-coloring
 except that the surjectivity criterion is dropped.
-We use almost NAC-coloring for the rest of the section.
+By \( \anac{G} \), we denote the set of all almost NAC-colorings of \( G \).
+We use the notion of almost NAC-coloring for the rest of the section.
 Later when output is read in a \RootNode{},
 we switch back from almost NAC-colorings to NAC-colorings.
 
@@ -505,7 +505,7 @@ like \textsc{Edit Distance}, \textsc{Matrix Chain Multiplication} or \textsc{Lon
 We define a state space \( S \) of \emph{states}
 that will be used by our cache in our dynamic programming algorithm.
 We denote all partitions of a set \( X \) by \( \mathcal{F}(X) \).
-Note that it always holds that \( \emptyset \in \mathcal{F}(X) \).
+Recall that it holds that \( \emptyset \in \mathcal{F}(\emptyset) \).
 
 %
 \begin{definition}[State space]
@@ -530,25 +530,27 @@ we mean \( P_\red \) and \( R_\red \),
 analogically for \( \blue \).
 %
 A state represents sort of a projection of almost NAC-colorings of \( G_t \)
-grouped by common behavior on \( X_t \) --- vertices of \( X_t \) are in the same components.
+grouped by common behavior on \( X_t \)
+--- vertices of \( X_t \) are in the same part if they share the same component.
 %
 Relations \( R_\red, R_\blue \) represent
 whenever the components (or parts) are neighboring.
-This plays major role for detecting almost cycles.
+This plays a major role for detecting almost cycles.
 %
 For some \( t \in T \),
 an almost NAC-coloring \( \delta \) of \( G_t \)
-is \emph{consistent} with a state \( s_t = (P_\red, R_\red, P_\blue, R_\blue), s_t \in \in S_t \)
+is \emph{consistent} with a state \( s_t = (P_\red, R_\red, P_\blue, R_\blue), s_t \in S_t \)
 if \( \red \) and \( \blue \) components of \( \delta \) form \( P_\red \) and \( P_\blue \)
 when intersected with \( X_t \) and
 there are bridges between the components if and only if
 the components are neighboring \( R_\red \) and \( R_\blue \).
 Multiple almost NAC-coloring can be consistent with a single state.
 %
-Note that the state space is somewhat large, we evaluate the size in~\Cref{thm:fpt_algo}.
+Note that the state space is somewhat large,
+we elaborate on the size in the proof of~\Cref{thm:fpt_algo}.
 
 For the following definitions, lemmas, proofs and theorems, let us fix
-a nice tree decomposition \( T \) of a graph \( G \).
+a nice tree decomposition \( T \) of a graph \( G \) and width \( k \).
 %
 \begin{definition}[Cache function]
 	Let us have a mapping \( c: \mathcal{S} \to \N_0 \)
@@ -556,21 +558,57 @@ a nice tree decomposition \( T \) of a graph \( G \).
 	If it holds that \( c(t, s) \) maps to the number of almost NAC-colorings of \( G_t \)
 	consistent with \( s \) for all \( t \in T \),
 	we call \( c \) a \emph{cache function}.
-	By \emph{cache entry} we denote a pair \( (t, s) \in \mathcal{S} \).
-	By \emph{cache value} we devote the value \( c(t, s) \) for a cache entry \( (t, s) \).
+	By \emph{cache entry} we denote a pair \( (t, s) \in \mathcal{S} \) and
+	by \emph{cache value} we denote the value \( c(t, s) \) for a cache entry \( (t, s) \).
 \end{definition}
 %
+%
 \begin{observation}
-	For each almost NAC-coloring \( \delta \) on \( G_t \)
+	For each almost NAC-coloring \( \delta \) on \( G_t \),
 	there is single state \( s \in S_t \) consistent with it.
-	It holds that \( |\nac{G_t}| + 2 = \sum_{s \in S_t} c(t, s) \).
 \end{observation}
+%
+%
+\begin{lemma}%
+	\label[lemma]{lemma:state_space_sum}
+	%
+	For \( t \in T \) and a graph \( G_t \),
+	it holds that \( |\anac{G_t}| =  \sum_{s \in S_t} c(t, s) \).
+\end{lemma}
+%
+\begin{proof}
+	%
+	For each \( \delta \in \anac{G_t} \),
+	there is a single state \( s \in S_t \) consistent with \( \delta \).
+	Therefore, if we sum over all states \( s \in S_t \),
+	we consider every \( \delta \in \anac{G_t} \) and get \( |\anac{G_t}| \).
+\end{proof}
+%
+\begin{lemma}%
+	\label[lemma]{lemma:same_coloring_no}
+	%
+	For two nodes \( t_1, t_2 \in T \) such that \( G_{t_1}, G_{t_2} \)
+	are isomorphic up to isolated vertices,
+	then for bags \( X_{t_1}, X_{t_2} \) and state spaces on them \( S_{t_t}, S_{t_2} \),
+	it holds that \( \sum_{s \in S_{t_1}} c[t_1, s] = \sum_{s \in S_{t_2}} c[t_2, s] \).
+\end{lemma}
+%
+\begin{proof}
+	Isolated vertices are not important for almost NAC-colorings
+	as we consider edges only.
+	Therefore, as \( \anac{G_{t_1}} = \anac{G_{t_2}} \),
+	by \Cref{lemma:state_space_sum}
+	it holds that \( \sum_{s \in S_{t_1}} c[t_1, s] = \sum_{s \in S_{t_2}} c[t_2, s] \).
+\end{proof}
+%
 
-In the following sections we show how to construct a cache function \( c \)
+In the following sections,
+we show how to construct a cache function \( c \)
 based on values of child nodes in \( T \).
 We make sure that the precondition that \( c(t, s) \) represents the number of almost NAC-colorings
 consistent with \( s \in S_t \) for any \( t \in T  \) always hold.
-We work with invalid states that produce almost cycles and
+We describe states that necessarily correspond only
+to \( \red \)-\( \blue \)-coloring with  almost cycles and
 get zero cache entry value as they cannot represent any almost NAC-coloring.
 We prove the algorithm's correctness by induction.
 The base case is for \LeafNode{}s, for other nodes we split the reasoning for cases where
@@ -579,9 +617,12 @@ Next few lemmas work as follows: for a state \( s \in S_t \)
 we derive states \( s' \in S_{t'} \) from whose cache entry \( (t, s) \)
 can be computed based on already computed values of \( c \).
 
+\todo[inline]{Replace correspond with consistent.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Leaf node
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{\LeafNode{}}
+
 \begin{lemma}%
 	\label[lemma]{lemma:fpt_leaf_node}
 	%
@@ -590,9 +631,9 @@ can be computed based on already computed values of \( c \).
 \end{lemma}
 %
 \begin{proof}
-	There are no edges as \( X_t \) has no edges.
-	By definition of the cache function \( c \) must hold \( 0 \)
-	for each \LeafNode{} state.
+	There are no edges as \( X_t \) and \( V_t \) have no vertices.
+	By definition of the cache function,
+	\( c \) must hold \( 0 \) for each state of a \LeafNode{}.
 \end{proof}
 %
 Note that for a \LeafNode{} \( t \in T \),
@@ -602,6 +643,8 @@ as \( X_t = \emptyset \).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduce Vertex Node
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{\IntroduceVertexNode{}}
+
 \begin{lemma}%
 	\label[lemma]{lemma:fpt_introduce_vertex_node}
 	%
@@ -620,7 +663,7 @@ as \( X_t = \emptyset \).
 		\begin{cases}
 			0,                                                                                 & \text{if } \exists a : \{v\} \not\in P_a,                    \\
 			0,                                                                                 & \text{if } \exists a \exists p \in P_a : (\{v\}, p) \in R_a, \\
-			c[t', (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue)], & \text{otherwise},
+			c[t', (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue)], & \text{otherwise}.
 		\end{cases} \\
 	\end{align*}
 \end{lemma}
@@ -645,18 +688,24 @@ Recall that \( R_\red, R_\blue \) are relations --- sets of pairs.
 	a part neighboring \( \{v\} \), there are no consistent almost NAC-colorings
 	and therefore the cache value must be also zero.
 	%
-	By adding a vertex to \( G_{t'} \), we cannot create new almost cycles
-	or extend existing almost NAC-colorings as no new edge was added.
-	Therefore, the number of almost NAC-coloring for a state \( s \) must be the same
-	as for the state \( (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue) \).
+	By \Cref{lemma:same_coloring_no},
+	\( S_t \) and \( S_{t'} \) cover the same number of almost NAC-colorings.
+	%
+	For an almost NAC-coloring \( \delta \) on \( G_{t'} \) consistent with
+	a state \( s' \in S_{t'} \),
+	by adding part \( \{v\} \) to \( P_\red \) and \( P_\blue \)
+	we get some \( s \in S_t \) that is also consistent with \( \delta \).
+	Therefore, \( c[t, s] = c[t', s'] \) for all states.
 \end{proof}
 %
 To summarize, already computed values are propagated to the states
-where \( v \) stays isolated.
+where \( v \) is added and stays isolated.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Forget Vertex Node
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{\ForgetVertexNode{}}
+
 \begin{lemma}%
 	\label[lemma]{lemma:fpt_forget_vertex_node}
 	%
@@ -686,7 +735,7 @@ where \( v \) stays isolated.
 --- if \( \{v\} \in P \), \( \emptyset \) is also cleared.
 \( \mathcal{P'}_a \) denotes all the partitions such that removing \( v \) from them gives \( P_a \).
 \( \mathcal{R'}(P_a') \) denotes all the relations \( R_a' \)
-for \( P_a' \in \mathcal{P'}_a \) that correspond with \( R_a \) when \( v \) are removed
+for \( P_a' \in \mathcal{P'}_a \) that correspond with \( R_a \) when \( v \) is removed
 --- parts are updated or relations to \( \{v\} \) is removed.
 \( S' \subseteq S_{t'} \) is the set of all states that
 correspond to state \( s \) when \( v \) is removed.
@@ -695,25 +744,50 @@ correspond to state \( s \) when \( v \) is removed.
 	If there are no edges in \( G_t \), none are added by a \ForgetVertexNode{}.
 	Therefore, \( c[t, s] \coloneqq 0 \).
 	%
-	Otherwise, we know that \( G_t = G_{t'} \) and therefore
-	almost NAC-colorings over the
-	state spaces \( S \) and \( S_{t'} \) are the same.
+	Otherwise, we know that \( G_t = G_{t'} \).
 	%
-	As \( v \) was removed from \( X_{t'} \),
-	corresponding states in \( S' \) can to be adapted and mapped to \( S_t \).
+	Let us have \( \delta \in \anac{G_{t'}} \)
+	and a consistent state \( s' \in S_{t'} \).
+	In \( G_t \), \( \delta \) is consistent with a state \( s \in S_t \).
+	We now describe how w.l.o.g. \( \blue \) half of \( s \) looks
+	based on the \( \blue \) half of \( s' \).
 	%
-	For each state \( s \in S_t \) we find a set of states in \( S' \)
-	that correspond to the same almost NAC-colorings.
-	First such states are where \( v \) was in its own part \( \{v\} \)
-	and remaining parts and corresponding relations are the same as in \( s \).
-	The other is where \( v \) was in a part where after removal of \( v \) and
-	after updating the neighboring relation we get the same parts as in \( s \).
-	These properties must hold for both colors.
+	If \( \{v\} \) is a part in \( P_\blue' \),
+	it is no longer considered in \( P_\blue \),
+	therefore \( P_\blue' \setminus \{\{v\}\} = P_\blue \).
+	All pairs with \( \{v\} \) are removed from \( R_\blue' \).
 	%
-	As \( S_t \) and \( S_{t'} \) differ only in \( v \),
-	we covered the whole state space and gave each state in \( S_t \) disjoint
-	set of states in \( S' \).
+	If \( \{v\} \) is not a part in \( P_\blue' \),
+	it is in a part of \( P_\blue' \).
+	In \( P_\blue \), the parts look the same except they do not
+	contain \( v \). \( R_\blue' \) is updated analogically.
 	%
+	These two statements holds, otherwise it cannot be true
+	that \( \delta \) is consistent with \( s' \).
+	%
+	The mappings we prove are exactly \( \mathcal{P'} \) and \( \mathcal{R'} \)
+	in the statement of the lemma.
+	%
+	We showed mapping for each \( s' \in S' \) into \( S_t \),
+	we give appropriate states their values and \Cref{lemma:same_coloring_no} holds.
+	%
+
+
+	% As \( v \) was removed from \( X_{t'} \),
+	% corresponding states in \( S' \) can to be adapted and mapped to \( S_t \).
+	% %
+	% For each state \( s \in S_t \) we find a set of states in \( S' \)
+	% that correspond to the same almost NAC-colorings.
+	% First such states are where \( v \) was in its own part \( \{v\} \)
+	% and remaining parts and corresponding relations are the same as in \( s \).
+	% The other is where \( v \) was in a part where after removal of \( v \) and
+	% after updating the neighboring relation we get the same parts as in \( s \).
+	% These properties must hold for both colors.
+	% %
+	% As \( S_t \) and \( S_{t'} \) differ only in \( v \),
+	% we covered the whole state space and gave each state in \( S_t \) disjoint
+	% set of states in \( S' \).
+
 
 	% If \( v \) did not share a component with other vertices,
 	% and if we later add an edge \( e = \{u, v\}, u, v \in X_t \) to the graph,
@@ -735,12 +809,15 @@ correspond to state \( s \) when \( v \) is removed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduce Edge Node
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{\IntroduceEdgeNode{}}
+
 When discussing \IntroduceEdgeNode{} intorducing edge \( e \),
 we first describe states in \( S_{t} \)
 that cannot correspond to any almost NAC-coloring in \( G_t \).
 If they can, we call them \emph{allowed}, otherwise they are \emph{not allowed}.
+Similarly, we define this notion for halves of a state.
 To avoid confusion, note that in the following statements we assume
-a state \( s \in S_t \) after the edge \( e \) is added, not a state \( s' in S_{t'} \).
+a state \( s \in S_t \) after the edge \( e \) is added, not a state \( s' \in S_{t'} \).
 %
 An edge \emph{lies} in a part if both its endpoints are in the part.
 An edge \emph{connects} two parts if its endpoints are each in these parts.
@@ -786,14 +863,6 @@ Now we state conditions for \( \red \) half of a state \( s \):
 	      This is \emph{not allowed}.
 \end{description}
 %
-\begin{observation}%
-	\label[observation]{observ:introduce_edge_allowed}
-	%
-	A state is \emph{allowed} only if its both halves are allowed.
-	Otherwise, no almost NAC-coloring in \( G_t \)
-	where \( e \) is colored \( \blue \) can correspond to the state.
-\end{observation}
-%
 
 \begin{lemma}%
 	\label[lemma]{lemma:fpt_introduce_edge_node}
@@ -801,10 +870,22 @@ Now we state conditions for \( \red \) half of a state \( s \):
 	Let us have an \IntroduceEdgeNode{} \( t \in T \) that is
 	the only parent of \( t' \in T \) and state \( s \in S_t \).
 	It holds that \( X_t = X_{t'} \),
-	let \( e \) be the only edge added in the step, \( e \in Y_t \setminus Y_{t'} \).
+	let \( e = \{u, v\} \) be the only edge added in the step, \( e \in Y_t \setminus Y_{t'} \).
 	%
 	If there is only a single edge \( e \) in \( G_t \) (the just introduced edge),
-	the cache value is set as \( c[t, s] \coloneqq 2 \).
+	for state \( s = (P_\red, R_\red, P_\blue, R_\blue) \),
+	\( Z = V_t \setminus \{u, v\} \),
+	\( a \in \{\red, \blue\} \) and \( b \in \{\red, \blue\} \setminus \{a\} \),
+	the cache value is set as follows:
+	\begin{align*}
+		c[t, s] & \coloneqq
+		\begin{cases}
+			1, & \text{if } \{u\}, \{v\} \in P_a \land \{u, v\} \in P_b                 \\
+			   & \land \, \{(\{u\}, \{v\}),(\{v\}, \{u\})\} = R_a \land R_b = \emptyset \\
+			   & \land \, \forall z \in Z : \{z\} \in P_a \land \{z\} \in P_b,          \\
+			0, & \text{otherwise}.                                                      \\
+		\end{cases} \\
+	\end{align*}
 	%
 	Otherwise, if the state \( s \) is not allowed, then \( c[t, s] \coloneqq 0 \).
 	%
@@ -878,10 +959,15 @@ Now we state conditions for \( \red \) half of a state \( s \):
 \end{lemma}
 %
 \begin{proof}
-	The case when \( e \) is the only edge is trivial.
-	%
-	As shown in \Cref{observ:introduce_edge_allowed},
-	only allowed states may correspond to almost NAC-colorings on \( G_t \).
+	For the case when \( e \) is the only edge,
+	there are only two almost NAC-colorings on \( G_t \).
+	The states consistent with these colorings are \( s_\red \) and \( s_\blue \)
+	such that \( u, v \) are in the same part either in \( P_\red \) or \( P_\blue \),
+	the other parts are singleton as these vertices cannot be yet connected.
+	\( e \) is a bridge, so there must be a corresponding neighboring relation.
+	This is exactly what we describe in the lemma.
+
+	Otherwise, only allowed states may correspond to almost NAC-colorings on \( G_t \).
 	%
 	By adding a single \( \blue \) edge \( e \),
 	an almost NAC-coloring of \( G_{t'} \)
@@ -923,6 +1009,8 @@ Now we state conditions for \( \red \) half of a state \( s \):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Join node
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{\JoinNode{}}
+
 In the following paragraphs,
 we prepare terms that will come useful in \Cref{lemma:fpt_join_node}.
 Let us have a \JoinNode{} \( t \in T \) that is
@@ -1013,7 +1101,8 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	Otherwise, both \( G_{t_1'} \) and \(G_{t_2'} \) have some edges.
 	%
 	The following formula computes cache value based on previously defined mappings.
-	It comes from the same idea as NAC-product (\Cref{def:NACproduct}) where all the resulting colorings
+	It comes from the same idea as the Cartesian product and
+	NAC-product (\Cref{def:NACproduct}) where all the resulting colorings
 	are NAC-colorings. The size of such product is multiple of the numbers of
 	almost NAC-colorings on \( G_{t_1'}, G_{t_2'} \).
 	%
@@ -1032,7 +1121,7 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	For simplicity, we assume that \( Y_t = \emptyset \)
 	as shown in \Cref{lemma:join_node_no_edges}.
 	Let us join the two almost NAC-colorings \( \delta_1' \) and \( \delta_2' \)
-	to obtain an almost NAC-coloring \( \delta \) on \( G_t \).
+	to obtain a \( \red \)-\( \blue \)-coloring \( \delta \) on \( G_t \).
 	%
 	Let us find components in \( G_t \).
 	The components have to be the same or larger
@@ -1055,17 +1144,25 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	If two components \( C_1, C_2 \) corresponding to
 	parts \( p_1', p_2' \in P_{i,a}' \) in \( G_{t_i'} \) are neighboring,
 	all the parts merged with them preserve the property
-	(unless \( p_1' \) gets merged with \( p_2' \)).
+	(unless \( p_1' \) gets merged with \( p_2' \) to preserve irreflexivity).
 	No other new neighboring relations can be introduced
 	as there are no new edges introduced by \( t \) and \( Y_t = \emptyset \).
 
-	Now we show, that \( N \) gives \( 1 \) only if the state \( s \),
-	corresponds to almost NAC-colorings on \( G_t \)
-	that are merged from almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \)
-	for states \( s_1', s_2' \).
+	Now we show, that \( N \) gives \( 1 \) only if the state \( s \)
+	can correspond to an almost NAC-coloring on \( G_t \)
+	merged from almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \)
+	consistent with states \( s_1', s_2' \).
 	%
-	A state \( s \in S \) is suitable unless configurations
-	introduce an almost cycle in \( G_t \).
+	For \( \delta_1', \delta_2' \) on \( G_{t_1'}, G_{t_2'} \)
+	consistent with \( s_1', s_2' \),
+	we want to show how state \( s \in S \) looks and
+	whether \( \delta \) created by merging \( \delta_1' \) and \( \delta_2' \)
+	is an almost NAC-coloring.
+	We show that this only depends on the states \( s_1', s_2' \),
+	not on the fact how \( \delta_1' \) and \( \delta_2' \) actually look.
+	%
+	% A state \( s \in S \) is suitable unless configurations
+	% introduce an almost cycle in \( G_t \).
 	%
 	% We need to validate that we did not create an almost cycle.
 	% An almost cycle is created if there exist \( p_1', p_2' \in P_{i,a}' \)
@@ -1078,38 +1175,52 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	% The rest of the statement follows similar in introduce edge node proof.
 	% The check is done once again for both the colors.
 	%
-	Let us go through cases how can an almost cycle be created.
+	First, let us go through cases how can an almost cycle be created.
 	%
-	Suppose the only edge with different color in an almost cycle is colored \( \red \).
+	Suppose the only edge with different color in an almost cycle is w.l.o.g. colored \( \red \).
 	Then there must exist a \( \blue \) path connecting its endpoints.
 	%
 	If the path spans only vertices
-	in \( V_{t_1'} \), there is no almost NAC-coloring considered in \( c[t_1', s_1'] \)
-	as it is not an almost NAC-coloring on \( G_{t_1} \).
+	in \( V_{t_i'} \), \( \delta_i' \) is not an almost NAC-coloring.
 	%
 	Therefore, the \( \red \) edge must be
-	a bridge connecting two \( \blue \) components in \( P_{1,\blue} \),
+	a bridge connecting two \( \blue \) components \( p_1', p_2' \) in \( P_{1,\blue} \),
 	and the path has to also visit multiple vertices in \( V_{t_2'} \).
 	As shown in the proof of the mapping \( M \), \( \blue \) components
 	visited by such path are merged together.
 	%
+	Such an almost cycle therefore occurs
+	iff.\ \( p_1' \) and \( p_2' \) are neighboring in \( R_{1,\blue}' \),
+	and they get merged to \( p \) in \( P_\blue' \).
+	These are all the possibilities how an almost cycle can be created.
+	%
 	If also done for almost cycles with a \( \blue \) edge,
 	these are exactly the bad states as described in the definition of \( N \).
+	Therefore, \( N \) gives \( 1 \) if and only if almost NAC-colorings
+  consistent with \( s_1' \) and \( s_2' \) produce
+	an almost NAC-coloring consistent with \( s \).
 
 	Lastly, we show that the value stored in the cache corresponds
 	to the number of almost NAC-colorings on \( G_t \) consistent with \( s \).
 	We consider only states where \( N(s_1', s_2') = 1 \)
 	as the value of other states does not matter.
 	%
-	For \( \delta_i' \) as defined above, \( \delta \) is an almost NAC-coloring
+	For \( \delta_1', \delta_2' \) as defined above, \( \delta \) is an almost NAC-coloring
 	on \( G_t \) as we showed that there are no almost cycles formed.
+	For each pair of almost NAC-colorings \( \delta_1', \delta_2' \) consistent with \( s_1', s_2' \),
+	there is one almost NAC-coloring \( \delta \) consistent with \( s \).
+	There is \( c[t_1', s_1'] \cdot c[t_2', s_2'] \) such pairs and therefore
+	\( c[t, s] = c[t_1', s_1'] \cdot c[t_2', s_2'] \).
 	%
-	Assume we have an almost NAC-coloring \( \gamma \) on \( G_t \) consistent with \( s \)
+	For contradiction assume that we have
+	an almost NAC-coloring \( \gamma \) on \( G_t \) consistent with \( s \)
 	that is not accounted for by merging some \( \delta_i' \).
 	But a restriction of \( \gamma \) onto \( G_i \) produces an almost NAC-coloring
 	consistent with \( s_i' \). This is a contradiction.
 \end{proof}
 %
+
+\subsubsection*{\RootNode{}}
 
 %
 \begin{lemma}%
@@ -1120,9 +1231,12 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 %
 \begin{proof}
 	The previous cache entry holds the number of almost NAC-colorings on \( G_{t'} \).
-	As \( G_{t'} = G_r \), the number of almost NAC-colorings on \( G_r \) must be the same.
+	As \( G_{t'} = G_r \), the number of almost NAC-colorings on \( G_r \) is the same.
+	Also, as \( X_t = \emptyset \), the only state in \( t \) and \( t' \) are as stated.
 \end{proof}
 %
+
+\subsubsection*{All done}
 
 %
 \begin{theorem}%
@@ -1156,11 +1270,11 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	}.
 	There are only two almost NAC-colorings
 	that are not NAC-colorings (the monochromatic ones), they get subtracted.
-	From that it can be clearly observed that the algorithm
+	From that it can be clearly seen that the algorithm
 	will never give you up~\cite{never_gonna_give_you_up}.
 
 	Bell numbers are defined as the number of partitions of a set.
-	They can be upper bounded by \( n^n \), which is what we will use from now on.
+	They can be upper bounded by \( n^n \), which is what we use from now on.
 	Recall that \( \forall t \in T : |X_t| \le k+1 \).
 
 	First, size of the state space used is upper bounded.
@@ -1218,13 +1332,13 @@ with no \IntroduceEdgeNode{}s.
 There are no behaving changes for
 \LeafNode{}, \RootNode{}, \ForgetVertexNode{} nor \JoinNode{}
 todo[inline]{Uncomment footnote}{
-% \footnote{
-In the proof of lemma \Cref{lemma:fpt_join_node}
-regarding \JoinNode{} we required that \( Y_t = \emptyset \).
-This is not a requirement as if an edge in \( Y_t \) is assigned two colors
-by \( \delta_1', \delta_2' \), the endpoints are in common parts for both colors
-and a contradiction is still detected.
-}.
+		% \footnote{
+		In the proof of lemma \Cref{lemma:fpt_join_node}
+		regarding \JoinNode{} we required that \( Y_t = \emptyset \).
+		This is not a requirement as if an edge in \( Y_t \) is assigned two colors
+		by \( \delta_1', \delta_2' \), the endpoints are in common parts for both colors
+		and a contradiction is still detected.
+	}.
 
 Let us describe how \IntroduceVertexWithEdgesNode{} processes cache entries.
 Before, when a single edge was added,
@@ -1406,7 +1520,7 @@ a new connectivity map is obtained as follows:
 For a \ForgetVertexNode{}
 a new connectivity map is obtained as
 \( C_t \coloneqq M(C_t') \)
-where \( M \) is mapping from \Cref{lemma:fpt_forget_vertex_node} 
+where \( M \) is mapping from \Cref{lemma:fpt_forget_vertex_node}
 deleting occurrences of forgotten vertex from the partition given.
 %
 For an \IntroduceEdgeNode{}
