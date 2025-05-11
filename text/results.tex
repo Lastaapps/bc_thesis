@@ -1,14 +1,18 @@
 
-\chapter{Results}
+\chapter{Conclusion}
 
 \section{Discussion and Future work}
 
+\todo[inline]{Prokonzultovat - jsou algo na stable cutech na 4-degree -> dává tohle smysl?}
+%
 It remains open if NAC-coloring is also NP-complete on graphs with
 maximum degree four as this would diverge from the stable cuts results.
 
 To further improve the performance of the current solution, the codebase
 can be rewritten from Python into some sensible language like C, C++, Rust or Zig.
-Also, further heuristics can be tried to reach additional performance gains.
+Also, further heuristics can be tried
+and tested on additional graph classes
+to reach additional performance gains.
 
 Major gains for some graph classes
 can be expected if the FPT algorithm is also implemented.
@@ -16,18 +20,21 @@ Expectations are that the FPT algorithm will outperform the current algorithm
 for graphs with large number of NAC-colorings if only the number of colorings
 is required (without the colorings itself being formed), and
 for graph classes with small tree width.
+This algorithm could also be parallelized up to some extent,
+but this would make sense for large graphs only.
+%
 Also, it is possible that there is a Monte Carlo algorithm with significantly
 lower time complexity compared to the algorithm proposed by us.
 
-For flexible graphs including graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+For flexible graphs including graphs where \( |E(G)| \le 2|V(G)| - 4 \),
 we can find a stable cut in polynomial time using \Cref{alg:stableCutFlexible},
-that was implemented in this thesis.
+that is implemented in this thesis.
 There is no known implementation of an algorithm
-for graphs where \( |E(G)| \le 2|V(G)| - 4 \)
+for graphs where \( |E(G)| = 2|V(G)| - 3 \)
 even though it can be described and implemented
 as shown in~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit}.
 
-\section{Summary}
+\section{Results}
 
 To remind us of the goals of the thesis,
 we wanted to show that the problem of deciding if a graph has a NAC-coloring
@@ -46,17 +53,23 @@ to decide if a graph has a NAC-coloring even on graphs with maximal degree five.
 We discussed the relation of this result with stable cuts.
 Regarding stable cuts, we implemented and described algorithm that can find
 a stable cut for any flexible graph.
+%
 Back to NAC-colorings, we presented a significantly faster algorithm
 for NAC-coloring search using graph decomposition and gradual coloring buildup.
+%
 We also proposed multiple heuristics and optimizations.
 The performance of the algorithm was
 first compared with the previous naive or simple
-algorithms, and then heuristics were compared with each other.
-The algorithm was already used to find NAC-coloring counts distribution
-on all Laman graphs on twelve vertices.
+algorithms, and then heuristics were compared with each other and
+well performing heuristics were chosen.
+Our algorithm outperforms the previous implementation by a large margin
+and also works fast for non-simple instances.
+%
 Lastly, we proposed an FPT algorithm for NAC-coloring counting
 parametrized by tree width that can
 possibly outperform our proposed algorithm if implemented.
-Code was already partially refactored and merged into PyRigi.
+%
+Code is already partially refactored and merged into PyRigi.
+%
 With that, all the goals of the thesis have been fulfilled.
 

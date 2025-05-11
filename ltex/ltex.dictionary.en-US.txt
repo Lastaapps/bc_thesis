@@ -46,3 +46,4 @@ cliquewidth
 surjectivity
 Gymnázium
 NACproduct
+irreflexivity

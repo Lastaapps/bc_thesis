@@ -379,7 +379,7 @@ We describe some heuristics how to split a graph into edge disjoint subgraphs.
 In contrast with~\cite{my_paper}, we also discuss heuristics
 that did not perform well or have other specific limitations.
 
-\subsubsection{\None{}}
+\subsubsection*{\None{}}
 
 The strategy with the least overhead costs called \None{}
 is to take the chunks of $k$ consecutive
@@ -393,7 +393,7 @@ is to maximize the number of suitable cycles in each
 subgraph as cycles may form almost cycles and those help us
 to reduce the search space.
 
-\subsubsection{\Neighbors{}}
+\subsubsection*{\Neighbors{}}
 
 We start with a heuristic that we call \Neighbors{},
 its pseudocode is in \Cref{alg:neighbors}.
@@ -473,7 +473,7 @@ but the performance was not better.
 	\end{algorithmic}
 \end{algorithm}
 
-\subsubsection{\CyclesMatchChunks{}}
+\subsubsection*{\CyclesMatchChunks{}}
 
 Monochromatic classes are first ordered descending by their degree.
 Then cycles are found for each monochromatic class with the same procedure
@@ -492,7 +492,7 @@ all monochromatic classes are marked as used.
 
 \todo[inline]{Consider pseudocode for \CyclesMatchChunks{}}
 
-\subsubsection{\KernighanLin{}, \Cuts{}}
+\subsubsection*{\KernighanLin{}, \Cuts{}}
 
 Kernighan-Lin algorithm~\cite{kernighan_lin} proposes a heuristic based algorithm
 for partitioning a graph into two parts. It tires to minimize the edge cut between
@@ -537,6 +537,8 @@ and also with the number of NAC-colorings found in each subgraph
 We describe multiple merging strategies.
 As before, we extend the list we presented in~\cite{my_paper}.
 
+\subsubsection*{\MergeLinear{}, \SharedVertices{}}
+
 The first approach \MergeLinear{} is
 to take the sequence of subgraphs and merge them one by one.
 We merge the first and the second subgraph, then we merge this result with the
@@ -546,6 +548,8 @@ Another approach called \SharedVertices{} always merges the two subgraphs that
 have the most vertices in common with the goal
 to create as many new cycles as possible.
 
+\subsubsection*{\Log{}}
+
 Next approach called \Log{} tries to merge subgraphs in a tree-like manner.
 For an ordered list of subgraphs,
 for simplicity let its size be \( 2^c \) for some \( c \in \N \).
@@ -553,11 +557,13 @@ The list is split into pairs of consequent subgraphs and NAC-colorings
 of the subgraphs in pairs are merged. With that, a new list is created.
 This continues until we have the original graph and all its NAC-colorings.
 
+\subsubsection*{\SortedBits{}, \MinMax{}}
+
 For the following strategies,
 we consider the number of monochromatic components
 that induces a given subgraph as its size.
 %
-One heuristic is that runtime can be reduced
+One heuristic \SortedBits{} is that runtime can be reduced
 when we first merge smaller subgraphs as less processing power is
 required for smaller graphs.
 Subgraphs are always sorted by their size and two smallest are merged
@@ -569,6 +575,8 @@ First, the smallest subgraph is merged with the largest one,
 then second smallest with the second largest and so on.
 The idea is that work is minimized on average
 as we prevent merges of large graphs.
+
+\subsubsection*{\PromisingCycles{}}
 
 Following strategy is called \PromisingCycles{}.
 The strategy tries to guess which subgraphs
@@ -584,6 +592,8 @@ otherwise we score as follows:
 	\item Subgraphs with more common vertices get higher priority.
 \end{itemize}
 %
+
+\subsubsection*{\SortedSize{}, \Score{}}
 
 All the previous merging strategies did not use the number of NAC-colorings
 of individual subgraphs in merging decisions.
@@ -610,7 +620,7 @@ The pair with the lowest score is chosen.
 We also tried approaches based on dynamic programming and recursive optimization,
 these approached do not scale well to larger instances.
 
-\subsubsection{Smart split}%
+\subsubsection*{Smart split}%
 \label{sec:smart_split}
 
 We already talked about the importance of subgraphs having vertices in common,
