@@ -1,13 +1,84 @@
-\chapter{Obsah příloh}
-% Contents of the attachment
 
-	\dirtree{%
-		.1 /.
-		.2 readme.txt\DTcomment{stručný popis obsahu média}.
-		.2 exe\DTcomment{adresář se spustitelnou formou implementace}.
-		.2 src.
-		.3 impl\DTcomment{zdrojové kódy implementace}.
-		.3 thesis\DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
-		.2 text\DTcomment{text práce}.
-		.3 thesis.pdf\DTcomment{text práce ve formátu PDF}.
-	}
+\chapter{Attachments}%
+\label{chapter:attachments}
+
+\todo[inline]{ Don't include other files ---
+	NAC\_benchmark.ipynb,
+	Visualization.ipynb,
+	graphs-store/README.md,
+}
+
+\dirtree{%
+	.1 thesis.pdf                           \DTcomment{thesis text in PDF}.
+	%
+	.1 thesis                               \DTcomment{source files of the text part}.
+	.2 assets                               \DTcomment{static images and PDF attachments}.
+	.3 declaration.pdf                      \DTcomment{declaration from KOS information system}.
+	.2 figures                              \DTcomment{figures generated from benchmarks in PGF}.
+	.2 text                                 \DTcomment{\TeX{} files of individual chapters}.
+	.2 scripts														  \DTcomment{scripts for building \TeX{} files}.
+	.3 rewrite\_figures.py 								  \DTcomment{updates styling in Matplotlib figures}.
+	.2 ctufit-thesis.cls                    \DTcomment{FIT CTU \TeX{} template by Tomáš Nováček}.
+	.2 Dockerfile                           \DTcomment{\TeX{} build image definition}.
+	.2 docker-compose.yaml                  \DTcomment{Docker compose configuration for building}.
+	.2 README.md                            \DTcomment{swift description of the project}.
+	.2 thesis.tex                           \DTcomment{main \TeX{} document}.
+	%
+	.1 code                                 \DTcomment{source files of the code part}.
+	.2 benchmarks                           \DTcomment{}.
+	.3 precomputed                          \DTcomment{precomputed benchmark results in CSV}.
+	.3 dataset.py                           \DTcomment{loads datasets from \texttt{graphs\_store}}.
+	.3 generators.py                        \DTcomment{generate graphs from some graph classes}.
+	.3 notebook\_utils.py                   \DTcomment{helpers for \texttt{NAC\_presentation.ipynb}}.
+	.2 graphs\_store                        \DTcomment{datasets for benchmarking}.
+	.3 nauty                                \DTcomment{graphs generated using Nauty}.
+	.4 minimally\_rigid\_all                \DTcomment{minimally rigid graphs}.
+	.5 minimally\_rigid\_\{n\}.g6           \DTcomment{graphs of vertex no \( n \)}.
+	.4 generate\_minimally\_rigid\_graphs.sh\DTcomment{}.
+	.3 no\_3\_nor\_4\_cycles                \DTcomment{graphs with no 3 nor 4 cycles}.
+	.4 c34\_n\{n\}e\{m\}.s6                 \DTcomment{graphs with \( n \) vertices and \( m \) edges}.
+	.3 random                               \DTcomment{randomly generated graphs}.
+	.4 globally\_rigid                      \DTcomment{}.
+	.5 globally\_rigid\_\{n\}.g6            \DTcomment{graphs of vertex no \( n \)}.
+	.4 minimally\_rigid                     \DTcomment{}.
+	.5 minimally\_rigid\_\{n\}.g6           \DTcomment{graphs of vertex no \( n \)}.
+	.4 no\_NAC\_coloring\_graphs            \DTcomment{graphs with no NAC-coloring}.
+	.5 no\_NAC\_coloring-\{n\}-TRIANGLES.g6 \DTcomment{graphs of vertex no \( n \)}.
+	.5 search\_no\_NAC\_graphs.py           \DTcomment{}.
+	.2 nac                                  \DTcomment{Algorithms in \Cref{chapter:nac}}.
+	.3 util                                 \DTcomment{helper modules}.
+	.4 \_\_init\_\_.py                      \DTcomment{}.
+	.4 lazy\_product.py                     \DTcomment{lazy product of lazy iterators}.
+	.4 repeatable\_iterator.py              \DTcomment{wraps lazily an iterator into a list}.
+	.4 union\_find.py                       \DTcomment{\textsc{UnionFind} data structure}.
+	.3 \_\_init\_\_.py                      \DTcomment{}.
+	.3 algorithms.py                        \DTcomment{\Naive{}, \NaiveCycles{} and \Subgraphs{}}.
+	.3 check.py                             \DTcomment{\IsNACColoring{}}.
+	.3 core.py                              \DTcomment{}.
+	.3 cycle\_detection.py                  \DTcomment{approaches described in \Cref{sec:small_cycles}}.
+	.3 data\_type.py                        \DTcomment{}.
+	.3 development.py                       \DTcomment{development helpers}.
+	.3 entry.py                             \DTcomment{algorithm's API entry points}.
+	.3 exception.py                         \DTcomment{}.
+	.3 existence.py                         \DTcomment{\Cref{sec:polynomial_optimizations}}.
+	.3 monochromatic\_classes.py            \DTcomment{\trcon{} components and monochromatic classes}.
+	.3 search.py                            \DTcomment{chooses the correct algorithm}.
+	.3 single.py                            \DTcomment{entry point for optimized single coloring search}.
+	.3 strategies.py                        \DTcomment{approaches described in \Cref{sec:combining}}.
+	.2 NAC\_playground.ipynb                \DTcomment{simple usage example}.
+	.2 NAC\_presentation.ipynb              \DTcomment{benchmarking and analytics}.
+	.2 pytest.ini                           \DTcomment{configuration for pytest}.
+	.2 README.md                            \DTcomment{environment setup instructions}.
+	.2 requirements.txt                     \DTcomment{Python dependencies with specified version}.
+	.2 shell.nix                            \DTcomment{environment setup for NixOS}.
+	.2 stablecut                            \DTcomment{based on \Cref{chapter:stable_cuts}}.
+	.3 \_\_init\_\_.py                      \DTcomment{}.
+	.3 flexible\_graphs.py                  \DTcomment{\Cref{alg:stable_cut_flexible}}.
+	.3 types.py                             \DTcomment{}.
+	.3 util.py                              \DTcomment{}.
+	.2 test                                 \DTcomment{tests using Pytest}.
+	.3 \_\_init\_\_.py                      \DTcomment{}.
+	.3 test\_nac.py                         \DTcomment{tests for NAC-coloring algorithms}.
+	.3 test\_stablecut.py                   \DTcomment{tests for stable cut algorithms}.
+}
+
