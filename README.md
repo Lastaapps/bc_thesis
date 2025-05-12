@@ -12,9 +12,9 @@ of the thesis can be found in artifacts in GitHub workflows.
 
 ## Graphs summary
 - ukázat špatnost logu
-  - spostit na nových lamanech
-- ukázat špatnost cuts
-Laman
+  - spustit na nových lamanech
+Minimally rigid
+- spustit i pro špatné strategie
 - first
   - cycles, jinak none o režiji
 - all

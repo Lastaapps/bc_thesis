@@ -1291,7 +1291,7 @@
 \pgfpathlineto{\pgfqpoint{1.872060in}{1.246917in}}%
 \pgfpathlineto{\pgfqpoint{1.913269in}{1.252587in}}%
 \pgfpathlineto{\pgfqpoint{1.954479in}{1.274098in}}%
-\pgfpathlineto{\pgfqpoint{1.995688in}{1.293952in}}%
+\pgfpathlineto{\pgfqpoint{1.995688in}{1.284215in}}%
 \pgfpathlineto{\pgfqpoint{2.036897in}{1.307899in}}%
 \pgfpathlineto{\pgfqpoint{2.078107in}{1.312386in}}%
 \pgfpathlineto{\pgfqpoint{2.119316in}{1.321132in}}%

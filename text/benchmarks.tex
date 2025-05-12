@@ -395,16 +395,13 @@ For \Neighbors{}, the performance is more stable, but still worse than \MergeLin
 % 	\label{fig:graph_count_no_3_nor_4_cycles_first_checks}
 % \end{figure}%
 
-For listing all NAC-colorings shown in \Cref{fig:graph_count_no_3_nor_4_cycles_all_runtime},
-\Subgraphs{} are again significantly faster.
-It can be seen in \Cref{fig:graph_count_no_3_nor_4_cycles_all_checks}
-that \Neighbors{} and \CyclesMatchChunks{} strategies are not faster than \None{},
-but the number of \IsNACColoring{} check calls is reduced.
-The difference grows for larger graphs, therefore it can be expected
-that \Neighbors{} and \CyclesMatchChunks{} will eventually become faster
-for larger graphs then \None{}.
-%
-\todo{Refactor after runs are run}
+For listing all NAC-colorings shown
+in \Cref{fig:graph_count_no_3_nor_4_cycles_all_runtime}
+shows that \NaiveCycles{} is almost never faster.
+We can see that \None{} and \CyclesMatchChunks{} is also slower than
+\Neighbors{} and \NeighborsDegree{}.
+At around twenty-eight vertices five second time limit is reached for all algorithms.
+\MergeLinear{} and \SharedVertices{} have no significant influence.
 %
 \begin{figure}[thbp]
 	\centering
@@ -413,13 +410,13 @@ for larger graphs then \None{}.
 		Mean running time to find all NAC-colorings for graphs with no three nor four cycles.}%
 	\label{fig:graph_count_no_3_nor_4_cycles_all_runtime}
 \end{figure}%
-\begin{figure}[thbp]
-	\centering
-	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for graphs with no 3 nor 4 cycles (all).]{
-		The number of checks performed to find all NAC-colorings for graphs with no three nor four cycles.}%
-	\label{fig:graph_count_no_3_nor_4_cycles_all_checks}
-\end{figure}%
+% \begin{figure}[thbp]
+% 	\centering
+% 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_checks_split_merging_mean.pgf}}
+% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (all).]{
+% 		The number of checks performed to find all NAC-colorings for graphs with no three nor four cycles.}%
+% 	\label{fig:graph_count_no_3_nor_4_cycles_all_checks}
+% \end{figure}%
 
 
 \subsubsection*{Globally rigid graphs}
@@ -624,42 +621,52 @@ and becomes negligible for larger graphs.
 \label{sec:failing_strategies}
 
 In this section, we show the performance of other strategies described in \Cref{chapter:alg}.
-We do not show these strategies in previous graphs as they would influence
+We do not show these strategies in previous figures as they would influence
 the scale and would make figures and legends unreadable and unclear.
 
-\todo[inline]{Refactor one benchmarks finish}
-Some of these strategies performed as well as our preferred strategies for some graph classes,
-but failed for others and therefore are not universal enough.
+Some of these strategies perform as well as
+than our preferred strategies for some graph classes,
+but fail for others and therefore are not universal enough to use in a library.
 %
+In the following figures, we fixed
+split strategy to \Neighbors{} or merging strategy to \MergeLinear{}
+as they perform the best as shown in \Cref{sec:bench_graph_classes}.
+
 First, we show in \Cref{fig:graph_mimimally_rigid_failing_merging_first_runtime,fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
-how strategies like \Log{} and \PromisingCycles{} fails compared to the others.
-We fixed a single strategy, but behavior is similar for other strategies.
-We also show in \Cref{fig:graph_mimimally_rigid_failing_split_first_runtime}
-that \KernighanLin{} and \Cuts{} are not suitable for general graphs.
+how strategies like \Log{} and \PromisingCycles{} fail on minimally rigid graphs.
+We also shown in \Cref{fig:graph_mimimally_rigid_failing_split_first_runtime},
+\KernighanLin{} and \Cuts{} perform worse.
 %
-Strategies \SortedBits{} and \MinMax{} fail as the size of subgraphs is similar,
-and therefore, we can only break some eventual relations between the subgraphs by sorting them.
+Graphs with no three nor four cycles behave similarly for these strategies.
 %
-We can see strategies \SortedSize{} and \Score{} perform well
-on graphs with no NAC-coloring. But as they must list all the NAC-colorings
-on each subgraph, they are not suitable for when only one NAC-coloring is requested.
-
-\todo[inline]{Describe split on no NAC \Cref{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}}
-
 \begin{figure}[thbp]
 	\centering
-	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_merging_first_vertex_checks_split_merging_mean.pgf}}
+	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_merging_first_vertex_runtime_split_merging_mean.pgf}}
 	\caption[Mean runtime for minimally rigid graphs (some) (with failing).]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs with failing merging strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_merging_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
-	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_split_first_vertex_checks_split_merging_mean.pgf}}
+	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_split_first_vertex_runtime_split_merging_mean.pgf}}
 	\caption[Mean runtime for minimally rigid graphs (some) (with failing).]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs with failing splitting strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_split_first_runtime}
 \end{figure}%
+
+
+As shown in \Cref{fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime},
+strategies \Log{}, \SortedBits{} and \MinMax{} fail,
+\PromisingCycles{} perform well on the other hand.
+%
+It can be seen that strategies \SortedSize{} and \Score{} perform
+as well as our preferred strategies on graphs with no NAC-coloring.
+But as they must list all the NAC-colorings on each subgraph,
+they are not suitable for cases where only one NAC-coloring is requested.
+%
+In \Cref{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}
+it can be seen that performance of \KernighanLin{} and \Cuts{} is worse.
+%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_failing_merging_first_triangle_runtime_split_merging_mean.pgf}}
@@ -674,6 +681,7 @@ on each subgraph, they are not suitable for when only one NAC-coloring is reques
 		Mean running time to find all NAC-colorings for graphs with no NAC-coloring with failing splitting strategies.}%
 	\label{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}
 \end{figure}%
+
 
 Smart split described in \Cref{sec:smart_split}
 did not improve the runtime.
@@ -708,7 +716,7 @@ perform slightly better then \None{}.
 Note that the implementation of \Neighbors{} is slightly simpler than
 the one of \NeighborsDegree{}.
 %
-\KernighanLin{} resuls are not consistent.
+\KernighanLin{} results are not consistent.
 \Cuts{} perform even worse for even small instance.
 This is probably because they operate on a graph of monochromatic
 components that does not preserver all the properties

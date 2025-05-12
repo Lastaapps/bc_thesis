@@ -1016,6 +1016,26 @@
 \pgfsetlinewidth{1.505625pt}%
 \pgfsetstrokecolor{currentstroke1}%
 \pgfsetdash{}{0pt}%
+\pgfpathmoveto{\pgfqpoint{0.829322in}{0.658283in}}%
+\pgfpathlineto{\pgfqpoint{1.364731in}{0.749323in}}%
+\pgfpathlineto{\pgfqpoint{1.900141in}{1.000738in}}%
+\pgfpathlineto{\pgfqpoint{2.435550in}{1.186196in}}%
+\pgfpathlineto{\pgfqpoint{2.970960in}{1.643355in}}%
+\pgfpathlineto{\pgfqpoint{3.506369in}{1.802021in}}%
+\pgfpathlineto{\pgfqpoint{4.041779in}{1.950162in}}%
+\pgfpathlineto{\pgfqpoint{4.577188in}{2.136084in}}%
+\pgfpathlineto{\pgfqpoint{5.112598in}{2.420016in}}%
+\pgfpathlineto{\pgfqpoint{5.648008in}{2.430011in}}%
+\pgfusepath{stroke}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfpathrectangle{\pgfqpoint{0.588387in}{0.521603in}}{\pgfqpoint{5.300555in}{2.196617in}}%
+\pgfusepath{clip}%
+\pgfsetrectcap%
+\pgfsetroundjoin%
+\pgfsetlinewidth{1.505625pt}%
+\pgfsetstrokecolor{currentstroke2}%
+\pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.829322in}{0.699289in}}%
 \pgfpathlineto{\pgfqpoint{1.364731in}{0.869373in}}%
 \pgfpathlineto{\pgfqpoint{1.900141in}{1.106251in}}%
@@ -1034,7 +1054,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke2}%
+\pgfsetstrokecolor{currentstroke3}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.829322in}{0.681826in}}%
 \pgfpathlineto{\pgfqpoint{1.364731in}{0.918704in}}%
@@ -1054,7 +1074,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke3}%
+\pgfsetstrokecolor{currentstroke4}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.829322in}{0.621450in}}%
 \pgfpathlineto{\pgfqpoint{1.364731in}{0.918704in}}%
@@ -1074,7 +1094,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke4}%
+\pgfsetstrokecolor{currentstroke5}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.829322in}{0.621450in}}%
 \pgfpathlineto{\pgfqpoint{1.364731in}{0.918704in}}%
@@ -1094,7 +1114,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke5}%
+\pgfsetstrokecolor{currentstroke6}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{0.829322in}{0.699289in}}%
 \pgfpathlineto{\pgfqpoint{1.364731in}{0.918704in}}%
@@ -1163,16 +1183,16 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetstrokeopacity{0.800000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{5.976442in}{1.690426in}}%
-\pgfpathlineto{\pgfqpoint{8.259376in}{1.690426in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{8.284376in}{1.690426in}}{\pgfqpoint{8.284376in}{1.715426in}}%
+\pgfpathmoveto{\pgfqpoint{5.976442in}{1.506955in}}%
+\pgfpathlineto{\pgfqpoint{8.259376in}{1.506955in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{8.284376in}{1.506955in}}{\pgfqpoint{8.284376in}{1.531955in}}%
 \pgfpathlineto{\pgfqpoint{8.284376in}{2.630721in}}%
 \pgfpathquadraticcurveto{\pgfqpoint{8.284376in}{2.655721in}}{\pgfqpoint{8.259376in}{2.655721in}}%
 \pgfpathlineto{\pgfqpoint{5.976442in}{2.655721in}}%
 \pgfpathquadraticcurveto{\pgfqpoint{5.951442in}{2.655721in}}{\pgfqpoint{5.951442in}{2.630721in}}%
-\pgfpathlineto{\pgfqpoint{5.951442in}{1.715426in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{5.951442in}{1.690426in}}{\pgfqpoint{5.976442in}{1.690426in}}%
-\pgfpathlineto{\pgfqpoint{5.976442in}{1.690426in}}%
+\pgfpathlineto{\pgfqpoint{5.951442in}{1.531955in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{5.951442in}{1.506955in}}{\pgfqpoint{5.976442in}{1.506955in}}%
+\pgfpathlineto{\pgfqpoint{5.976442in}{1.506955in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -1180,7 +1200,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke1}%
+\pgfsetstrokecolor{currentstroke2}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{6.001442in}{2.554500in}}%
 \pgfpathlineto{\pgfqpoint{6.126442in}{2.554500in}}%
@@ -1197,7 +1217,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke3}%
+\pgfsetstrokecolor{currentstroke4}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{6.001442in}{2.367549in}}%
 \pgfpathlineto{\pgfqpoint{6.126442in}{2.367549in}}%
@@ -1214,7 +1234,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke4}%
+\pgfsetstrokecolor{currentstroke5}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{6.001442in}{2.184078in}}%
 \pgfpathlineto{\pgfqpoint{6.126442in}{2.184078in}}%
@@ -1231,7 +1251,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke5}%
+\pgfsetstrokecolor{currentstroke6}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{6.001442in}{1.997128in}}%
 \pgfpathlineto{\pgfqpoint{6.126442in}{1.997128in}}%
@@ -1248,7 +1268,7 @@
 \pgfsetrectcap%
 \pgfsetroundjoin%
 \pgfsetlinewidth{1.505625pt}%
-\pgfsetstrokecolor{currentstroke2}%
+\pgfsetstrokecolor{currentstroke1}%
 \pgfsetdash{}{0pt}%
 \pgfpathmoveto{\pgfqpoint{6.001442in}{1.813656in}}%
 \pgfpathlineto{\pgfqpoint{6.126442in}{1.813656in}}%
@@ -1259,7 +1279,24 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=6.351442in,y=1.769906in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\KernighanLin{} \& \MergeLinear{}}}%
+\pgftext[x=6.351442in,y=1.769906in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\Cuts{} \& \MergeLinear{}}}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfsetrectcap%
+\pgfsetroundjoin%
+\pgfsetlinewidth{1.505625pt}%
+\pgfsetstrokecolor{currentstroke3}%
+\pgfsetdash{}{0pt}%
+\pgfpathmoveto{\pgfqpoint{6.001442in}{1.630184in}}%
+\pgfpathlineto{\pgfqpoint{6.126442in}{1.630184in}}%
+\pgfpathlineto{\pgfqpoint{6.251442in}{1.630184in}}%
+\pgfusepath{stroke}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
+\pgfsetstrokecolor{textcolor}%
+\pgfsetfillcolor{textcolor}%
+\pgftext[x=6.351442in,y=1.586434in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}\KernighanLin{} \& \MergeLinear{}}}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%
