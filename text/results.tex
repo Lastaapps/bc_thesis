@@ -1,5 +1,5 @@
 
-\chapter{Conclusion}
+\chapter{Results}
 
 \section{Discussion and Future work}
 
@@ -13,6 +13,9 @@ can be rewritten from Python into some sensible language like C, C++, Rust or Zi
 Also, further heuristics can be tried
 and tested on additional graph classes
 to reach additional performance gains.
+It is expected that the heuristic has to work significantly differently
+compared to our solution as we reach some sort of limit
+that we did not manage to overcome.
 
 Major gains for some graph classes
 can be expected if the FPT algorithm is also implemented.
@@ -34,7 +37,7 @@ for graphs where \( |E(G)| = 2|V(G)| - 3 \)
 even though it can be described and implemented
 as shown in~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit}.
 
-\section{Results}
+\section{Conclusion}
 
 To remind us of the goals of the thesis,
 we wanted to show that the problem of deciding if a graph has a NAC-coloring
@@ -58,6 +61,10 @@ Back to NAC-colorings, we presented a significantly faster algorithm
 for NAC-coloring search using graph decomposition and gradual coloring buildup.
 %
 We also proposed multiple heuristics and optimizations.
+%
+We introduced the concept of monochromatic classes speeding up
+computation significantly for many graph classes.
+%
 The performance of the algorithm was
 first compared with the previous naive or simple
 algorithms, and then heuristics were compared with each other and
