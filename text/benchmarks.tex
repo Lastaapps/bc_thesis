@@ -18,14 +18,14 @@
 
 \section{Implementation}
 
+\todo[inline]{Popsat základní API knihovny}
+
 In this section we first describe the structure of the project containing
 the code of the algorithm.
 Next, we mention libraries, relation to PyRigi and
 some worth mentioning implementation details.
 The code is available as an attachment of this thesis,
-nevertheless the most recent version can be found on
-\todo{Uncomment footnote} GitHub.
-%GitHub\footnote{\url{https://github.com/Lastaapps/nac_coloring}}.
+nevertheless the most recent version can be found on GitHub~\cite{my_code}.
 
 The code is written in Python~\cite{python}, minimal supported version is Python 3.12.
 To set up the project, create a virtual environment and install packages
@@ -53,7 +53,7 @@ File \texttt{NAC\_presentation.ipynb} shows how the benchmarks can be run and an
 The code of the algorithm described in~\Cref{sec:stable_cuts_implementation}
 with additional helper functions is implemented in directory \texttt{stablecut}.
 Note that some changes were done when the code was merged into PyRigi.
-%
+
 The code of the algorithms described in~\Cref{chapter:alg}
 is stored in directory \texttt{nac}.
 %
@@ -196,7 +196,7 @@ In every case, our algorithms are significantly faster than implementation in \f
 Notice also huge advantage gained by using monochromatic classes instead of \trcon{} components.
 %
 \begin{table}[ht]
-	\caption[Running times on graphs.]{
+	\caption[Running times on graphs]{
 		The time (in seconds) needed to find all NAC-colorings for all graphs with a given size. Run by us.
 		\textsc{FRLG} stands for \flexrilog{}, \textsc{ND} for \NeighborsDegree{}.}%
 	\label{tab:all_min_rigid}
@@ -236,7 +236,7 @@ This corresponds to \( 2^{29} \) checks done by \NaiveCycles{}.
 \begin{figure}[ht]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Running time for minimally rigid graphs.]{
+	\caption[Running time for minimally rigid graphs]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_time_minimally_rigid}
 \end{figure}%
@@ -250,10 +250,11 @@ even though the \NaiveCycles{} algorithm is still faster for these graphs.
 We think that the slowdown is caused by internal overhead
 used for subgraphs splitting and merging.
 
+\todo[inline]{Podívat se, co se kurňa děje - all vs some}
 \begin{figure}[ht]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for minimally rigid graphs.]{
+	\caption[Checks performed for minimally rigid graphs]{
 		The number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_count_minimally_rigid}
 \end{figure}%
@@ -273,7 +274,7 @@ since these are called only when the small cycles check \CycleMask{} fails to de
 \begin{figure}[ht]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_check-comparision_exp_edge_no_monochromatic_checks_checks_mean.pgf}}
-	\caption[The number of \IsNACColoring{} calls.]{
+	\caption[The number of \IsNACColoring{} calls]{
 		The number of \IsNACColoring{} calls with respect to the number of monochromatic classes
 		over all graphs used for benchmarking.}%
 	\label{fig:graph_summary}
@@ -352,14 +353,14 @@ for both the runtime and the number of \IsNACColoring{} checks.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_first_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for minimally rigid graphs (some).]{
+	\caption[Mean runtime for minimally rigid graphs (some)]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_minimally_rigid_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_first_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for minimally rigid graphs (some).]{
+	\caption[Checks performed for minimally rigid graphs (some)]{
 		The number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
 	\label{fig:graph_minimally_rigid_first_checks}
 \end{figure}%
@@ -383,14 +384,14 @@ For \Neighbors{}, the performance is more stable, but still worse than \MergeLin
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_first_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no 3 nor 4 cycles (some).]{
+	\caption[Mean runtime for graphs with no 3 nor 4 cycles (some)]{
 		Mean running time to find all NAC-colorings for graphs with no three nor four cycles.}%
 	\label{fig:graph_count_no_3_nor_4_cycles_first_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_first_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (some).]{
+% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (some)]{
 % 		The number of checks performed to find all NAC-colorings for graphs with no three nor four cycles.}%
 % 	\label{fig:graph_count_no_3_nor_4_cycles_first_checks}
 % \end{figure}%
@@ -406,14 +407,14 @@ At around twenty-eight vertices five second time limit is reached for all algori
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no 3 nor 4 cycles (all).]{
+	\caption[Mean runtime for graphs with no 3 nor 4 cycles (all)]{
 		Mean running time to find all NAC-colorings for graphs with no three nor four cycles.}%
 	\label{fig:graph_count_no_3_nor_4_cycles_all_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (all).]{
+% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (all)]{
 % 		The number of checks performed to find all NAC-colorings for graphs with no three nor four cycles.}%
 % 	\label{fig:graph_count_no_3_nor_4_cycles_all_checks}
 % \end{figure}%
@@ -467,14 +468,14 @@ the other are not far behind.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for globally rigid graphs (some).]{
+	\caption[Mean runtime for globally rigid graphs (some)]{
 		Mean running time to find some NAC-colorings for globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_first_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_first_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for globally rigid graphs (some).]{
+% 	\caption[Checks performed for globally rigid graphs (some)]{
 % 		The number of checks performed to find some NAC-colorings for globally rigid graphs.}%
 % 	\label{fig:graph_globally_rigid_first_checks}
 % \end{figure}%
@@ -490,14 +491,14 @@ that for the number of checks performed the same statements hold.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for globally rigid graphs (all).]{
+	\caption[Mean runtime for globally rigid graphs (all)]{
 		Mean running time to find all NAC-colorings for globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_all_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_all_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for globally rigid graphs (all).]{
+	\caption[Checks performed for globally rigid graphs (all)]{
 		The number of checks performed to find all NAC-colorings for globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_all_checks}
 \end{figure}%
@@ -576,14 +577,14 @@ as these graphs are not simple anymore.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring.]{
+	\caption[Mean runtime for graphs with no NAC-coloring]{
 		Mean running time to find all NAC-colorings for graphs with no NAC-coloring.}%
 	\label{fig:graph_no_nac_coloring_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for graphs with no NAC-coloring.]{
+	\caption[Checks performed for graphs with no NAC-coloring]{
 		The number of checks performed to find all NAC-colorings for graphs with no NAC-coloring.}%
 	\label{fig:graph_no_nac_coloring_first_checks}
 \end{figure}%
@@ -603,19 +604,20 @@ and becomes negligible for larger graphs.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_runtime_subgraph_size_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring.]{
+	\caption[Mean runtime for graphs with no NAC-coloring]{
 		Mean running time to find all NAC-colorings for graphs with no NAC-coloring for different subgraph sizes \( k \).}%
 	\label{fig:graph_no_nac_coloring_first_runtime_subgraph_size}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_checks_subgraph_size_mean.pgf}}
-	\caption[Checks performed for graphs with no NAC-coloring.]{
+	\caption[Checks performed for graphs with no NAC-coloring]{
 		The number of checks performed to find all NAC-colorings for graphs with no NAC-coloring for different subgraph sizes \( k \).}%
 	\label{fig:graph_no_nac_coloring_first_checks_subgraph_size}
 \end{figure}%
 
 
+\todo[inline]{Failing -> Other}
 
 \subsection{Failing strategies}%
 \label{sec:failing_strategies}
@@ -642,14 +644,14 @@ Graphs with no three nor four cycles behave similarly for these strategies.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_merging_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for minimally rigid graphs (some) (with failing).]{
+	\caption[Failing merging strategies for minimally rigid graphs]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs with failing merging strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_merging_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_split_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for minimally rigid graphs (some) (with failing).]{
+	\caption[Failing splitting strategies for minimally rigid graphs]{
 		Mean running time to find all NAC-colorings for minimally rigid graphs with failing splitting strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_split_first_runtime}
 \end{figure}%
@@ -670,14 +672,14 @@ it can be seen that performance of \KernighanLin{} and \Cuts{} is worse.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_failing_merging_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring (with failing).]{
+	\caption[Failing merging strategies for graphs with no NAC-coloring]{
 		Mean running time to find all NAC-colorings for graphs with no NAC-coloring with failing merging strategies.}%
 	\label{fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_failing_split_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring (with failing).]{
+	\caption[Failing splitting strategies for graphs with no NAC-coloring]{
 		Mean running time to find all NAC-colorings for graphs with no NAC-coloring with failing splitting strategies.}%
 	\label{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}
 \end{figure}%

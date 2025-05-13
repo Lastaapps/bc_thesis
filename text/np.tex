@@ -1,14 +1,14 @@
-\chapter{NP-completeness on graphs with maximal degree five}%
+\chapter{NP-completeness on graphs with maximum degree five}%
 \label{chapter:np}
 
 \begin{chapterabstract}
 
 	It has been previously shown that it is NP-complete to decide
 	if a graph has a NAC-coloring.
-	One could hope that for graphs with small maximal degree
+	One could hope that for graphs with small maximum degree
 	the problem becomes somewhat simpler.
 	In this chapter we show that this is not the case
-	for graphs with maximal degree five --- the problem is still NP-complete.
+	for graphs with maximum degree five --- the problem is still NP-complete.
 	A graph is constructed from gadgets and equivalence
 	with NAC-coloring existence and 3-SAT satisfiability is proved.
 	Later we show the same for graphs with average degree of
@@ -100,7 +100,7 @@ The paper~\cite{np_complete} then introduces a \emph{connecting element} gadget.
 			\node[] at (1.25, 1.75) {$\bar{x}_i$};
 		\end{tikzpicture}
 	\end{center}
-	\caption[Connecting element gadget.]{
+	\caption[Connecting element gadget]{
 		\centering Connecting element gadget as proposed in~\cite{np_complete}.
 		Note that dashed and filled edges need to share same colors in every NAC-coloring.}%
 	\label{fig:np_gadget_connecting}
@@ -157,12 +157,12 @@ The degrees of vertices in the cycles are bounded by six
 and the degrees of vertices inside connecting elements are bounded by seven.
 
 
-\section{Graphs with maximal degree five}
+\section{Graphs with maximum degree five}
 
 In the previous proof there are not guaranties about
 degree of vertices in the graph. The vertices incident to the connecting edges
 have high degree, propositional to the number of clauses.
-We propose different gadgets where we bound the maximal degree.
+We propose different gadgets where we bound the maximum degree.
 We already presented this proof in our previous paper~\cite{my_paper}.
 
 %
@@ -295,7 +295,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 				\draw[edge] (11d)edge(11) (12d)edge(12) (51d)edge(51) (52d)edge(52);
 			\end{scope}
 		\end{tikzpicture}
-		\caption[Train and its extension.]{
+		\caption[Train and its extension]{
 			\centering A train (left) is formed by gluing braced ladders so that
 			the maximum degree is 5. The right figure shows how it can be extended.}
 		\label{fig:proof_trains}
@@ -455,7 +455,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 
 			\end{scope}
 		\end{tikzpicture}
-		\caption[{Gadgets for literals with cycles \( A_i \) and \( B_i \).}]{
+		\caption[Gadgets for literals with cycles \( A_i \) and \( B_i \)]{
 			\centering The gadgets for every variable $x_i$.
 			For all variables together they enforce that the trains $x_i$ and $\bar{x}_i$ have different colors.}%
 		\label{fig:proof_enforce_true_false}
@@ -626,7 +626,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 			\node[] at (4.125, 2.375) {$t$};
 
 		\end{tikzpicture}
-		\caption[Gadget for a clause with the cycle \( C_i \).]{
+		\caption[Gadget for a clause with the cycle \( C_i \)]{
 			\centering The gadget for the clause
 			$(\hat{x}_{i,1} \lor \hat{x}_{i,2} \lor \hat{x}_{i,3})$, index $i$ omitted in the labels.}%
 		\label{fig:proof_clause}
@@ -732,7 +732,7 @@ Therefore, an almost cycle exists, and the coloring is not a NAC-coloring.
 If the prisms are used, four more blue edges are visited with an analogous cycle.
 
 
-\section{Average degree of \( 4 + \varepsilon \)}
+\section{Average degree \( 4 + \varepsilon \)}
 
 The previous result can be extended further.
 We can extend ladder parts of the graph by adding

@@ -11,8 +11,6 @@ of the thesis can be found in artifacts in GitHub workflows.
 - run no NAC coloring with larger subgraphs as I misinterpreted the results
 
 ## Graphs summary
-- ukázat špatnost logu
-  - spustit na nových lamanech
 Minimally rigid
 - spustit i pro špatné strategie
 - first
@@ -54,9 +52,12 @@ Failing
 - Fix line breaks & typography
 - Comment code
 - update precomputed benchmarks
+- README v kódu
 - pregenerate graphs in notebooks
 - remove attachments if still empty
 - todonotes, just in case
+- odebrat bw možná?
+- zkontrolovat latex chyby
 
 ## Abstract
 
@@ -69,19 +70,24 @@ two colors such that for each cycle either all the edges have the same color or
 there are at least two edges of each color.
 It is NP-complete to determine is a graph has a NAC-coloring,
 we show that the problem is
-also NP-complete for graphs with maximal degree five.
+also NP-complete for graphs with maximum degree five.
 We present an algorithm for NAC-coloring search,
 and we discuss related heuristics.
 The performance is compared with previous algorithms and among the heuristics.
 We also present fixed-parameter tractable (FPT) algorithm for NAC-coloring counting
-parametrized by tree width.
+parametrized by treewidth.
 We discuss relation to stable cuts and algorithm for finding
 a stable cut is implemented as part of the thesis.
+
+### Keywords
+
+rigidity theory, flexibility, NAC-coloring, stable cut, parametrized
+complexity, NP-completeness, treewidth
 
 ## Links
 
 * [PyRigi](https://github.com/PyRigi/PyRigi) (target repository, where my code is merged)
-* [Code of this thesis](https://github.com/Lastaapps/nac_coloring/)
+* [Code of this thesis](https://github.com/Lastaapps/bc_thesis_code/)
 * [Code before merge into PyRigi](https://github.com/Lastaapps/PyRigi/)
 * [Our related paper](https://www.arxiv.org/abs/2412.13721)
 

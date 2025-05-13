@@ -52,12 +52,12 @@ The following definitions are taken from~\cite{np_complete,my_paper}.
 \end{definition}
 %
 \begin{definition}[Nontrivial flex]
-	For a framework \( (G, p) \),
-	let us have a family of maps \( p_0 = p \) such that for all \( 0 < t \le 1 \)
+	A \emph{non-trivial flex} of framework \( (G, p) \) is a continuous curve of realizations \( p_t \)
+	for \( 0 \le t \le 1\) such that
+	\( p_0 = p \) and for all \( 0 < t \le 1 \)
 	we have \( p_t \) such that
 	\( \|p_t(u) - p_t(v)\| = \|p(u) - p(v)\|\) for every \( \{u, v\} \in E(G) \),
 	but \( \|p_t(u) - p_t(v)\| \ne \|p(u) - p(v)\| \) for some \( u, v \in V (G) \).
-	We call such a family of maps a \emph{non-trivial flex} of framework \( (G, p) \).
 \end{definition}
 %
 \begin{definition}[\( d \)-flexible, \( d \)-rigid]
@@ -81,6 +81,17 @@ Note that two non-neighboring vertices can be mapped to the same position.
 but they are of no interest for us in this thesis
 as there is no known combinatorial characterization of them.
 
+For \( d = 1 \) or \( d \ge 3 \),
+the question whether a graph has a flexible \( d \)-framework is simple.
+%
+For \( d = 1 \), all the vertices are on a line
+and any vertex deviation necessarily changes distances (if the graph is connected).
+Therefore, there is none.
+%
+For \( d \ge 3 \), we can map all the vertices except one onto a line and
+move (for \( d=3 \) rotate) the remaining vertex around the line.
+Therefore, such \( d \)-framework is flexible.
+
 It is NP-hard to decide whether a given \( d \)-dimensional framework is
 \( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
 We can simplify the problem if we talk about \emph{generic}
@@ -93,6 +104,7 @@ behavior.
 	its \( 2 \)-realizations are \( 2 \)-rigid.
 \end{definition}
 %
+
 
 From now on, we focus only on the \( 2 \)-dimensional case,
 in which there is a combinatorial characterization of rigid graphs.

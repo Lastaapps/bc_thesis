@@ -15,7 +15,7 @@
 
 We use notation as used in~\cite{book_parametrized_algorithms}.
 Treewidth is one of many graph parametrizations like
-pathwidth, cliquewidth, maximal degree and many others.
+pathwidth, cliquewidth, maximum degree and many others.
 These approaches are used to somehow exploit graphs structure
 and provide algorithms with possibly significantly lower time complexity
 then algorithms considering general graphs only.
@@ -172,6 +172,9 @@ For some problems it is beneficial to divide this operation further.
 First a vertex is added with no edges using a \IntroduceVertexNode{}
 and later all the edges corresponding to the vertex are added using new \IntroduceEdgeNode{}s.
 We define an edge bag \( Y_t, t \in T \) similarly as vertex bags \( X_t \).
+%
+\todo[inline]{Ukázat, že \( Y_t \) je prázdný pro všechny, viz \cite{book_parametrized_algorithms}}
+\todo[inline]{Odmazat edge bagy, pokud nebudou třeba}
 %
 Let \( t' \) be a direct ancestor of \( t \).
 For \IntroduceVertexNode{}, we define \( Y_t = Y_{t'} \).
@@ -388,7 +391,7 @@ We start by defining other auxiliary predicates:
 With the predicates ready, we can proceed approach to the theorem.
 %
 \begin{theorem}[\cite{my_paper}]
-	The problem of existence of a NAC-coloring is fixed parameter
+	The problem of existence of a NAC-coloring is fixed-parameter
 	tractable when parametrized by treewidth.
 \end{theorem}
 %
@@ -1103,7 +1106,8 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	The following formula computes cache value based on previously defined mappings.
 	It comes from the same idea as the Cartesian product and
 	NAC-product (\Cref{def:NACproduct}) where all the resulting colorings
-	are NAC-colorings. The size of such product is multiple of the numbers of
+	are NAC-colorings.
+	The size of such product is multiple of the numbers of
 	almost NAC-colorings on \( G_{t_1'}, G_{t_2'} \).
 	%
 	\begin{align*}
@@ -1569,4 +1573,6 @@ Monte Carlo algorithms are randomized algorithms whole output may be incorrect
 with some probability. As they are often faster, they are run many times
 to obtain trustworthy results.
 This is unfortunately far beyond the scope of this thesis.
+
+\todo[inline]{Pozor na monochromatic components - projít celé}
 

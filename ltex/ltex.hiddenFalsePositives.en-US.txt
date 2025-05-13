@@ -40,9 +40,9 @@
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe previous algorithm is modified by also introducing edges in and removing .\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe same is also done for , but there are multiple such constrains\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe same is also done for , but there are multiple such constrains checked at the same time.\\E$"}
-{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QAs also described above, often FPT algorithms parametrized by tree width use variant on that also introduces edges, we call this node .\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QAs also described above, often FPT algorithms parametrized by treewidth use variant on that also introduces edges, we call this node .\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe previous algorithm is modified by replacing every by and introducing edges in it and removing every .\\E$"}
-{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QAs also described above, FPT algorithms parametrized by tree width often use that also introduces edges, for this section we call this node .\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QAs also described above, FPT algorithms parametrized by treewidth often use that also introduces edges, for this section we call this node .\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe same is also done for , but you can think of the process as multiple such constrains checked at the same time.\\E$"}
 {"rule":"IT_IS","sentence":"^\\QThe core concept of Rigidity Theory is a framework which is a simple graph \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with its a realization of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q into a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q-dimensional plane \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"IT_IS","sentence":"^\\QThe core concept of Rigidity Theory is a framework which is a simple graph \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q with its a realization of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q into a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q-dimensional space \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

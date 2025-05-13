@@ -52,7 +52,7 @@
     Následně představujeme FPT algoritmus na počítání NAC-obarvení
     parametrizovaný stromovou šířkou.
     %
-    Navíc popisujeme vztahy s stable řezy grafu a implementujeme algoritmus
+    Navíc popisujeme vztahy se stabilními řezy grafu a implementujeme algoritmus
     pro jejich hledání v flexible grafech.
 }
 % Also update README.md if any changes are made.
@@ -76,7 +76,7 @@
     The performance is compared with previous algorithms and among the heuristics.
     %
     We also present fixed-parameter tractable (FPT) algorithm for NAC-coloring counting
-    parametrized by tree width.
+    parametrized by treewidth.
     %
     We discuss relation to stable cuts and algorithm for finding
     a stable cut is implemented as part of the thesis.
@@ -84,20 +84,22 @@
 
 \ctufitkeywordsCZE{
     strukturální teorie tuhosti,
-    generická flexibilita,
+    flexibilita,
     NAC-obar\-vení,
-    stable-cut,
+    stabilní řez,
     parametrizovaná komplexita,
-    NP-úplnost
+    NP-úplnost,
+    stromová šířka
 }
 \ctufitkeywordsENG{
     rigidity theory,
-    generic flexibility,
+    flexibility,
     NAC-coloring,
-    stable-cut,
+    stable cut,
     \newline
     parametrized complexity,
-    NP-completeness
+    NP-completeness,
+    treewidth
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END FILL IN
@@ -362,9 +364,10 @@
 	information in accordance with the Guideline for adhering to ethical principles when elaborating an
 	academic final thesis.
 	%
-	I declare that I have used AI tools during the preparation and writing of my thesis. I have verified
-	the generated content. I confirm that I am aware that I am fully responsible for the content of the
-	thesis.
+	I declare that I have used AI tools during the preparation and writing of my thesis,
+	mostly as a line completion tool for both text and code.
+	I have verified the generated content.
+	I confirm that I am aware that I am fully responsible for the content of the thesis.
 
 	I acknowledge that my thesis is subject to the rights and obligations stipulated by the Act No.
 	121/2000 Coll., the Copyright Act, as amended. In accordance with Section 2373(2) of Act No.
@@ -431,7 +434,7 @@
 % OR REMOVE ENTIRELY
 % List the abbreviations in lexicography order.
 %%%%%%%%%%%%%%%%%%%
-\chapter{\thectufitabbreviationlabel}
+\chapter*{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
 	API                & Application programming interface    \\
@@ -471,7 +474,7 @@
 
 \appendix\appendixinit{} % do not remove these two commands
 
-\include{text/appendix}
+% \include{text/appendix}
 
 \backmatter{} % do not remove this command
 
