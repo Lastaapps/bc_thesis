@@ -4,7 +4,7 @@
 
 \begin{chapterabstract}
 
-	In this chapter, we define terminology from Rigidity theory including NAC-coloring.
+	In this chapter, we define terminology from Rigidity theory including NAC-colorings.
 	We also introduce its relation to Rigidity theory and
 	some simple statements considering
 	the structure of graphs and NAC-coloring existence.
@@ -14,8 +14,9 @@
 \section{Rigidity theory}
 
 Rigidity theory, often also called Structural rigidity,
-is an area combining combinatorics, discrete and computational geometry,
-which studies properties of objects formed from flexible joins and rigid bars.
+is an area combining among the others
+combinatorics and discrete and computational geometry,
+which studies properties of objects formed from joints and rigid bars.
 These objects can be represented as graphs with
 a mapping into \( d \)-dimensional space.
 Rigidity theory studies if such objects are rigid or flexible.
@@ -24,20 +25,21 @@ For the rest of the thesis,
 we consider only simple undirected graphs.
 Often, only connected graphs are considered as disconnected graphs
 represent uninteresting trivial cases.
-By \( V(G) \) we denote vertices of a graph \( G \) and
-by \( E(G) \) we denote edges of a graph \( G \).
+By \( V(G) \) we denote the vertices of a graph \( G \) and
+by \( E(G) \) we denote the edges of~\( G \).
 
 By \( G - v \), resp. \( G - e \),
-where \( v in V(G), e \in E(G) \) we denote a graph
+where \( v \in V(G), e \in E(G) \) we denote the graph
 formed from \( G \) by removing vertex \( v \), resp.\ edge \( e \).
 Formally,
 \( G - v = (V(G) \setminus \{v\}, E(G) \setminus \{\{u, v\} \mid u \in V(G)\}) \)
 and \( G - e = (V(G), E(G) \setminus \{e\}) \).
+%
 By \( G \setminus S \), resp. \( G \setminus F \),
-where \( S \subseteq V(G), F \subseteq E(G) \) we denote a graph
+where \( S \subseteq V(G), F \subseteq E(G) \) we denote the graph
 formed from \( G \) by removing vertices \( S \), resp.\ edges \( F \).
 Formally,
-\( G \setminus S = (V(G) \setminus S, E(G) \setminus \{\{u, v\} \mid v in S, u \in V(G)\}) \)
+\( G \setminus S = (V(G) \setminus S, E(G) \setminus \{\{u, v\} \mid v \in S, u \in V(G)\}) \)
 and \( G \setminus F = (V(G), E(G) \setminus F) \).
 
 The following definitions are taken from~\cite{np_complete,my_paper}.
@@ -68,10 +70,10 @@ The following definitions are taken from~\cite{np_complete,my_paper}.
 For a \( d \)-rigid realization, there may still be other realizations
 with the same distances between vertices connected by edges.
 If there are no such realizations for a \( d \)-rigid realization,
-we call such realization \emph{globally rigid}.
+we call such realization \emph{globally \( d \)-rigid}.
 To summarize all the previous definitions,
-a framework is flexible if it can be continuously deformed
-while preserving lengths of edges of the graph.
+a framework is \( d \)-flexible if it can be continuously deformed
+while preserving the lengths of the edges of the graph.
 
 From now on, we consider only \emph{quasi-injective} realizations ---
 two neighboring vertices cannot be mapped to the same position.
@@ -94,61 +96,89 @@ Therefore, such \( d \)-framework is flexible.
 
 It is NP-hard to decide whether a given \( d \)-dimensional framework is
 \( d \)-rigid for \( d \ge 2 \)~\cite{d_rigidity_hardness}.
-We can simplify the problem if we talk about \emph{generic}
-behavior.
+We can simplify the problem if we talk about \emph{generic} behavior.
 %
-\begin{definition}[Flexible \& Rigid graphs~\cite{generically_rigid_graphs}]
-	A graph is \emph{(generically) flexible} if almost all of
-	its \( 2 \)-realizations are \( 2 \)-flexible.
-	A graph is \emph{(generically) rigid} if almost all of
-	its \( 2 \)-realizations are \( 2 \)-rigid.
+For graphs, it holds that almost all or all the realizations are
+either \( d \)-rigid or \( d \)-flexible.
+As there may be few \( d \)-realizations of the other type then the majority type,
+we talk about paradoxical flexibility.
+%
+\begin{definition}[Flexible \& rigid graphs~\cite{generically_rigid_graphs}]
+	A graph is \emph{(generically) \( d \)-flexible} if almost all of
+	its \( d \)-realizations are \( d \)-flexible.
+	A graph is \emph{(generically) \( d \)-rigid} if almost all of
+	its \( d \)-realizations are \( d \)-rigid.
 \end{definition}
 %
 
 
 From now on, we focus only on the \( 2 \)-dimensional case,
 in which there is a combinatorial characterization of rigid graphs.
+When we use \emph{rigid} or \emph{flexible} we mean \( 2 \)-rigid or \( 2 \)-flexible.
 
 There is a significant graph class studied in Rigidity theory
 called minimally rigid graphs or Laman graphs.
 %
 \begin{definition}
-	A graph is \emph{minimally generically \( d \)-rigid} if it is \( d \)-rigid
+	A graph \( G \) is \emph{minimally generically \( d \)-rigid} if it is \( d \)-rigid
 	and \( G - e \) is \(d\)-flexible for each \( e \in E(G) \).
 \end{definition}
 %
-Pollaczek, Geiringer and later Laman gave characterization of minimally $2$-rigid graphs.
+Pollaczek-Geiringer and later Laman gave characterization of minimally $2$-rigid graphs.
 %
-\begin{lemma}[\cite{polzacek_1927,laman_1970}]%
-	\label[lemma]{lemma:laman_characterization}
-	A graph is minimally rigid if and only if
-	\( |E(G)| = 2|V(G)| - 3\) and
-	\( E(H) \le 2|V(H)| - 3 \) for any \( H \) subgraph of \( G \).
+\begin{theorem}[\cite{polzacek_1927,laman_1970}]%
+	\label[theorem]{theorem:laman_characterization}
 	%
-	Therefore, for a graph \( G \) where \( |E(G)| < 2|V(G)| - 3 \) or
-	where \( |E(G)| = 2|V(G)| - 3 \) and there exists a subgraph \( H \) such that \( E(H) > 2|V(H)| - 3 \),
-	there exists a flexible realization of \( G \).
-\end{lemma}
+	A graph \( G \) is minimally rigid if and only if
+	\( |E(G)| = 2|V(G)| - 3\) and
+	\( |E(H)| \le 2|V(H)| - 3 \) for any \( H \) subgraph of \( G \).
+\end{theorem}
 %
-Based on \Cref{lemma:laman_characterization}, a polynomial algorithm
-for testing $2$-rigidity~\cite{polynomial-min-rigid},
-while a combinatorial classification of $d$-rigid graphs for $d\geq 3$ remains an open problem.
+\begin{corollary}[\cite{polzacek_1927,laman_1970}]
+	For a graph \( G \) where \( |E(G)| < 2|V(G)| - 3 \) or
+	where \( |E(G)| = 2|V(G)| - 3 \) and there exists a subgraph \( H \) such that \( |E(H)| > 2|V(H)| - 3 \),
+	there exists a flexible realization of \( G \).
+\end{corollary}
+%
+Based on \Cref{theorem:laman_characterization},
+a polynomial algorithm
+for testing $2$-rigidity was obtained~\cite{polynomial-min-rigid}.
+A combinatorial classification of $d$-rigid graphs
+for $d \geq 3$ remains an open problem.
 
 It is already known for some classes of graphs that they are flexible.
-Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \)
-are flexible~\cite{stable_cuts_2v_4}.
+Namely, graphs where \( |E(G)| \le 2|V(G)| - 4 \) are flexible.
+This can be seen form \Cref{theorem:laman_characterization}
+or from the following observation.
+It can be derived from the fact that for \( |V(G)| \) vertices,
+there are \( 2|V(G)| \) degrees of freedom in the \( 2 \)-dimensional space.
+We can fix translation, rotation and reflection of the graph
+by fixing three vertices and by using \( 3 \) edges.
+%
+By adding a single, we fix one degree of freedom.
+Therefore, we can fix the remaining \( |V(G)| - 3 \) vertices
+(\( 2|V(G)| - 6 \) degrees of freedom)
+by using at least \( 2|V(G)| - 6 \) edges.
+But when there are less than \( 2|V(G)| - 3 \) edges in total,
+we cannot ever fix enough degrees of freedom.
+
 
 There are polynomial algorithms for testing \( 2 \)-rigidity
 for minimally rigid graphs, see for example~\cite{polynomial-min-rigid}.
 We focus more on these graphs in benchmarks.
 
-\section{NAC-coloring}
+
+\section{NAC-colorings}
 
 It is algorithmically hard to find flexible realizations of a graph
-just by trying realizations and checking if they are flexible
-as the plane is continuous.
+just by trying realizations and checking if they are flexible.
 In~\cite{legersky_original} a new edge coloring is proposed
 that corresponds with the existence of a flexible realization.
+
+\todo[inline]{
+	Picture, maybe prism again?
+	Vykrást https://arxiv.org/abs/2412.16018
+}
 
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
@@ -162,15 +192,13 @@ that corresponds with the existence of a flexible realization.
 	\end{itemize}
 	%
 	By \emph{an almost cycle} we denote both almost \( \red \) and almost \( \blue \) cycles.
-	A coloring \( \delta \) is called a \emph{NAC-coloring}, if it is surjective
+	The coloring~\( \delta \) is called a \emph{NAC-coloring}, if it is surjective
 	and there are no almost cycles.
 \end{definition}
 %
 
 As shown in~\cite{np_complete}, it is NP-complete to decide if a graph has a NAC-coloring.
 We elaborate further on this in later chapters.
-Thanks to the following \Cref{lemma:is_nac_coloring},
-the check if a coloring is a NAC-coloring can be done in polynomial time.
 Let \( E_\red\), resp. \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \),
 in an edge coloring \( \delta \).
 %
@@ -180,13 +208,14 @@ in an edge coloring \( \delta \).
 	then there are no almost cycles in \( G \) if and only if the connected components
 	of \( G[E_\red] \) and \( G[E_\blue] \)%
 	\footnote{
-		For \(X \subseteq V(G)\), by \(G[X]\) we denote
-		the induced subgraph of \( G \) on vertices \( X \),
-		\( G[X] = (X, \{ \{u, v\} \mid u, v \in X\}) \).
-		%
 		For \(Y \subseteq E(G)\), by \(G[Y]\) we denote
 		the induced subgraph of \( G \) on edges \( Y \),
 		\( G[Y] = (\{ v \mid \exists u \in V(G) : \{u, v\} \in Y\}, Y) \).
+		%
+		We also later use a similar notation for vertex-induced components:
+		for \(X \subseteq V(G)\), by \(G[X]\) we denote
+		the induced subgraph of \( G \) on vertices \( X \),
+		\( G[X] = (X, \{ \{u, v\} \mid u, v \in X\}) \).
 	}
 	are induced subgraphs of \( G \).
 \end{lemma}
@@ -195,6 +224,7 @@ The idea is quite simple --- if there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} 
 and \( \{u, v\} \) share the same connected component in \( G[E_\red] \),
 an almost cycle is formed from a \( u \)-\( v \)-path in \( G[E_\red] \)
 and the edge \( \{u, v\} \).
+The check can be done in polynomial (linear) time.
 
 Now we present relation of NAC-colorings and flexible frameworks.
 %
@@ -212,7 +242,7 @@ For example, have a look at~\Cref{fig:3prism}
 from Introduction.
 
 Note that for each NAC-coloring \( \delta \) on a graph \( G \),
-there exists a NAC-coloring \( \delta^\prime \) on \( G \)
+there exists a NAC-coloring~\( \delta^\prime \) on~\( G \)
 where \( \red \) and \( \blue \) colors are swapped.
 %
 \begin{definition}
@@ -228,8 +258,8 @@ to reduce the search space.
 It can often be seen from the graph's structure
 that if colors differ for some set of edges,
 the resulting coloring cannot be a NAC-coloring.
-
-All the edges of a 3-cycle subgraph \( C_3 \) must map to the same color.
+%
+For instance, all the edges of a 3-cycle subgraph \( C_3 \) must map to the same color.
 Otherwise, two edges of \( C_3 \) are w.l.o.g.\ \( \red \) and one is \( \blue \).
 Therefore, \( C_3 \) forms an almost cycle.
 This idea can be expanded further to neighboring triangles.
@@ -273,6 +303,10 @@ Stable set is also often called an \emph{independent set}.
 \begin{definition}[Vertex cut]
 	A \emph{vertex cut} of a graph \( G \) is a set \( S \subseteq V(G) \) such that
 	\( G \setminus S \) is a disconnected graph.
+	%
+	Vertices \( u, v \in V(G) \) are separated by \( S \)
+	if \( u, v \not\in S \)
+	and there is no path from \( u \) to \( v \) in \( G \setminus S \).
 \end{definition}
 %
 \begin{definition}[Edge cut]
@@ -294,12 +328,13 @@ They are able to find a NAC-coloring of a graph in polynomial time for some grap
 \begin{lemma}[\cite{legersky_original}]%
 	\label[lemma]{lemma:weird_four_cycle}
 	%
-	Let \( G \) be a connected graph such that \( |E(G)| \ge 2 \). If there is \( E_c \subseteq E(G) \)
-	edge cut in \( G \) such that \( E_c \) separates \( G \) and the subgraph of \( G \)
+	Let \( G \) be a connected graph such that \( |E(G)| \ge 2 \). If there is an edge cut \( E_c \subseteq E(G) \)
+	in~\( G \) and the subgraph of \( G \)
 	induced by \( E_c \) contains no path of length four, then \( G \) has a NAC-coloring.
 \end{lemma}
 %
-The idea is to construct a NAC-coloring, first consider \( E_c^\prime \) minimal subset of \( E_c \)
+The original proof constructs a NAC-coloring by first considering
+\( E_c^\prime \) minimal subset of \( E_c \)
 such that it is also an edge cut in \( G \).
 We color edges in \( E_c^\prime \) \( \red \) and the other edges \( \blue \).
 See~\cite{legersky_original} for a complete proof.
@@ -310,7 +345,7 @@ When all the articulation vertices are found,
 the graph can be decomposed into blocks
 --- vertex \( 2 \)-connected components.
 As no cycles pass through multiple blocks, we can color each block
-independently as long as both colors are used.~\cite{my_paper}.
+independently as long as both colors are used~\cite{my_paper}.
 We formalize this observation later.
 
 There are other useful graph properties related to stable cuts

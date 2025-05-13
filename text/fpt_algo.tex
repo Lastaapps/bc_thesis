@@ -1,4 +1,5 @@
-\chapter{FPT Algorithm for NAC-coloring counting}%
+
+\chapter{NAC-coloring counting fixed-parameter tractability}%
 \label{chapter:fpt}
 
 \begin{chapterabstract}
@@ -22,22 +23,39 @@ then algorithms considering general graphs only.
 For a list of other common parametrization approaches,
 we recommend~\cite{tree_width_comparision_other_classes}.
 Using these approaches, many NP-complete problems can be solved
-in a time polynomial in \( n \) where \( n = |V| \)
+in a time polynomial in \( |V(G)| \)
 for many graph classes that have such a bounded structural property.
 To name a few such problems:
 \textsc{Vertex Cover}, \textsc{Dominating Set}, \textsc{Longest Path}, \dots
 
+First we provide a formal definition:
 %
-\begin{definition}[FPT alorithm~\cite{book_parametrized_algorithms}]
-	Algorithms with running time \( f(k)\cdot n^c \)
-	where \( k \) is a parameter dependent on the instance
-	and for a constant \( c \),
-	are called \emph{fixed-parameter tractable (FPT) algorithms}.
+\begin{definition}[\cite{book_parametrized_algorithms}]
+	A parametrized problem is a language \( L \subseteq \Sigma^* \times \N \), where
+	\( \Sigma \) is a fixed, finite alphabet. For an instance \( (x, k) \in \Sigma^* \times \N \), \( k \) is called the
+	parameter.
+	%
+	We define the size of an instance \( (x, k) \) of a parametrized problem as \( |x| + k \).
 \end{definition}
 %
+\begin{definition}[\cite{book_parametrized_algorithms}]
+	A parametrized problem \( L \subseteq \Sigma^* \times \N \) is called fixed-parameter
+	tractable (FPT) if there exists an algorithm \( \mathcal{A} \) (called a fixed-parameter
+	algorithm), a computable function \( f: \N \to \N \), and a constant
+	\( c \) such that, given \( (x, k) \in \Sigma^* \times \N \), the algorithm \( \mathcal{A} \)
+	correctly decides
+	whether \( (x, k) \in L \) in time bounded by \( f(k) \cdot |(x, k)|^c \). The complexity
+	class containing all fixed-parameter tractable problems is called FPT.
+\end{definition}
+%
+Less formally we can say that FPT algorithms
+have running time of \( f(k)\cdot n^c \)
+where \( k \) is a parameter dependent on the instance
+and \( c \) is a constant.
+
 In parametrized algorithms, \( k \) stands for different parameters
 representing some form on internal graph structure as noted before.
-
+%
 For many problems it is quite simple to find a fast solution on trees.
 Often a dynamic programming approach is needed for that.
 %
@@ -50,7 +68,7 @@ that exploits the tree-likeness of a graph.
 
 %
 \begin{definition}[Tree decomposition~\cite{book_parametrized_algorithms}]
-	A \emph{tree decomposition} of a graph \( G \) is
+	A \emph{tree decomposition} of a graph~\( G \) is
 	a pair \( (T, {\{X_t\}}_{t \in V ( T )}) \)
 	where \( T \) is decomposition tree and every node \( t \)
 	is assigned a bag \( X_t \subseteq V(G) \) such that the following hold:
@@ -84,7 +102,7 @@ We follow with a lemma that is important for all the related
 dynamic programming approaches running on tree decompositions.
 %
 \begin{definition}[Vertex subset border~\cite{book_parametrized_algorithms}]
-	Let \( A \subseteq V(G) \). Then the \emph{border} of \( A \) denoted by \( \delta(A) \)
+	Let \( A \subseteq V(G) \). Then the \emph{border} of \( A \) denoted by \( \beta(A) \)
 	is the set of vertices
 	\( \{u \in A \mid \exists v \in V(G) \setminus A : \{u, v\} \in E(G) \} \).
 \end{definition}
@@ -96,7 +114,7 @@ dynamic programming approaches running on tree decompositions.
 	Then \( T - \{a, b\} \) consists of two connected components \( T_a, T_b \).
 	%
 	Let \( A = \bigcup_{t \in T_a} X_t \) and \( B = \bigcup_{t \in T_b} X_t \).
-	Then \( \delta(A), \delta(B) \subseteq X_a \cap X_b \).
+	Then \( \beta(A), \beta(B) \subseteq X_a \cap X_b \).
 \end{lemma}
 %
 The lemma also reads as:
@@ -104,7 +122,7 @@ The lemma also reads as:
 are distinct connected components''.
 
 For a graph, many different tree decompositions can be obtained.
-There may for example be multiple nodes with same bags or just a single node.
+There may be for example multiple nodes with same bags or just a single node.
 We also have no guarantee how two neighboring bags differ --- how many vertices changed.
 Therefore, we want to define \emph{a nice tree decomposition} where neighboring nodes
 represent some useful change between two bags.
@@ -112,12 +130,12 @@ First, we want our nice tree to be a rooted tree,
 let \( r \in T \) be the root node.
 %
 \begin{definition}[Nice tree decomposition~\cite{book_parametrized_algorithms}]
-	A tree decomposition
+	A tree decomposition \newline
 	\( (T, {\{X_t\}}_{t \in V ( T )}) \) rooted at \( r \in T \)
 	is \emph{nice} if the following conditions are satisfied:
 	%
 	\begin{itemize}
-		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every \LeafNode{} \( l \in T \).
+		\item \( X_r = \emptyset \) and \( X_l = \emptyset \) for every leaf node \( l \in T \).
 		\item Every non-leaf node is one of the following types:
 		      \begin{itemize}
 			      \item \IntroduceVertexNode{} --- a node \( t \) with one child \( t' \)
@@ -126,12 +144,12 @@ let \( r \in T \) be the root node.
 			      \item \ForgetVertexNode{} --- a node \( t \) with one child \( t' \)
 			            such that \( X_t = X_{t'} \setminus \{v\} \) where \( v \in X_{t'} \).
 			            We say that \( v \) is \emph{forgotten} by \( t \).
-			      \item \JoinNode --- a node \( t \) with two children \( t_1, t_2 \)
+			      \item \JoinNode{} --- a node \( t \) with two children \( t_1, t_2 \)
 			            such that \( X_t = X_1 = X_2 \).
 		      \end{itemize}
 	\end{itemize}
 	%
-	We denote the root node by \RootNode{} and leaf nodes by \LeafNode{}.
+	We denote the root node \( r \) by \RootNode{} and leaf nodes by \LeafNode{}.
 	Vertex bags of these nodes are empty.
 \end{definition}
 %
@@ -140,18 +158,26 @@ let \( r \in T \) be the root node.
 		\includegraphics[width=0.80\textwidth]{./assets/nice_tree_decomposition.png}
 	\end{center}
 	\caption[Nice tree decomposition]{An example of a nice tree decomposition with width three~\cite{nice_tree_decomposition_img}.
-		In (A) you can see the decomposed graph, in (B) the nice tree decomposition
+		In (A) you can see the decomposed graph, in (B) a nice tree decomposition
 		with \LeafNode{}s on the right and the \RootNode{} on the left.
 	}%
-	% \label{fig:nice_tree_decomposition}
+	\label{fig:nice_tree_decomposition}
 \end{figure}
+
 \todo[inline]{Do in Tikz or SVG, maybe}
 
-Note that a vertex \( v \in V(G) \) can be introduced multiple times,
+Note that a vertex \( v \in V(G) \) can be introduced multiple times
+(in multiple branches of \( T \)),
 but forgotten only once.
+%
+Otherwise, there must be an \IntroduceVertexNode{} above a \ForgetVertexNode{} in~\( T \).
+But then there are multiple subgraphs in \( T \)
+such that \( v \) is in their every bag.
+This does not fulfill the definition of a tree decomposition.
+
 By \( V_t, t \in T \), we denote the set of vertices introduced by \( t \)
 and all its child nodes.
-
+%
 \begin{lemma}[\cite{book_parametrized_algorithms}]
 	Any tree decomposition of width at most \( k \) can be converted to
 	a nice tree decomposition of width at most \( k \)
@@ -426,7 +452,7 @@ our FPT algorithm for NAC-coloring counting,
 define a cache function,
 show and prove the correct value of the cache function for each node in a tree decomposition
 and determine the complexity of the algorithm.
-Lastly, we propose optimizations to the algorithm by also empowering monochromatic components.
+Lastly, we propose optimizations to the algorithm by also empowering monochromatic classes.
 
 \subsection{The algorithm}
 
@@ -1201,7 +1227,7 @@ We denote set of such bad state pairs (for both colors) as \( \mathcal{B} \subse
 	If also done for almost cycles with a \( \blue \) edge,
 	these are exactly the bad states as described in the definition of \( N \).
 	Therefore, \( N \) gives \( 1 \) if and only if almost NAC-colorings
-  consistent with \( s_1' \) and \( s_2' \) produce
+	consistent with \( s_1' \) and \( s_2' \) produce
 	an almost NAC-coloring consistent with \( s \).
 
 	Lastly, we show that the value stored in the cache corresponds
@@ -1407,15 +1433,15 @@ which is asymptotically higher.
 
 
 
-\subsection{Monochromatic components}
+\subsection{Monochromatic classes}
 
-Monochromatic components can be used to significantly reduce the state space
+Monochromatic classes can be used to significantly reduce the state space
 that needs to be searched as for some cache entries we can say that
 they resolve to zero without solving related sub-problems.
 %
 First we introduce state space reduction when
 there is an edge in a bag, then we extend the result to multiple edges
-sharing the same monochromatic component, and lastly we improve the number of
+sharing the same monochromatic class, and lastly we improve the number of
 operations needed in the \IntroduceVertexWithEdgesNode{}.
 %
 \begin{lemma}
@@ -1439,14 +1465,14 @@ operations needed in the \IntroduceVertexWithEdgesNode{}.
 \end{proof}
 %
 
-We extend the result for monochromatic components as follows:
+We extend the result for monochromatic classes as follows:
 see that this is just a generalization of the previous theorem
 as an edge forms a trivial monochromatic class.
 %
 \begin{theorem}
 	For \( t \in T \),
 	edges \( F \subseteq Y_t \) such that
-	they share the same monochromatic component
+	they share the same monochromatic class
 	and vertices \( U \) such that they are end points of the edges in \( F \).
 	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \)
 	such that it holds that
@@ -1460,7 +1486,7 @@ as an edge forms a trivial monochromatic class.
 	The edges \( F \) has to be either \( \red \) or \( \blue \).
 	Let w.l.o.g.\ edges in \( F \) be colored \( \blue \).
 	That means that all vertices in \( U \) are in the same \( \blue \) component (and part)
-	as the edges are from a monochromatic component.
+	as the edges are from a monochromatic class.
 	But the state \( s \) states that there is a vertex \( u \in U \)
 	that does not share a \( \blue \) component with the other vertices in \( U \).
 	Then \( \delta \) does not correspond to the state \( s \).
@@ -1471,14 +1497,14 @@ as an edge forms a trivial monochromatic class.
 Lastly, we show how \IntroduceVertexWithEdgesNode{} can be optimized.
 First, while traversing all the colorings of the edges \( F \) incident to the added vertex,
 we do not try all the color combinations as usual. If there are some edges
-in \( Y_{t'} \cup F \) that are part of a monochromatic component,
+in \( Y_{t'} \cup F \) that are part of a monochromatic class,
 the same as above applies. We cannot create a contradicting state with non-zero
 cache entry. But by using monochromatic classes
 we can enforce that all such edges should always have the same color.
 We can also enforce the color by using an edge of the same monochromatic class
 that is a part of \( Y_{t'} \).
 For example, if the edge in \( Y_{t'} \) lies in a \( \blue \) part,
-the other edges from the same monochromatic component
+the other edges from the same monochromatic class
 can be added and checked as \( \blue \).
 
 
@@ -1573,6 +1599,4 @@ Monte Carlo algorithms are randomized algorithms whole output may be incorrect
 with some probability. As they are often faster, they are run many times
 to obtain trustworthy results.
 This is unfortunately far beyond the scope of this thesis.
-
-\todo[inline]{Pozor na monochromatic components - projít celé}
 

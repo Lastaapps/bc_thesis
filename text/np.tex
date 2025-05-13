@@ -29,7 +29,7 @@ In this section we describe the main idea and gadgets used
 in the original proof of NAC-coloring NP-completeness~\cite{np_complete}.
 
 For a reduction from other NP-complete problem
-we use well known \emph{3-SAT} problem.
+we use the well known \emph{3-SAT} problem.
 Propositional logic SAT answers the question
 whether the formula is satisfiable ---
 there exists a truth assignment of variables that satisfies the formula.
@@ -38,25 +38,25 @@ where the formula must be in the conjunctive normal form (CNF), namely in 3-CNF
 --- conjunction of clauses with three literals.
 For example, \( (A \lor B \lor \lnot C) \land (\lnot A \lor D \lor \lnot E) \)
 is in 3-CNF\@.
-% TODO CNF formulas look like a face with a nose in the middle \( (\lor)\land(\lor) \).
 It was shown that 3-SAT is NP-complete,
 and it is a common tool for NP-completeness proofs~\cite{3-sat}.
 
 First, for a formula \( \phi \) we create a graph \( G_\phi \).
 Alongside the graph an edge-map is introduced mapping into the literals
-of \( \phi \). Recall that for an elementary clause \( x_i \) the literals
+of \( \phi \). Recall that for an elementary variable \( x_i \), the literals
 are both \( x_i \) and \( \neg x_i \). We denote \( \lnot x_i \) by \( \bar{x}_i \).
 There are also literals \( t \) and \( f \) for \( \true \) and \( \false \).
 Note, that the goal is to color literals where \( \true \) is assigned \( \blue \)
 and \( \false \) is assigned \( \red \).
 
-To construct \( G_\phi \) for each literal \( x_i, \bar{x}_i\) and \( t, f \),
+To construct \( G_\phi \), for each literal \( x_i, \bar{x}_i\) and \( t, f \),
 a \emph{connecting edge} labeled by the literal is added to \( G_\phi \).
 For each literal we add a five-cycle \( A_i \) to \( G_\phi \)
 such that the edges are labeled by \( x_i, x_i, \bar{x}_i, \bar{x}_i, t \).
 Then, also for each literal we add a four-cycle \( B_i \) to \( G_\phi \)
 such that the edges are labeled by \( x_i, \bar{x}_i, t, f \).
-Lastly, for each clause a seven-cycle \( C_i \) is added to \( G_\phi \)
+Lastly, for each clause \( \hat{x}_{i,1} \lor	\hat{x}_{i,2} \lor \hat{x}_{i,3} \)
+a seven-cycle \( C_i \) is added to \( G_\phi \)
 such that the edges are labeled by
 \( \hat{x}_{i,1}, \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,2}, \hat{x}_{i,3}, \hat{x}_{i,3}, t \)
 where \( \hat{x}_{i,j} \) is either \( x_{i,j} \) or \( \bar{x}_{i,j} \)
@@ -114,16 +114,16 @@ The top most edge is identified with the connecting edge corresponding to litera
 
 We do not provide the full proof from the paper~\cite{np_complete},
 still we outline the main idea.
-First observe, that for any NAC-coloring and literal \( x_i \),
+Notice that for any NAC-coloring and literal \( x_i \),
 all the edges labeled by \( x_i \) are colored the same.
 
-First, let us suppose that we have a NAC-coloring \( \delta \) of \( G_\phi \).
+Let us suppose that we have a NAC-coloring \( \delta \) of \( G_\phi \).
 The goal is to create a truth assignment~\( \tau \).
 W.l.o.g.\ let the connecting edge corresponding to \( \true \) is colored \( \blue \).
 The elementary formulas colored by \( \blue \) are assigned \( \true \) in \( \tau \),
 the other formulas are assigned \( \false \).
 We show that \( \phi \) is satisfiable with assignment \( \tau \).
-Because of cycles \( A_i \) and \( B_i \) literals \( x_i \) and \( \bar{x}_i \)
+Because of cycles \( A_i \) and \( B_i \), literals \( x_i \) and \( \bar{x}_i \)
 must have different color. In cycles \( C_i \) corresponding to clauses
 at least one of \( \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,3} \) must be colored \( \blue \),
 otherwise an almost cycle is formed as the last edge labeled by \( \true \) is colored \( \blue \).
@@ -131,7 +131,7 @@ Therefore, each in each clause at least one literal is assigned \( \true \)
 and therefore all clauses and \( \phi \) itself are satisfied.
 
 Now, let us assume that we are given satisfiable \( \phi \)
-with truth assignment \( \tau \).
+with truth assignment~\( \tau \).
 We want to construct a NAC-coloring \( \delta \) of \( G_\phi \).
 We color edges labeled by \( x_i \) with \( \blue \) if \( \tau(x_i) = \true \)
 and \( \red \) otherwise.
@@ -148,20 +148,24 @@ from \( x_i \) section to \( x_i \) the other \( x_i \) section.
 As there are at least two connecting elements, at least two edges of each color are in the cycle.
 Therefore, the cycle is not an almost cycle.
 
-Notice high degree of vertices of the connecting edges.
-For \( i \)th literal edges base degree is thirteen: one from the connecting edge itself,
+Notice the high degrees of vertices of the connecting edges.
+For \( i \)-th literal, the degrees are at least thirteen:
+one from the connecting edge itself,
 eight from \( A_i \) cycle and four from the \( B_i \) cycle.
 Now for every occurrence of \( x_i \) in a clause degree is increased by four.
-Similar holds for the \( \true \) and \( \false \) connecting edges.
+%
+Degrees of vertices of the \( \true \) and \( \false \) connecting edges
+have even higher degrees.
+%
 The degrees of vertices in the cycles are bounded by six
 and the degrees of vertices inside connecting elements are bounded by seven.
 
 
 \section{Graphs with maximum degree five}
 
-In the previous proof there are not guaranties about
-degree of vertices in the graph. The vertices incident to the connecting edges
-have high degree, propositional to the number of clauses.
+In the previous proof there are no guaranties about
+the degree of vertices in the graph. The vertices incident to the connecting edges
+have high degrees, proportional to the number of clauses.
 We propose different gadgets where we bound the maximum degree.
 We already presented this proof in our previous paper~\cite{my_paper}.
 

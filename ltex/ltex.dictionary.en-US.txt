@@ -47,3 +47,4 @@ surjectivity
 Gymnázium
 NACproduct
 irreflexivity
+Erdős-Rényi

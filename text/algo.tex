@@ -1,4 +1,4 @@
-\chapter{Algorithm for NAC-coloring search}%
+\chapter{Algorithms for NAC-coloring search}%
 \label{chapter:alg}
 
 \begin{chapterabstract}
@@ -44,11 +44,12 @@ an almost cycle is formed from a \( \red \) \( u \)-\( v \)-path in \( G[E_\red]
 and the \( \blue \) edge \( \{u, v\} \).
 
 The algorithm we call \Naive{} runs in \( O(2^{|E(G)|}) \) time.
-It can be sped up dramatically by considering sets of edges instead of individual edges.
-For some sets of edges, we can easily see that all the edges in the set need to share
+It can be sped up dramatically by considering sets of edges
+where it can be easily seen that all the edges in the set need to share
 the same color in every NAC-coloring.
+%
 Now we can color the whole sets at once
-and therefore reduce the time complexity to \( O(2^{c}) \)
+and reduce the search space and time complexity to \( O(2^{c}) \)
 where \( c \) is the number of described sets.
 One example of such a set are \trcon{} components
 as defined in~\Cref{def:triangle_connected_component}.
@@ -106,8 +107,9 @@ With that, we also define terms used with monochromatic classes:
 %
 \begin{observation}%
 	\label[observation]{observ:monochromatic_classes_graph}
-	Monochromatic classes behave like a graph,
-	where monochromatic classes are vertices, and there is an edge incident to
+	%
+	A graph can be formed from monochromatic classes:
+	vertices are the monochromatic classes and there is an edge incident to
 	two monochromatic classes if they are neighboring.
 \end{observation}
 %
@@ -194,12 +196,11 @@ Hence, the resulting partition indeed forms monochromatic classes
 of a NAC-valid relation by \Cref{lemma:two_edges_and_component}.
 The construction can be done in polynomial time
 and implemented efficiently using a Union-find data structure
-as presented in the pseudocode of \Cref{alg:create_monochromatic classes}.
-\todo[inline]{Consider moving \Cref{alg:create_monochromatic classes} to attachments}
+as presented in the pseudocode of \Cref{alg:create_monochromatic_classes}.
 
 \begin{algorithm}
 	\caption[Create Monochromatic classes]{Create Monochromatic classes~\cite{my_paper}}%
-	\label{alg:create_monochromatic classes}
+	\label{alg:create_monochromatic_classes}
 	\begin{algorithmic}[1]
 		\Require{} $G$
 
@@ -282,7 +283,7 @@ In our implementation, we take $k=4$ and $l=2$ cycles for every monochromatic cl
 \section{Combining NAC-colorings of subgraphs}%
 \label{sec:combining}
 
-In our algorithm called \Subgraphs{} a graph is decomposed into subgraphs so that
+In our algorithm called \Subgraphs{}, a graph is decomposed into subgraphs so that
 the NAC-colorings of the graph can be obtained from the NAC-colorings of the subgraphs.
 We introduce notation for this process of combining NAC-colorings of suitable subgraphs.
 
@@ -307,10 +308,10 @@ We introduce notation for this process of combining NAC-colorings of suitable su
 Since the restriction of a NAC-coloring of a graph
 to its subgraph is either a NAC-coloring or monochromatic,
 we have $\nac{G_{1} \cup G_{2}} \subseteq \CP(G_{1}, G_{2})$.
-If $G_1, \dots, G_k$ are the connected components of $G$,
-then $\nac{G} = \CP(G_1,\ldots, G_k)$.
+If~$G_1, \dots, G_k$ are the connected components of $G$,
+then it holds that $\nac{G} = \CP(G_1,\ldots, G_k)$.
 Since every cycle is contained in a single
-block\footnote{A \emph{block} is a bridge or a maximal 2-connected subgraph.}
+block\footnote{A \emph{block} is a single edge or a maximal 2-connected subgraph.}
 of a graph, we have that $\nac{G} = \CP(G_1,\ldots, G_k)$
 for $G_1,\ldots, G_k$ being the blocks of $G$.
 
@@ -488,12 +489,10 @@ While the queue is non-empty, we pop the first monochromatic class,
 add it the result list and mark it as used.
 Then we traverse all the cycles (that we obtained before)
 corresponding to the component
-and add monochromatic components from the cycles to the queue.
+and add monochromatic classes from the cycles to the queue.
 The stage ends when the queue is empty or when \( k \) monochromatic classes
 were marked as used. The whole process is repeated until
 all monochromatic classes are marked as used.
-
-\todo[inline]{Consider pseudocode for \CyclesMatchChunks{}}
 
 \subsubsection*{\KernighanLin{}, \Cuts{}}
 
@@ -515,7 +514,7 @@ With that, we lose the guarantee that the parts in recursive step
 are similar in size. Therefore, the recursive tree may be unbalanced.
 
 Other strategies based on
-sorting monochromatic components by their degree
+sorting monochromatic classes by their degree
 or breadth-first-search were also tried,
 but with no meaningful results.
 
@@ -563,7 +562,7 @@ This continues until we have the original graph and all its NAC-colorings.
 \subsubsection*{\SortedBits{}, \MinMax{}}
 
 For the following strategies,
-we consider the number of monochromatic components
+we consider the number of monochromatic classes
 that induces a given subgraph as its size.
 %
 One heuristic \SortedBits{} is that runtime can be reduced
@@ -606,7 +605,7 @@ we can use lazy iterators in our implementation that
 find a NAC-coloring of a subgraph and wait till another coloring is requested.
 If all the NAC-colorings are desired or if we expect the graph to have no NAC-coloring,
 all NAC-colorings of subgraphs need to be traversed.
-In such cases, we can list all coloring of subgraphs first
+In such cases, we can list all NAC-colorings of subgraphs first
 and employ heuristics that take advantage of this additional knowledge.
 
 The first proposed heuristic is called \SortedSize{}
@@ -637,7 +636,7 @@ the filtering of the NAC-product.
 The strategies for subgraph creation are generic --- they accept a graph and
 the list of target subgraphs sizes bounded by \( k \) as input and output final subgraphs.
 We exploit this property here.
-We use these strategies to divide the graph divided in half by giving it appropriate
+We use these strategies to divide the graph in half by giving it appropriate
 sizes (the sum of the first half of subgraph sizes and the sum of the rest).
 Then we split the subgraphs further until we reach desired graph sizes.
 We order the created subgraphs in the tree traversal order.
@@ -690,27 +689,33 @@ all the subgraph creation strategies and therefore can be easily added.
 
 In this section, we present and recall some polynomial checks
 that can detect if a graph has a NAC-coloring and often also provide a certificate.
+Unless otherwise stated, a certificate can be obtained for all the following approaches.
 
 We start by recalling some statements from \Cref{chapter:preliminaries}.
 %
-First, if a graph \( G \) with no isolated vertices is not connected,
+First, if a graph~\( G \) with no isolated vertices is not connected,
 a NAC-coloring can be found by coloring different connected components differently.
 %
-If a graph \( G \) has an articulation vertex or a bridge edge,
+If a graph~\( G \) has an articulation vertex or
+a single edge as a block (often called a bridge),
 a NAC-coloring can be found in \( O(|V(G)|+|E(G)|) \) time.
 Connectivity can be also checked using the same algorithms.
 
 All algorithms and approaches described in \Cref{chapter:stable_cuts}
 are also relevant here as a NAC-coloring can be constructed from a stable cut.
-An important algorithm goes from \Cref{cor:vertex_no_triangle_stable_cut}.
+An important algorithm can be easily obtained from \Cref{cor:vertex_no_triangle_stable_cut}.
+It can be run alongside the search for monochromatic classes (\Cref{alg:create_monochromatic_classes}).
+%
 If a graph is flexible (which always holds for \( |E(G)| \le 2|V(G)|-4 \)),
 a stable cut can be found in polynomial time using \Cref{alg:stable_cut_flexible}.
 This also holds for minimally rigid graphs that are not 2-trees as shown in \Cref{lemma:stable_cut_or_2_tree}.
+Currently, a certificate is not obtainable for such graphs
+even though the algorithm can be described and implemented, see \Cref{sec:stable_cut_approaches}.
 %
 As shown in~\cite{legersky_original}, there are no flexible realizations
 of graphs with \( |E(G)| > \frac{n(n-1)}{2} - (n-2) \) where \( n = |V(G)| \).
 These graphs always form a \trcon{} component.
 %
 Another polynomial algorithm goes from \Cref{lemma:weird_four_cycle}
-(it is not implemented as part of the thesis).
+The algorithm is not implemented as part of the thesis.
 

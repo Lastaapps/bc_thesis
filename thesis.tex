@@ -365,7 +365,7 @@
 	academic final thesis.
 	%
 	I declare that I have used AI tools during the preparation and writing of my thesis,
-	mostly as a line completion tool for both text and code.
+	mostly as a line completion tool for both text and code and translation.
 	I have verified the generated content.
 	I confirm that I am aware that I am fully responsible for the content of the thesis.
 
@@ -472,14 +472,13 @@
 
 % \include{./text/examples}
 
-\appendix\appendixinit{} % do not remove these two commands
-
+% \appendix\appendixinit{} % do not remove these two commands
 % \include{text/appendix}
 
 \backmatter{} % do not remove this command
 
 % print out the BibLaTeX-generated bibliography list
-\printbibliography{}
+\printbibliography[heading=bibintoc]{}
 
 \include{text/medium} % attachments
 

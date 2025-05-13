@@ -31,7 +31,7 @@
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QWe call the following heuristic , its pseudocode is in \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q in \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QWe can also see how the cycles optimization reduces the number of more expensive calls, since these are called only when the small cycles check passes.\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qlet the connecting edge corresponding to \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is colored \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
-{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QFirst we introduce state space reduction when there is an edge in a bag, then we extend the result to multiple edges sharing the same monochromatic component, and lastly we improve the number of operations needed in the .\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QFirst we introduce state space reduction when there is an edge in a bag, then we extend the result to multiple edges sharing the same monochromatic class, and lastly we improve the number of operations needed in the .\\E$"}
 {"rule":"WHERE_MD_VB","sentence":"^\\QLastly, we describe how can be optimized.\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QA connectivity map \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is a factorization of .\\E$"}
 {"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QThe only step where edges were added to the graph are either or .\\E$"}

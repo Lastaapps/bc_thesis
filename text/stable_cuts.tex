@@ -21,32 +21,37 @@ stable cut in~\Cref{def:stable_cut}.
 
 Notice how stable cuts are related to NAC-colorings.
 %
-\begin{lemma}[\cite{legersky_original}]
+\begin{lemma}[\cite{legersky_original}]%
 	\label[lemma]{lemma:stable_cut_implies_nac_coloring}
+	%
 	Let \( S \) be a stable cut in a connected graph \( G \).
 	Then \( G \) has a NAC-coloring.
 \end{lemma}
 %
 \begin{proof}
 	For a vertex cut \( S \subseteq V(G) \), let us have \( G^\prime = G \setminus S \).
-	Nonempty sets \( A, B \subsetneq V(G) \) are called \emph{partitions} of the cut \( S \)
-	if \( A \cup B = V(G), A \cap B = S \) and for each \( v \in A \setminus S, u \in B \setminus S \)
+	Let us have nonempty sets \( A, B \subsetneq V(G) \) such that
+	\( A \cup B = V(G), A \cap B = S \) and for each \( v \in A \setminus S, u \in B \setminus S \)
 	there exists no \( u \)--\( v \)--path in \( G^\prime \).
-	%
-	As \( S \) is a cut in \( G \), let us have some partitions \( A, B \),
+
+	As \( S \) is a cut in \( G \), let us have \( A, B \) as described above.
 	We know that \( |S| < |A|, |S| < |B| \)
-	as disconnected partitions are nonempty and \( G \) is connected.
+	as \( A\setminus S \ne \emptyset{} \) and \( G \) is connected.
+	%
 	There is at least one edge incident to vertices in both \( A \) and \( B \).
 	We color \( E(G[A]) \) \( \red \) and \( E(G[B]) \) \( \blue \).
-	Both colors are used, so the coloring is surjective.
+	%
+	Both colors are used as \( G[A] \) and \( G[B] \) are connected,
+	and therefore they have at least one edge,
+	so the coloring is surjective.
 	We also need to show that no almost cycle was created.
 	As~\Cref{lemma:is_nac_coloring}
 	states, there is no almost cycle in a graph if and only
 	if components \( G_\red^\delta, G_\blue^\delta \)
-	are induced subgraphs of \( G \).
+	are induced subgraphs of~\( G \).
 	That is the case as there is no edge with both the endpoints in \( S \)
 	as \( S \) is a stable set.
-	So there are no almost cycles and a NAC-coloring is created.
+	Therefore, there are no almost cycles and a NAC-coloring is created.
 \end{proof}
 %
 The above lemma can be also proven from the fact that every cycle that
@@ -84,23 +89,23 @@ if \( V(G_1) \cap V(G_2) = \{u, v, w\}, E(G_1) \cap E(G_2) = \{\{u, v\}, \{v, w\
 and \( G = (V(G_1) \cup V(G_2), E(G_1) \cup E(G_2)) \).
 
 It is known for some classes that a stable cut must exist.
-Flexibility of such graphs can be seen from~\Cref{lemma:laman_characterization}.
+Flexibility of such graphs can be seen from~\Cref{theorem:laman_characterization}.
 %
 \begin{theorem}[\cite{stable_cuts_2v_4}]
 	Let \( G \) be a graph with \( |E(G)| \le 2|V(G)|-4 \).
 	Then \( G \) contains a stable cut.
 \end{theorem}
 %
-This result can be extended to graphs \( |E(G)| \le 2|V(G)|-3 \) with exception
-for graphs from graph class \( \GSC \):
+This result can be extended to graphs with \( |E(G)| \le 2|V(G)|-3 \) with exception
+for graphs from graph class \( \GSC \) defined as follows:
 %
 \begin{itemize}
 	\item Triangle and prism are in \( \GSC \).
 	\item If \( H, K \in \GSC \), and \( G \) is a graph
-	      formed from \( H, K \) by an edge identification,
+	      formed from \( H \) and \( K \) by an edge identification,
 	      then also \( G \in \GSC \).
 	\item If \( H, K \in \GSC \), and \( G \) is a graph
-	      formed from \( H, K \) by a triangle identification,
+	      formed from \( H \) and \( K \) by a triangle identification,
 	      then also \( G \in \GSC \).
 \end{itemize}
 %
@@ -137,7 +142,8 @@ Both results are similar to what we show for NAC-colorings in \Cref{chapter:np}.
 
 \section{Algorithms}
 
-\subsection{Approaches}
+\subsection{Approaches}%
+\label{sec:stable_cut_approaches}
 
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
 an algorithm to find a stable cut (if present)
@@ -153,11 +159,11 @@ As shown in~\cite[Algorithm 1]{stable_cuts_legersky}, a stable cut can be found
 in a polynomial time for any flexible graph.
 As mentioned before, that also includes graphs
 where \( |E(G)| \le 2|V(G)| - 4 \) (not for \( |E(G)| \le 2|V(G)| - 3 \)).
-A rigid component of a graph is maximal induced subgraph that is rigid.
+A \emph{rigid component} of a graph is maximal induced subgraph that is rigid.
 The main idea of the algorithm works as follows:
 %
 \begin{itemize}
-	\item Rigid components of the graphs are found in a polynomial time.
+	\item Rigid components of the graphs are found in a polynomial time~\cite{rigid_components_pebble_game}.
 	\item Vertices \( u, v \) from different rigid components are chosen.
 	\item If neighborhood of \( u \) is a stable cut, return it.
 	\item Otherwise, contract one edge of a triangle with \( u \) and start again while preserving \( u \).
@@ -177,8 +183,8 @@ in the original paper~\cite{stable_cuts_legersky}.
 		\Else{}
 		\State{} $x_1,x_2 :={}$ neighbors of $u$ such that $(u,x_1,x_2)$  is a $3$-cycle
 		\For{$i\in\{1,2\}$}
-		\State{} $G'_i :={}$ the graph obtained from $G$ by contracting the edge $ux_i$
-		\State{} $u'_i :={}$ the vertex of $G'_i$ corresponding to the contracted edge $ux_i$
+		\State{} $G'_i :={}$ the graph obtained from $G$ by contracting the edge $\{u, x_i\}$
+		\State{} $u'_i :={}$ the vertex of $G'_i$ corresponding to the contracted edge $\{u, x_i\}$
 		\EndFor{}
 		\If{$u'_1$ and $v$ are in different rigid components of $G'_1$}
 		\State\Return{} a stable cut of $G'_1$ separating $u'_1$ and $v$
@@ -211,7 +217,7 @@ are in different rigid components has to be added.
 
 In the implementation, it is also beneficial to offer an option to choose
 vertices \( u \) and/or \(  v \) for a user automatically.
-First in the user specifies only vertex \( u \), the goal is to find a stable cut
+First if the user specifies only vertex \( u \), the goal is to find a stable cut
 that avoids it. Our algorithm finds \( v \)
 such that it is not in the same rigid component with \( u \).
 This is always possible unless \( u \) is the only articulation vertex
@@ -228,5 +234,5 @@ is implemented and contributed as part of this thesis
 to PyRigi~\cite{pyrigi} in pull request~\cite{pyrigi_pr_stable_cuts}
 as method \texttt{stable\_separating\_set}.
 Other helper and cuts related function
-were also implemented in the module \texttt{separating\_set.py}.
+are implemented in module \texttt{separating\_set.py}.
 
