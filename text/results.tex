@@ -26,24 +26,25 @@ for some graphs.
 We proved that it is NP-complete
 to decide if a graph has a NAC-coloring even on graphs with maximum degree five
 by a reduction from 3-SAT\@.
-We designed gadgets from which a graph is constructed for a 3-SAT formula.
-We show equivalence between the NAC-coloring existence and 3-SAT satisfiability.
-The maximum degree of the constructed graph is bounded by five.
+This improves the previous known fact that the problem is NP-complete~\cite{np_complete}.
+% We designed gadgets from which a graph is constructed for a 3-SAT formula.
+% We show equivalence between the NAC-coloring existence and 3-SAT satisfiability.
+% The maximum degree of the constructed graph is bounded by five.
 
 We also presented a significantly faster algorithms
 for NAC-coloring search.
 %
 First we proposed optimizations to the algorithm
-that checks if a coloring is a NAC-coloring on a graph.
-Perspective cycles in a graph that can be an almost cycle
-are found and checked first.
+that checks if a coloring is a NAC-coloring on a graph
+by finding and checking perspective cycles in the graph
+that can be an almost cycle.
 %
-We introduced the concept of monochromatic classes reducing the search space
+The concept of monochromatic classes reducing the search space
 and speeding up the computation significantly for many graph classes
-even for the naive approach.
+even for the naive approach was also introduced.
 %
-We proposed an algorithm using graph decomposition and gradual coloring buildup.
-We also proposed multiple heuristics and optimizations of this algorithm.
+We proposed and implemented an algorithm using graph decomposition and gradual coloring buildup.
+We also implemented multiple heuristics and optimizations of this algorithm.
 %
 We also implemented multiple checks that can find a NAC-coloring in polynomial time
 if only a single NAC-coloring is requested.
@@ -54,8 +55,9 @@ and then the heuristics were compared on multiple significant graph classes
 with each other.
 %
 These results were evaluated and well performing heuristics were chosen.
-Our algorithm outperforms the previous implementation by a large margin
-and also works fast for non-simple instances.
+Our algorithm outperforms the previous implementation by a large margin.
+%
+With that, all the goals of the thesis are fulfilled.
 
 We extended the scope of the thesis beyond the assignment by
 describing an FPT algorithm for NAC-coloring counting
@@ -68,11 +70,9 @@ with stable cuts.
 We also studied and implemented an algorithm that can find
 a stable cut for any flexible graph in polynomial time.
 
-We extended on our work done in~\cite{my_paper}.
+We extended our work done in~\cite{my_paper}.
 Code implemented in this thesis~\cite{my_code} is already partially
 refactored and merged into PyRigi, a library for Rigidity Theory.
-%
-With that, all the goals of the thesis are fulfilled.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Future work

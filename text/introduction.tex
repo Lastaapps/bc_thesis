@@ -24,9 +24,9 @@ or almost all realizations are \( d \)-rigid~\cite{generically_rigid_graphs}.
 A graph is \emph{(generically) \( d \)-rigid} if most of the realizations are \( d \)-rigid
 and \emph{(generically) \( d \)-flexible} if most of the realizations are \( d \)-flexible.
 %
-As for a graph with most of the realizations being one type (rigid or flexible)
-there may be some realizations of the other type,
-we talk about paradoxical flexibility.
+As for a rigid graph,
+there may be some flexible realizations.
+We talk about paradoxical flexibility.
 
 An illustrative application of the Rigidity Theory is a squadron of drones
 where the drones can measure distance to their close neighbors.
@@ -91,28 +91,43 @@ the triangles are identical except for translation.
 It can be easily seen that there are
 no other NAC-colorings except for the one, where the colors are swapped.
 
-Among the goals of this thesis is to provide an algorithm
+Among the goals of this thesis is to
+%
+study basics of Rigidity theory with the focus on flexible realizations
+and their combinatorial characterization using NAC-colorings.
+%
+In \Cref{chapter:np},
+we show that the problem of deciding if a graph has a NAC-coloring
+is NP-complete even on graphs with maximum degree five.
+%
+We provide a parametrized approach in \Cref{chapter:fpt}
+where complexity can be reduced for graphs
+with low internal structural complexity (treewidth).
+%
+The relation of NAC-colorings with stable cuts is presented in \Cref{chapter:stable_cuts},
+and an algorithm for stable cut search on flexible~\cite{stable_cuts_legersky} graphs is described and implemented.
+%
+In \Cref{chapter:algo},
+we provide an algorithm
 that can find all the NAC-colorings of a graph.
 Multiple heuristics are used to significantly
 reduce the runtime of the algorithm.
-We also provide a parametrized approach where complexity can be reduced for graphs
-with low internal structural complexity (treewidth).
-We also show that the problem of deciding if a graph has a NAC-coloring
-is NP-complete even on graphs with maximum degree five.
 %
-The relation of NAC-colorings with stable cuts~\cite{stable_cuts_2v_4} is presented,
-and an algorithm for stable cut search is described and implemented.
-%
+We describe the implementation and
+compare and evaluate the performance of the algorithm
+compared to previous implementations,
+and also we compare individual heuristics among each other
+in \Cref{chapter:benchmarks}.
+Multiple relevant graph classes are considered.
+
 The code implemented in this thesis available at~\cite{my_code}
-enriches PyRigi~\cite{pyrigi}
+shall enrich PyRigi~\cite{pyrigi}
 library used for research in Rigidity Theory.
 Currently, there are no such algorithms implemented in PyRigi itself,
 the only available implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
-We compare our implementation performance with FlexRiLoG and also compare
-individual heuristics among each other.
-Multiple relevant graph classes are considered.
 
 In this thesis, the results shown in our previous paper~\cite{my_paper}
+(done as part of VýLeT --- Research Summer program)
 are extended upon by introducing a fixed-parameter tractable algorithm,
 discussion of relation to stable cuts,
 and present other heuristic that do not perform as well.

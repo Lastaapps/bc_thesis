@@ -48,3 +48,4 @@ Gymnázium
 NACproduct
 irreflexivity
 Erdős-Rényi
+VýLeT

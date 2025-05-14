@@ -40,13 +40,14 @@
     %
     Pohyblivá realizace souvislého grafu v rovině existuje právě tehdy, když
     graf má NAC-obarvení, což je hranové obarvení dvěma barvami takové,
-    že pro každý cyklus jsou všechny hrany obarveny stejnou barvou nebo
+    že pro každý cyklus jsou všechny hrany obarveny stejnou barvou, nebo
     jsou každou barvou obarveny alespoň dvě hrany.
     %
     Je NP-úplné rozhodnout, zda graf má NAC-obarvení, v práci ukazujeme,
     že problém je NP-úplný i pro grafy s maximálním stupněm pět.
     %
-    Představujeme značně rychlejší algoritmus na hledání NAC-obarvení společně s různými heuristikami.
+    Představujeme značně rychlejší algoritmus i s jeho implementací
+    na hledání NAC-obarvení společně s různými heuristikami.
     Srovnáváme ho s předchozími algoritmy a porovnáváme i heuristiky mezi sebou.
     %
     Následně představujeme FPT algoritmus na počítání NAC-obarvení
@@ -71,14 +72,14 @@
     we show that the problem is
     also NP-complete for graphs with maximum degree five.
     %
-    We present a significantly faster algorithm implementation for NAC-coloring search,
+    We present a significantly faster algorithm with an implementation for NAC-coloring search,
     and we discuss related heuristics.
     The performance is compared with previous algorithms and among the heuristics.
     %
     We also present fixed-parameter tractable (FPT) algorithm for NAC-coloring counting
     parametrized by treewidth.
     %
-    We discuss relation to stable cuts and algorithm for finding
+    We discuss relation to stable cuts and an algorithm for finding
     a stable cut is implemented as part of the thesis.
 }
 
@@ -437,17 +438,19 @@
 \chapter*{\thectufitabbreviationlabel}
 
 \begin{tabular}{rl}
-	API                & Application programming interface    \\
-	BFS                & Breadth-first search                 \\
-	CNF                & Conjunctive normal form              \\
-	CSV                & Comma-separated values               \\
-	FPT                & Fixed-parameter tractable            \\
-	ID                 & Identifier                           \\
-	\( \text{MSO}_2 \) & Monadic second-order logic on graphs \\
-	PDF                & Portable document format             \\
-	PGF                & Portable graphics format             \\
-	NAC                & No almost cycles                     \\
-	SAT                & Boolean satisfiability problem       \\
+	API                & Application programming interface             \\
+	BFS                & Breadth-first search                          \\
+	CNF                & Conjunctive normal form                       \\
+	CSV                & Comma-separated values                        \\
+	FIT                & Faculty of Information Technology             \\
+	FPT                & Fixed-parameter tractable                     \\
+	ID                 & Identifier                                    \\
+	\( \text{MSO}_2 \) & Monadic second-order logic on graphs          \\
+	PDF                & Portable document format                      \\
+	PGF                & Portable graphics format                      \\
+	NAC                & No almost cycles                              \\
+	SAT                & Boolean satisfiability problem                \\
+	VýLeT              & Výzkumné léto na FIT (Research Summer at FIT) \\
 \end{tabular}
 %%%%%%%%%%%%%%%%%%%
 % ABBREVIATIONS END

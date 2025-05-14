@@ -69,15 +69,16 @@ A flexible realization of a connected graph in the plane exists if and only if
 the graph has a NAC-coloring, which is surjective edge coloring by
 two colors such that for each cycle either all the edges have the same color or
 there are at least two edges of each color.
-It is NP-complete to determine is a graph has a NAC-coloring,
+While it is known that it is \mbox{NP-complete}
+to decide if a graph has a NAC-coloring,
 we show that the problem is
 also NP-complete for graphs with maximum degree five.
-We present an algorithm for NAC-coloring search,
+We present a significantly faster algorithm with an implementation for NAC-coloring search,
 and we discuss related heuristics.
 The performance is compared with previous algorithms and among the heuristics.
 We also present fixed-parameter tractable (FPT) algorithm for NAC-coloring counting
 parametrized by treewidth.
-We discuss relation to stable cuts and algorithm for finding
+We discuss relation to stable cuts and an algorithm for finding
 a stable cut is implemented as part of the thesis.
 
 ### Keywords
