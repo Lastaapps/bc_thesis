@@ -50,7 +50,7 @@ Failing
 - more examples (where?)
 - clear useless runs and classes from precomputed results
 - Fix line breaks & typography
-- check for "monochromatic components"
+- check for "monochromatic components" and \exits
 - Comment code
 - update precomputed benchmarks
 - README v kódu
