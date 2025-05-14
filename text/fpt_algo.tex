@@ -1081,7 +1081,9 @@ to almost NAC-coloring consistent with \( s \).
 First we define an operation that shows for two states \( s_1', s_2' \)
 which state is consistent with coloring merged from \( s_1' \) and \( s_2' \).
 %
-\begin{definition}
+\begin{definition}%
+	\label[definition]{def:fpt_merging_mapping}
+	%
 	A \emph{merging mapping} \( M: S_1' \times S_2' \to S \)
 	for two states \( s_1', s_2' \) maps to the state \( s \)
 	such that the almost NAC-colorings consistent with \( s_1' \) and \( s_2' \)
@@ -1165,7 +1167,9 @@ and let \( R_a \coloneqq R_{1,a} \cup R_{2,a} \).
 Now we define a notion of filtering out
 merges that do not produce almost NAC-colorings.
 %
-\begin{definition}
+\begin{definition}%
+	\label[definition]{def:fpt_bad_states}
+	%
 	A pair \( (s_1', s_2') \in S_1' \times S_2'\) is \emph{bad}
 	if almost NAC-colorings \( \delta_1', \delta_2' \) consistent with them are merged
 	into \rbcol{} \( \gamma \) consistent with \( s = M(s_1', s_2') \),
@@ -1360,10 +1364,10 @@ almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \).
 		\item[\ForgetVertexNode{}]
 		      Even if the operation seams complex, we just need to traverse the state space
 		      and create target state after \( v \) is removed.
-					This can be done in \( O(k) \) time
-					per state as only neighboring relations where \( v \) is present
-					need to be also updated.
-					The total complexity therefore is
+		      This can be done in \( O(k) \) time
+		      per state as only neighboring relations where \( v \) is present
+		      need to be also updated.
+		      The total complexity therefore is
 		      \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot O(k) \).
 		\item[\IntroduceEdgeNode{}]
 		      The state space is iterated again, and we run few simple checks and cache key constructions
@@ -1389,27 +1393,33 @@ almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \).
 
 As we also mentioned before, FPT algorithms parametrized by treewidth
 often use \IntroduceVertexNode{} in such a way
-that edges incident to the introduced edge and to
+that edges incident to the introduced vertex and to
 the vertices in the bag are also considered.
 For this section, we call such behaving node an \IntroduceVertexWithEdgesNode{}.
-Our original algorithm can be modified to use this node instead.
+%
+We base our approach on the lemmas from the previous section.
 We outline the proof of correctness of such operation and show
 that it is actually asymptotically slower than the originally proposed algorithm.
 
 We consider a nice tree decomposition \( T \) as defined originally
 with no \IntroduceEdgeNode{}s.
-There are no behaving changes for
-\LeafNode{}, \RootNode{}, \ForgetVertexNode{} nor \JoinNode{}
-todo[inline]{Uncomment footnote}{
-		% \footnote{
-		In the proof of lemma \Cref{lemma:fpt_join_node}
-		regarding \JoinNode{} we required that \( Y_t = \emptyset \).
-		This is not a requirement as if an edge in \( Y_t \) is assigned two colors
-		by \( \delta_1', \delta_2' \), the endpoints are in common parts for both colors
-		and a contradiction is still detected.
-	}.
+The lemmas for
+\LeafNode{}, \RootNode{} and \ForgetVertexNode{} hold with no changes.
+%
+In the proof of lemma \Cref{lemma:fpt_join_node}
+regarding \JoinNode{},
+we used the fact that \( Y_t = \emptyset \).
+This is not a necessary requirement.
+%
+Let us have almost NAC-colorings \( \delta_1' \) and \( \delta_2' \)
+consistent with states \( s_1' \in S_{t_1'} \) and \( s_2' \in S_{t_2'} \)
+such that \( f \in Y_t \) is colored w.l.o.g.\ \( \red \) in \( \delta_1' \)
+and \( \blue \) in \( \delta_2' \).
+But then \Cref{lemma:fpt_join_merging}
+still detects this pair as a bad state
+as \( f \) is a \( \red \) bridge in a (new) \( \blue \) connected component.
 
-Let us describe how \IntroduceVertexWithEdgesNode{} processes cache entries.
+Let us describe the idea how \IntroduceVertexWithEdgesNode{} works.
 Before, when a single edge was added,
 we checked if there is some constraint violation
 --- if an almost cycle was formed.
@@ -1417,56 +1427,95 @@ The same is also done for \IntroduceVertexWithEdgesNode{},
 but you can think of the process as
 multiple such constrains checks at the same time.
 
-As it is nontrivial and confusing to describe this operation
-by using predicate logic, we stick to natural language for simplicity.
-Suppose that \( t \in T \) is
-the only parent of \( t' \in T \).
+Let us have an \IntroduceVertexWithEdgesNode{} \( t \in T \) that
+is the only parent of \( t' \in T \).
 Let \( v \) be the only vertex in \( X_t \setminus X_{t'} \).
-Let \( F \) be the introduced edges,
+Let \( F \) be the newly considered edges,
 \( F = \{ \{ u, v \} \mid u \in X_t \} \cap E(G) \).
 %
 Let us have a set \( \Lambda \) of all almost NAC-colorings on \( F \)
-(trivially found for a star).
-We define mapping \( m: S' \times \Lambda \to S \)
-that represents how state changes for a coloring of edges in \( F \).
-Let us have some \( s' \in S' \) and \( \lambda \in \Lambda \)
-and \( m(s', \lambda) = s \in S \).
+(trivially found for a star), \( |\Lambda| = 2^{|F|} \).
+Let us have a state space \( S_\Lambda \) on \( G_F \coloneqq G_t[F] \)
+and bag \( X_F \coloneqq V(G_F) \setminus \{ v \} \).
+%
+\begin{observation}
+	A state in \( S_\Lambda \) is consistent with at most one
+	almost NAC-coloring in \( \Lambda \).
+	%
+	For each \( a \in \{\red, \blue\} \) and
+	each \( s_\lambda = (P_\red, R_\red, P_\blue, R_\blue) \in S_\Lambda \)
+	and \( \lambda \in \Lambda \) consistent with \( s_\lambda \),
+	%
+	if \( \lambda \) is not monochromatic,
+	\( \exists p_a \in P_a : |p_a| > 1
+	\land \forall p_a' \in P_a \setminus \{p_a\} : |p_a'| = 1 \)
+	and for each \( x \in X_F \), either \( x \in p_\red \) or \( x \in p_\blue \) holds.
+	%
+	If \( \lambda \) is monochromatic, \( \exists p_a \in P_a : |p_a| = |F| \).
+\end{observation}
+%
+This can be seen from the fact that \( G_F \) is a star and \( X_F \) are its rays.
+If there are two components of the same color,
+they both must span \( v \)
+and therefore they are not maximal.
 
-Vertices \( u, v \in X_t \) share the same \( \blue \) component if either:
+Hence, from now on by \( S_\Lambda \) we only consider states corresponding to
+an almost NAC-coloring in \( \Lambda \), hence \( |S_\Lambda| = |\Lambda| \).
 %
-\begin{itemize}
-	\item They shared the same component in \( s' \).
-	\item There is a \( \blue \) path in \( F \) with coloring \( \lambda \).
-\end{itemize}
+Let us have
+% \footnote{
+\emph{
+	Technically, these lemmas should be adapted for the fact that state space \( S_\Lambda \)
+	does not come from a node in \( T \). This is just a technicality
+	as we have vertex bag \( C_F \), edge bag \( F \) and graph \( G_F \)
+	and only these are needed for mentioned definitions and proofs of corresponding lemmas.
+	Also, isolated vertices \( X_t \setminus X_F \) should to be added to \( G_F \).
+	We skip this as this is not the main important part of the algorithm.
+}
+\todo{Uncomment footnote}
+merging mapping (\Cref{def:fpt_merging_mapping})
+\( M : S_{t'} \times S_\Lambda \to S_t \).
+Also let us have bad states (\Cref{def:fpt_bad_states})
+\( \mathcal{B} \subseteq S_{t'} \times S_\Lambda \).
 %
-Note that \( \blue \) components created by following this procedure
-are same as in \( s' \) or merged \( \blue \) components of \( s' \)
-except for \( v \) as it is not yet in \( X_{t'} \).
-Such \( \blue \) components are neighboring if either:
-%
-\begin{itemize}
-	\item They or their predecessors in \( s' \)
-	      were neighbors in \( s' \).
-	\item There is a path in \( F \) with
-	      one \( \blue \) and one \( \red \) edge
-	      according to coloring \( \lambda \).
-	      The \( \red \) edge becomes a bridge.
-\end{itemize}
-%
-Now the same is done for \( \red \).
-We ensure that all the rules described in \IntroduceEdgeNode{}
-still hold for \( s \). If so, \( c[t, s] \pluseq c[t', s'] \).
-This all is done for each combination in \( S' \time \Lambda \).
+With that, we can use slightly adapted \Cref{lemma:fpt_join_node}
+from \JoinNode{}.
 
-For the original algorithm for each \( v \)
+% Vertices \( u, v \in X_t \) share the same \( \blue \) component if either:
+% %
+% \begin{itemize}
+% 	\item They shared the same component in \( s' \).
+% 	\item There is a \( \blue \) path in \( F \) with coloring \( \lambda \).
+% \end{itemize}
+% %
+% Note that \( \blue \) components created by following this procedure
+% are same as in \( s' \) or merged \( \blue \) components of \( s' \)
+% except for \( v \) as it is not yet in \( X_{t'} \).
+% Such \( \blue \) components are neighboring if either:
+% %
+% \begin{itemize}
+% 	\item They or their predecessors in \( s' \)
+% 	      were neighbors in \( s' \).
+% 	\item There is a path in \( F \) with
+% 	      one \( \blue \) and one \( \red \) edge
+% 	      according to coloring \( \lambda \).
+% 	      The \( \red \) edge becomes a bridge.
+% \end{itemize}
+% %
+% Now the same is done for \( \red \).
+% We ensure that all the rules described in \IntroduceEdgeNode{}
+% still hold for \( s \). If so, \( c[t, s] \pluseq c[t', s'] \).
+% This all is done for each combination in \( S' \time \Lambda \).
+
+In the original algorithm for each \( v \)
 \IntroduceEdgeNode{} is used \( |F| \) times
 and \( \IntroduceVertexNode{} \) once, therefore added complexity for \( v \)
-is \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot (|F| + 1) \).
+is \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot (|F| + 1) = {k}^{O(k)} \cdot 2^{O(k^2)} \cdot O(k) \).
 %
-For \IntroduceVertexWithEdgesNode{} we iterate
-through all the colorings in \( \Lambda \) for each state.
-The size of \( \Lambda \) is \( |\Lambda| = 2^{|F|} = 2^{O(k)} \),
-the required runtime added for \( v \) is
+For \IntroduceVertexWithEdgesNode{}
+we used the same technique as for \JoinNode{}.
+The complexity is lower as \( |S_\Lambda| = 2^{|F|} \) and \( |F| = O(k) \).
+The runtime complexity added for \( v \) is therefore
 \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot 2^{O(k)} = {k}^{O(k)} \cdot 2^{O(k^3)}\)
 which is asymptotically higher.
 
