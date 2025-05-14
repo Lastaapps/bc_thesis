@@ -5,7 +5,7 @@
 \begin{chapterabstract}
 
 	It can be easily shown that the NAC-coloring existence as an NP-complete
-	problem can be parametrized by treewidth by using \( \text{MSO}_2 \) logic.
+	problem can be parameterized by treewidth by using \( \text{MSO}_2 \) logic.
 	In this chapter, we present an algorithm that can obtain
 	the number of NAC-coloring of a graph in \({k}^{O(k)} 2^{O(k^2)} n^{O(1)}\) time,
 	where \(k\) stands for the treewidth of the graph.
@@ -31,15 +31,15 @@ To name a few such problems:
 First we provide a formal definition:
 %
 \begin{definition}[\cite{book_parametrized_algorithms}]
-	A parametrized problem is a language \( L \subseteq \Sigma^* \times \N \), where
+	A parameterized problem is a language \( L \subseteq \Sigma^* \times \N \), where
 	\( \Sigma \) is a fixed, finite alphabet. For an instance \( (x, k) \in \Sigma^* \times \N \), \( k \) is called the
 	parameter.
 	%
-	We define the size of an instance \( (x, k) \) of a parametrized problem as \( |x| + k \).
+	We define the size of an instance \( (x, k) \) of a parameterized problem as \( |x| + k \).
 \end{definition}
 %
 \begin{definition}[\cite{book_parametrized_algorithms}]
-	A parametrized problem \( L \subseteq \Sigma^* \times \N \) is called fixed-parameter
+	A parameterized problem \( L \subseteq \Sigma^* \times \N \) is called fixed-parameter
 	tractable (FPT) if there exists an algorithm \( \mathcal{A} \) (called a fixed-parameter
 	algorithm), a computable function \( f: \N \to \N \), and a constant
 	\( c \) such that, given \( (x, k) \in \Sigma^* \times \N \), the algorithm \( \mathcal{A} \)
@@ -53,7 +53,7 @@ have running time of \( f(k)\cdot n^c \)
 where \( k \) is a parameter dependent on the instance
 and \( c \) is a constant.
 
-In parametrized algorithms, \( k \) stands for different parameters
+In parameterized algorithms, \( k \) stands for different parameters
 representing some form on internal graph structure as noted before.
 %
 For many problems it is quite simple to find a fast solution on trees.
@@ -223,10 +223,10 @@ By \( G_t, t \in T \), we mean the graph \( G_t = (V_t, E_t) \).
 
 For edge \( \{u, v\} \in E(G) \), we can transform a nice tree decomposition \( T \)
 by adding \IntroduceEdgeNode{}s \( t \) above \IntroduceVertexNode{}s of \( u, v \)
-and bellow \ForgetVertexNode{}s of \( u, v \) in \( T \).
+and bellow \ForgetVertexNode{}s of \( u, v \in T \).
 %
 W.l.o.g., suppose that the \ForgetVertexNode{} \( t_v \) of \( v \) is
-an ancestor of the \ForgetVertexNode{} \( t_u \) of \( u \) in \( T \).
+an ancestor of the \ForgetVertexNode{} \( t_u \) of \( u \in T \).
 Let \( t_c \) be the only child of \( t_u \).
 %
 We add \IntroduceEdgeNode{} \( t_e \) for edge \( \{u, v\} \)
@@ -256,9 +256,9 @@ that are incident to the forgotten vertex.
 
 Monadic second-order logic~(\MSO{}) on graphs is a logical system based on
 well known predicate logic.
-In the world of parametrized algorithms,
+In the world of parameterized algorithms,
 it often comes handy --- if we are able to represent a problem using~\MSO{},
-then there exists an FPT algorithm parametrized by treewidth
+then there exists an FPT algorithm parameterized by treewidth
 that can solve the problem~\cite{tree_width_mso}.
 
 \subsection{Introduction to \( \text{MSO}_2 \)}
@@ -431,7 +431,7 @@ With the predicates ready, we can proceed approach to the theorem.
 %
 \begin{theorem}[\cite{my_paper}]
 	The problem of existence of a NAC-coloring is fixed-parameter
-	tractable when parametrized by treewidth.
+	tractable when parameterized by treewidth.
 \end{theorem}
 %
 \begin{proof}
@@ -446,7 +446,7 @@ With the predicates ready, we can proceed approach to the theorem.
 	\end{align*}
 	%
 	By \Cref{theorem:courcelles_theorem},
-	there exists an FPT algorithm parametrized by treewidth
+	there exists an FPT algorithm parameterized by treewidth
 	that can resolve \( \phi \) and therefore resolve the question whenever a graph has a NAC-coloring.
 \end{proof}
 %
@@ -554,14 +554,14 @@ Note that it holds that \( \emptyset \in \mathcal{F}(\emptyset) \).
 %
 \begin{definition}[State space]
 	Let \( t \in T \) be a node in the nice tree decomposition tree and
-	\Xt{} be its bag of vertices.
+	\( X_t \) be its bag of vertices.
 	%
 	A state is formed by a tuple \( s = (P_\red, R_\red, P_\blue, R_\blue) \)
-	where \( P_\red, P_\blue \in \mathcal{F}(X)\) are partitions of \Xt{}
+	where \( P_\red, P_\blue \in \mathcal{F}(X)\) are partitions of \( X_t \)
 	and \( R_\red\), resp. \(R_\blue \), is a symmetric irreflexive relation
 	on parts in \( P_\red\), resp. \(P_\blue \).
 	%
-	All such states on \Xt{} form the \emph{state space} \( S_t \).
+	All such states on \( X_t \) form the \emph{state space} \( S_t \).
 \end{definition}
 %
 For some \( t \in T \), a \rbcol{} \( \gamma \) of \( G_t \)
@@ -599,7 +599,7 @@ There recursive relations can be then used in an implementation.
 \begin{definition}[Cache function]
 	For a nice tree decomposition \( T \) on a graph \( G \),
 	a \emph{cache function} \( c: \mathcal{S} \to \N_0 \)
-	where \( \mathcal{S} = \{ (t,s): t \in T, s \in S_t \} \)
+	where \( \mathcal{S} = \{ (t,s): t \in T \in S_t \} \)
 	is a function that maps each state \( s \in S_t \) for each node \( t \in T \)
 	to the number of almost NAC-colorings of \( G_t \) consistent with \( s \).
 \end{definition}
@@ -769,18 +769,18 @@ where \( v \) is added and stays isolated.
 	\begin{align*}
 		c[t, s]            & = \sum_{s' \in S'} c[t', s'],                                                                                   \\
 		\text{where}                                                                                                                         \\
-		m(p)               & \coloneqq p \setminus \{v\},                                                                                    \\
-		M(P)               & \coloneqq \{m(p) \mid p \in P \} \setminus \{\emptyset\},                                                       \\
-		\mathcal{P'}_a     & \coloneqq \{ P_a' \in \mathcal{F}(X_{t'}) \mid M(P_a') = P_a \},                                                \\
+		d(p)               & \coloneqq p \setminus \{v\},                                                                                    \\
+		D(P)               & \coloneqq \{d(p) \mid p \in P \} \setminus \{\emptyset\},                                                       \\
+		\mathcal{P'}_a     & \coloneqq \{ P_a' \in \mathcal{F}(X_{t'}) \mid D(P_a') = P_a \},                                                \\
 		\mathcal{R'}(P_a') & \coloneqq \{ R_a' \subseteq P_a' \times P_a' \mid \forall (p_1, p_2) \in R_a' :                                 \\
-		                   & \qquad (m(p_1), m(p_2)) \in R_a \lor m(p_1) = \emptyset \lor m(p_2) = \emptyset \},                             \\
+		                   & \qquad (d(p_1), d(p_2)) \in R_a \lor d(p_1) = \emptyset \lor d(p_2) = \emptyset \},                             \\
 		S'                 & \coloneqq \{(P_\red', R_\red', P_\blue', R_\blue') \mid P_a' \in \mathcal{P'}_a, R' \in \mathcal{R'}(P_a')  \}. \\
 	\end{align*}
 \end{lemma}
 %
 Recall that \( R_\red, R_\blue \) are relations --- sets of pairs.
-\( m(p) \) denotes deletion of  the vertex \( v \) from a part \( p \).
-\( M(P) \) denotes deleting the vertex \( v \) from all the parts in partition \( P \)
+\( d(p) \) denotes deletion of  the vertex \( v \) from a part \( p \).
+\( D(P) \) denotes deleting the vertex \( v \) from all the parts in partition \( P \)
 --- if \( \{v\} \in P \), \( \emptyset \) is also cleared.
 \( \mathcal{P'}_a \) denotes all the partitions such that removing \( v \) from them gives \( P_a \).
 \( \mathcal{R'}(P_a') \) denotes all the relations \( R_a' \)
@@ -994,7 +994,7 @@ Now we state conditions for \( \red \) half of a state \( s \):
 	there are parts \( \{u\}, \{v\} \) (singletons) in \( P_\blue \), resp. \( P_\red \),
 	as these vertices cannot be yet connected by \( \blue \), resp.\ \( \red \), edges.
 	Edge \( e \) is a bridge, so there must be a corresponding neighboring
-	relation \( (\{u\}, \{v\}) \) in \( R_\blue \), resp. \( R_\red \).
+	relation \( (\{u\}, \{v\}) \in R_\blue \), resp. \( R_\red \).
 	Other states are not consistent with any almost NAC-colorings.
 	This is exactly what we describe in the lemma.
 
@@ -1124,7 +1124,7 @@ For each \( i \in \{1, 2\} \) and for each \( a \in \{\red, \blue\} \) let
 and let \( R_a \coloneqq R_{1,a} \cup R_{2,a} \).
 
 \begin{lemma}%
-	\label[lemma]{lemma:fpt_join_merging}
+	\label[lemma]{lemma:fpt_merging_mapping}
 	%
 	For a merging mapping \( M \), it holds that:
 	\[ M(s_1', s_2') \coloneqq (P_\red, R_\red, P_\blue, R_\blue). \]
@@ -1225,7 +1225,7 @@ merges that do not produce almost NAC-colorings.
 	%
 	Such an almost cycle therefore occurs
 	if and only if \( p_1' \) and \( p_2' \) are neighboring in \( R_{1,\blue}' \),
-	and they get merged to \( p \) in \( P_\blue \).
+	and they get merged to \( p \in P_\blue \).
 	These are the only possibilities how an almost cycle can be created.
 	%
 	If also done for almost cycles with a \( \blue \) edge,
@@ -1269,7 +1269,7 @@ almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \).
 \begin{proof}
 	We know that \( \mathcal{S}(s) \) represents all states whole
 	almost NAC-colorings are merged to \rbcol{}s consistent with \( s \)
-	based on correctness of \( M \) in \Cref{lemma:fpt_join_merging}.
+	based on correctness of \( M \) in \Cref{lemma:fpt_merging_mapping}.
 	We also know that the \rbcol{}s are almost NAC-colorings consistent with \( s \)
 	as we filter out bad states \( \mathcal{B} \) as shown in \Cref{lemma:fpt_join_bad_states}.
 	%
@@ -1391,7 +1391,7 @@ almost NAC-colorings on \( G_{t_1'} \) and \( G_{t_2'} \).
 
 \subsection{\IntroduceVertexWithEdgesNode{}}
 
-As we also mentioned before, FPT algorithms parametrized by treewidth
+As we also mentioned before, FPT algorithms parameterized by treewidth
 often use \IntroduceVertexNode{} in such a way
 that edges incident to the introduced vertex and to
 the vertices in the bag are also considered.
@@ -1415,7 +1415,7 @@ Let us have almost NAC-colorings \( \delta_1' \) and \( \delta_2' \)
 consistent with states \( s_1' \in S_{t_1'} \) and \( s_2' \in S_{t_2'} \)
 such that \( f \in Y_t \) is colored w.l.o.g.\ \( \red \) in \( \delta_1' \)
 and \( \blue \) in \( \delta_2' \).
-But then \Cref{lemma:fpt_join_merging}
+But then \Cref{lemma:fpt_merging_mapping}
 still detects this pair as a bad state
 as \( f \) is a \( \red \) bridge in a (new) \( \blue \) connected component.
 
@@ -1463,6 +1463,7 @@ Hence, from now on by \( S_\Lambda \) we only consider states corresponding to
 an almost NAC-coloring in \( \Lambda \), hence \( |S_\Lambda| = |\Lambda| \).
 %
 Let us have
+\todo{Uncomment footnote}
 % \footnote{
 \emph{
 	Technically, these lemmas should be adapted for the fact that state space \( S_\Lambda \)
@@ -1472,7 +1473,6 @@ Let us have
 	Also, isolated vertices \( X_t \setminus X_F \) should to be added to \( G_F \).
 	We skip this as this is not the main important part of the algorithm.
 }
-\todo{Uncomment footnote}
 merging mapping (\Cref{def:fpt_merging_mapping})
 \( M : S_{t'} \times S_\Lambda \to S_t \).
 Also let us have bad states (\Cref{def:fpt_bad_states})
@@ -1524,28 +1524,36 @@ which is asymptotically higher.
 \subsection{Monochromatic classes}
 
 Monochromatic classes can be used to significantly reduce the state space
-that needs to be searched as for some cache entries we can say that
-they resolve to zero without solving related sub-problems.
+that needs to be searched as sometimes we can say that
+\( c[t, s] = 0 \) for some \( s \in S_t, t \in T \)
+without solving corresponding sub-problems.
 %
-First we introduce state space reduction when
-there is an edge in a bag, then we extend the result to multiple edges
-sharing the same monochromatic class, and lastly we improve the number of
+We introduce a state space reduction for edges from edge bags,
+then we extend the result to multiple edges
+sharing the same monochromatic class,
+and lastly we improve the number of
 operations needed in the \IntroduceVertexWithEdgesNode{}.
+
+Let us start with a lemma that is yet unrelated to monochromatic classes.
+Note that the following optimizations can be only used in \IntroduceEdgeNode{}
+as the other nodes have empty edge bags.
 %
 \begin{lemma}
-	Let us have \( t \in T \) and an edge \( e = \{u, v\} \) in \( Y_t \).
-	For a state \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S_t \)
-	such that it holds that
+	Let us have \( t \in T \) and an edge \( e = \{u, v\} \in Y_t \).
+	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S_t \)
+	it holds that
 	\( {\forall a \in \{\red, \blue\}} : {\forall p_a \in P_a} : {u \in p_a \Rightarrow v \not\in p_a} \),
-	it then also holds that \( c[t, s] = 0 \).
+	then it also holds that \( c[t, s] = 0 \).
 \end{lemma}
 %
+The lemma states that vertices \( u, v \) incident to an edge must
+be share \( \red \) or \( \blue \) part.
 %
 \begin{proof}
 	For contradiction, suppose that such state corresponds
-	to some almost NAC-coloring \( \delta \).
+	to some almost NAC-coloring \( \delta \) on \( G_t \).
 	The edge \( e \) has to be either \( \red \) or \( \blue \).
-	Let w.l.o.g.\ \( e \) be colored \( \blue \).
+	Let \( e \) be colored w.l.o.g.\ \( \blue \).
 	That means that both \( u, v \) are in the same \( \blue \) component.
 	But the state \( s \) states that \( u, v \) do not share a \( \blue \) component.
 	Then \( \delta \) does not correspond to the state \( s \).
@@ -1553,24 +1561,25 @@ operations needed in the \IntroduceVertexWithEdgesNode{}.
 \end{proof}
 %
 
+\todo[inline]{This is most probably wrong!}
 We extend the result for monochromatic classes as follows:
 see that this is just a generalization of the previous theorem
 as an edge forms a trivial monochromatic class.
 %
-\begin{theorem}
-	For \( t \in T \),
+\begin{lemma}
+	Let us have \( t \in T \),
 	edges \( F \subseteq Y_t \) such that
-	they share the same monochromatic class
-	and vertices \( U \) such that they are end points of the edges in \( F \).
-	Then for states \( s = (P_\red, R_\red, P_\blue, R_\blue), s \in S \)
-	such that it holds that
-	\( \forall a \in {\red, \blue}: \forall p_a \in P_a : U \not\subseteq p_a \),
-	it then also holds that \( c[t, s] = 0 \).
-\end{theorem}
-%
+	they share the same monochromatic class and form a connected component.
+	Let us have vertices \( U = \{ u \mid \exists f \in F : u \in f \} \).
+	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S \)
+	it holds that
+	\( {\forall a \in \{\red, \blue\} }:{ \forall p_a \in P_a }:{ U \not\subset p_a} \),
+	then it also holds that \( c[t, s] = 0 \).
+\end{lemma}
 %
 \begin{proof}
-	For contradiction suppose that such state corresponds to an almost NAC-coloring \( \delta \).
+	For contradiction suppose that such state corresponds
+	to an almost NAC-coloring \( \delta \) on \( G_t \).
 	The edges \( F \) has to be either \( \red \) or \( \blue \).
 	Let w.l.o.g.\ edges in \( F \) be colored \( \blue \).
 	That means that all vertices in \( U \) are in the same \( \blue \) component (and part)
@@ -1583,17 +1592,15 @@ as an edge forms a trivial monochromatic class.
 %
 
 Lastly, we show how \IntroduceVertexWithEdgesNode{} can be optimized.
-First, while traversing all the colorings of the edges \( F \) incident to the added vertex,
-we do not try all the color combinations as usual. If there are some edges
-in \( Y_{t'} \cup F \) that are part of a monochromatic class,
-the same as above applies. We cannot create a contradicting state with non-zero
-cache entry. But by using monochromatic classes
-we can enforce that all such edges should always have the same color.
-We can also enforce the color by using an edge of the same monochromatic class
-that is a part of \( Y_{t'} \).
-For example, if the edge in \( Y_{t'} \) lies in a \( \blue \) part,
+Colorings of \( F \) that do no match with known monochromatic classes
+are removed from \( \Lambda \). This also decreases the size of \( S_\Lambda \).
+
+We can extend this idea further by extracting colors of edges from \( Y_{t} \)
+based on \( s_t \in S_t \).
+For example, if the edge in \( Y_{t} \) lies in a \( \blue \) part,
+it must be colored blue and hence
 the other edges from the same monochromatic class
-can be added and checked as \( \blue \).
+must be also colored blue \( \blue \).
 
 
 \subsection{Connectivity}
@@ -1603,72 +1610,91 @@ vertices in bags.
 %
 \begin{definition}[Connectivity map]
 	Let \( t \in T \) be a node in a nice tree decomposition tree and
-	\Xt{} be a bag of vertices.
-	A \emph{connectivity map} \( C_t \) is a partition of \Xt{}.
-	For each \( u, v \in X_t \), it holds that
-	\( \exists c \in C_t : u \in c \land v \in c \) iff
+	\( X_t \) be a bag of vertices.
+	A \emph{connectivity map} \( C_t \) is a partition of \( X_t \) such that
+	for each \( u, v \in X_t \), it holds that
+	\( \exists c \in C_t : u \in c \land v \in c \) if and only if
 	\( u, v \) are in the same component in \( G_t \).
 \end{definition}
 %
+
+In \Cref{lemma:fpt_merging_mapping}, we show how to merge
+two halves of two states. Let us by \( M': S_t \to \mathcal{F}(X_t) \) denote
+the operation of merging halves of a single state by the same means,
+obtaining a partition of \( X_t \) and dropping
+the neighboring relation as we do not need it.
+%
 \begin{lemma}
-	A state \( s \in S_t \) is \emph{in conflict} with \( C_t \)
-	if both \( P_\red \) and \( P_\blue \) are not same or finer that \( C_t \).
-	For such states we have \( c[t, s] = 0 \).
+	Let us have \( s \in S_t \) with connectivity map \( C_t \).
+	If \( M'(s) \ne C_t \), then \( c[t, s] = 0 \).
 \end{lemma}
 %
 \begin{proof}
 	For contradiction, suppose that such state \( s \)
 	corresponds to an almost NAC-coloring \( \delta \).
-	It must hold that \( C_t \ne \{X_t\} \), otherwise \( s \) cannot be in conflict.
+	%
 	For each \( c_1, c_2 \in C_t, c_1 \ne c_2, u \in c_1, v \in c_2 \)
 	there is no \( u \)--\( v \)--path in \( G_t \).
-	But state \( s \) states that there is such a path for some \( u, v \) as it is not finer.
-	Therefore, \( s \) does not correctly describe situation in \( G_t \)
-	and cannot therefore correspond \( \delta \).
+	Then there is also no path in the merged parts as
+	these are merged along a path according to \Cref{lemma:fpt_merging_mapping}.
+	%
+	The same argument with path holds also the other way around.
 \end{proof}
 %
-We show how connectivity map changes for different types of nodes.
+We show which conditions hold for a connectivity map
+for different types of neighboring nodes.
 Consider a node \( t \in T \) and its child \( t' \)
-or children \( t_1, t_2 \) in case of a \JoinNode{}.
+or children \( t_1', t_2' \) in case of a \JoinNode{}.
 %
-For an \IntroduceVertexNode{}
-a new connectivity map is obtained as follows:
-\( C_t \coloneqq C_t' \cup \{\{ v \}\} \).
+For an \IntroduceVertexNode{}, it holds that
+\( C_t = C_{t'} \cup \{\{ v \}\} \).
 %
-For a \ForgetVertexNode{}
-a new connectivity map is obtained as
-\( C_t \coloneqq M(C_t') \)
-where \( M \) is mapping from \Cref{lemma:fpt_forget_vertex_node}
-deleting occurrences of forgotten vertex from the partition given.
+For a \ForgetVertexNode{}, it holds that
+\( C_t = D(C_{t'}) \)
+where \( D \) is mapping from \Cref{lemma:fpt_forget_vertex_node}
+deleting occurrences of the forgotten vertex from the partition given.
 %
 For an \IntroduceEdgeNode{}
-where edge \( \{u, v\} \) is introduced
-parts of \( u, v \) are merged if they are not merged already.
+where edge \( \{u, v\} \) is introduced,
+if in \( C_{t'} \) vertices \( u, v \) are in the same part, \( C_t = C_{t'} \).
+Otherwise, \( u, v \) are in parts \( p_1', p_2' \), then 
+\( C_t \cup \{p_1', p_2'\} = C_{t'} \cup \{ p_1' \cup p_2'\} \).
 %
-For a \JoinNode{}
-connectivity maps \( C_{t_1}, C_{t_2} \) are merged into
+For a \JoinNode{},
+connectivity maps \( C_{t_1'}, C_{t_2'} \) are merged into
 a single connectivity map \( C_t \)
-the same way as when a \JoinNode{} is processed using mapping \( M \).
+the same way as when a \JoinNode{} is processed using merging mapping \( M \).
 %
-For a \LeafNode{}
+For a \LeafNode{},
 no vertices are present yet, so for the connectivity map it holds that \( C_t = \emptyset \).
-
-With such connectivity map, we can not reduce the state space by only considering
-partitions that are finer then the connectivity map.
 
 
 \subsection{NAC-coloring certificate}
 
-To obtain a NAC-coloring certificate or all the NAC-colorings of the graph
-given we need to traverse the cache backwards recursively.
-The only step where edges were added to the graph are either \IntroduceEdgeNode{}
-or \IntroduceVertexWithEdgesNode{}. In both cases the given cache entry correspond
-to some color given to the edge. From the recursive step we can obtain
-all NAC-colorings of \( G_{t'} \) and add our edge.
-Note that the whole cache has to be stored in memory the whole time unless
-NAC-colorings are materialized while the algorithm runs.
-This would harm our performance as we would
-process up to \( 2^{O(n^2)} \) colorings in each node of the tree.
+To obtain a NAC-coloring certificate or all the NAC-colorings of a graph
+one approach is to traverse \( T \) top-down 
+and track where there are positive additions to the cache function.
+%
+The only step where edges are introduced is \IntroduceEdgeNode{}
+(or \IntroduceVertexWithEdgesNode{}).
+We check if the edge is w.l.o.g.\ \( \blue \) by checking if \( c_\blue[t,s] > 0 \),
+setting the edge color to blue and color remaining edges in \( G_{t'} \) recursively.
+If we stop at the first NAC-coloring, we found a certificate in time bounded by
+the size of \( T \)
+(if we stored metadata about contributing states in the bottom-up traversal).
+%
+When we continue, we can obtain all NAC-colorings.
+As there can be exponentially many of them,
+listing all NAC-colorings is not parameterized by \( k \) anymore.
+Note that the whole cache has to be stored in memory
+the whole time for this approach.
+
+Another approach is to store an almost NAC-coloring on \( G_t \)
+for each \( s \in S_t, t \in T \) where \( c[t, s] > 0 \)
+while preferring colorings that are not monochromatic.
+The runtime performance of the algorithm degrades,
+but the whole cache does not need to be stored in memory the whole time.
+Only a single certificate can be obtained with this method.
 
 
 \subsection{Other optimizations}

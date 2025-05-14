@@ -67,13 +67,13 @@ The following definitions are taken from~\cite{np_complete,my_paper}.
 	Otherwise, it is \emph{\( d \)-rigid}.
 \end{definition}
 %
-Note that we consider realizations that differ only by translation,
-rotation or symmetry as equivalent.
+Realizations that differ only by translation,
+rotation or reflection are called \emph{congruent}.
 %
-For a \( d \)-rigid realization, there may still be other realizations
+For a \( d \)-rigid realization, there may still be noncongruent realizations
 with the same distances between vertices connected by edges.
 %
-If there are no realizations for a \( d \)-rigid realization,
+If there are no such realizations for a \( d \)-rigid realization,
 we call such realization \emph{globally \( d \)-rigid}.
 To summarize all the previous definitions,
 a framework is \( d \)-flexible if it can be continuously deformed
@@ -83,7 +83,8 @@ From now on, we consider only \emph{quasi-injective} realizations ---
 two neighboring vertices cannot be mapped to the same position.
 This is equivalent to the distances between adjacent vertices being positive.
 Note that two non-neighboring vertices can be mapped to the same position.
-\emph{Injective} flexible realizations have been also studied~\cite{injective_realizations},
+The existence of \emph{injective} flexible realizations
+has been also studied~\cite{injective_realizations},
 but they are of no interest for us in this thesis
 as there is no known combinatorial characterization of them.
 
@@ -94,7 +95,7 @@ For \( d = 1 \), all the vertices are on a line
 and any vertex deviation necessarily changes distances (if the graph is connected).
 Therefore, there is no flexible realization if and only if the graph is connected.
 %
-For \( d \ge 3 \), we can map all the vertices except two nonadjacent one
+For \( d \ge 3 \), we can map all the vertices except two nonadjacent ones
 onto a line and rotate one of them around the line.
 Therefore, flexible \( d \)-framework exists if and only if the graph is not complete.
 
