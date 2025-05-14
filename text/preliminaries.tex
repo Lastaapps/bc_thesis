@@ -28,14 +28,14 @@ represent uninteresting trivial cases.
 By \( V(G) \) we denote the vertices of a graph \( G \) and
 by \( E(G) \) we denote the edges of~\( G \).
 
-By \( G - v \), resp. \( G - e \),
+By \( G - v \), resp.\ \( G - e \),
 where \( v \in V(G), e \in E(G) \) we denote the graph
 formed from \( G \) by removing vertex \( v \), resp.\ edge \( e \).
 Formally,
 \( G - v = (V(G) \setminus \{v\}, E(G) \setminus \{\{u, v\} \mid u \in V(G)\}) \)
 and \( G - e = (V(G), E(G) \setminus \{e\}) \).
 %
-By \( G \setminus S \), resp. \( G \setminus F \),
+By \( G \setminus S \), resp.\ \( G \setminus F \),
 where \( S \subseteq V(G), F \subseteq E(G) \) we denote the graph
 formed from \( G \) by removing vertices \( S \), resp.\ edges \( F \).
 Formally,
@@ -134,7 +134,7 @@ Pollaczek-Geiringer and later Laman gave characterization of minimally $2$-rigid
 \begin{theorem}[\cite{polzacek_1927,laman_1970}]%
 	\label[theorem]{theorem:laman_characterization}
 	%
-	A graph \( G \) is minimally rigid if and only if
+	A graph \( G \) is minimally \( 2 \)-rigid if and only if
 	\( |E(G)| = 2|V(G)| - 3\) and
 	\( |E(H)| \le 2|V(H)| - 3 \) for any \( H \) subgraph of \( G \).
 \end{theorem}
@@ -194,7 +194,8 @@ that corresponds with the existence of a flexible realization.
 	be a coloring of edges:
 	%
 	\begin{itemize}
-		\item A cycle in \( G \) is a \( \red \) cycle, if all its edges are \( \red \).
+		\item A cycle in \( G \) is a \( \red \) cycle, if all its edges are \( \red \),
+		      analogously for a \( \blue \) cycles.
 		\item A cycle in \( G \) is an \emph{almost \( \red \) cycle},
 		      if exactly one of its edges is \( \blue \).
 		      \emph{Almost \( \blue \) cycle} is defined analogously.
@@ -208,7 +209,7 @@ that corresponds with the existence of a flexible realization.
 
 As shown in~\cite{np_complete}, it is NP-complete to decide if a graph has a NAC-coloring.
 We elaborate further on this in later chapters.
-Let \( E_\red\), resp. \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \),
+Let \( E_\red\), resp.\ \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \),
 in an edge coloring \( \delta \).
 %
 \begin{lemma}[\cite{legersky_original}]%
@@ -277,7 +278,7 @@ This idea can be expanded further to neighboring triangles.
 	\label[definition]{def:triangle_connected_component}
 	Let \( G \) be a graph and \( \sim^\prime_\triangle \) be
 	a relation on \( E(G) \times E(G) \) such that \( e_1 \sim^\prime_\triangle e_2 \)
-	iff there exists a 3-cycle subgraph \( C_3 \) of \( G \)
+	if and only if there exists a 3-cycle subgraph \( C_3 \) of \( G \)
 	such that \( e_1, e_2 \in E(C_3) \).
 	Let \( \sim_\triangle \) be the reflexive-transitive closure of \( \sim^\prime_\triangle \).
 	The graph \( G \) is called \emph{\trcon{}} if \( e_1 \sim_\triangle \)

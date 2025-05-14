@@ -202,7 +202,7 @@ Notice also huge advantage gained by using monochromatic classes instead of \trc
 		The time (in seconds) needed to find all NAC-colorings for all graphs with a given size. Run by us.
 		\textsc{FRLG} stands for \flexrilog{}, \textsc{ND} for \NeighborsDegree{}.}%
 	\label{tab:all_min_rigid}
-	\vspace{0.3cm}
+	% \vspace{0.3cm}
 	\centering
 	\begin{tabular}{ccccccc}
 		\hline
@@ -338,7 +338,7 @@ and it can be seen that for larger graphs, the required runtime
 does not grow significantly.
 %
 Note that minimally rigid graphs have no NAC-coloring if and only if they are formed from
-a single \trcon{} component (resp. they are a 2-tree, recall \Cref{lemma:stable_cut_or_2_tree}).
+a single \trcon{} component (resp.\ they are a 2-tree, recall \Cref{lemma:stable_cut_or_2_tree}).
 Therefore, such instances do not worsen runtime performance as they are resolved instantly.
 %
 \NaiveCycles{} is faster as it has lower internal overhead.
@@ -395,8 +395,8 @@ For \Neighbors{}, the performance is more stable, but still worse than \MergeLin
 % \end{figure}%
 
 For listing all NAC-colorings shown
-in \Cref{fig:graph_count_no_3_nor_4_cycles_all_runtime}
-shows that \NaiveCycles{} is almost never faster.
+in \Cref{fig:graph_count_no_3_nor_4_cycles_all_runtime},
+it can be seen that \NaiveCycles{} is almost never faster.
 We can see that \None{} and \CyclesMatchChunks{} is also slower than
 \Neighbors{} and \NeighborsDegree{}.
 At around twenty-eight vertices five second time limit is reached for all algorithms.
@@ -527,10 +527,10 @@ those where there are only few or no solutions.
 In this section, we focus on graphs with no NAC-colorings.
 
 We searched for random graphs where \( |E| \ge 2|V(G)| - 2 \) that have
-multiple monochromatic classes, but no NAC-coloring
-\todo{Uncoment footnote}
-% \footnote{
-{We could have also used the same formula as for globally rigid graphs.}.
+multiple monochromatic classes, but no NAC-coloring%
+\nohznamka{
+	We could have also used the same formula as for globally rigid graphs.
+}.
 %
 As this graph generation was slow, we searched only for
 graphs with more than \( 2\sqrt{|V(G)|} \) \trcon{} components.

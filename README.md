@@ -8,7 +8,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 
 ## Done
 - rerun laman random graphs, everything
-- run no NAC coloring with larger subgraphs as I misinterpreted the results
+- run no NAC-coloring with larger subgraphs as I misinterpreted the results
 
 ## Graphs summary
 Minimally rigid
@@ -42,7 +42,7 @@ Failing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ## TODO
-- run score on no NAC coloring
+- run score on no NAC-coloring
 - run no 3 nor 4 cycles with larger timeout (at least cycles & linear, all NAC-coloring figures are weird...)
 - resolve todos
 - document code

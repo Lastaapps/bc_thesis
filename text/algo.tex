@@ -59,12 +59,11 @@ to reduce the search space even further.
 Another simple but important observation is that the whole search space \( O(2^{c}) \)
 does not need to be traversed, as a NAC-coloring with colors swapped is again a NAC-coloring.
 Therefore, we fix the color of one set of edges and additionally generate NAC-colorings with colors swapped.
-This cuts runtime in half %
-\todo[inline]{Uncomment footnote
-	% \footnote{
+This cuts runtime in half%
+\nohznamka{
 	To learn more on the topic of cutting in half, we recommend
 	\href{https://youtu.be/FZ4qeJly1g0}{youtu.be/FZ4qeJly1g0}.
-}%
+}
 to \( O(2^{c-1}) \).
 
 
