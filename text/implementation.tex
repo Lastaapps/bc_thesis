@@ -4,40 +4,61 @@
 
 \begin{chapterabstract}
 
-	In this chapter, we first describe the structure of the project
-	and discuss some design choices.
-	\todo[inline]{Dopsat abstrakt kapitoly}
+	In this chapter,
+	we first describe the structure of the project,
+	general description of source code file, and datasets.
+	We list significant libraries used in the project,
+	mention relation to PyRigi and
+	describe the Python API surface of the implementation.
 
 \end{chapterabstract}
 
-In this section we first describe the structure of the project containing
-the code of the algorithm.
-Next, we mention libraries, relation to PyRigi and
-some worth mentioning implementation details.
 The code is available as an attachment of this thesis,
-nevertheless the most recent version can be found on GitHub~\cite{my_code}.
-
+nevertheless the most recent version can be found on GitHub~\cite{my_code}
+and soon also in PyRigi~\cite{pyrigi}.
+%
 The code is written in Python~\cite{python}, minimal supported version is Python 3.12.
 To set up the project, create a virtual environment and install packages
 from \texttt{requirements.txt}. On NixOS, \texttt{shell.nix} can be used.
 See \texttt{README.md} for additional instructions.
 We go through the main folders and files of the project,
-to see the code structure in~\Cref{chapter:attachments}.
+see project file structure in~\nameref{chapter:attachments}.
 
-The base directory contains tooling for running, visualizing and exporting benchmarks.
-File \texttt{NAC\_playground.ipynb} presents a simple case
-to show how the algorithm's API can be used.
-File \texttt{NAC\_presentation.ipynb} shows how the benchmarks can be run and analyzed.
 
-The code of the algorithm described in~\Cref{sec:stable_cuts_implementation}
-with additional helper functions is implemented in directory \texttt{stablecut}.
-Note that some changes were done when the code was merged into PyRigi.
+\section{Files overview}
+
+In this section, we describe the main source code files of the project
+and link them to the corresponding terms and section
+from \Cref{chapter:stable_cuts,chapter:algo}.
+
+\subsection{Code for benchmarking}
+
+File \texttt{NAC\_presentation.ipynb} shows how the benchmarks
+can be run and analyzed.
+Bellow imports, a user can choose if precomputed benchmarks should be used
+(they need to be decompressed first),
+or if the benchmarks should be run from scratch.
+Note that this takes a long time
+as further discussed in \Cref{chapter:benchmarks}.
+Then follows a section dedicated to loading graph datasets.
+After that, tooling for running benchmarks and individual cells
+for running benchmarks for each graph class follow.
+Lastly, there are cells for the performance analysis.
+%
+There are many utility functions
+imported from \texttt{benchmarks/notebook\_utils.py}
+that offer wide range of functionality.
+The file \texttt{benchmarks/NAC\_benchmark.ipynb}
+contains code similar to \texttt{NAC\_presentation.ipynb},
+but with additional functionality like exporting figures to \LaTeX{}.
+
+\subsection{NAC-coloring search}
 
 The code of the algorithms described in~\Cref{chapter:algo}
 is stored in directory \texttt{nac}.
 %
-Directory \texttt{nac/util} stores helper functions and classes
-like an implementation of the \textsc{UnionFind} data structure.
+Directory \texttt{util} stores helper functions and classes
+like an implementation of \textsc{UnionFind} data structure.
 %
 File \texttt{check.py} implements \IsNACColoring{} check.
 %
@@ -49,8 +70,8 @@ File \texttt{cycle\_detection.py} holds algorithms for finding cycles
 used by \Cref{sec:small_cycles}
 and some heuristics.
 %
-In \Cref{sec:polynomial_optimizations}
-we presented checks that can in polynomial time
+In \Cref{sec:polynomial_optimizations},
+we present checks that can in polynomial time
 sometimes find a NAC-coloring or determine that there is none.
 These checks are implemented in \texttt{existence.py} and
 used mostly from \texttt{single.py} that is the entry-point
@@ -63,11 +84,136 @@ After that, the correct algorithm from \Naive{}, \NaiveCycles{} or \Subgraphs{}
 is chosen and called.
 %
 These algorithms are implemented in \texttt{algorithms.py} alongside many helper functions.
-Heuristics for \Subgraphs{} algorithm are stored in \texttt{strategies.py}.
+Heuristics for \Subgraphs{} algorithm are stored in \texttt{strategies\_split.py}
+and \texttt{strategies\_merging.py}.
+
+
+\subsection{Stable cuts}
+
+The code related to finding stable cuts in flexible graphs
+is implemented in directory \texttt{stablecut}.
+%
+The algorithm described in~\Cref{sec:stable_cuts_implementation}
+is implemented in \texttt{flexible\_graphs.py}.
+While other helper functions related to cuts and stable sets
+are implemented in \texttt{util.py}%
+\nohznamka{
+	Note that some changes were done
+	when the code was merged into PyRigi~\cite{pyrigi_pr_stable_cuts}
+	that were not backported to the codebase of this thesis.
+}.
+
+
+\section{Graph datasets}
+
+In \texttt{graphs\_store}, we store datasets used for benchmarking.
+Graphs are either obtained from~\cite{extremal_graphs},
+generated using Nauty~\cite{nauty} with a plugin~\cite{nauty_plugin}
+or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}.
+Graph are stored in Graph6 or Sparse6 formats~\cite{graph6}.
+%
+Files and directories store these graph classes:
+minimally rigid graph, no 3 nor 4 cycles, globally rigid graph,
+and graphs with no NAC-coloring, see~\nameref{chapter:attachments}.
+%
+The code for working with datasets is stored in directory \texttt{benchmarks}.
+The code for reading dataset files from the store can be found in \texttt{dataset.py},
+the code for generating random graphs of some graph classes
+can be found in \texttt{generators.py}.
+%
+In the \texttt{precomputed} subdirectory, there are all result of the benchmarks that
+we use for algorithms evaluation.
+Individual runs are stored in a compressed CSV file.
+The CSV file structure is described in detail in \texttt{NAC\_presentation.ipynb}.
+Notable columns are:
+encoded graph,
+the number of \trcon{} components and monochromatic classes of the graph,
+the number of NAC-colorings found and mean running time,
+both for search for a single NAC-coloring or for all NAC-colorings,
+and the strategies used and subgraph sizes.
+
+
+\subsection{Other files}
+
+File \texttt{NAC\_playground.ipynb} presents a simple case
+to show how the algorithm's API can be used.
+This API is further described in \Cref{sec:impl_python_api}.
 %
 Tests of both stable cuts and NAC-coloring parts are stored in directory \texttt{test}.
+%
+File \texttt{requirements.txt} lists versions of Python libraries used for development.
+\texttt{README.md} comes from our original paper~\cite{my_paper}
+and contains additional instructions for setting up the project.
+File \texttt{shell.nix} can be used for project setup on NixOS\@.
 
-Common function parameters are:
+
+\section{Python API surface}%
+\label{sec:impl_python_api}
+
+In this section,
+we describe the main entry points to our library.
+%
+To call algorithm~\Cref{alg:stable_cut_flexible},
+first import function \texttt{stable\_cut\_in\_flexible\_graph}
+from module \texttt{stablecut.flexible\_graphs}.
+The function accepts a graph and
+optionally vertices that should be avoided and separated by a cut.
+
+All the following function are imported from module \texttt{nac}.
+To find monochromatic classes on a graph,
+call function \texttt{find\_monochromatic\_classes} and provide a graph.
+Optionally, \trcon{} components can be found by changing the second parameter.
+%
+\IsNACColoring{} check can be run by calling \texttt{is\_nac\_coloring} function.
+The function accepts a graph and a NAC-coloring
+as a tuple of containers with edges.
+%
+To find a single NAC-coloring, call \texttt{single\_NAC\_coloring} and provide
+a graph. If there exists any NAC-coloring, it will be returned.
+In case a certificate is not needed,
+\texttt{has\_NAC\_coloring} should be called instead.
+%
+To list all NAC-colorings of a graph, call function \texttt{NAC\_colorings}.
+Notable parameters are:
+\begin{itemize}
+	\item \texttt{graph} is a graph to search on.
+	\item \texttt{algorithm} is a string that can be either
+	      \emph{naive} for \Naive{},
+	      \emph{cycles} for \NaiveCycles{},
+	      or \emph{subgraphs-{s}-{m}-{k}} for \Subgraphs{},
+	      where \( s \) stands for a splitting strategy,
+	      \( m \) for a merging strategy,
+	      and \( k \) for the size of subgraphs.
+	      %
+	      Notable split strategies are
+	      \emph{none} for \None{},
+	      \emph{neighbors} for \Neighbors{}, and
+	      \emph{neighbors\_degree} for \NeighborsDegree{},
+	      %
+	      notable merging strategies are
+	      \emph{linear} for \MergeLinear{} and
+	      \emph{shared\_vertices} for \SharedVertices{}.
+	      %
+	      Names of other strategies can be found in \texttt{algorithms.py}.
+	\item \texttt{monochromatic\_class\_type} sets
+	      whether monochromatic classes or \trcon{} components are used.
+	\item \texttt{use\_decompositions} sets
+	      whether a check for articulation vertices is done.
+	\item \texttt{use\_has\_coloring\_check} sets
+	      whether \texttt{has\_NAC\_coloring} should be used
+	      as if we can decide the graph has no NAC-coloring,
+	      the whole check can be skipped.
+\end{itemize}
+
+
+
+\section{Implementation details}
+
+In this section we describe some code specifics
+in case a reader of this thesis want tho examine the code.
+%
+To improve reader's understanding of the code,
+we first describe common function parameters:
 \texttt{graph} repressing the subgraph where NAC-colorings should be found.
 %
 \texttt{comp\_graph} is a graph where vertices are some integer IDs of monochromatic classes
@@ -78,17 +224,6 @@ Monochromatic class IDs also serve as indices into \texttt{component\_to\_edges}
 that maps an ID of a monochromatic class to its edges.
 %
 NAC-colorings are represented as bit-masks where bit's offset correspond to a class ID\@.
-
-In \texttt{graphs\_store} we store datasets used for benchmarking.
-Graphs are either obtained from~\cite{extremal_graphs},
-generated using Nauty~\cite{nauty} with a plugin~\cite{nauty_plugin}
-or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}.
-Graph are mostly stored in Graph6 format~\cite{graph6}.
-Code for reading graphs from the store can be found in \texttt{benchmarks/dataset.py},
-code for generating some graph classes can be found in  \texttt{benchmarks/generators.py}.
-In the \texttt{benchmark/precomputed} directory, there are all result of the benchmarks that
-we use for algorithms evaluation.
-Individual runs are stored in a compressed CSV file.
 
 As \IsNACColoring{} is a core component of all our algorithms,
 we tried to optimized it well.
@@ -115,3 +250,4 @@ Other than that, the code is not dependent on PyRigi.
 %
 Pytest~\cite{pytest} is used for testing and
 Matplotlib~\cite{matplotlib} for visualizations.
+
