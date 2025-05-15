@@ -19,7 +19,7 @@ Treewidth is one of many graph parametrizations like
 pathwidth, cliquewidth, maximum degree and many others.
 These approaches are used to somehow exploit graphs structure
 and provide algorithms with possibly significantly lower time complexity
-then algorithms considering general graphs only.
+than algorithms considering general graphs only.
 For a list of other common parametrization approaches,
 we recommend~\cite{tree_width_comparision_other_classes}.
 Using these approaches, many NP-complete problems can be solved
@@ -80,7 +80,7 @@ that exploits the tree-likeness of a graph.
 		\item For every \( \{u,v\} \in E(G) \), there exists
 		      a node \( t \in T \) such that both \( u, v \in X_t \).
 		\item For every \( u \in V(G) \),
-		      the set \( T_u = \{t \in V(T) \mid u \in X_t\} \)
+		      the set \( \{t \in V(T) \mid u \in X_t\} \)
 		      induces a connected subtree of \( T \).
 	\end{enumerate}
 \end{definition}
@@ -277,7 +277,6 @@ that adds option to quantify over predicates.
 	Without this requirement, we could talk
 	about the monadic first-order logic \( \text{MSO}_1 \).
 }.
-
 Formulas can be formed from
 variables, constants, predicates,
 boolean operations \( \lnot, \land, \lor, \Rightarrow, \Leftrightarrow \)
@@ -286,13 +285,26 @@ Complex formulas are created recursively from atomic formulas
 by applying schema related to each operation or quantifier.
 This process is the same as in the first-order predicate logic.
 
-\todo[inline]{Define evaluation function}
 Formulas of \MSO{} can use four types of variables:
-for single vertices, single edges, subsets of vertices, and subsets of edges.
-An evaluation function is a mapping from variables and formulas to truth assignments.
-By \( u^G \) we denote evaluation of variable \( u \) in graph \( G \)
-for some model \( \mathcal{G} \) (a tuple of evaluation function and \( G \)).
-In \MSO{} to form atomic formulas, we allow only following base predicates:
+single vertices, single edges, subsets of vertices, and subsets of edges.
+%
+An application of a graph \( G \) to a formula \( \phi \) is called \emph{evaluation}
+of \( \phi \) in \( G \).
+This represents the process of assigning values from \( G \) to variables in \( \phi \).
+%
+By \( u^G \) we denote evaluation of variable \( u \) in graph \( G \).
+%
+A \emph{free variable} is a variable such that it is not quantified by any predicate.
+Let \( \Sigma \) denote all free variables of \( \phi \).
+%
+Let \( \Sigma^G \) be a sequence of evaluations for each variable in \( \Sigma \).
+Tuple \( \langle G, \Sigma^G \rangle \) is called the \emph{structure}
+in which \( \phi \) is evaluated.
+If \( \phi \) is true in \( \langle G, \Sigma^G \rangle \),
+then \( \langle G, \Sigma^G \rangle \)
+is called a \emph{model} of \( \phi \)~\cite{book_parametrized_algorithms}.
+%
+To form atomic formulas in \MSO{}, we allow only following base predicates:
 %
 \begin{itemize}
 	\item For \( u \) representing a vertex (edge) variable
@@ -361,64 +373,65 @@ polynomial in \( n \), but we are given no guaranties about the complexity of~\(
 
 \subsection{Expressing NAC-colorings using \( \text{MSO}_2 \)}
 
-\todo[inline]{Věty nedávají smysl, viz opravený text}
-
 In this section we present results from our previous paper~\cite{my_paper}.
+By \( V \) we denote the set of all vertices and
+by \( E \) the set of all edges.
 We start by defining other auxiliary predicates:
 %
 \begin{itemize}
-	\item For \( V \) all vertices and \( E \) subset of edges we define predicate
+	\item For a subset of edges \( F \) we define predicate
 	      %
 	      \begin{align*}
-		      \text{deg2}(E) \coloneqq \,
-		       & \forall e \in E : \forall v \in V : \inc (v, e) \Rightarrow \Big( \exists e' \in E : \\
-		       & \big( \inc (v, e') \land e \ne e' \land (\forall e^{\prime\prime} \in E :
-				      \lnot \inc (v, e^{\prime\prime}) \lor e^{\prime\prime} \not\in \{e, e'\}) \big) \Big).
+		      \text{deg2}(F) \coloneqq \predsp
+		       & \forall e \in F \predsp \forall v \in V : \inc (v, e) \Rightarrow                                                                      \\
+		       & \exists e' \in F \setminus \{e\} : \Big( \inc (v, e') \land \big(\forall e'' \in F \setminus \{e, e'\}: \lnot \inc (v, e'')\big)\!\Big).
 	      \end{align*}
 	      %
-	      The predicate says that all vertices incident to edges in \( E \) have degree two.
+	      The predicate says that all vertices incident to edges in \( F \) have degree two.
 	      %
-	\item For \( V \) subset of vertices and \( E \) subset of edges we define predicate
+	\item For a subset of vertices \( U \) and a subset of edges \( F \) we define predicate
 	      %
 	      \begin{align*}
-		      \text{incident}(V, E) \coloneqq \,
-		       & (\forall v \in V : \exists e \in E : \inc (v, e))                                                 \\
-		       & \land (\forall e \in E : \exists v_1, v_2 \in V : v_1 \ne v_2 \land \inc (v_1) \land \inc (v_2)).
+		      \text{incident}(U, F) \coloneqq \predsp
+		       & \big(\forall v \in U \predsp \exists e \in F : \inc (v, e)\big)                                                       \\
+		       & \land \big(\forall e \in F \predsp \exists v_1, v_2 \in U : v_1 \ne v_2 \land \inc (v_1, e) \land \inc (v_2, e)\big).
 	      \end{align*}
 	      %
-	      The predicate says that \( V \) are vertices of the subgraph induced by \( E \)
-	      and that \( E \) are edges of the subgraph induced by \( V \).
+	      The predicate says that \( U \) are vertices of the subgraph induced by \( F \)
+	      and that \( F \) are edges of the subgraph induced by \( U \),
+	      e.g. \( (U, F) \) is an induced subgraph of \( (V, E) \).
 	      %
-	\item For \( E \) subset of edges we define predicate
+	\item For a subset of edges \( F \) we define predicate
 	      %
 	      \begin{align*}
-		      \text{cycle}(E) \coloneqq \,
-		      \big( \exists X \subseteq V : \text{incident}(X, E) \land \text{connected}(X) \big)
-		      \land \text{deg2}(E).
+		      \text{cycle}(F) \coloneqq \predsp
+		      \big( \exists X \subseteq V : \text{incident}(X, F) \land \text{connected}(X) \big)
+		      \land \text{deg2}(F).
 	      \end{align*}
 	      %
-	      The predicate says that edges \( E \) form a cycle.
+	      The predicate says that edges \( F \) form a cycle.
 	      %
-	\item For \( E_1, E_2 \) subsets of edges we define predicate
+	\item For subsets of edges \( F_1, F_2 \) we define predicate
 	      %
 	      \begin{align*}
-		      \text{partition}(E_1, E_2) \coloneqq \, & (\exists e_1, e_2 \in E : e_1 \in E_1 \land e_2 \in E_2 )    \\
-		                                              & \land (\forall e \in E : e \in E_1 \lor e \in E_2 )          \\
-		                                              & \land (\forall e \in E : e \not\in E_1 \lor e \not\in E_2 ).
+		      \text{partition}(F_1, F_2) \coloneqq \predsp
+		       & (\exists e_1, e_2 \in E : e_1 \in F_1 \land e_2 \in F_2 )    \\
+		       & \land (\forall e \in E : e \in F_1 \lor e \in F_2 )          \\
+		       & \land (\forall e \in E : e \not\in F_1 \lor e \not\in F_2 ).
 	      \end{align*}
 	      %
 	      The formula reads as: ``Both the partitions are not empty,
 	      and each edge is in exactly one of the partitions''.
-	\item For \( C, E_\red, E_\blue \) subsets of edges we define predicate
+	\item For subsets of edges \( C, F_\red, F_\blue \) we define predicate
 	      %
 	      \begin{align*}
-		      \text{NACcond}(C, E_\red, E_\blue) \coloneqq \,
-		       & C \subseteq E_\red \lor C \subseteq E_\red
+		      \text{NACcond}(C, F_\red, F_\blue) \coloneqq \predsp
+		       & C \subseteq F_\red \lor C \subseteq F_\red
 		      \\
 		       & \lor (\exists e_1, e_2, e_3, e_4 \in E :
 		      e_1 \ne e_2 \land e_3 \ne e_4
 		      \\
-		       & \qquad \land e_1, e_2 \in E_\red \land e_3, e_4 \in E_\blue ).
+		       & \qquad \land e_1, e_2 \in F_\red \land e_3, e_4 \in F_\blue ).
 	      \end{align*}
 	      %
 	      The predicate says that the cycles \( C \) is not an almost cycle.
@@ -479,15 +492,15 @@ our state space is even larger and all the state mapping operations are signific
 Before we start, we define some terms that come useful later.
 When we talk about a component, we mean a connected component.
 %
-\begin{definition}[Bridge, Neighboring components]
+\begin{definition}[Connector, Neighboring components]
 	For a graph \( G \) with a \rbcol{} \( \gamma \)
 	and two distinct components of \( G[\Ered] \), resp.\ \( G[\Eblue] \),
 	with vertex sets \( U_1 \) and \( U_2 \),
-	a \emph{bridge} is an edge \( e = \{u_1, u_2\} \in E(G) \)
+	a \emph{connector} is an edge \( e = \{u_1, u_2\} \in E(G) \)
 	such that \( u_1 \in U_1 \) and \( u_2 \in U_2 \).
 	%
 	The components are \emph{neighboring} if there exists
-	a bridge for these two components.
+	a connector for these two components.
 \end{definition}
 %
 
@@ -507,9 +520,9 @@ In that case one of the following cases must be true:
 	      from \( \red \) \( u \)-\( v \)-path in the component
 	      and edge \( e \) with \( \blue \) color.
 	\item Vertices \( u, v \) lay in neighboring components in \( G[\Eblue] \)
-	      i.e.\ there is a \( \red \) bridge between the components.
+	      i.e.\ there is a \( \red \) connector between the components.
 	      An almost cycle is formed from \( \blue \) paths in each component,
-	      the \( \red \) bridge and \( \blue \) edge \( e \).
+	      the \( \red \) connector and \( \blue \) edge \( e \).
 \end{itemize}
 %
 In all other cases, an almost cycle cannot be formed by adding a \( \blue \) edge \( e \).
@@ -556,8 +569,8 @@ of a graph \( G \).
 %
 We define a state space \( S \) of \emph{states}
 that will be used by our cache in our dynamic programming algorithm.
-We denote all partitions of a nonempty set \( X \) by \( \mathcal{F}(X) \)
-and we put \( \{\emptyset\} = \mathcal{F}(\emptyset) \).
+We denote all partitions of a nonempty set \( X \) by \( \mathcal{F}(X) \),
+and we put \( \emptyset = \mathcal{F}(\emptyset) \).
 
 %
 \begin{definition}[State space]
@@ -577,7 +590,7 @@ is \emph{consistent} with a state \( s_t = (P_\red, R_\red, P_\blue, R_\blue) \i
 if \( \red \) and \( \blue \) components of \( \gamma \) form \( P_\red \) and \( P_\blue \)
 when \( u, v \in X_t \) are in the same part in \( P_\red \) or \( P_\blue \)
 if and only if they are in the same \( \red \) or \( \blue \) component induced by \( \gamma \).
-There are bridges between two components if and only if
+There are connectors between two components if and only if
 the corresponding parts are in relation \( R_\red \) or \( R_\blue \).
 %
 Note that we define consistence for general \rbcol{}s,
@@ -735,7 +748,7 @@ and where the same parts stay neighbors as in \( s \).
 	and therefore no almost NAC-coloring consistent with such state exists.
 	Otherwise, there must be a part \( \{v\} \).
 	%
-	Also, as \( v \) is an isolated vertex in \( G_t \), there cannot be a bridge
+	Also, as \( v \) is an isolated vertex in \( G_t \), there cannot be a connector
 	connecting this and another component.
 	Thus, for all states where there exists
 	a part neighboring \( \{v\} \), there are no consistent almost NAC-colorings
@@ -806,34 +819,68 @@ correspond to state \( s \) when \( v \) is removed.
 	%
 	Otherwise, we know that \( G_t = G_{t'} \).
 	%
-	Let us have \( \delta \in \anac{G_{t'}} \)
-	and a consistent state \( s' \in S_{t'} \).
-	In \( G_t \), \( \delta \) is consistent with a state \( s \in S_t \).
-	Note that components in \( G_t \) and \( G_{t'} \) are the same.
+	For \( s \in S_t \),
+	let us have an almost NAC-coloring \( \delta \) consistent with \( s \).
+	We show all states in \( S_{t'} \) that may be consistent with \( \delta \).
+	We show how w.l.o.g.\ \( \blue \) half of \( s' \in S_{t'} \) looks
+	based on \( \blue \) half of \( s \).
+
+	Let \( v \) be in a \( \blue \) component \( C \) such that
+	\( C \) corresponds to no part in \( P_\blue \).
+	Then for \( s' \) it holds that \( \{v\} \in P_\blue' \).
 	%
-	We now describe how w.l.o.g.\ \( \blue \) half of \( s \) looks
-	based on the \( \blue \) half of \( s' \).
-	The halves do not influence ech other here.
+	Components neighboring in \( R_\blue \)
+	are also neighboring in \( R_\blue' \), therefore \( R_\blue \subseteq R_\blue' \).
 	%
-	If \( \{v\} \) is a part in \( P_\blue' \),
-	it is no longer considered in \( P_\blue \),
-	therefore \( P_\blue' \setminus \{\{v\}\} = P_\blue \).
-	All pairs with \( \{v\} \) are removed from \( R_\blue' \).
-	%
-	If \( \{v\} \) is not a part in \( P_\blue' \),
-	\( v \) is in another part of \( P_\blue' \).
-	In \( P_\blue \), the parts look the same except they do not
-	contain \( v \). Relation \( R_\blue' \) is updated analogically.
-	%
-	Either of these statements hold for the \( \blue \) half,
-	analogically for the \( \red \) half.
-	%
-	The mappings we prove are exactly \( \mathcal{P'} \) and \( \mathcal{R'} \)
-	in the statement of the lemma.
-	%
-	We showed mapping for each \( s' \in S_{t'} \) into \( S_t \).
-	%
-	\todo[inline]{Zvážit, jestli nemám ukazovat, že barvení \( s \) jsou konzistentní s \( s' \) a ne naopak.}
+	Component \( C \) may be neighboring with
+	components corresponding to parts in \( P_\blue' \).
+	% It cannot be specified with witch without deeper knowledge about \( \delta \),
+	% hence we consider all possible relations.
+	To cover all possible \( \delta \),
+	we consider all possible relations \( R_\blue' \).
+
+	Now let \( v \) in a component corresponding to a part \( p \in P_\blue \).
+	Then part in \( P_\blue' \) correspond to the same components and the only
+	change is that part \( p \) is replaced by \( p \cup \{v\} \).
+	Neighboring relation is updated accordingly.
+
+	By this we described \( \red \) and \( \blue \) halves of states in \( S_{t'} \)
+	such that they are consistent with the same almost NAC-colorings as \( s \).
+	We used exactly the same operations as in the statement of the lemma.
+
+	When we consider all states in \( S_t \), we cover all almost NAC-colorings on \( G_t \)
+	and hence also all states in \( S_{t'} \) must get \( s \in S_t \) to map to.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Old proof left for nostalgia reasons
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Let us have \( \delta \in \anac{G_{t'}} \)
+	% and a consistent state \( s' \in S_{t'} \).
+	% In \( G_t \), \( \delta \) is consistent with a state \( s \in S_t \).
+	% Note that components in \( G_t \) and \( G_{t'} \) are the same.
+	% %
+	% We now describe how w.l.o.g.\ \( \blue \) half of \( s \) looks
+	% based on the \( \blue \) half of \( s' \).
+	% The halves do not influence ech other here.
+	% %
+	% If \( \{v\} \) is a part in \( P_\blue' \),
+	% it is no longer considered in \( P_\blue \),
+	% therefore \( P_\blue' \setminus \{\{v\}\} = P_\blue \).
+	% All pairs with \( \{v\} \) are removed from \( R_\blue' \).
+	% %
+	% If \( \{v\} \) is not a part in \( P_\blue' \),
+	% \( v \) is in another part of \( P_\blue' \).
+	% In \( P_\blue \), the parts look the same except they do not
+	% contain \( v \). Relation \( R_\blue' \) is updated analogically.
+	% %
+	% Either of these statements hold for the \( \blue \) half,
+	% analogically for the \( \red \) half.
+	% %
+	% The mappings we prove are exactly \( \mathcal{P'} \) and \( \mathcal{R'} \)
+	% in the statement of the lemma.
+	% %
+	% We showed mapping for each \( s' \in S_{t'} \) into \( S_t \).
+	% %
 \end{proof}
 %
 
@@ -888,12 +935,12 @@ Now we state conditions for \( \red \) half of a state \( s \):
 	      therefore this is \emph{not allowed}.
 	      %
 	\item[Edge \( e \) connects two neighboring \( \red \) parts]
-	      This is \emph{\( \blue \)-allowed} as \( e \) is a bridge and
+	      This is \emph{\( \blue \)-allowed} as \( e \) is a connector and
 	      therefore the parts need to be neighboring.
 	      %
 	\item[Edge \( e \) connects two non-neighboring \( \red \) parts]
 	      This state is \emph{not allowed} as both parts
-	      are now neighboring as \( e \) is a bridge.
+	      are now neighboring as \( e \) is a connector.
 	      This is \emph{not allowed}.
 \end{description}
 %
@@ -1003,7 +1050,7 @@ Otherwise, a state is not allowed.
 	such that if \( u, v \) are in the same part in \( P_\red \), resp.\ \( P_\blue \),
 	there are parts \( \{u\}, \{v\} \) (singletons) in \( P_\blue \), resp.\ \( P_\red \),
 	as these vertices cannot be yet connected by \( \blue \), resp.\ \( \red \), edges.
-	Edge \( e \) is a bridge, so there must be a corresponding neighboring
+	Edge \( e \) is a connector, so there must be a corresponding neighboring
 	relation \( (\{u\}, \{v\}) \in R_\blue \), resp.\ \( R_\red \).
 	Other states are not consistent with any almost NAC-colorings.
 	This is exactly what we describe in the lemma.
@@ -1021,7 +1068,7 @@ Otherwise, a state is not allowed.
 	as there was no such \( \blue \) path before.
 	Therefore, there must be two \( \blue \) components \( p_1', p_2' \) in \( G_{t'} \)
 	connecting endpoints of \( e \) to \( f \).
-	Hence, \( f \) must be a bridge connecting \( p_1' \) and \( p_2' \),
+	Hence, \( f \) must be a connector connecting \( p_1' \) and \( p_2' \),
 	and parts \( p_1' \) and \( p_2' \) are neighboring.
 	But we do not consider such states in \( s_1', \dots, s_4' \).
 
@@ -1237,7 +1284,7 @@ merges that do not produce almost NAC-colorings.
 	in \( V_{t_1'} \), \( \delta_1' \) is not an almost NAC-coloring.
 	%
 	Therefore, \( f \) must be
-	a bridge connecting two \( \blue \) components \( p_1', p_2' \in P_{1,\blue} \),
+	a connector connecting two \( \blue \) components \( p_1', p_2' \in P_{1,\blue} \),
 	and the path has to also visit multiple vertices in \( V_{t_2'} \).
 	As shown in the proof of the merging map \( M \), \( \blue \) components
 	visited by such path are merged together.
@@ -1262,13 +1309,13 @@ merges that do not produce almost NAC-colorings.
 	there exist \( p_1', p_2' \in P_{i, a}'' : (p_1', p_2') \in R_{i, a}' \),
 	such that \( (p_1', p_2') \in R_{i, a}' \).
 	There also exists \( p \in P_{a} \) such that \( \bigcup_{p' \in P_{i, a}''} p' = p \).
-	This means that there exists a bridge \( \{u, v\} \) colored \( \bar{a} \) connecting
+	This means that there exists a connector \( \{u, v\} \) colored \( \bar{a} \) connecting
 	components corresponding to \( p_1' \) and \( p_2' \).
 	As \( p_1', p_2' \subseteq p \),
 	their components on \( G_{t_i'} \) are now merged
 	to a component \( C \) on \( G_t \) colored \( a \) corresponding to \( p \).
 	Then there exists a \( u \)-\( v \)-path in \( C \) colored \( a \).
-	An almost cycle is created from this path and the bridge \( \{u, v\} \).
+	An almost cycle is created from this path and the connector \( \{u, v\} \).
 \end{proof}
 %
 
@@ -1464,7 +1511,7 @@ such that \( f \in Y_t \) is colored w.l.o.g.\ \( \red \) in \( \delta_1' \)
 and \( \blue \) in \( \delta_2' \).
 But then \Cref{lemma:fpt_merging_map}
 still detects this pair as a bad state
-as \( f \) is a \( \red \) bridge in a (new) \( \blue \) connected component.
+as \( f \) is a \( \red \) connector in a (new) \( \blue \) connected component.
 
 Let us describe the idea how \IntroduceVertexWithEdgesNode{} works.
 Before, when a single edge was added,
@@ -1544,7 +1591,7 @@ from \JoinNode{}.
 % 	\item There is a path in \( F \) with
 % 	      one \( \blue \) and one \( \red \) edge
 % 	      according to coloring \( \lambda \).
-% 	      The \( \red \) edge becomes a bridge.
+% 	      The \( \red \) edge becomes a connector.
 % \end{itemize}
 % %
 % Now the same is done for \( \red \).
@@ -1566,155 +1613,6 @@ The runtime complexity added for \( v \) is therefore
 Both approaches are asymptotically equivalent,
 it remains to be seen which yields faster runtime complexity in practice.
 
-
-
-\todo[inline]{Zavedeno až v 5.\ kapitole!}
-\subsection{Monochromatic classes}
-
-Monochromatic classes can be used to significantly reduce the state space
-that needs to be searched as sometimes we can say that
-\( c[t, s] = 0 \) for some \( s \in S_t, t \in T \)
-without solving corresponding sub-problems.
-%
-We introduce a state space reduction for edges from edge bags,
-then we extend the result to multiple edges
-sharing the same monochromatic class,
-and lastly we improve the number of
-operations needed in the \IntroduceVertexWithEdgesNode{}.
-
-Let us start with a lemma that is yet unrelated to monochromatic classes.
-Note that the following optimizations can be only used in \IntroduceEdgeNode{}
-as the other nodes have empty edge bags.
-%
-\begin{lemma}
-	Let us have \( t \in T \) and an edge \( e = \{u, v\} \in Y_t \).
-	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S_t \)
-	it holds that
-	\( {\forall a \in \{\red, \blue\}} : {\forall p_a \in P_a} : {u \in p_a \Rightarrow v \not\in p_a} \),
-	then it also holds that \( c[t, s] = 0 \).
-\end{lemma}
-%
-The lemma states that vertices \( u, v \) incident to an edge must
-be share \( \red \) or \( \blue \) part.
-%
-\begin{proof}
-	For contradiction, suppose that such state is consistent
-	with some almost NAC-coloring \( \delta \) on \( G_t \).
-	The edge \( e \) has to be either \( \red \) or \( \blue \).
-	Let \( e \) be colored w.l.o.g.\ \( \blue \).
-	That means that both \( u, v \) are in the same \( \blue \) component.
-	But the state \( s \) states that \( u, v \) do not share a \( \blue \) component.
-	Then \( \delta \) is not consistent with state \( s \).
-	This is a contradiction.
-\end{proof}
-%
-
-\todo[inline]{This is most probably wrong!}
-We extend the result for monochromatic classes as follows:
-see that this is just a generalization of the previous theorem
-as an edge forms a trivial monochromatic class.
-%
-\begin{lemma}
-	Let us have \( t \in T \),
-	edges \( F \subseteq Y_t \) such that
-	they share the same monochromatic class and form a connected component.
-	Let us have vertices \( U = \{ u \mid \exists f \in F : u \in f \} \).
-	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S \)
-	it holds that
-	\( {\forall a \in \{\red, \blue\} }:{ \forall p_a \in P_a }:{ U \not\subset p_a} \),
-	then it also holds that \( c[t, s] = 0 \).
-\end{lemma}
-%
-\begin{proof}
-	For contradiction suppose that such state is consistent with
-	an almost NAC-coloring \( \delta \) on \( G_t \).
-	The edges \( F \) has to be either \( \red \) or \( \blue \).
-	Let w.l.o.g.\ edges in \( F \) be colored \( \blue \).
-	That means that all vertices in \( U \) are in the same \( \blue \) component (and part)
-	as the edges are from a monochromatic class.
-	But the state \( s \) states that there is a vertex \( u \in U \)
-	that does not share a \( \blue \) component with the other vertices in \( U \).
-	Then \( \delta \) is not consistent with state \( s \).
-	This is a contradiction.
-\end{proof}
-%
-
-Lastly, we show how \IntroduceVertexWithEdgesNode{} can be optimized.
-Colorings of \( F \) that do no match with known monochromatic classes
-are removed from \( \Lambda \). This also decreases the size of \( S_\Lambda \).
-
-We can extend this idea further by extracting colors of edges from \( Y_{t} \)
-based on \( s_t \in S_t \).
-For example, if the edge in \( Y_{t} \) lies in a \( \blue \) part,
-it must be colored blue and hence
-the other edges from the same monochromatic class
-must be also colored blue \( \blue \).
-
-
-\subsection{Connectivity}
-
-Along with the cache we can also hold an information about connectivity of
-vertices in bags.
-%
-\begin{definition}[Connectivity map]
-	Let \( t \in T \) be a node in a nice tree decomposition tree and
-	\( X_t \) be a bag of vertices.
-	A \emph{connectivity map} \( C_t \) is a partition of \( X_t \) such that
-	for each \( u, v \in X_t \), it holds that
-	\( \exists c_t \in C_t : u \in c_t \land v \in c_t \) if and only if
-	\( u, v \) are in the same component in \( G_t \).
-\end{definition}
-%
-
-In \Cref{lemma:fpt_merging_map}, we show how to merge
-two halves of two states. Let us by \( M': S_t \to \mathcal{F}(X_t) \) denote
-the operation of merging halves of a single state by the same means,
-obtaining a partition of \( X_t \) and dropping
-the neighboring relation as we do not need it.
-%
-\begin{lemma}
-	Let us have \( s \in S_t \) with connectivity map \( C_t \).
-	If \( M'(s) \ne C_t \), then \( c[t, s] = 0 \).
-\end{lemma}
-%
-\begin{proof}
-	For contradiction, suppose that such state \( s \)
-	is consistent with an almost NAC-coloring \( \delta \).
-	%
-	For each \( c_1, c_2 \in C_t, c_1 \ne c_2, u \in c_1, v \in c_2 \)
-	there is no \( u \)--\( v \)--path in \( G_t \).
-	Then there is also no path in the merged parts as
-	these are merged along a path according to \Cref{lemma:fpt_merging_map}.
-	%
-	The same argument with path holds also the other way around.
-\end{proof}
-%
-We show which conditions hold for a connectivity map
-for different types of neighboring nodes.
-Consider a node \( t \in T \) and its child \( t' \)
-or children \( t_1', t_2' \) in case of a \JoinNode{}.
-%
-For an \IntroduceVertexNode{}, it holds that
-\( C_t = C_{t'} \cup \{\{ v \}\} \).
-%
-For a \ForgetVertexNode{}, it holds that
-\( C_t = D(C_{t'}) \)
-where \( D \) is a map from \Cref{lemma:fpt_forget_vertex_node}
-deleting occurrences of the forgotten vertex from the partition given.
-%
-For an \IntroduceEdgeNode{}
-where edge \( \{u, v\} \) is introduced,
-if in \( C_{t'} \) vertices \( u, v \) are in the same part, \( C_t = C_{t'} \).
-Otherwise, \( u, v \) are in parts \( p_1', p_2' \), then
-\( C_t \cup \{p_1', p_2'\} = C_{t'} \cup \{ p_1' \cup p_2'\} \).
-%
-For a \JoinNode{},
-connectivity maps \( C_{t_1'}, C_{t_2'} \) are merged into
-a single connectivity map \( C_t \)
-the same way as when a \JoinNode{} is processed using merging map \( M \).
-%
-For a \LeafNode{},
-no vertices are present yet, so for the connectivity map it holds that \( C_t = \emptyset \).
 
 
 \subsection{NAC-coloring certificate}
@@ -1745,9 +1643,157 @@ but the whole cache does not need to be stored in memory the whole time.
 Only a single certificate can be obtained with this method.
 
 
+%
+
+% It is most probably true that monochromatic classes can be used
+% to reduce the search space.
+% The statement bellow need to be formalized better
+% and more refactoring for the cache function is needed as
+% now it would show the lower-bound of the number of almost NAC-colorings
+% that are a restriction of an NAC-coloring on \( G \).
+%
+% Monochromatic classes can be used to significantly reduce the state space
+% that needs to be searched as sometimes we can say that
+% \( c[t, s] = 0 \) for some \( s \in S_t, t \in T \)
+% without solving corresponding sub-problems.
+% %
+% We extend the result for monochromatic classes as follows:
+% see that this is just a generalization of the previous theorem
+% as an edge forms a trivial monochromatic class.
+% %
+% \begin{lemma}
+% 	Let us have \( t \in T \),
+% 	edges \( F \subseteq Y_t \) such that
+% 	they share the same monochromatic class and form a connected component.
+% 	Let us have vertices \( U = \{ u \mid \exists f \in F : u \in f \} \).
+% 	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S \)
+% 	it holds that
+% 	\( {\forall a \in \{\red, \blue\} }:{ \forall p_a \in P_a }:{ U \not\subset p_a} \),
+% 	then it also holds that \( c[t, s] = 0 \).
+% \end{lemma}
+% %
+% \begin{proof}
+% 	For contradiction suppose that such state is consistent with
+% 	an almost NAC-coloring \( \delta \) on \( G_t \).
+% 	The edges \( F \) has to be either \( \red \) or \( \blue \).
+% 	Let w.l.o.g.\ edges in \( F \) be colored \( \blue \).
+% 	That means that all vertices in \( U \) are in the same \( \blue \) component (and part)
+% 	as the edges are from a monochromatic class.
+% 	But the state \( s \) states that there is a vertex \( u \in U \)
+% 	that does not share a \( \blue \) component with the other vertices in \( U \).
+% 	Then \( \delta \) is not consistent with state \( s \).
+% 	This is a contradiction.
+% \end{proof}
+% %
+
+% Lastly, we show how \IntroduceVertexWithEdgesNode{} can be optimized.
+% Colorings of \( F \) that do no match with known monochromatic classes
+% are removed from \( \Lambda \). This also decreases the size of \( S_\Lambda \).
+
+% We can extend this idea further by extracting colors of edges from \( Y_{t} \)
+% based on \( s_t \in S_t \).
+% For example, if the edge in \( Y_{t} \) lies in a \( \blue \) part,
+% it must be colored blue and hence
+% the other edges from the same monochromatic class
+% must be also colored blue \( \blue \).
+
+
+\subsection{Connectivity}
+
+Along with the cache, we can also hold an information about connectivity of
+vertices in bags.
+%
+\begin{definition}[Connectivity map]
+	Let \( t \in T \) be a node in a nice tree decomposition tree and
+	\( X_t \) be a bag of vertices.
+	A \emph{connectivity map} \( C_t \) is a partition of \( X_t \) such that
+	for each \( u, v \in X_t \), it holds that
+	\( \exists c_t \in C_t : u \in c_t \land v \in c_t \) if and only if
+	\( u, v \) are in the same component in \( G_t \).
+\end{definition}
+%
+
+In \Cref{lemma:fpt_merging_map}, we show how to merge
+two halves of two states. Let us by \( M': S_t \to \mathcal{F}(X_t) \) denote
+the operation of merging halves of a single state by the same means,
+obtaining a partition of \( X_t \) and dropping
+the neighboring relation as we do not need it
+(it holds that it is empty).
+%
+\begin{lemma}
+	Let us have \( s \in S_t \) with connectivity map \( C_t \).
+	If \( M'(s) \ne C_t \), then \( c[t, s] = 0 \).
+\end{lemma}
+%
+\begin{proof}
+	For contradiction, suppose that such state \( s \)
+	is consistent with an almost NAC-coloring \( \delta \).
+	%
+	For each \( c_1, c_2 \in C_t, c_1 \ne c_2, u \in c_1, v \in c_2 \)
+	there is no \( u \)--\( v \)--path in \( G_t \).
+	Then there is also no path in the merged parts as
+	they are merged along a path in~\Cref{lemma:fpt_merging_map}.
+	%
+	The same argument with the path non-existence
+	holds also in the other direction.
+\end{proof}
+%
+We show which conditions hold for a connectivity map
+for different types of neighboring nodes.
+%
+For an \IntroduceVertexNode{}~\( t \) with child \( t' \), it holds that
+\( C_t = C_{t'} \cup \{\{ v \}\} \).
+%
+For a \ForgetVertexNode{}~\( t \) with child \( t' \), it holds that
+\( C_t = D(C_{t'}) \)
+where \( D \) is a map from \Cref{lemma:fpt_forget_vertex_node}
+deleting occurrences of the forgotten vertex from the partition given.
+%
+For an \IntroduceEdgeNode{}~\( t \) with child \( t' \)
+where edge \( \{u, v\} \) is introduced,
+if in \( C_{t'} \) vertices \( u, v \) are in the same part, \( C_t = C_{t'} \).
+Otherwise, \( u, v \) are in parts \( p_1', p_2' \), then
+\( C_t \cup \{p_1', p_2'\} = C_{t'} \cup \{ p_1' \cup p_2'\} \).
+%
+For a \JoinNode{}~\( t \) with children \( t_1', t_2' \),
+connectivity maps \( C_{t_1'}, C_{t_2'} \) are merged into
+a single connectivity map \( C_t \)
+the same way as when a \JoinNode{} is processed using merging map \( M \).
+%
+For a \LeafNode{}~\( t \),
+no vertices are present yet, so for the connectivity map it holds that \( C_t = \emptyset \).
+
+
 \subsection{Other optimizations}
 
-It is trivial to see that if the input graph has an articulation,
+We first introduce a state space reduction for edges from edge bags.
+%
+Note that the following optimizations can be only used in \IntroduceEdgeNode{}
+as the other nodes have empty edge bags by definition.
+%
+\begin{lemma}
+	Let us have \( t \in T \) and an edge \( e = \{u, v\} \in Y_t \).
+	If for a state \( s = (P_\red, R_\red, P_\blue, R_\blue) \in S_t \)
+	it holds that
+	\( {\forall a \in \{\red, \blue\}} : {\forall p_a \in P_a} : {u \in p_a \Rightarrow v \not\in p_a} \),
+	then it also holds that \( c[t, s] = 0 \).
+\end{lemma}
+%
+The lemma states that vertices \( u, v \) incident to an edge must
+be share \( \red \) or \( \blue \) part.
+%
+\begin{proof}
+	For contradiction, suppose that such state is consistent
+	with some almost NAC-coloring \( \delta \) on \( G_t \).
+	The edge \( e \) has to be either \( \red \) or \( \blue \).
+	Let \( e \) be colored w.l.o.g.\ \( \blue \).
+	That means that both \( u, v \) are in the same \( \blue \) component.
+	But the state \( s \) states that \( u, v \) do not share a \( \blue \) component.
+	Then \( \delta \) is not consistent with state \( s \).
+	This is a contradiction.
+\end{proof}
+
+As discussed before, if the input graph has an articulation,
 we can once again run our algorithm on each block of the graph separately
 and then multiply the results together to get the final result
 while also considering monochromatic colorings of each block.

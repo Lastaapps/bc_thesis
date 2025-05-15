@@ -12,6 +12,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 - extend implementation section/chapter
 - resolve todos
 - clear useless runs and classes from precomputed results
+- za všechna in narvat vlnovku, pozor na in na konci řádku
 
 ### Nice to have TODOS
 - more examples (where?)
@@ -27,6 +28,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 - todonotes, just in case
 - zkontrolovat latex chyby
 - uklidit toto README.md
+- Don't include other files --- NAC\_benchmark.ipynb, Visualization.ipynb, graphs-store/README.md
 
 
 ## Abstract

@@ -189,11 +189,6 @@ just by trying realizations and checking if they are flexible.
 In~\cite{legersky_original} a new edge coloring is proposed
 that corresponds with the existence of a flexible realization.
 
-\todo[inline]{
-	Picture, maybe prism again?
-	Vykrást https://arxiv.org/abs/2412.16018
-}
-
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let \( G \) be a graph and \( \delta: E(G) \to \{ \red, \blue \} \)
 	be a coloring of edges:
@@ -212,6 +207,79 @@ that corresponds with the existence of a flexible realization.
 \end{definition}
 %
 
+\begin{figure}[ht]
+	% original scale * 4/5
+	\centering
+	\begin{tikzpicture}[scale=1.2] % 1.5
+		\node[fvertex] (a) at (0,0) {};
+		\node[fvertex] (b) at (1,0) {};
+		\node[fvertex] (c) at (0.5,0.5) {};
+		\node[fvertex] (d) at (0,1) {};
+		\node[fvertex] (e) at (1,1) {};
+		\node[fvertex] (f) at (0.5,1.5) {};
+		\draw[edge] (a)edge(b) (b)edge(c) (c)edge(a) (d)edge(e) (e)edge(f) (f)edge(d) (a)edge(d) (b)edge(e) (c)edge(f);
+	\end{tikzpicture}
+	\quad
+	\begin{tikzpicture}[scale=1.2] % 1.5
+		\node[vertex] (a) at (0,0) {};
+		\node[vertex] (b) at (1,0) {};
+		\node[vertex] (c) at (0.5,0.5) {};
+		\node[vertex] (d) at (0,1.5) {};
+		\node[vertex] (e) at (1,1.5) {};
+		\node[vertex] (f) at (0.5,1) {};
+		\draw[bedge] (a)edge(b) (b)edge(c) (c)edge(a) (d)edge(e) (e)edge(f) (f)edge(d) ;
+		\draw[redge] (a)edge(d) (b)edge(e) (c)edge(f);
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}[scale=0.55] % 0.75
+		\draw[black!50!white, dashed] (-1.5,0)edge(2.3,0);
+		\draw[black!50!white, dashed] (0,1.55)edge(0,-2.1);
+		\node[fvertex] (2) at (1.8, 0) {};
+		\node[fvertex] (5) at (-1., 0) {};
+		\node[fvertex] (7) at (0.7, 0) {};
+		\node[fvertex] (1) at (0, -1.75) {};
+		\node[fvertex] (6) at (0,  1.2) {};
+		\node[fvertex] (4) at (0, -0.8) {};
+		\draw[edge]  (6)edge(5) (5)edge(4) (7)edge(4) (7)edge(6);
+		\draw[edge] (2)edge(4) (2)edge(6);
+		\draw[edge] (1)edge(5) (7)edge(1) ;
+		\draw[edge] (2)edge(1);
+	\end{tikzpicture}
+	\quad
+	\begin{tikzpicture}[scale=0.96] % 1.2
+		\node[vertex] (a1) at (-0.5, -0.866025) {};
+		\node[vertex] (a2) at (0.5, -0.866025) {};
+		\node[vertex] (a3) at (1., 0.) {};
+		\node[vertex] (a4) at (0.5, 0.866025) {};
+		\node[vertex] (a5) at (-0.5, 0.866025) {};
+		\node[vertex] (a6) at (-1.,  0.) {};
+		\draw[bedge] (a1)edge(a2) (a1)edge(a4) (a1)edge(a6);
+		\draw[redge] (a2)edge(a3) (a2)edge(a5) (a3)edge(a4) (a3)edge(a6) (a5)edge(a4) (a5)edge(a6);
+	\end{tikzpicture}
+	\quad
+	\begin{tikzpicture}[scale=0.96] % 1.2
+		\node[vertex] (a1) at (-0.5, -0.866025) {};
+		\node[vertex] (a2) at (0.5, -0.866025) {};
+		\node[vertex] (a3) at (1., 0.) {};
+		\node[vertex] (a4) at (0.5, 0.866025) {};
+		\node[vertex] (a5) at (-0.5, 0.866025) {};
+		\node[vertex] (a6) at (-1.,  0.) {};
+		\draw[bedge] (a1)edge(a2) (a1)edge(a4) (a2)edge(a3) (a3)edge(a4) (a5)edge(a6);
+		\draw[redge] (a1)edge(a6) (a2)edge(a5) (a3)edge(a6) (a5)edge(a4) ;
+	\end{tikzpicture}
+	\caption[NAC-colorings of $3$-prism and $K_{3,3}$]{
+		The $3$-prism and $K_{3,3}$ are rigid, but both have flexible
+		realizations.
+		The $3$-prism has a unique NAC-coloring modulo swapping colors,
+		while all NAC-colorings of $K_{3,3}$ are isomorphic to the two displayed ones.
+		The figures are taken from~\cite{stable_cuts_legersky}.
+	}%
+	\label{fig:3prismK33flexible}
+\end{figure}
+
+An example of NAC-coloring and corresponding flexible realization
+can be seen in \Cref{fig:3prismK33flexible}.
+%
 As shown in~\cite{np_complete}, it is NP-complete to decide if a graph has a NAC-coloring.
 We elaborate further on this in later chapters.
 Let \( E_\red\), resp.\ \( E_\blue \), be edges colored by \( \red \), resp.~\( \blue \),
