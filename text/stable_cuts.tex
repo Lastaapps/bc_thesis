@@ -140,10 +140,8 @@ $4+\varepsilon$ for any $\varepsilon > 0$ admits a stable cut~\cite{stable_cuts_
 Both results are similar to what we show for NAC-colorings in \Cref{chapter:np}.
 %
 
-\section{Algorithms}
-
-\subsection{Approaches}%
-\label{sec:stable_cut_approaches}
+\section{Algorithms}%
+\label{sec:stable_cut_algo}
 
 The papers~\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit} do not provide
 an algorithm to find a stable cut (if present)
@@ -206,9 +204,6 @@ was presented as a practical result of the following theorem.
 	then for every vertex \( v \in V(G) \), \( G \) has a stable cut avoiding \( v \).
 \end{theorem}
 %
-
-\subsection{Implementation}%
-\label{sec:stable_cuts_implementation}
 
 Notice that~\Cref{alg:stable_cut_flexible}
 accepts vertices \( u, v \) arbitrary as long as they do not share a rigid component.

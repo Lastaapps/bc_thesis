@@ -23,8 +23,11 @@ and show running time and internal search optimizations for various graph classe
 The main question regarding NAC-coloring search is whether a graph has a NAC-coloring.
 We usually ask the algorithm to not only answer yes, but to also provide a certificate.
 %
-For flexible graphs, it is algorithmically quite simple to find a NAC-coloring,
-so this question is more interesting for rigid graphs.
+For flexible graphs, it is algorithmically quite simple to find a NAC-coloring.
+Polynomial \Cref{alg:stable_cut_flexible}
+can be used for flexible graphs,
+moreover as we show later, often even the naive approach is acceptable.
+Hence, this question is more interesting for rigid graphs.
 %
 For flexible graphs, it is more interesting to ask for the number of NAC-colorings
 of a graph.

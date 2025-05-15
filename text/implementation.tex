@@ -71,8 +71,9 @@ used by \Cref{sec:small_cycles}
 and some heuristics.
 %
 In \Cref{sec:polynomial_optimizations},
-we present checks that can in polynomial time
-sometimes find a NAC-coloring or determine that there is none.
+we present checks that can
+sometimes find a NAC-coloring in polynomial time
+or determine that there is none.
 These checks are implemented in \texttt{existence.py} and
 used mostly from \texttt{single.py} that is the entry-point
 for a single NAC-coloring search.
@@ -93,9 +94,9 @@ and \texttt{strategies\_merging.py}.
 The code related to finding stable cuts in flexible graphs
 is implemented in directory \texttt{stablecut}.
 %
-The algorithm described in~\Cref{sec:stable_cuts_implementation}
+The algorithm described in~\Cref{sec:stable_cuts_algo}
 is implemented in \texttt{flexible\_graphs.py}.
-While other helper functions related to cuts and stable sets
+Other helper functions related to cuts and stable sets
 are implemented in \texttt{util.py}%
 \nohznamka{
 	Note that some changes were done
@@ -104,7 +105,7 @@ are implemented in \texttt{util.py}%
 }.
 
 
-\section{Graph datasets}
+\subsection{Graph datasets}
 
 In \texttt{graphs\_store}, we store datasets used for benchmarking.
 Graphs are either obtained from~\cite{extremal_graphs},
@@ -113,7 +114,7 @@ or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}
 Graph are stored in Graph6 or Sparse6 formats~\cite{graph6}.
 %
 Files and directories store these graph classes:
-minimally rigid graph, no 3 nor 4 cycles, globally rigid graph,
+minimally rigid graph, graphs with no three nor four cycles, globally rigid graph,
 and graphs with no NAC-coloring, see~\nameref{chapter:attachments}.
 %
 The code for working with datasets is stored in directory \texttt{benchmarks}.
@@ -152,7 +153,7 @@ File \texttt{shell.nix} can be used for project setup on NixOS\@.
 
 In this section,
 we describe the main entry points to our library.
-%
+
 To call algorithm~\Cref{alg:stable_cut_flexible},
 first import function \texttt{stable\_cut\_in\_flexible\_graph}
 from module \texttt{stablecut.flexible\_graphs}.
@@ -178,21 +179,21 @@ Notable parameters are:
 \begin{itemize}
 	\item \texttt{graph} is a graph to search on.
 	\item \texttt{algorithm} is a string that can be either
-	      \emph{naive} for \Naive{},
-	      \emph{cycles} for \NaiveCycles{},
-	      or \emph{subgraphs-{s}-{m}-{k}} for \Subgraphs{},
-	      where \( s \) stands for a splitting strategy,
-	      \( m \) for a merging strategy,
-	      and \( k \) for the size of subgraphs.
+	      \texttt{naive} for \Naive{},
+	      \texttt{cycles} for \NaiveCycles{},
+	      or \texttt{subgraphs-\{s\}-\{m\}-\{k\}} for \Subgraphs{},
+	      where \texttt{s} stands for a splitting strategy,
+	      \texttt{m} for a merging strategy,
+	      and \texttt{k} for the size of subgraphs.
 	      %
 	      Notable split strategies are
-	      \emph{none} for \None{},
-	      \emph{neighbors} for \Neighbors{}, and
-	      \emph{neighbors\_degree} for \NeighborsDegree{},
+	      \texttt{none} for \None{},
+	      \texttt{neighbors} for \Neighbors{}, and
+	      \texttt{neighbors\_degree} for \NeighborsDegree{},
 	      %
 	      notable merging strategies are
-	      \emph{linear} for \MergeLinear{} and
-	      \emph{shared\_vertices} for \SharedVertices{}.
+	      \texttt{linear} for \MergeLinear{} and
+	      \texttt{shared\_vertices} for \SharedVertices{}.
 	      %
 	      Names of other strategies can be found in \texttt{algorithms.py}.
 	\item \texttt{monochromatic\_class\_type} sets
@@ -204,7 +205,8 @@ Notable parameters are:
 	      as if we can decide the graph has no NAC-coloring,
 	      the whole check can be skipped.
 \end{itemize}
-
+%
+An iterator is returned, so the colorings can be listed lazily.
 
 
 \section{Implementation details}
@@ -214,7 +216,7 @@ in case a reader of this thesis want tho examine the code.
 %
 To improve reader's understanding of the code,
 we first describe common function parameters:
-\texttt{graph} repressing the subgraph where NAC-colorings should be found.
+\texttt{graph} represents a (sub)graph where NAC-colorings should be found.
 %
 \texttt{comp\_graph} is a graph where vertices are some integer IDs of monochromatic classes
 and edges exist if the classes are neighboring,
