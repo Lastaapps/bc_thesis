@@ -5,12 +5,12 @@
 
 	It has been previously shown that it is NP-complete to decide
 	if a~graph has a~NAC-coloring.
-	One could hope that for graphs with small maximum degree
+	One could hope that for graphs with a small maximum degree,
 	the~problem becomes somewhat simpler.
-	In this chapter we show that this is not the~case
+	In this chapter, we show that this is not the~case
 	for graphs with maximum degree five --- the~problem is still NP-complete.
 	A~graph is constructed from gadgets and equivalence
-	with NAC-coloring existence and 3-SAT satisfiability is proved.
+	with NAC-coloring existence, and 3-SAT satisfiability is proved.
 	Later we show the~same for graphs with average degree of
 	$4+\varepsilon$ of any $\varepsilon > 0$.
 
@@ -28,8 +28,8 @@ degree in the~constructed graph to five.
 In this section we describe the~main idea and gadgets used
 in the~original proof of NAC-coloring NP-completeness~\cite{np_complete}.
 
-For a~reduction from other NP-complete problem
-we use the~well known \emph{3-SAT} problem.
+For a~reduction from another NP-complete problem
+we use the~well-known \emph{3-SAT} problem.
 Propositional logic SAT answers the~question
 whether the~formula is satisfiable ---
 there exists a~truth assignment of variables that satisfies the~formula.
@@ -42,18 +42,18 @@ It was shown that 3-SAT is NP-complete,
 and it is a~common tool for NP-completeness proofs~\cite{3-sat}.
 
 First, for a~formula~\( \phi \) we create a~graph \( G_\phi \).
-Alongside the~graph an~edge-map is introduced mapping into the~literals
+Alongside the~graph, an~edge-map is introduced mapping into the~literals
 of \( \phi \). Recall that for an~elementary variable \( x_i \), the~literals
 are both \( x_i \) and \( \neg x_i \). We denote \( \lnot x_i \) by \( \bar{x}_i \).
 There are also literals \( t \) and \( f \) for \( \true \) and \( \false \).
-Note, that the~goal is to color literals where \( \true \) is assigned \( \blue \)
+Note that the~goal is to color literals where \( \true \) is assigned \( \blue \)
 and \( \false \) is assigned \( \red \).
 
 To construct \( G_\phi \), for each literal \( x_i, \bar{x}_i\) and \( t, f \),
 a~\emph{connecting edge} labeled by the~literal is added to \( G_\phi \).
-For each literal we add a~five-cycle \( A_i \) to \( G_\phi \)
+For each literal, we add a~five-cycle \( A_i \) to \( G_\phi \)
 such that the~edges are labeled by \( x_i, x_i, \bar{x}_i, \bar{x}_i, t \).
-Then, also for each literal we add a~four-cycle \( B_i \) to \( G_\phi \)
+Then also for each literal, we add a~four-cycle \( B_i \) to \( G_\phi \)
 such that the~edges are labeled by \( x_i, \bar{x}_i, t, f \).
 Lastly, for each clause \( \hat{x}_{i,1} \lor	\hat{x}_{i,2} \lor \hat{x}_{i,3} \)
 a~seven-cycle \( C_i \) is added to \( G_\phi \)
@@ -122,11 +122,11 @@ The~goal is to create a~truth assignment~\( \tau \).
 W.l.o.g.\ let the~connecting edge corresponding to \( \true \) is colored \( \blue \).
 The~elementary formulas colored by \( \blue \) are assigned \( \true \) in~\( \tau \),
 the~other formulas are assigned \( \false \).
-We show that \( \phi \) is satisfiable with assignment \( \tau \).
+We show that \( \phi \) is satisfied with assignment \( \tau \).
 Because of cycles \( A_i \) and \( B_i \), literals \( x_i \) and \( \bar{x}_i \)
-must have different color. In cycles \( C_i \) corresponding to clauses
-at least one of \( \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,3} \) must be colored \( \blue \),
-otherwise an~almost cycle is formed as the~last edge labeled by \( \true \) is colored \( \blue \).
+must have different colors. In cycles \( C_i \) corresponding to clauses
+at least one of \( \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,3} \) must be colored \( \blue \).
+Otherwise an~almost cycle is formed as the~last edge labeled by \( \true \) is colored \( \blue \).
 Therefore, each in each clause at least one literal is assigned \( \true \)
 and therefore all clauses and \( \phi \) itself are satisfied.
 
@@ -157,13 +157,13 @@ Now for every occurrence of \( x_i \) in a~clause degree is increased by four.
 Degrees of vertices of the~\( \true \) and \( \false \) connecting edges
 have even higher degrees.
 %
-The~degrees of vertices in the~cycles are bounded by six
+The~degrees of vertices in the~cycles are bounded by six,
 and the~degrees of vertices inside connecting elements are bounded by seven.
 
 
 \section{Graphs with maximum degree five}
 
-In the~previous proof there are no guaranties about
+In the~previous proof, there are no guaranties about
 the~degree of vertices in the~graph. The~vertices incident to the~connecting edges
 have high degrees, proportional to the~number of clauses.
 We propose different gadgets where we bound the~maximum degree.
@@ -320,7 +320,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	For each variable $x_i$, we create two gadgets:
 	one with cycle $A_i$ in the~center
 	with the~edges of the~cycle linked using braced ladders
-	to the~trains $x_i, \bar{x}_i$ and $t$
+	to the~trains $x_i, \bar{x}_i$ and $t$,
 	and the~other linked to the~trains $x_i, \bar{x}_i, t$ and $f$
 	according to \Cref{fig:proof_enforce_true_false}.
 
@@ -461,7 +461,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 		\end{tikzpicture}
 		\caption[Gadgets for literals with cycles \( A_i \) and \( B_i \)]{
 			\centering The~gadgets for every variable $x_i$.
-			For all variables together they enforce that the~trains $x_i$ and $\bar{x}_i$ have different colors.}%
+			For all variables together, they enforce that the~trains $x_i$ and $\bar{x}_i$ have different colors.}%
 		\label{fig:proof_enforce_true_false}
 	\end{figure}
 
@@ -649,7 +649,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	Let the~train $t$ be blue.
 	We derive some properties of the~NAC-coloring from the~graph.
 	We prove that the~trains $x_i$ and~$\bar{x}_i$
-	are colored with different colors for every $i$
+	are colored with different colors for every $i$,
 	and the~train $f$ is red.
 
 	Assume for contradiction that the~train $f$ is blue.
@@ -669,8 +669,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	otherwise \false{}.
 	Each cause $L_i$ is satisfied since
 	in every cycle $C_i$, at least one of
-	the~literals $\hat{x}_{i,j}$ corresponds to blue colored
-	edges, otherwise an~almost red cycle is formed.
+	the~literals $\hat{x}_{i,j}$ corresponds to edges blue colored.
+	Otherwise an~almost red cycle is formed.
 	Therefore, a~truth assignment for $\phi$ can be obtained
 	from a~NAC-coloring of~$G_\phi$ in polynomial time.
 
@@ -684,8 +684,8 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	the~coloring $\delta$ is surjective.
 
 	Suppose there is an~almost cycle $C$.
-	Let $e=\{u, v\}$ be the~edge of the~almost cycle $C$ that has the~opposite color
-	than all the~other edges of $C$.
+	Let $e=\{u, v\}$ be the~edge of the~almost cycle $C$ that has the color opposite
+	to all other edges of $C$.
 	The~vertices $u$ and $v$ must be contained in multiple \trcon{} components
 	since these are monochromatic.
 	In the~gadgets, all such possibilities for $e$ are indicated by edges with yellow end vertices.
@@ -704,7 +704,7 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 	For the~third gadget in~\Cref{fig:proof_clause},
 	suppose first that $e$ is the~edge in cycle $C_i$ labelled $t$.
 	Since it is blue, the~edges labelled $\hat{x}_{i,1}$ and $\hat{x}_{i,3}$ are red.
-	The~edges labelled $\hat{x}_{i,2}$ are blue since the~$i$-th  clause evaluates to \true{}.
+	The~edges labelled $\hat{x}_{i,2}$ are blue since the~$i$-th clause evaluates to \true{}.
 	Hence, nor $C_i$ nor any other cycle inside the~gadget is an~almost red cycle.
 	Since every cycle containing $e$ that does not lie entirely in the~gadget
 	has to pass through some of the 3-prism subgraphs in the~gadget, it contains another blue edge labelled by $t$.
@@ -716,11 +716,11 @@ We already presented this proof in our previous paper~\cite{my_paper}.
 
 It may not be obvious why 3-prisms in clause gadget
 (\Cref{fig:proof_clause})
-are really needed. We present a~counter example.
+are really needed. We present a~counter-example.
 Let us have a 3-CNF formula~\( \phi = (A \lor B \lor C) \land (\lnot A~\lor D \lor B) \).
 For each satisfiable truth assignment, there should be a~NAC-coloring in~\( G_\phi \).
 %
-This formula is satisfiable for example if \( C \) and \( D \) are assigned \( \true \)
+This formula is satisfiable, for example, if \( C \) and \( D \) are assigned \( \true \)
 and all the~other literals are assigned \( \false \).
 If we create corresponding \( \red \)-\( \blue \)-coloring in~\( G_\phi \)
 where the~cause gadgets do not have the 3-prisms, an~almost cycle is created:

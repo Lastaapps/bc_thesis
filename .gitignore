@@ -32,5 +32,6 @@ _minted/
 /build/
 
 *.pdf
+*.bkp
 !assets/*.pdf
 styles

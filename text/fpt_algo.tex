@@ -71,7 +71,7 @@ that exploits the~tree-likeness of a~graph.
 \begin{definition}[Tree decomposition~\cite{book_parametrized_algorithms}]
 	A~\emph{tree decomposition} of a~graph~\( G \) is
 	a~pair \( (T, {\{X_t\}}_{t \in V ( T )}) \)
-	where \( T \) is decomposition tree and every node \( t \)
+	where \( T \) is a decomposition tree and every node \( t \)
 	is assigned a~bag \( X_t \subseteq V(G) \) such that the~following hold:
 	%
 	\begin{enumerate}
@@ -95,7 +95,7 @@ that exploits the~tree-likeness of a~graph.
 %
 The~width is decreased by one, so the~treewidth of a~tree is one.
 
-Throughout the~chapter we use term \emph{vertex} for vertices of \( G \)
+Throughout the~chapter, we use the term \emph{vertex} for vertices of \( G \)
 and \emph{node} for nodes of \( T \).
 We also shorten \( t \in V(T) \) to \( t \in T \).
 
@@ -123,7 +123,7 @@ The~lemma also reads as:
 are distinct connected components''.
 
 For a~graph, many different tree decompositions can be obtained.
-There may be for example multiple nodes with same bags or just a~single node.
+There may be multiple nodes with the same bags or just a~single node.
 We also have no guarantee how two neighboring bags differ --- how many vertices changed.
 Therefore, we want to define \emph{a nice tree decomposition} where neighboring nodes
 represent some useful change between two bags.
@@ -151,24 +151,28 @@ let \( r \in T \) be the~root node.
 	\end{itemize}
 	%
 	We denote the~root node \( r \) by \RootNode{} and leaf nodes by \LeafNode{}.
-	Vertex bags of these nodes are usually empty as in our case,
+	Vertex bags of these nodes are usually empty, as in our case,
 	but sometimes it is beneficial
 	for the~algorithm (like \textsc{SteinerTree}) that they contain a~single vertex.
 \end{definition}
 %
 \begin{figure}[ht]
 	\begin{center}
-		\includegraphics[width=0.80\textwidth]{./assets/nice_tree_decomposition.png}
+		\includegraphics[width=0.95\textwidth]{./assets/nice_tree_decomposition}
 	\end{center}
-	\caption[Nice tree decomposition]{An example of a~nice tree decomposition with width three~\cite{nice_tree_decomposition_img}.
-		In (A) you can see the~decomposed graph, in (B) a~nice tree decomposition
+	\caption[Nice tree decomposition]{
+		An example of a~nice tree decomposition with width three.
+		On the~left, you can see the~decomposed graph,
+		on the~right, a~nice tree decomposition
 		with \LeafNode{}s on the~right and the~\RootNode{} on the~left.
+		Figure inspired by~\cite{nice_tree_decomposition_img}.
 	}%
 	\label{fig:nice_tree_decomposition}
 \end{figure}
 
-\todo[inline]{Do in Tikz or SVG, maybe. If so, make leaf nodes empty}
-
+An example of a nice tree decomposition with bags showed in vertices
+is shown in \cref{fig:nice_tree_decomposition}.
+%
 Note that a~vertex \( v \in V(G) \) can be introduced multiple times
 (in multiple branches of \( T \)),
 but forgotten only once.
@@ -198,7 +202,7 @@ In~\IntroduceVertexNode{} introducing \( v \), all the~edges incident to \( v \)
 to vertices in~\( X_{t'} \) are usually considered while processing \( t \).
 %
 For some problems, it is beneficial to divide this operation further.
-First a~vertex \( v \) is introduced with no edges using a~\IntroduceVertexNode{}
+First, a~vertex \( v \) is introduced with no edges using a~\IntroduceVertexNode{},
 and later all the~edges corresponding to the~vertex are introduced using new \IntroduceEdgeNode{}s
 just before one of its vertices is forgotten.
 
@@ -250,13 +254,11 @@ This can be seen that the~edges are added right before one of the~vertices
 they are incident to is forgotten. \ForgetVertexNode{} removes all the~edges
 that are incident to the~forgotten vertex.
 
-\todo[inline]{Image, maybe?}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Monadic second-order logic}
 
 Monadic second-order logic~(\MSO{}) on graphs is a~logical system based on
-well known predicate logic.
+well-known predicate logic.
 In the~world of parameterized algorithms,
 it often comes handy --- if we are able to represent a~problem using~\MSO{},
 then there exists an~FPT algorithm parameterized by treewidth
@@ -266,7 +268,7 @@ that can solve the~problem~\cite{tree_width_mso}.
 
 In the~following paragraphs we paraphrase and simplify formal definition
 from~\cite{book_parametrized_algorithms}.
-We presume that reader is already familiar with first-order predicate logic.
+We presume that the reader is already familiar with first-order predicate logic.
 Second-order predicate logic as an~extension of first-order predicate logic,
 that adds option to quantify over predicates.
 
@@ -304,7 +306,7 @@ If \( \phi \) is true in~\( \langle G, \Sigma^G \rangle \),
 then \( \langle G, \Sigma^G \rangle \)
 is called a~\emph{model} of \( \phi \)~\cite{book_parametrized_algorithms}.
 %
-To form atomic formulas in~\MSO{}, we allow only following base predicates:
+To form atomic formulas in~\MSO{}, we allow only the following base predicates:
 %
 \begin{itemize}
 	\item For \( u \) representing a~vertex (edge) variable
@@ -324,13 +326,13 @@ subsets of vertices and subsets of edges.
 
 It is beneficial to define auxiliary predicates to simplify our work.
 We show examples taken from~\cite{book_parametrized_algorithms}.
-First we show predicate \( \text{adj} \) represents if two vertices are adjacent.
+First, we show predicate \( \text{adj} \) represents if two vertices are adjacent.
 %
 \begin{align*}
 	\text{adj}(u, v) \coloneqq (u \ne v) \land (\exists e \in E : \inc (u, e) \land \inc (v, e))
 \end{align*}
 %
-For a~graph \( G = (V, E) \), we can represent connectivity of its induced subgraph
+For a~graph \( G = (V, E) \), we can represent the connectivity of its induced subgraph
 on vertices \( X \subseteq V \) with the~following predicate~\cite{book_parametrized_algorithms}.
 %
 \begin{align*}
@@ -353,7 +355,7 @@ For \( X = V \), the~formula would read as:
 
 \subsection{Relation to treewidth}
 
-In the~following, for a~formula~\( \phi \) by \( \|\phi\| \)
+In the following, for a~formula~\( \phi \) by \( \|\phi\| \)
 we denote the~length of the~encoding of \( \phi \) as a~string.
 %
 \begin{theorem}[Courcelle's theorem,~\cite{tree_width_mso,book_parametrized_algorithms}]%
@@ -373,13 +375,13 @@ polynomial in~\( n \), but we are given no guaranties about the~complexity of~\(
 
 \subsection{Expressing NAC-colorings using \( \text{MSO}_2 \)}
 
-In this section we present results from our previous paper~\cite{my_paper}.
+In this section, we present results from our previous paper~\cite{my_paper}.
 By \( V \) we denote the~set of all vertices and
 by \( E \) the~set of all edges.
 We start by defining other auxiliary predicates:
 %
 \begin{itemize}
-	\item For a~subset of edges \( F \) we define predicate
+	\item For a~subset of edges \( F \), we define predicate
 	      %
 	      \begin{align*}
 		      \text{deg2}(F) \coloneqq \predsp
@@ -389,7 +391,7 @@ We start by defining other auxiliary predicates:
 	      %
 	      The~predicate says that all vertices incident to edges in~\( F \) have degree two.
 	      %
-	\item For a~subset of vertices \( U \) and a~subset of edges \( F \) we define predicate
+	\item For a~subset of vertices \( U \) and a~subset of edges \( F \), we define predicate
 	      %
 	      \begin{align*}
 		      \text{incident}(U, F) \coloneqq \predsp
@@ -401,7 +403,7 @@ We start by defining other auxiliary predicates:
 	      and that \( F \) are edges of the~subgraph induced by \( U \),
 	      e.g. \( (U, F) \) is an~induced subgraph of \( (V, E) \).
 	      %
-	\item For a~subset of edges \( F \) we define predicate
+	\item For a~subset of edges \( F \), we define predicate
 	      %
 	      \begin{align*}
 		      \text{cycle}(F) \coloneqq \predsp
@@ -411,7 +413,7 @@ We start by defining other auxiliary predicates:
 	      %
 	      The~predicate says that edges \( F \) form a~cycle.
 	      %
-	\item For subsets of edges \( F_1, F_2 \) we define predicate
+	\item For subsets of edges \( F_1, F_2 \), we define predicate
 	      %
 	      \begin{align*}
 		      \text{partition}(F_1, F_2) \coloneqq \predsp
@@ -422,7 +424,7 @@ We start by defining other auxiliary predicates:
 	      %
 	      The~formula reads as: ``Both the~partitions are not empty,
 	      and each edge is in exactly one of the~partitions''.
-	\item For subsets of edges \( C, F_\red, F_\blue \) we define predicate
+	\item For subsets of edges \( C, F_\red, F_\blue \), we define predicate
 	      %
 	      \begin{align*}
 		      \text{NACcond}(C, F_\red, F_\blue) \coloneqq \predsp
@@ -439,7 +441,7 @@ We start by defining other auxiliary predicates:
 \end{itemize}
 %
 
-With the~predicates ready, we can proceed approach to the~theorem.
+With the~predicates ready, we can proceed to the~theorem.
 %
 \begin{theorem}[\cite{my_paper}]
 	The~problem of existence of a~NAC-coloring is fixed-parameter
@@ -466,7 +468,7 @@ The~proof shows us that there exists such an~algorithm,
 but it does not give us explicit steps to follow
 (even tough they can be deduced from the~original proof of \Cref{theorem:courcelles_theorem}).
 Still, the~complexity guaranties of the~algorithm are not very clear.
-In the~following section we define our
+In the~following section, we define our
 own FPT algorithm that solves the~NAC-coloring problem
 while not relying on~\MSO{}.
 
@@ -504,7 +506,7 @@ When we talk about a~component, we mean a~connected component.
 \end{definition}
 %
 
-First we want to build the~intuition for the~upcoming operations.
+First, we want to build the~intuition for the~upcoming operations.
 Let us have a~graph \( G \) and all NAC-colorings of the~graph \( \nac{G} \).
 Let us add an~edge \( e = \{u, v\}, e \not\in E(G) \) to form the~graph~\( G' \).
 We want to obtain~\( \nac{G'} \) based on \( \nac{G} \).
@@ -512,7 +514,7 @@ We want to obtain~\( \nac{G'} \) based on \( \nac{G} \).
 Let us have \( \delta \in \nac{G} \),
 we want to extend it to \( \delta' \) where w.l.o.g.\ \( \delta'(e) = \blue \).
 Coloring \( \delta' \) is a~NAC-coloring unless an~almost cycle is formed in~\( G' \).
-In that case one of the~following cases must be true:
+In that case, one of the~following cases must be true:
 %
 \begin{itemize}
 	\item Both vertices \( u, v \) are in the~same component in~\( G[\Ered] \).
@@ -526,12 +528,12 @@ In that case one of the~following cases must be true:
 \end{itemize}
 %
 In all other cases, an~almost cycle cannot be formed by adding a~\( \blue \) edge \( e \).
-Note that a~vertex cannot be in multiple component for the~given color
+Note that a~vertex cannot be in multiple components for the~given color
 as this fact would mean that the~components are not maximal.
 
 To create \( \nac{G'} \), we extend the~colorings
 in~\( \nac{G} \cup \{ \delta_\red \} \), where \( \delta_\red \)
-colors all the~edges in~\( G \) with \( \red \) color.
+colors all edges in~\( G \) with \( \red \) color.
 We do the~whole checking process likewise
 for \( e \) colored \( \red \) --- all the~colors used get swapped.
 Then we keep only the~surjective colorings that did not form an~almost cycle.
@@ -548,16 +550,16 @@ the~number of all NAC-colorings of~\( G \) is obtained.
 Note that a~graph with no edges has no almost NAC-colorings.
 
 We use \emph{dynamic programming}, a~well-known technique for solving problems
-where the~problem can be subdivided into smaller sub-problems.
-Usually, some base cases are solved trivially and then a~sub-problem
-is solved based on the~solution of its smaller sub-problems.
+where the~problem can be subdivided into smaller subproblems.
+Usually, some base cases are solved trivially and then a~subproblem
+is solved based on the~solution of its smaller subproblems.
 %
-Often it is a~case, that a~smaller sub-problem would be solved multiple times
-as it is a~part of multiple larger sub-problems.
-Its first result is therefore cached and reused
+Often it is a~case that a~smaller subproblem would be solved multiple times
+as it is a~part of multiple larger subproblems.
+Its first result is therefore cached and reused,
 reducing the~total running time significantly.
 %
-In other cases like ours it is a~nice approach how to traverse
+In other cases like ours, it is a~common approach for traversing
 some data structure like matrix or a~tree.
 %
 There are many popular dynamic programming algorithms
@@ -601,18 +603,18 @@ When we talk about \emph{\( \red \) half of a~state},
 we mean \( P_\red \) and \( R_\red \),
 analogically for \( \blue \).
 %
-Note that the~state space is somewhat large,
-we elaborate on the~size in the~proof of~\Cref{thm:fpt_algo}.
+Note that the~state space is somewhat large.
+We elaborate on the~size in the~proof of~\Cref{thm:fpt_algo}.
 %
 \begin{observation}
 	For each \rbcol{} \( \gamma \) on \( G_t \),
-	there is single state \( s \in S_t \) consistent with it.
+	there is a single state \( s \in S_t \) consistent with it.
 	Multiple \rbcol{} can be consistent with a~single state.
 \end{observation}
 %
 
 In a~dynamic programming algorithms, a~cache function is gradually computed
-from the~simplest sub-problems to the~largest ones.
+from the~simplest subproblems to the~largest ones.
 Here, we have a~function that already has all the~values computed,
 and we show relations for neighboring nodes in~\( T \).
 There recursive relations can be then used in an~implementation.
@@ -667,7 +669,7 @@ In the~following proofs,
 we often describe states that cannot be consistent with
 any almost NAC-colorings and hence have zero value in~\( c \).
 
-We prove correctness of our algorithms by induction.
+We prove the correctness of our algorithms by induction.
 The~base case is for \LeafNode{}s, for other nodes we split the~reasoning for cases where
 there is or is not at least one edge in~\( G_t \).
 %
@@ -743,7 +745,7 @@ and where the~same parts stay neighbors as in~\( s \).
 	in~\( G_t \) if \( G_t \) has no edges,
 	therefore \( c[t, s] = 0 \) for each \( s \in S_t \).
 	%
-	Otherwise, if vertex \( v \) is in a~part of \( P_\red \) or \( P_\blue \) with other vertices,
+	Otherwise, if a vertex \( v \) is in a~part of \( P_\red \) or \( P_\blue \) with other vertices,
 	the~cache function must be zero as \( v \) is an~isolated vertex in~\( G_t \)
 	and therefore no almost NAC-coloring consistent with such state exists.
 	Otherwise, there must be a~part \( \{v\} \).
@@ -802,7 +804,7 @@ where \( v \) is added and stays isolated.
 \end{lemma}
 %
 Recall that \( R_\red, R_\blue \) are relations --- sets of pairs.
-By \( d(p) \) we denote deletion of  the~vertex \( v \) from a~part \( p \),
+By \( d(p) \) we denote deletion of the~vertex \( v \) from a~part \( p \),
 and by \( D(P) \) we denote deleting the~vertex \( v \) from all the~parts in partition \( P \)
 --- if \( \{v\} \in P \), \( \emptyset \) is also cleared.
 Set \( \mathcal{P'}_a \) denotes all the~partitions
@@ -932,7 +934,7 @@ Now we state conditions for \( \red \) half of a~state \( s \):
 	\item[Edge \( e \) lies in a~\( \red \) part]
 	      In this case, an~almost cycle is trivially created
 	      through the~\( \red \) component,
-	      therefore this is \emph{not allowed}.
+	      therefore, this is \emph{not allowed}.
 	      %
 	\item[Edge \( e \) connects two neighboring \( \red \) parts]
 	      This is \emph{\( \blue \)-allowed} as \( e \) is a~connector and
@@ -972,7 +974,7 @@ Otherwise, a~state is not allowed.
 		\end{cases} \\
 	\end{align*}
 	%
-	Otherwise, if the~state \( s \) is not allowed, then \( c[t, s] = 0 \).
+	Otherwise if the~state \( s \) is not allowed, then \( c[t, s] = 0 \).
 	%
 	For an~allowed state~\( s \),
 	the~only states \( s' = (P_\red', R_\red', P_\blue', R_\blue') \in S_{t'} \),
@@ -1135,7 +1137,7 @@ pairs \( (s_i', s_2') \in S_i' \times S_2' \),
 whose consistent almost NAC-coloring are merged
 to almost NAC-coloring consistent with \( s \).
 
-First we define an~operation that shows for two states \( s_1', s_2' \)
+First, we define an~operation that shows for two states \( s_1', s_2' \)
 which state is consistent with coloring merged from \( s_1' \) and \( s_2' \).
 %
 \begin{definition}%
@@ -1149,7 +1151,7 @@ which state is consistent with coloring merged from \( s_1' \) and \( s_2' \).
 %
 It may not be obvious that for every coloring pair consistent with \( s_1', s_2' \)
 there is a~singe state \( s \in S \) consistent with the~merged \rbcol{}.
-In the~following construction we show that
+In the~following construction, we show that
 only the~parts of \( s_1', s_2' \) determine \( s \).
 Later we filter out \rbcol{}s that contain an~almost cycle.
 
@@ -1176,7 +1178,7 @@ This operation represents merging colored components from both the~states
 --- if multiple components intersect, they become one
 component and therefore one part.
 
-We continue with neighbors relation. We remove pairs of parts
+We continue with neighbor relations. We remove pairs of parts
 that were merged and update the~relations to correspond with the~new parts.
 For each \( i \in \{1, 2\} \) and for each \( a \in \{\red, \blue\} \) let
 %
@@ -1287,7 +1289,7 @@ merges that do not produce almost NAC-colorings.
 	a~connector connecting two \( \blue \) components \( p_1', p_2' \in P_{1,\blue} \),
 	and the~path has to also visit multiple vertices in~\( V_{t_2'} \).
 	As shown in the~proof of the~merging map \( M \), \( \blue \) components
-	visited by such path are merged together.
+	visited by such a path are merged together.
 	%
 	Such an~almost cycle therefore occurs
 	if and only if \( p_1' \) and \( p_2' \) are neighboring in~\( R_{1,\blue}' \),
@@ -1299,7 +1301,7 @@ merges that do not produce almost NAC-colorings.
 	%
 
 	% If the~described properties hold => there is an~almost cycle
-	For the~other direction we show that if \( (s_1', s_2') \in \mathcal{B} \),
+	For the~other direction, we show that if \( (s_1', s_2') \in \mathcal{B} \),
 	there exists an~almost cycle
 	in~\rbcol{} \( \gamma \) consistent with \( s = M(s_1', s_2') \)
 	merged from almost NAC-colorings \( \delta_1' \) and \( \delta_2' \)
@@ -1368,7 +1370,7 @@ Now we show the~recursive constraint of the~cache function \( c \) for \JoinNode
 	consistent with \( s_1', s_2' \) such that \( (s_1', s_2') \) is not bad,
 	there is one almost NAC-coloring~\( \delta \) consistent with \( s \)
 	obtained by merging \( \delta_1' \) and \( \delta_2' \).
-	There are \( c[t_1', s_1'] \cdot c[t_2', s_2'] \) such coloring pairs and
+	There are \( c[t_1', s_1'] \cdot c[t_2', s_2'] \) such coloring pairs, and
 	when we sum over all such states in~\( \mathcal{S}(s) \setminus \mathcal{B} \)
 	we get that \( c[t, s] \ge c[t_1', s_1'] \cdot c[t_2', s_2'] \).
 	%
@@ -1431,8 +1433,8 @@ Now we show the~recursive constraint of the~cache function \( c \) for \JoinNode
 	If the~graph has no edges, we read \( 0 \), that is why we use \( \max{} \) in the~reading.
 	By definition, cache function \( c \) always stores the~number of almost NAC-colorings.
 	There are only two almost NAC-colorings
-	that are not NAC-colorings (the monochromatic ones) an~they get subtracted.
-	Based on that it can be clearly seen that the~algorithm
+	that are not NAC-colorings (the monochromatic ones), and they get subtracted.
+	Based on that, it can be clearly seen that the~algorithm
 	will never give you up~\cite{never_gonna_give_you_up}.
 
 	Bell numbers are defined as
@@ -1441,7 +1443,7 @@ Now we show the~recursive constraint of the~cache function \( c \) for \JoinNode
 	Recall that \( \forall t \in T : |X_t| \le k+1 \).
 	%
 	First, the~size of the~state space used is upper bounded.
-	For each color there is up to \( {(k+1)}^{(k+1)} \) partitions of a~bag and
+	For each color, there is up to \( {(k+1)}^{(k+1)} \) partitions of a~bag and
 	up to \( 2^{\binom{k}{2}} \) neighboring relations.
 	The~total state space size for each bag is therefore bounded by
 	\[ {\Big({(k+1)}^{(k+1)} \cdot 2^{\binom{k}{2}} \Big)}^2 = {(k+1)}^{2(k+1)} \cdot 2^{2 \binom{k}{2}}. \]
@@ -1456,8 +1458,8 @@ Now we show the~recursive constraint of the~cache function \( c \) for \JoinNode
 		      so the~time complexity corresponds to the~state space size:
 		      \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot O(1) \).
 		\item[\ForgetVertexNode{}]
-		      Although the~operation seams complex, we just need to traverse the~state space
-		      and create target state after \( v \) is removed.
+		      Although the~operation seems complex, we just need to traverse the~state space
+		      and create a target state after \( v \) is removed.
 		      This can be done in~\( O(k) \) time
 		      per state as only neighboring relations where \( v \) is present
 		      need to be also updated.
@@ -1465,7 +1467,7 @@ Now we show the~recursive constraint of the~cache function \( c \) for \JoinNode
 		      \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot O(k) \).
 		\item[\IntroduceEdgeNode{}]
 		      The~state space is iterated again, and we run few simple checks and cache key constructions
-		      that can be run in~\( O(k) \) time, therefore the~final complexity stays the~same
+		      that can be run in~\( O(k) \) time, therefore, the~final complexity stays the~same
 		      \( {k}^{O(k)} \cdot 2^{O(k^2)} \cdot O(k) \).
 		\item[\JoinNode{}]
 		      We iterate through product of state spaces,
@@ -1489,7 +1491,7 @@ As we also mentioned before, FPT algorithms parameterized by treewidth
 often use \IntroduceVertexNode{} in such a~way
 that edges incident to the~introduced vertex and to
 the~vertices in the~bag are also considered.
-For this section, we call such behaving node an~\IntroduceVertexWithEdgesNode{}.
+For this section, we call such a behaving node an~\IntroduceVertexWithEdgesNode{}.
 %
 We base our approach on the~lemmas from the~previous section.
 We outline the~proof of correctness of such operation and show
@@ -1545,7 +1547,7 @@ and bag \( X_F \coloneqq V(G_F) \setminus \{ v \} \).
 	\land \forall p_a' \in P_a \setminus \{p_a\} : |p_a'| = 1 \)
 	and for each \( x \in X_F \), either \( x \in p_\red \) or \( x \in p_\blue \) holds.
 	%
-	If \( \lambda \) is monochromatic, \( \exists p_a \in P_a : |p_a| = |F| \).
+	If \( \lambda \) is monochromatic, then \( \exists p_a \in P_a : |p_a| = |F| \).
 \end{observation}
 %
 This can be seen from the~fact that \( G_F \) is a~star and \( X_F \) are its rays.
@@ -1553,7 +1555,7 @@ If there are two components of the~same color,
 they both must span \( v \)
 and therefore they are not maximal.
 
-Hence, from now on by \( S_\Lambda \) we only consider states corresponding to
+Hence from now on, \( S_\Lambda \) we only consider states corresponding to
 an~almost NAC-coloring in~\( \Lambda \), hence \( |S_\Lambda| = |\Lambda| \).
 %
 Let us have%
@@ -1562,7 +1564,7 @@ Let us have%
 	does not come from a~node in~\( T \). This is just a~technicality
 	as we have vertex bag \( C_F \), edge bag \( F \) and graph \( G_F \)
 	and only these are needed for mentioned definitions and proofs of corresponding lemmas.
-	Also, isolated vertices \( X_t \setminus X_F \) should to be added to \( G_F \).
+	Also, isolated vertices \( X_t \setminus X_F \) should be added to \( G_F \).
 	We skip this as this is not the~main important part of the~algorithm.
 }
 merging map (\Cref{def:fpt_merging_map})
@@ -1570,7 +1572,7 @@ merging map (\Cref{def:fpt_merging_map})
 Also let us have bad states (\Cref{def:fpt_bad_states})
 \( \mathcal{B} \subseteq S_{t'} \times S_\Lambda \).
 %
-With that, we can use slightly adapted \Cref{lemma:fpt_join_node}
+With that, we can use a slightly adapted \Cref{lemma:fpt_join_node}
 from \JoinNode{}.
 
 % Vertices \( u, v \in X_t \) share the~same \( \blue \) component if either:
@@ -1581,7 +1583,7 @@ from \JoinNode{}.
 % \end{itemize}
 % %
 % Note that \( \blue \) components created by following this procedure
-% are same as in~\( s' \) or merged \( \blue \) components of \( s' \)
+% are the same as in~\( s' \) or merged \( \blue \) components of \( s' \)
 % except for \( v \) as it is not yet in~\( X_{t'} \).
 % Such \( \blue \) components are neighboring if either:
 % %
@@ -1617,7 +1619,7 @@ it remains to be seen which yields faster runtime complexity in practice.
 
 \subsection{NAC-coloring certificate}
 
-To obtain a~NAC-coloring certificate or all the~NAC-colorings of a~graph
+To obtain a~NAC-coloring certificate or all the~NAC-colorings of a~ graph,
 one approach is to traverse \( T \) top-down
 and track where there are positive additions to the~cache function.
 %
@@ -1700,7 +1702,7 @@ Only a~single certificate can be obtained with this method.
 
 \subsection{Connectivity}
 
-Along with the~cache, we can also hold an~information about connectivity of
+Along with the~cache, we can also hold information about connectivity of
 vertices in bags.
 %
 \begin{definition}[Connectivity map]
@@ -1721,12 +1723,12 @@ the~neighboring relation as we do not need it
 (it holds that it is empty).
 %
 \begin{lemma}
-	Let us have \( s \in S_t \) with connectivity map \( C_t \).
+	Let us have \( s \in S_t \) with a connectivity map \( C_t \).
 	If \( M'(s) \ne C_t \), then \( c[t, s] = 0 \).
 \end{lemma}
 %
 \begin{proof}
-	For contradiction, suppose that such state \( s \)
+	For contradiction, suppose that such a state \( s \)
 	is consistent with an~almost NAC-coloring \( \delta \).
 	%
 	For each \( c_1, c_2 \in C_t, c_1 \ne c_2, u \in c_1, v \in c_2 \)
@@ -1758,7 +1760,7 @@ Otherwise, \( u, v \) are in parts \( p_1', p_2' \), then
 For a~\JoinNode{}~\( t \) with children \( t_1', t_2' \),
 connectivity maps \( C_{t_1'}, C_{t_2'} \) are merged into
 a~single connectivity map \( C_t \)
-the~same way as when a~\JoinNode{} is processed using merging map \( M \).
+the~same way as when a~\JoinNode{} is processed using a merging map \( M \).
 %
 For a~\LeafNode{}~\( t \),
 no vertices are present yet, so for the~connectivity map it holds that \( C_t = \emptyset \).
@@ -1783,7 +1785,7 @@ The~lemma states that vertices \( u, v \) incident to an~edge must
 be share \( \red \) or \( \blue \) part.
 %
 \begin{proof}
-	For contradiction, suppose that such state is consistent
+	For contradiction, suppose that such a state is consistent
 	with some almost NAC-coloring \( \delta \) on \( G_t \).
 	The~edge \( e \) has to be either \( \red \) or \( \blue \).
 	Let \( e \) be colored w.l.o.g.\ \( \blue \).
@@ -1799,8 +1801,8 @@ and then multiply the~results together to get the~final result
 while also considering monochromatic colorings of each block.
 Note that the~same can be done for disconnected graphs.
 
-There is possibility that the~algorithm can be further improved by creating
-a~Monte Carlo algorithm or a~linear algebra based algorithm that can run
+There is a possibility that the~algorithm can be further improved by creating
+a~Monte Carlo algorithm or a~linear algebra-based algorithm that can run
 in~\( O(c^k), c \in \N \) time as~\cite{book_parametrized_algorithms} suggests
 for problems with connectivity requirements.
 Monte Carlo algorithms are randomized algorithms whole output may be incorrect

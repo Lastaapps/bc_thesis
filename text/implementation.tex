@@ -6,7 +6,7 @@
 
 	In this chapter,
 	we first describe the~structure of the~project,
-	general description of source code file, and datasets.
+	general description of source code files, and datasets.
 	We list significant libraries used in the~project,
 	mention relation to PyRigi and
 	describe the~Python API surface of the~implementation.
@@ -14,10 +14,10 @@
 \end{chapterabstract}
 
 The~code is available as an~attachment of this thesis,
-nevertheless the~most recent version can be found on GitHub~\cite{my_code}
+ nevertheless, the~most recent version can be found on GitHub~\cite{my_code}
 and soon also in PyRigi~\cite{pyrigi}.
 %
-The~code is written in Python~\cite{python}, minimal supported version is Python 3.12.
+The~code is written in Python~\cite{python}, the minimal supported version is Python 3.12.
 To set up the~project, create a~virtual environment and install packages
 from \texttt{requirements.txt}. On NixOS, \texttt{shell.nix} can be used.
 See \texttt{README.md} for additional instructions.
@@ -47,7 +47,7 @@ Lastly, there are cells for the~performance analysis.
 %
 There are many utility functions
 imported from \texttt{benchmarks/notebook\_utils.py}
-that offer wide range of functionality.
+that offer a wide range of functionality.
 The~file \texttt{benchmarks/NAC\_benchmark.ipynb}
 contains code similar to \texttt{NAC\_presentation.ipynb},
 but with additional functionality like exporting figures to \LaTeX{}.
@@ -79,7 +79,7 @@ used mostly from \texttt{single.py} that is the~entry-point
 for a~single NAC-coloring search.
 %
 General NAC-coloring searching is implemented in~\texttt{search.py}
-along with parameter parsing, graph vertices normalization and
+along with parameter parsing, graph vertices normalization, and
 optimizations like search for articulation vertices.
 After that, the~correct algorithm from \Naive{}, \NaiveCycles{} or \Subgraphs{}
 is chosen and called.
@@ -111,7 +111,7 @@ In~\texttt{graphs\_store}, we store datasets used for benchmarking.
 Graphs are either obtained from~\cite{extremal_graphs},
 generated using Nauty~\cite{nauty} with a~plugin~\cite{nauty_plugin}
 or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}.
-Graph are stored in Graph6 or Sparse6 formats~\cite{graph6}.
+Graphs are stored in Graph6 or Sparse6 formats~\cite{graph6}.
 %
 Files and directories store these graph classes:
 minimally rigid graph, graphs with no three nor four cycles, globally rigid graph,
@@ -122,8 +122,8 @@ The~code for reading dataset files from the~store can be found in~\texttt{datase
 the~code for generating random graphs of some graph classes
 can be found in~\texttt{generators.py}.
 %
-In the~\texttt{precomputed} subdirectory, there are all result of the~benchmarks that
-we use for algorithms evaluation.
+In the~\texttt{precomputed} subdirectory, there are all results of the~benchmarks that
+we use for evaluation of algorithms.
 Individual runs are stored in a~compressed CSV file.
 The~CSV file structure is described in detail in~\texttt{NAC\_presentation.ipynb}.
 Notable columns are:
@@ -160,7 +160,7 @@ from module \texttt{stablecut.flexible\_graphs}.
 The~function accepts a~graph and
 optionally vertices that should be avoided and separated by a~cut.
 
-All the~following function are imported from module \texttt{nac}.
+All the~following functions are imported from module \texttt{nac}.
 To find monochromatic classes on a~graph,
 call function \texttt{find\_monochromatic\_classes} and provide a~graph.
 Optionally, \trcon{} components can be found by changing the~second parameter.
@@ -211,8 +211,8 @@ An~iterator is returned, so the~colorings can be listed lazily.
 
 \section{Implementation details}
 
-In this section we describe some code specifics
-in case a~reader of this thesis want tho examine the~code.
+In this section, we describe some code specifics
+in case a~reader of this thesis wants to examine the~code.
 %
 To improve reader's understanding of the~code,
 we first describe common function parameters:
@@ -223,12 +223,12 @@ and edges exist if the~classes are neighboring,
 see \Cref{observ:monochromatic_classes_graph}.
 %
 Monochromatic class IDs also serve as indices into \texttt{component\_to\_edges}
-that maps an~ID of a~monochromatic class to its edges.
+that map an~ID of a~monochromatic class to its edges.
 %
 NAC-colorings are represented as bit-masks where bit's offset correspond to a~class ID\@.
 
 As \IsNACColoring{} is a~core component of all our algorithms,
-we tried to optimized it well.
+we tried to optimize it well.
 %
 In the~base implementation of \IsNACColoring{},
 subgraphs from \( \red \) and \( \blue \) edges are created.

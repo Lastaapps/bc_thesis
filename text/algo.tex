@@ -9,7 +9,7 @@
 	try all the~\( \red \)-\( \blue \)-edge colorings
 	and check in polynomial time if a~coloring given is a~NAC-coloring.
 	In this chapter, we propose multiple optimizations to the~naive approach
-	and an~algorithm that significantly outperforms naive approach in general case.
+	and an~algorithm that significantly outperforms the naive approach in general case.
 
 \end{chapterabstract}
 
@@ -108,7 +108,7 @@ With that, we also define terms used with monochromatic classes:
 	\label[observation]{observ:monochromatic_classes_graph}
 	%
 	A~graph can be formed from monochromatic classes:
-	vertices are the~monochromatic classes and there is an~edge incident to
+	vertices are the~monochromatic classes, and there is an~edge incident to
 	two monochromatic classes if they are neighboring.
 \end{observation}
 %
@@ -406,7 +406,7 @@ The~goal is to find monochromatic classes that are close together.
 Let $P$ be the~list of monochromatic classes,
 for simplicity we assume that $k$ divides $|P|$.
 We will gradually divide the~monochromatic classes into bags.
-The~output are the~subgraphs induced by the~monochromatic classes in each bag.
+The~output is a list of subgraphs induced by the~monochromatic classes in each bag.
 
 We start with $\frac{|P|}{k}$ empty bags
 and all vertices of the~graph labelled $open$.
@@ -510,7 +510,7 @@ the~monochromatic classes that often also represent cycles in the~real graph.
 
 We also tried approach \Cuts{}, where Kernighan-Lin algorithm is replaced by
 more classical flow-based edge cuts to split graph into parts.
-With that, we lose the~guarantee that the~parts in recursive step
+With that, we lose the~guarantee that the~parts in a recursive step
 are similar in size. Therefore, the~recursive tree may be unbalanced.
 
 Other strategies based on
@@ -568,7 +568,7 @@ that induces a~given subgraph as its size.
 One heuristic \SortedBits{} is that runtime can be reduced
 when we first merge smaller subgraphs as less processing power is
 required for smaller graphs.
-Subgraphs are always sorted by their size and two smallest are merged
+Subgraphs are always sorted by their size, and two smallest are merged
 till we obtain the~original graph.
 %
 The~other heuristic \MinMax{} based on an~opposite idea
@@ -602,7 +602,7 @@ of individual subgraphs in merging decisions.
 That is on purpose as we do not know the~number of NAC-colorings in advance.
 With that, if only a~single NAC-coloring is requested by a~user,
 we can use lazy iterators in our implementation that
-find a~NAC-coloring of a~subgraph and wait till another coloring is requested.
+finds a~NAC-coloring of a~subgraph and wait till another coloring is requested.
 If all the~NAC-colorings are desired or if we expect the~graph to have no NAC-coloring,
 all NAC-colorings of subgraphs need to be traversed.
 In such cases, we can list all NAC-colorings of subgraphs first

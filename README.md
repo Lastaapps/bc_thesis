@@ -19,10 +19,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 
 ### Final
 - Fix line breaks & typography
-- check for "monochromatic components" and \exits
-- update precomputed benchmarks
 - prerender graphs in notebooks
-- todonotes, just in case
 - zkontrolovat latex chyby
 - uklidit toto README.md
 - Don't include other files --- NAC\_benchmark.ipynb, Visualization.ipynb, graphs-store/README.md

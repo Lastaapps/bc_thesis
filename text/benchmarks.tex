@@ -4,11 +4,11 @@
 \begin{chapterabstract}
 
 	In this chapter,
-	we evaluate performance of the~algorithms
+	we evaluate the performance of the~algorithms
 	proposed in~\Cref{chapter:algo}.
 	First, we compare the~high-level approaches with previous approaches and among each other,
 	and then we compare heuristics with each other
-	for different  graph classes.
+	for different graph classes.
 	We show reduction both in runtime and in the~number
 	of \IsNACColoring{} checks performed.
 	Lastly, we evaluate the~strategies and
@@ -16,7 +16,7 @@
 
 \end{chapterabstract}
 
-In this section we first set meaningful targets for our benchmarks,
+In this section, we first set meaningful targets for our benchmarks,
 then we compare the~performance of our algorithms with the~previous implementation
 and show running time and internal search optimizations for various graph classes.
 
@@ -26,12 +26,12 @@ We usually ask the~algorithm to not only answer yes, but to also provide a~certi
 For flexible graphs, it is algorithmically quite simple to find a~NAC-coloring.
 Polynomial \Cref{alg:stable_cut_flexible}
 can be used for flexible graphs,
-moreover as we show later, often even the~naive approach is acceptable.
+ moreover, as we show later, often even the~naive approach is acceptable.
 Hence, this question is more interesting for rigid graphs.
 %
 For flexible graphs, it is more interesting to ask for the~number of NAC-colorings
 of a~graph.
-Note, that for larger flexible graphs with around thirty vertices
+Note that for larger flexible graphs with around thirty vertices,
 the~number of NAC-colorings is huge as it often grows exponentially.
 This slows our algorithm down as just materializing and iterating exponential
 number of NAC-colorings takes exponential time.
@@ -40,7 +40,7 @@ For such cases, the~FPT algorithm described in~\Cref{chapter:fpt}
 could be a~better fit as it does not materialize any NAC-colorings,
 but implementing it is out of the~scope of this thesis.
 
-The~graphs the~algorithm works with have integer vertices (we relabel the~otherwise).
+The~graphs the~algorithm works with have integer vertices (we relabel them otherwise).
 We noticed that for synthetically generated graphs,
 the~algorithm performs slightly better compared to
 the~same algorithm run on the~same graph with vertices randomly relabeled.
@@ -78,9 +78,9 @@ run in SageMath~\cite{sagemath}
 and compare them to our implementation of the~same \Naive{} algorithm
 using $\triangle$-connected components
 and monochromatic classes as described in~\Cref{sec:NACvalid}.
-Next column shows \NaiveCycles{} from \Cref{sec:small_cycles}
+The next column shows \NaiveCycles{} from \Cref{sec:small_cycles}
 using monochromatic classes.
-The~last column is for the~\NeighborsDegree{} (each initial subgraph has $k=4$ monochromatic classes)
+The~last column is for \NeighborsDegree{} (each initial subgraph has $k=4$ monochromatic classes)
 with \MergeLinear{} merging strategy.
 %
 In every case, our algorithms are significantly faster than implementation in~\flexrilog{}~\cite{flexrilog}.
@@ -112,12 +112,12 @@ Notice also huge advantage gained by using monochromatic classes instead of \trc
 shows timings to compute all NAC-colorings of minimally rigid graphs
 depending on the~strategy used.
 We did not list all NAC-colorings for all minimally rigid graphs with twelve vertices and more
-as there are too many such graphs (around 44 millions for twelve vertices).
+as there are too many such graphs (around 44 million for twelve vertices).
 %
 We rather randomly generated dataset of minimally rigid graphs
 using NetworkX~\cite{networkx} and PyRigi~\cite{pyrigi}.
 %
-It can be seen that for graphs up to around fourteen vertices the~\NaiveCycles{} algorithm
+It can be seen that for graphs up to around fourteen vertices, \NaiveCycles{} algorithm
 is still faster than \Subgraphs{}.
 For graphs with more than eighteen vertices,
 the~growing advantage of \Subgraphs{} is already clear.
@@ -220,8 +220,8 @@ The~growth is expected as the~number of NAC-coloring grows fast.
 In~\Cref{fig:graph_minimally_rigid_first_runtime,fig:graph_minimally_rigid_first_checks}
 we focus on finding some NAC-coloring of minimally rigid graphs.
 %
-Minimally rigid graphs have large number of NAC-colorings,
-therefore it is simple for both \NaiveCycles{}
+Minimally rigid graphs have a large number of NAC-colorings,
+therefore, it is simple for both \NaiveCycles{}
 and \Subgraphs{} algorithms to find some NAC-coloring,
 and it can be seen that for larger graphs, the~required runtime
 does not grow significantly.
@@ -231,8 +231,8 @@ a~single \trcon{} component (resp.\ they are a 2-tree, recall \Cref{lemma:stable
 Therefore, such instances do not worsen runtime performance as they are resolved instantly.
 %
 \NaiveCycles{} is faster as it has lower internal overhead.
-The~number of \IsNACColoring{} checks is also lower,
-that is probably because \Subgraphs{} strategies do additional checks
+The~number of \IsNACColoring{} checks is also lower.
+That is probably because \Subgraphs{} strategies do additional checks
 while merging, which are not needed for \NaiveCycles{}.
 \SharedVertices{} behaves unpredictably while \MergeLinear{} is consistent
 for both the~runtime and the~number of \IsNACColoring{} checks.
@@ -318,7 +318,7 @@ such that a~random graph generated with \( p \)
 should probably have no or just a~few NAC-colorings.
 %
 We instead used \( p' = 0.95\cdot p \) to generate random graphs that
-should have small number of NAC-colorings.
+should have a small number of NAC-colorings.
 For such random graphs, we checked if they are globally rigid using PyRigi~\cite{pyrigi}.
 %
 By doing this, we also randomly generated a~dataset of globally rigid graphs
@@ -330,7 +330,7 @@ These graphs are probably not included in our dataset.
 
 The~idea of monochromatic classes is so effective
 that even large graphs collapse into just a~few monochromatic classes.
-Majority of the~graphs in this dataset either has a~NAC-coloring,
+The Majority of the~graphs in this dataset either has a~NAC-coloring,
 or only a~single monochromatic class and therefore no NAC-coloring.
 In our dataset, 75 percent of graphs have less than ten	monochromatic classes,
 but only 10 percent of graphs have less than ten \trcon{} components
@@ -464,7 +464,7 @@ as these graphs are not simple anymore.
 \end{figure}%
 
 In~\Subgraphs{} algorithm description, an~important parameter was the~size of subgraphs \( k \).
-Majority of the~benchmarks in the~previous section were run with \( k = 4 \).
+The majority of the~benchmarks in the~previous section were run with \( k = 4 \).
 %
 We show the~impact of	\( k \) on runtime and number of checks.
 Note that you see averages over all the~strategies used for benchmarking
@@ -567,27 +567,27 @@ should join subgraphs near to each other together. This is not the~case.
 
 Based on our benchmarks, most of which we presented in the~previous sections,
 we evaluate respective strategies and choose ones
-that should we recommend are kept and merged into PyRigi.
+that should be recommend are kept and merged into PyRigi.
 %
 For graph classes with a~lot of NAC-colorings,
-\NaiveCycles{} is usually the~best choice
+\NaiveCycles{} is usually the best choice
 when we search for a~single NAC-coloring.
 %
 The~user of the~library has to pay attention while using this strategy
-as if there is just a~few or no NAC-coloring and the~graph does not trivially collapse
+as if there are just few or no NAC-colorings and the~graph does not trivially collapse
 into few monochromatic classes, the~runtime is huge.
 Therefore, \NaiveCycles{} should be an~available option in PyRigi,
 but the~default algorithm should be based on \Subgraphs{}.
 
-First we evaluate strategies for splitting:
-Strategy \None{} works well in most of the~cases and for simple
-instances it outperforms other strategies as it requires little to no overhead.
+First, we evaluate strategies for splitting:
+Strategy \None{} works well in most of the~cases, and for simple
+ instances, it outperforms other strategies as it requires little to no overhead.
 %
 \CyclesMatchChunks{} perform well in the~majority cases similar to \None{},
 but it is generally outperformed by \Neighbors{}.
 %
 \Neighbors{} and \NeighborsDegree{} generally managed to reduce the~number
-of \IsNACColoring{} calls and for complex cases they often
+of \IsNACColoring{} calls and for complex cases, they often
 perform slightly better then \None{}, usually for more complex instances.
 Note that the~implementation of \Neighbors{} is slightly simpler than
 the~one of \NeighborsDegree{}.
@@ -617,7 +617,7 @@ From the~general idea of the~\Subgraphs{} algorithm,
 it makes a~lot of sense \Log{} strategy would work great.
 This is not the~case as \Log{} is slow for all the~cases we tested.
 %
-\MinMax{} and \SortedBits{} strategies often perform badly
+\MinMax{} and \SortedBits{} strategies often perform badly,
 and if they do not, they do not outperform other strategies.
 %
 \PromisingCycles{} performs similarly well as \Neighbors{}
