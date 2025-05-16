@@ -6,26 +6,6 @@ at Faculty of Information technology, CTU Prague.
 The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflows/latex.yml)
 of the thesis can be found in artifacts in GitHub workflows.
 
-## TODO
-
-### Critical
-- clear useless runs and classes from precomputed results
-
-### Nice to have TODOS
-- more examples (where?)
-- Comment code
-- refactor/check README in the code part
-- clean up files
-- zkontrolovat introduce vertex node
-
-### Final
-- Fix line breaks & typography
-- zkontrolovat latex chyby
-- prerender graphs in notebooks
-- uklidit toto README.md
-- Don't include other files --- NAC\_benchmark.ipynb, Visualization.ipynb, graphs-store/README.md
-
-
 ## Abstract
 
 One of the questions in Rigidity Theory is whether a realization of the
@@ -35,7 +15,7 @@ A flexible realization of a connected graph in the plane exists if and only if
 the graph has a NAC-coloring, which is surjective edge coloring by
 two colors such that for each cycle either all the edges have the same color or
 there are at least two edges of each color.
-While it is known that it is \mbox{NP-complete}
+While it is known that it is NP-complete
 to decide if a graph has a NAC-coloring,
 we show that the problem is
 also NP-complete for graphs with maximum degree five.
@@ -54,7 +34,7 @@ complexity, NP-completeness, treewidth
 
 ## Links
 
-* [PyRigi](https://github.com/PyRigi/PyRigi) (target repository, where my code is merged)
+* [PyRigi](https://github.com/PyRigi/PyRigi) (target repository, where our code is merged)
 * [Code of this thesis](https://github.com/Lastaapps/bc_thesis_code/)
 * [Code before merge into PyRigi](https://github.com/Lastaapps/PyRigi/)
 * [Our related paper](https://www.arxiv.org/abs/2412.13721)

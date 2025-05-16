@@ -26,7 +26,7 @@ We~usually ask the~algorithm to not only answer yes, but to also provide a~certi
 For~flexible graphs, it~is algorithmically quite simple to find a~NAC-coloring.
 Polynomial \Cref{alg:stable_cut_flexible}
 can be used for~flexible graphs,
- moreover, as we~show later, often even the~naive approach is acceptable.
+moreover, as we~show later, often even the~naive approach is acceptable.
 Hence, this question is more interesting for~rigid graphs.
 %
 For~flexible graphs, it~is more interesting to ask for~the~number of NAC-colorings
@@ -343,7 +343,7 @@ For~minimally rigid graphs, this is not the~case as expected, see
 	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\scalebox{0.6}{\input{./figures/monochromatic_vs_triangle_globally_rigid.pgf}}
-		\caption[Monoch. classes vs tr. con. components for~globally rigid]{%
+		\caption[Monoch. classes vs tri. conn. components for~globally rigid]{%
 			\centering Globally rigid graphs}%
 		\label{fig:monochrom_vs_triangle_globally_rigid}
 	\end{subfigure}
@@ -351,7 +351,7 @@ For~minimally rigid graphs, this is not the~case as expected, see
 	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\scalebox{0.6}{\input{./figures/monochromatic_vs_triangle_minimally_rigid_random.pgf}}
-		\caption[Monoch. classes vs tr. con. components for~minimally rigid]{%
+		\caption[Monoch. classes vs tri. conn. components for~minimally rigid]{%
 			\centering Minimally rigid graphs}%
 		\label{fig:monochrom_vs_triangle_minimally_rigid}
 	\end{subfigure}
@@ -581,7 +581,7 @@ but the~default algorithm should be based on \Subgraphs{}.
 
 First, we~evaluate strategies for~splitting:
 Strategy \None{} works well in~most of the~cases, and for~simple
- instances, it~outperforms other strategies as it~requires little to no overhead.
+instances, it~outperforms other strategies as it~requires little to no overhead.
 %
 \CyclesMatchChunks{} perform well in~the~majority cases similar to \None{},
 but it~is generally outperformed by \Neighbors{}.
