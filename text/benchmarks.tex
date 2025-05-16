@@ -3,54 +3,54 @@
 
 \begin{chapterabstract}
 
-	In this chapter,
+	In~this chapter,
 	we evaluate the performance of the~algorithms
 	proposed in~\Cref{chapter:algo}.
-	First, we compare the~high-level approaches with previous approaches and among each other,
-	and then we compare heuristics with each other
+	First, we~compare the~high-level approaches with previous approaches and among each other,
+	and then we~compare heuristics with each other
 	for different graph classes.
-	We show reduction both in runtime and in the~number
+	We~show reduction both in~runtime and in~the~number
 	of \IsNACColoring{} checks performed.
-	Lastly, we evaluate the~strategies and
+	Lastly, we~evaluate the~strategies and
 	recommend ones that should be merged into PyRigi.
 
 \end{chapterabstract}
 
-In this section, we first set meaningful targets for our benchmarks,
-then we compare the~performance of our algorithms with the~previous implementation
-and show running time and internal search optimizations for various graph classes.
+In~this section, we~first set meaningful targets for~our benchmarks,
+then we~compare the~performance of our algorithms with the~previous implementation
+and show running time and internal search optimizations for~various graph classes.
 
 The~main question regarding NAC-coloring search is whether a~graph has a~NAC-coloring.
-We usually ask the~algorithm to not only answer yes, but to also provide a~certificate.
+We~usually ask the~algorithm to not only answer yes, but to also provide a~certificate.
 %
-For flexible graphs, it is algorithmically quite simple to find a~NAC-coloring.
+For~flexible graphs, it~is algorithmically quite simple to find a~NAC-coloring.
 Polynomial \Cref{alg:stable_cut_flexible}
-can be used for flexible graphs,
- moreover, as we show later, often even the~naive approach is acceptable.
-Hence, this question is more interesting for rigid graphs.
+can be used for~flexible graphs,
+ moreover, as we~show later, often even the~naive approach is acceptable.
+Hence, this question is more interesting for~rigid graphs.
 %
-For flexible graphs, it is more interesting to ask for the~number of NAC-colorings
+For~flexible graphs, it~is more interesting to ask for~the~number of NAC-colorings
 of a~graph.
-Note that for larger flexible graphs with around thirty vertices,
-the~number of NAC-colorings is huge as it often grows exponentially.
+Note that for~larger flexible graphs with around thirty vertices,
+the~number of NAC-colorings is huge as it~often grows exponentially.
 This slows our algorithm down as just materializing and iterating exponential
 number of NAC-colorings takes exponential time.
 %
-For such cases, the~FPT algorithm described in~\Cref{chapter:fpt}
-could be a~better fit as it does not materialize any NAC-colorings,
-but implementing it is out of the~scope of this thesis.
+For~such cases, the~FPT algorithm described in~\Cref{chapter:fpt}
+could be a~better fit as it~does not materialize any NAC-colorings,
+but implementing it~is out of the~scope of this thesis.
 
 The~graphs the~algorithm works with have integer vertices (we relabel them otherwise).
-We noticed that for synthetically generated graphs,
+We~noticed that for~synthetically generated graphs,
 the~algorithm performs slightly better compared to
 the~same algorithm run on the~same graph with vertices randomly relabeled.
-To counteract this, we tried to relabel the~graphs using BFS,
-but we reached no performance gains compared to the~random relabeling.
+To counteract this, we~tried to relabel the~graphs using BFS,
+but we~reached no performance gains compared to the~random relabeling.
 
-Visualizations in the~following sections were created by grouping data per dataset,
+Visualizations in~the~following sections were created by grouping data per dataset,
 graph size and some specified attribute --- usually the~strategies used.
 %
-We show mean of the~running time in milliseconds or
+We~show mean of the~running time in~milliseconds or
 the~number of \IsNACColoring{} calls.
 %
 Graphs with median and third quartile can be seen in~\texttt{NAC\_presentation.ipynb}.
@@ -66,30 +66,30 @@ using CPython 3.12.
 On more modern hardware, the~running times could be significantly shorter.
 
 \Cref{tab:all_min_rigid}
-shows the~time required for finding all the~NAC-colorings
+shows the~time required for~finding all the~NAC-colorings
 of all minimally rigid graphs with given vertex count.
 %
 They are generated using Nauty~\cite{nauty}
 with a~corresponding plugin~\cite{nauty_plugin}.
 %
-We show results of the~implementation
+We~show results of the~implementation
 in~\flexrilog{}~\cite{flexrilog} using \trcon{} components
-run in SageMath~\cite{sagemath}
+run in~SageMath~\cite{sagemath}
 and compare them to our implementation of the~same \Naive{} algorithm
 using $\triangle$-connected components
 and monochromatic classes as described in~\Cref{sec:NACvalid}.
 The next column shows \NaiveCycles{} from \Cref{sec:small_cycles}
 using monochromatic classes.
-The~last column is for \NeighborsDegree{} (each initial subgraph has $k=4$ monochromatic classes)
+The~last column is for~\NeighborsDegree{} (each initial subgraph has $k=4$ monochromatic classes)
 with \MergeLinear{} merging strategy.
 %
-In every case, our algorithms are significantly faster than implementation in~\flexrilog{}~\cite{flexrilog}.
+In~every case, our algorithms are significantly faster than implementation in~\flexrilog{}~\cite{flexrilog}.
 Notice also huge advantage gained by using monochromatic classes instead of \trcon{} components.
 %
 \begin{table}[ht]
 	\caption[Running times on graphs]{
-		The~time (in seconds) needed to find all NAC-colorings for all graphs with a~given size. Run by us.
-		\textsc{FRLG} stands for \flexrilog{}, \textsc{ND} for \NeighborsDegree{}.}%
+		The~time (in seconds) needed to find all NAC-colorings for~all graphs with a~given size. Run by us.
+		\textsc{FRLG} stands for~\flexrilog{}, \textsc{ND} for~\NeighborsDegree{}.}%
 	\label{tab:all_min_rigid}
 	% \vspace{0.3cm}
 	\centering
@@ -111,54 +111,54 @@ Notice also huge advantage gained by using monochromatic classes instead of \trc
 \Cref{fig:graph_time_minimally_rigid}
 shows timings to compute all NAC-colorings of minimally rigid graphs
 depending on the~strategy used.
-We did not list all NAC-colorings for all minimally rigid graphs with twelve vertices and more
-as there are too many such graphs (around 44 million for twelve vertices).
+We~did not list all NAC-colorings for~all minimally rigid graphs with twelve vertices and more
+as there are too many such graphs (around 44 million for~twelve vertices).
 %
-We rather randomly generated dataset of minimally rigid graphs
+We~rather randomly generated dataset of minimally rigid graphs
 using NetworkX~\cite{networkx} and PyRigi~\cite{pyrigi}.
 %
-It can be seen that for graphs up to around fourteen vertices, \NaiveCycles{} algorithm
+It~can be seen that for~graphs up to around fourteen vertices, \NaiveCycles{} algorithm
 is still faster than \Subgraphs{}.
-For graphs with more than eighteen vertices,
+For~graphs with more than eighteen vertices,
 the~growing advantage of \Subgraphs{} is already clear.
 \Subgraphs{} algorithm can list all NAC-colorings on graphs with 30 monochromatic classes
-usually in a~few seconds.
+usually in~a~few seconds.
 This corresponds to \( 2^{29} \) checks done by \NaiveCycles{}.
 
 \begin{figure}[ht]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Running time for minimally rigid graphs]{
-		Mean running time to find all NAC-colorings for minimally rigid graphs.}%
+	\caption[Running time for~minimally rigid graphs]{
+		Mean running time to find all NAC-colorings for~minimally rigid graphs.}%
 	\label{fig:graph_time_minimally_rigid}
 \end{figure}%
 
-If we analyze the~number of \IsNACColoring{} calls performed by \NaiveCycles{} and \Subgraphs{} algorithms
+If~we analyze the~number of \IsNACColoring{} calls performed by \NaiveCycles{} and \Subgraphs{} algorithms
 as shown in~\Cref{fig:graph_count_minimally_rigid},
-it can be seen that the~number of \IsNACColoring{} calls is reduced already for graphs
+it~can be seen that the~number of \IsNACColoring{} calls is reduced already for~graphs
 with eleven vertices,
-even though the~\NaiveCycles{} algorithm is still faster for these graphs.
+even though the~\NaiveCycles{} algorithm is still faster for~these graphs.
 %
-We think that the~slowdown is caused by internal overhead
-used for subgraphs splitting and merging.
+We~think that the~slowdown is caused by internal overhead
+used for~subgraphs splitting and merging.
 
 \begin{figure}[ht]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for minimally rigid graphs]{
-		The~number of checks performed to find all NAC-colorings for minimally rigid graphs.}%
+	\caption[Checks performed for~minimally rigid graphs]{
+		The~number of checks performed to find all NAC-colorings for~minimally rigid graphs.}%
 	\label{fig:graph_count_minimally_rigid}
 \end{figure}%
 
 In~\Cref{fig:graph_summary}
-we show the~relation between the~number of \IsNACColoring{} checks that
+we~show the~relation between the~number of \IsNACColoring{} checks that
 would \Naive{} algorithm perform compared to our solution.
 %
-The~numbers of checks are similar for graphs with few monochromatic classes
-when we consider \NaiveCycles{} using monochromatic classes and \Subgraphs{}.
+The~numbers of checks are similar for~graphs with few monochromatic classes
+when we~consider \NaiveCycles{} using monochromatic classes and \Subgraphs{}.
 That explains why the~\NaiveCycles{} algorithm outperformed
-the~\NeighborsDegree{} \& \MergeLinear{} strategies in~\Cref{tab:all_min_rigid}. This should improve quickly for larger graphs.
-We can also see how the~use of \CycleMask{} routine
+the~\NeighborsDegree{} \& \MergeLinear{} strategies in~\Cref{tab:all_min_rigid}. This should improve quickly for~larger graphs.
+We~can also see how the~use of \CycleMask{} routine
 reduces the~number of more expensive \IsNACColoring{} calls,
 since these are called only when the~small cycles check \CycleMask{} fails to decide
 (\CycleMask{} is called every time).
@@ -168,7 +168,7 @@ since these are called only when the~small cycles check \CycleMask{} fails to de
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_check-comparision_exp_edge_no_monochromatic_checks_checks_mean.pgf}}
 	\caption[The number of \IsNACColoring{} calls]{
 		The~number of \IsNACColoring{} calls with respect to the~number of monochromatic classes
-		over all graphs used for benchmarking.}%
+		over all graphs used for~benchmarking.}%
 	\label{fig:graph_summary}
 \end{figure}%
 
@@ -178,77 +178,77 @@ since these are called only when the~small cycles check \CycleMask{} fails to de
 \label{sec:bench_graph_classes}
 
 Each benchmark was run two or three times and the~mean was taken.
-The~graphs are grouped either by the~number of vertices
-monochromatic classes or \trcon{} components, see respective \(x\)-axis.
+Values of \( x \)-axis show the~number of graphs grouped either by the~number of vertices,
+monochromatic classes or \trcon{} components.
 Overall, over 350k \emph{benchmarks runs}
 (a graph of a~graph class run with a~splitting strategy, merging strategy
 and target subgraph size)
-are presented (and 200k more were run for strategies not worth mentioning)
+are presented (and 200k more were run for~strategies not worth mentioning)
 on over 12.8k graphs from multiple graph classes.
 %
 There are six splitting strategies, eight merging strategies, and usually two target subgraph sizes.
-There is also one more for \NaiveCycles{}.
+There is also one more for~\NaiveCycles{}.
 Therefore, the~whole heuristic state space has ninety-seven combinations,
-and thus we could have run up to 1.2 million benchmark runs on our dataset.
-We omitted many benchmark runs for strategies where we saw the  performance is poor.
+and thus we~could have run up to 1.2 million benchmark runs on our dataset.
+We~omitted many benchmark runs for~strategies where we~saw the  performance is poor.
 %
-We tested mostly only graphs with up to one hundred vertices
-as it is computationally hard to find larger graphs in the~classes given
-and to run enough benchmarks for them.
-A~NAC-coloring can be found for these graphs
-in hundreds of milliseconds or seconds at most.
+We~tested mostly only graphs with up to one hundred vertices
+as it~is computationally hard to find larger graphs in~the~classes given
+and to run enough benchmarks for~them.
+A~NAC-coloring can be found for~these graphs
+in~hundreds of milliseconds or seconds at~most.
 
-First, we only show strategies that performed generally well,
-we show the~others later in~\Cref{sec:other_strategies}.
-If a~configuration did not finish in the~given time limit,
-we replace the~runtime field with the~limit of the~benchmark, usually 5 seconds.
+First, we~only show strategies that performed generally well,
+we~show the~others later in~\Cref{sec:other_strategies}.
+If~a~configuration did not finish in~the~given time limit,
+we~replace the~runtime field with the~limit of the~benchmark, usually five seconds.
 These runs are excluded from figures with the~number of check calls.
 
 
 \subsection*{Minimally rigid graphs}
 
-In the~previous section, we showed performance of the~algorithm for listing
+In~the~previous section, we~showed performance of the~algorithm for~listing
 all NAC-colorings of minimally rigid graphs,
 but did not compare the~strategies among each other.
 %
 \Neighbors{} and \NeighborsDegree{} perform slightly better than \None{} and
 \SharedVertices{} outperforms \MergeLinear{} slightly.
-The~same also holds for the~number of \IsNACColoring{} checks.
+The~same also holds for~the~number of \IsNACColoring{} checks.
 Notice that the~runtime grows exponentially, but with lower factor than \NaiveCycles{}.
 The~growth is expected as the~number of NAC-coloring grows fast.
 
 In~\Cref{fig:graph_minimally_rigid_first_runtime,fig:graph_minimally_rigid_first_checks}
-we focus on finding some NAC-coloring of minimally rigid graphs.
+we~focus on finding some NAC-coloring of minimally rigid graphs.
 %
 Minimally rigid graphs have a large number of NAC-colorings,
-therefore, it is simple for both \NaiveCycles{}
+therefore, it~is simple for~both \NaiveCycles{}
 and \Subgraphs{} algorithms to find some NAC-coloring,
-and it can be seen that for larger graphs, the~required runtime
+and it~can be seen that for~larger graphs, the~required runtime
 does not grow significantly.
 %
-Note that minimally rigid graphs have no NAC-coloring if and only if they are formed from
+Note that minimally rigid graphs have no NAC-coloring if~and only if~they are formed from
 a~single \trcon{} component (resp.\ they are a 2-tree, recall \Cref{lemma:stable_cut_or_2_tree}).
 Therefore, such instances do not worsen runtime performance as they are resolved instantly.
 %
-\NaiveCycles{} is faster as it has lower internal overhead.
+\NaiveCycles{} is faster as it~has lower internal overhead.
 The~number of \IsNACColoring{} checks is also lower.
 That is probably because \Subgraphs{} strategies do additional checks
-while merging, which are not needed for \NaiveCycles{}.
+while merging, which are not needed for~\NaiveCycles{}.
 \SharedVertices{} behaves unpredictably while \MergeLinear{} is consistent
-for both the~runtime and the~number of \IsNACColoring{} checks.
+for~both the~runtime and the~number of \IsNACColoring{} checks.
 
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_first_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for minimally rigid graphs (some)]{
-		Mean running time to find some NAC-coloring for minimally rigid graphs.}%
+	\caption[Mean runtime for~minimally rigid graphs (some)]{
+		Mean running time to find some NAC-coloring for~minimally rigid graphs.}%
 	\label{fig:graph_minimally_rigid_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_first_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for minimally rigid graphs (some)]{
-		The~number of checks performed to find some NAC-coloring for minimally rigid graphs.}%
+	\caption[Checks performed for~minimally rigid graphs (some)]{
+		The~number of checks performed to find some NAC-coloring for~minimally rigid graphs.}%
 	\label{fig:graph_minimally_rigid_first_checks}
 \end{figure}%
 
@@ -256,53 +256,53 @@ for both the~runtime and the~number of \IsNACColoring{} checks.
 
 \subsection*{No three nor four cycle graphs}
 
-From~\cite{extremal_graphs} we obtained all graphs with up to 52 vertices
-that have no three nor four cycles. This class of graphs is interesting for us
+From~\cite{extremal_graphs} we~obtained all graphs with up to 52 vertices
+that have no three nor four cycles. This class of graphs is interesting for~us
 as there cannot be any \trcon{} components.
 These graphs have also many NAC-colorings.
 Because of that, as seen in~\Cref{fig:graph_count_no_3_nor_4_cycles_first_runtime},
-\NaiveCycles{} is again faster for finding some NAC-coloring
-for the~similar reasons as for minimally rigid graphs.
+\NaiveCycles{} is again faster for~finding some NAC-coloring
+for~the~similar reasons as for~minimally rigid graphs.
 %
 Also notice that \SharedVertices{} performs worse and non-deterministically
-for \CyclesMatchChunks{} and \None{}.
-For \Neighbors{}, the~performance is more stable, but still worse than \MergeLinear{}.
+for~\CyclesMatchChunks{} and \None{}.
+For~\Neighbors{}, the~performance is more stable, but still worse than \MergeLinear{}.
 
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_first_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no 3 nor 4 cycles (some)]{
-		Mean running time to find some NAC-coloring for graphs with no three nor four cycles.}%
+	\caption[Mean runtime for~graphs with no 3 nor 4 cycles (some)]{
+		Mean running time to find some NAC-coloring for~graphs with no three nor four cycles.}%
 	\label{fig:graph_count_no_3_nor_4_cycles_first_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_first_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (some)]{
-% 		The~number of checks performed to find some NAC-coloring for graphs with no three nor four cycles.}%
+% 	\caption[Checks performed for~graphs with no 3 nor 4 cycles (some)]{
+% 		The~number of checks performed to find some NAC-coloring for~graphs with no three nor four cycles.}%
 % 	\label{fig:graph_count_no_3_nor_4_cycles_first_checks}
 % \end{figure}%
 
-For listing all NAC-colorings shown
+For~listing all NAC-colorings shown
 in~\Cref{fig:graph_count_no_3_nor_4_cycles_all_runtime},
-it can be seen that \NaiveCycles{} is almost never faster.
-We can see that \None{} and \CyclesMatchChunks{} is also slower than
+it~can be seen that \NaiveCycles{} is almost never faster.
+We~can see that \None{} and \CyclesMatchChunks{} is also slower than
 \Neighbors{} and \NeighborsDegree{}.
-At around twenty-eight vertices five second time limit is reached for all algorithms.
+At~around twenty-eight vertices five second time limit is reached for~all algorithms.
 \MergeLinear{} and \SharedVertices{} have no significant influence.
 %
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no 3 nor 4 cycles (all)]{
-		Mean running time to find all NAC-colorings for graphs with no three nor four cycles.}%
+	\caption[Mean runtime for~graphs with no 3 nor 4 cycles (all)]{
+		Mean running time to find all NAC-colorings for~graphs with no three nor four cycles.}%
 	\label{fig:graph_count_no_3_nor_4_cycles_all_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_3_nor_4_cycles_all_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for graphs with no 3 nor 4 cycles (all)]{
-% 		The~number of checks performed to find all NAC-colorings for graphs with no three nor four cycles.}%
+% 	\caption[Checks performed for~graphs with no 3 nor 4 cycles (all)]{
+% 		The~number of checks performed to find all NAC-colorings for~graphs with no three nor four cycles.}%
 % 	\label{fig:graph_count_no_3_nor_4_cycles_all_checks}
 % \end{figure}%
 
@@ -310,32 +310,32 @@ At around twenty-eight vertices five second time limit is reached for all algori
 \subsection*{Globally rigid graphs}
 
 A~random graph can be generated taking a~graph with no edges on \( n \) vertices
-and for each pair of vertices adding an~edge with probability~\( p \).
+and for~each pair of vertices adding an~edge with probability~\( p \).
 This model is often referred to as Erdős-Rényi~\cite{random_gnp}.
 %
-John Haslegrave provided us with yet unpublished formula for \( p \)
+John Haslegrave provided us with yet unpublished formula for~\( p \)
 such that a~random graph generated with \( p \)
 should probably have no or just a~few NAC-colorings.
 %
-We instead used \( p' = 0.95\cdot p \) to generate random graphs that
+We~instead used \( p' = 0.95\cdot p \) to generate random graphs that
 should have a small number of NAC-colorings.
-For such random graphs, we checked if they are globally rigid using PyRigi~\cite{pyrigi}.
+For~such random graphs, we~checked if~they are globally rigid using PyRigi~\cite{pyrigi}.
 %
-By doing this, we also randomly generated a~dataset of globally rigid graphs
+By doing this, we~also randomly generated a~dataset of globally rigid graphs
 up to 57 vertices.
 %
 Note that there also exist globally rigid graphs
 that are just one edge different from minimally rigid graphs.
-These graphs are probably not included in our dataset.
+These graphs are probably not included in~our dataset.
 
 The~idea of monochromatic classes is so effective
 that even large graphs collapse into just a~few monochromatic classes.
-The Majority of the~graphs in this dataset either has a~NAC-coloring,
+The Majority of the~graphs in~this dataset either has a~NAC-coloring,
 or only a~single monochromatic class and therefore no NAC-coloring.
-In our dataset, 75 percent of graphs have less than ten	monochromatic classes,
+In~our dataset, 75 percent of graphs have less than ten	monochromatic classes,
 but only 10 percent of graphs have less than ten \trcon{} components
 as you can see in~\Cref{fig:monochrom_vs_triangle_globally_rigid}.
-For minimally rigid graphs, this is not the~case as expected, see
+For~minimally rigid graphs, this is not the~case as expected, see
 \Cref{fig:monochrom_vs_triangle_minimally_rigid}.
 %
 \begin{figure}[h!]
@@ -343,7 +343,7 @@ For minimally rigid graphs, this is not the~case as expected, see
 	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\scalebox{0.6}{\input{./figures/monochromatic_vs_triangle_globally_rigid.pgf}}
-		\caption[Monoch. classes vs tr. con. components for globally rigid]{%
+		\caption[Monoch. classes vs tr. con. components for~globally rigid]{%
 			\centering Globally rigid graphs}%
 		\label{fig:monochrom_vs_triangle_globally_rigid}
 	\end{subfigure}
@@ -351,7 +351,7 @@ For minimally rigid graphs, this is not the~case as expected, see
 	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\scalebox{0.6}{\input{./figures/monochromatic_vs_triangle_minimally_rigid_random.pgf}}
-		\caption[Monoch. classes vs tr. con. components for minimally rigid]{%
+		\caption[Monoch. classes vs tr. con. components for~minimally rigid]{%
 			\centering Minimally rigid graphs}%
 		\label{fig:monochrom_vs_triangle_minimally_rigid}
 	\end{subfigure}
@@ -359,7 +359,7 @@ For minimally rigid graphs, this is not the~case as expected, see
 	\label{fig:monochrom_vs_triangle}
 \end{figure}
 
-\NaiveCycles{} is no longer faster for finding a~NAC-coloring
+\NaiveCycles{} is no longer faster for~finding a~NAC-coloring
 as shown in~\Cref{fig:graph_globally_rigid_first_runtime}.
 \None{} and \Neighbors{} strategies match the~performance and
 the~other are not far behind.
@@ -367,38 +367,38 @@ the~other are not far behind.
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for globally rigid graphs (some)]{
-		Mean running time to find some NAC-coloring for globally rigid graphs.}%
+	\caption[Mean runtime for~globally rigid graphs (some)]{
+		Mean running time to find some NAC-coloring for~globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_first_runtime}
 \end{figure}%
 % \begin{figure}[thbp]
 % 	\centering
 % 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_first_monochromatic_checks_split_merging_mean.pgf}}
-% 	\caption[Checks performed for globally rigid graphs (some)]{
-% 		The~number of checks performed to find some NAC-coloring for globally rigid graphs.}%
+% 	\caption[Checks performed for~globally rigid graphs (some)]{
+% 		The~number of checks performed to find some NAC-coloring for~globally rigid graphs.}%
 % 	\label{fig:graph_globally_rigid_first_checks}
 % \end{figure}%
 
-\NaiveCycles{} algorithm is significantly slower when we list all NAC-colorings
+\NaiveCycles{} algorithm is significantly slower when we~list all NAC-colorings
 as expected, see \Cref{fig:graph_globally_rigid_all_runtime}.
 \None{} and \CycleMask{} strategies also lack behind \Neighbors{} and \NeighborsDegree{}.
-We do not see an~advantage of \MergeLinear{} over \SharedVertices{} anymore.
+We~do not see an~advantage of \MergeLinear{} over \SharedVertices{} anymore.
 %
-It can be also seen in~\Cref{fig:graph_globally_rigid_all_checks}
-that for the~number of checks performed the~same statements hold.
+It~can be also seen in~\Cref{fig:graph_globally_rigid_all_checks}
+that for~the~number of checks performed the~same statements hold.
 %
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_all_monochromatic_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for globally rigid graphs (all)]{
-		Mean running time to find all NAC-colorings for globally rigid graphs.}%
+	\caption[Mean runtime for~globally rigid graphs (all)]{
+		Mean running time to find all NAC-colorings for~globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_all_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_all_monochromatic_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for globally rigid graphs (all)]{
-		The~number of checks performed to find all NAC-colorings for globally rigid graphs.}%
+	\caption[Checks performed for~globally rigid graphs (all)]{
+		The~number of checks performed to find all NAC-colorings for~globally rigid graphs.}%
 	\label{fig:graph_globally_rigid_all_checks}
 \end{figure}%
 
@@ -406,87 +406,87 @@ that for the~number of checks performed the~same statements hold.
 
 \section{Performance on graphs with no NAC-colorings}
 
-In the~previous section, the~\Subgraphs{} algorithm
+In~the~previous section, the~\Subgraphs{} algorithm
 often performed worse considering runtime.
-As explained, it is caused by the~graphs being too simple
+As explained, it~is caused by the~graphs being too simple
 --- having plenty of NAC-colorings.
 %
-For many NP-complete problems, studied instances are often
+For~many NP-complete problems, studied instances are often
 those where there are only few or no solutions.
-In this section, we focus on graphs with no NAC-colorings.
+In~this section, we~focus on graphs with no NAC-colorings.
 
-We searched for random graphs where \( |E| \ge 2|V(G)| - 2 \) that have
+We~searched for~random graphs where \( |E| \ge 2|V(G)| - 2 \) that have
 multiple monochromatic classes, but no NAC-coloring%
 \nohznamka{
-	We could have also used the~same formula as for globally rigid graphs.
+	We~could have also used the~same formula as for~globally rigid graphs.
 }.
 %
-As this graph generation was slow, we searched only for
+As this graph generation was slow, we~searched only for
 graphs with more than \( 2\sqrt{|V(G)|} \) \trcon{} components.
 %
 This once again shows how effective monochromatic classes are
-in comparison with \trcon{} components.
-We generated and tested five thousand of such graphs from 40 to 130 vertices in size.
+in~comparison with \trcon{} components.
+We~generated and tested five thousand of such graphs from 40 to 130 vertices in~size.
 Just one of them had more than one monochromatic class.
 %
 The~following benchmarks are run with monochromatic classes disabled,
 \trcon{} components are used instead.
 
-For these graphs, \NaiveCycles{} algorithm needs to traverse all \( 2^{t-1} \) \(\red\)-\(\blue\)-colorings
-where \( t \) is the~number of \trcon{} components. It can be clearly seen that
-this is not suitable for graphs as large as we use in this benchmark,
-therefore, they are not present as they did not finish in reasonable time.
-It can be seen from \Cref{fig:graph_no_nac_coloring_first_runtime}
+For~these graphs, \NaiveCycles{} algorithm needs to traverse all \( 2^{t-1} \) \(\red\)-\(\blue\)-colorings
+where \( t \) is the~number of \trcon{} components. It~can be clearly seen that
+this is not suitable for~graphs as large as we~use in~this benchmark,
+therefore, they are not present as they did not finish in~reasonable time.
+It~can be seen from \Cref{fig:graph_no_nac_coloring_first_runtime}
 that \SharedVertices{} is faster than \MergeLinear{},
-for runtime and also for the~number of checks performed
+for~runtime and also for~the~number of checks performed
 as shown in~\Cref{fig:graph_no_nac_coloring_first_checks}.
 %
-It can be also seen that \NeighborsDegree{} strategy is
-faster than the~other strategies, and it holds for both merging strategies.
+It~can be also seen that \NeighborsDegree{} strategy is
+faster than the~other strategies, and it~holds for~both merging strategies.
 Also notice that,
 runtime grows strictly exponentially.
-This is in contrast with the~previous section
+This is in~contrast with the~previous section
 as these graphs are not simple anymore.
 
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring]{
-		Mean running time to finish search for graphs with no NAC-coloring.}%
+	\caption[Mean runtime for~graphs with no NAC-coloring]{
+		Mean running time to finish search for~graphs with no NAC-coloring.}%
 	\label{fig:graph_no_nac_coloring_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_checks_split_merging_mean.pgf}}
-	\caption[Checks performed for graphs with no NAC-coloring]{
-		The~number of checks performed to finish search for graphs with no NAC-coloring.}%
+	\caption[Checks performed for~graphs with no NAC-coloring]{
+		The~number of checks performed to finish search for~graphs with no NAC-coloring.}%
 	\label{fig:graph_no_nac_coloring_first_checks}
 \end{figure}%
 
 In~\Subgraphs{} algorithm description, an~important parameter was the~size of subgraphs \( k \).
-The majority of the~benchmarks in the~previous section were run with \( k = 4 \).
+The majority of the~benchmarks in~the~previous section were run with \( k = 4 \).
 %
-We show the~impact of	\( k \) on runtime and number of checks.
-Note that you see averages over all the~strategies used for benchmarking
+We~show the~impact of	\( k \) on runtime and number of checks.
+Note that you see averages over all the~strategies used for~benchmarking
 graphs with no NAC-colorings.
 %
 From graphs in~\Cref{fig:graph_no_nac_coloring_first_runtime_subgraph_size,fig:graph_no_nac_coloring_first_checks_subgraph_size},
-it can be seen that the~number of checks is reduced for smaller \( k \).
-On the~other hand, the~runtime improves slightly for larger \( k \)
-and the~difference between strategies becomes negligible for larger graphs.
+it~can be seen that the~number of checks is reduced for~smaller \( k \).
+On the~other hand, the~runtime improves slightly for~larger \( k \)
+and the~difference between strategies becomes negligible for~larger graphs.
 
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_runtime_subgraph_size_mean.pgf}}
-	\caption[Mean runtime for graphs with no NAC-coloring]{
-		Mean running time to finish search for graphs with no NAC-coloring for different subgraph sizes \( k \).}%
+	\caption[Mean runtime for~graphs with no NAC-coloring]{
+		Mean running time to finish search for~graphs with no NAC-coloring for~different subgraph sizes \( k \).}%
 	\label{fig:graph_no_nac_coloring_first_runtime_subgraph_size}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_first_triangle_checks_subgraph_size_mean.pgf}}
-	\caption[Checks performed for graphs with no NAC-coloring]{
-		The~number of checks performed to finish search for graphs with no NAC-coloring for different subgraph sizes \( k \).}%
+	\caption[Checks performed for~graphs with no NAC-coloring]{
+		The~number of checks performed to finish search for~graphs with no NAC-coloring for~different subgraph sizes \( k \).}%
 	\label{fig:graph_no_nac_coloring_first_checks_subgraph_size}
 \end{figure}%
 
@@ -494,37 +494,37 @@ and the~difference between strategies becomes negligible for larger graphs.
 \section{Other strategies}%
 \label{sec:other_strategies}
 
-In this section, we show the~performance of other strategies described in~\Cref{chapter:algo}.
-We do not show these strategies in previous figures as they would influence
+In~this section, we~show the~performance of other strategies described in~\Cref{chapter:algo}.
+We~do not show these strategies in~previous figures as they would influence
 the~scale and would make figures and legends unreadable and unclear.
 
 Some of these strategies perform as well as
-than our preferred strategies for some graph classes,
-but fail for others and therefore are not universal enough to use in a~library.
+than our preferred strategies for~some graph classes,
+but fail for~others and therefore are not universal enough to use in~a~library.
 %
-In the~following figures, we fixed
+In~the~following figures, we~fixed
 split strategy to \Neighbors{} or merging strategy to \MergeLinear{}
 as they perform the~best as shown in~\Cref{sec:bench_graph_classes}.
 
-First, we show in~\Cref{fig:graph_mimimally_rigid_failing_merging_first_runtime,fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
+First, we~show in~\Cref{fig:graph_mimimally_rigid_failing_merging_first_runtime,fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
 how strategies like \Log{} and \PromisingCycles{} fail on minimally rigid graphs.
-We also shown in~\Cref{fig:graph_mimimally_rigid_failing_split_first_runtime},
+We~also shown in~\Cref{fig:graph_mimimally_rigid_failing_split_first_runtime},
 \KernighanLin{} and \Cuts{} perform worse.
 %
-Graphs with no three nor four cycles behave similarly for these strategies.
+Graphs with no three nor four cycles behave similarly for~these strategies.
 %
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_merging_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Other merging strategies for minimally rigid graphs]{
-		Mean running time to find some NAC-coloring for minimally rigid graphs with other merging strategies.}%
+	\caption[Other merging strategies for~minimally rigid graphs]{
+		Mean running time to find some NAC-coloring for~minimally rigid graphs with other merging strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_merging_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_failing_split_first_vertex_runtime_split_merging_mean.pgf}}
-	\caption[Other splitting strategies for minimally rigid graphs]{
-		Mean running time to find some NAC-coloring for minimally rigid graphs with other splitting strategies.}%
+	\caption[Other splitting strategies for~minimally rigid graphs]{
+		Mean running time to find some NAC-coloring for~minimally rigid graphs with other splitting strategies.}%
 	\label{fig:graph_mimimally_rigid_failing_split_first_runtime}
 \end{figure}%
 
@@ -533,103 +533,103 @@ As shown in~\Cref{fig:graph_no_nac_coloring_generated_rigid_failing_merging_firs
 strategies \Log{}, \SortedBits{} and \MinMax{} fail,
 \PromisingCycles{} perform well on the~other hand.
 %
-It can be seen that strategies \SortedSize{} and \Score{} perform
+It~can be seen that strategies \SortedSize{} and \Score{} perform
 as well as our preferred strategies on graphs with no NAC-coloring.
 But as they must list all the~NAC-colorings on each subgraph,
-they are not suitable for cases where only one NAC-coloring is requested.
+they are not suitable for~cases where only one NAC-coloring is requested.
 %
 In~\Cref{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}
-it can be seen that performance of \KernighanLin{} and \Cuts{} is worse.
+it~can be seen that performance of \KernighanLin{} and \Cuts{} is worse.
 %
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_failing_merging_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Other merging strategies for graphs with no NAC-coloring]{
-		Mean running time to finish search for graphs with no NAC-coloring with other merging strategies.}%
+	\caption[Other merging strategies for~graphs with no NAC-coloring]{
+		Mean running time to finish search for~graphs with no NAC-coloring with other merging strategies.}%
 	\label{fig:graph_no_nac_coloring_generated_rigid_failing_merging_first_runtime}
 \end{figure}%
 \begin{figure}[thbp]
 	\centering
 	\scalebox{\BenchFigureScale}{\input{./figures/graph_export_no_nac_coloring_generated_failing_split_first_triangle_runtime_split_merging_mean.pgf}}
-	\caption[Other splitting strategies for graphs with no NAC-coloring]{
-		Mean running time to finish search for graphs with no NAC-coloring with other splitting strategies.}%
+	\caption[Other splitting strategies for~graphs with no NAC-coloring]{
+		Mean running time to finish search for~graphs with no NAC-coloring with other splitting strategies.}%
 	\label{fig:graph_no_nac_coloring_generated_rigid_failing_split_first_runtime}
 \end{figure}%
 
 
 Smart split described in~\Cref{sec:smart_split}
 did not improve the~runtime.
-We expected minor performance hit for smaller graphs because heuristic is run
-multiple times, but gains for larger graphs where subgraphs merging order
+We~expected minor performance hit for~smaller graphs because heuristic is run
+multiple times, but gains for~larger graphs where subgraphs merging order
 should join subgraphs near to each other together. This is not the~case.
 
 \section{Final comparison}
 
-Based on our benchmarks, most of which we presented in the~previous sections,
-we evaluate respective strategies and choose ones
+Based on our benchmarks, most of which we~presented in~the~previous sections,
+we~evaluate respective strategies and choose ones
 that should be recommend are kept and merged into PyRigi.
 %
-For graph classes with a~lot of NAC-colorings,
+For~graph classes with a~lot of NAC-colorings,
 \NaiveCycles{} is usually the best choice
-when we search for a~single NAC-coloring.
+when we~search for~a~single NAC-coloring.
 %
 The~user of the~library has to pay attention while using this strategy
-as if there are just few or no NAC-colorings and the~graph does not trivially collapse
+as if~there are just few or no NAC-colorings and the~graph does not trivially collapse
 into few monochromatic classes, the~runtime is huge.
-Therefore, \NaiveCycles{} should be an~available option in PyRigi,
+Therefore, \NaiveCycles{} should be an~available option in~PyRigi,
 but the~default algorithm should be based on \Subgraphs{}.
 
-First, we evaluate strategies for splitting:
-Strategy \None{} works well in most of the~cases, and for simple
- instances, it outperforms other strategies as it requires little to no overhead.
+First, we~evaluate strategies for~splitting:
+Strategy \None{} works well in~most of the~cases, and for~simple
+ instances, it~outperforms other strategies as it~requires little to no overhead.
 %
-\CyclesMatchChunks{} perform well in the~majority cases similar to \None{},
-but it is generally outperformed by \Neighbors{}.
+\CyclesMatchChunks{} perform well in~the~majority cases similar to \None{},
+but it~is generally outperformed by \Neighbors{}.
 %
 \Neighbors{} and \NeighborsDegree{} generally managed to reduce the~number
-of \IsNACColoring{} calls and for complex cases, they often
-perform slightly better then \None{}, usually for more complex instances.
+of \IsNACColoring{} calls and for~complex cases, they often
+perform slightly better then \None{}, usually for~more complex instances.
 Note that the~implementation of \Neighbors{} is slightly simpler than
 the~one of \NeighborsDegree{}.
 %
 \KernighanLin{} results are not consistent.
-\Cuts{} perform even worse for even small instance.
+\Cuts{} perform even worse for~even small instance.
 This is probably because they operate on a~graph of monochromatic
 components that does not preserve all the~properties
 of the~original graph well.
 They were never noticeably faster than \Neighbors{}.
-Therefore, these algorithms cannot be used in general case.
+Therefore, these algorithms cannot be used in~general case.
 %
-Based on this evaluation, we recommend strategies \None{} and \Neighbors{}
+Based on this evaluation, we~recommend strategies \None{} and \Neighbors{}
 as they perform the~best across all graph classes and
 as \Neighbors{} strategy has simpler implementation than \NeighborsDegree{}.
 
 \MergeLinear{} strategy performed the~best across the~board.
-It seems that the~idea of merging one growing subgraph
+It~seems that the~idea of merging one growing subgraph
 with subgraphs of initial small size works the~best
-in a~general case.
+in~a~general case.
 %
-For listing all NAC-colorings, \SharedVertices{} performs
-slightly better, but for a~search for a~single NAC-coloring for simple instances,
+For~listing all NAC-colorings, \SharedVertices{} performs
+slightly better, but for~a~search for~a~single NAC-coloring for~simple instances,
 its runtime becomes less predictable.
 %
 From the~general idea of the~\Subgraphs{} algorithm,
-it makes a~lot of sense \Log{} strategy would work great.
-This is not the~case as \Log{} is slow for all the~cases we tested.
+it~makes a~lot of sense \Log{} strategy would work great.
+This is not the~case as \Log{} is slow for~all the~cases we~tested.
 %
 \MinMax{} and \SortedBits{} strategies often perform badly,
-and if they do not, they do not outperform other strategies.
+and if~they do not, they do not outperform other strategies.
 %
 \PromisingCycles{} performs similarly well as \Neighbors{}
-for graphs with no NAC-coloring,
-but fails for simple instances which makes it not universal enough.
+for~graphs with no NAC-coloring,
+but fails for~simple instances which makes it~not universal enough.
 %
-\SortedSize{} and \Score{} also perform well for graphs with no NAC-coloring,
+\SortedSize{} and \Score{} also perform well for~graphs with no NAC-coloring,
 but as explained in~\Cref{sec:merging},
-they are unsuitable for instances where only a~single NAC-coloring
+they are unsuitable for~instances where only a~single NAC-coloring
 should be found as these strategies always list all NAC-colorings
 on all subgraphs.
 %
-Based on this evaluation, we recommend strategy \MergeLinear{} as a~general good choice.
-We also recommend \SharedVertices{} for graphs that are not simple instances.
+Based on this evaluation, we~recommend strategy \MergeLinear{} as a~general good choice.
+We~also recommend \SharedVertices{} for~graphs that are not simple instances.
 

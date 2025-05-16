@@ -16,11 +16,12 @@ of the thesis can be found in artifacts in GitHub workflows.
 - Comment code
 - refactor/check README in the code part
 - clean up files
+- zkontrolovat introduce vertex node
 
 ### Final
 - Fix line breaks & typography
-- prerender graphs in notebooks
 - zkontrolovat latex chyby
+- prerender graphs in notebooks
 - uklidit toto README.md
 - Don't include other files --- NAC\_benchmark.ipynb, Visualization.ipynb, graphs-store/README.md
 

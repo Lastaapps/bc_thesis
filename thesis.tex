@@ -163,7 +163,11 @@
 \usepackage[babel=true]{microtype}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sed script to add ~ almost everywhere
+% 'at~' breaks TikZ
+% for joins with each and form chunks to huge
 % s/\(^\| \|\t\)\(A\|a\|An\|an\|The\|the\) \([a-zA-Z]\|\\[a-zA-z]\|\$\|\\(\)/\1\2\~\3/g
+% s/\(We\|Let\|If\|In\|At\|It\) /\1\~/g
+% s/\(^\| \)\(in\|we\|if\|let\|it\) /\1\2\~/g
 %
 % Check validity - find broken math mode most of the time
 % grep -ir "\\\([^~)]*~[^)]*)" .
@@ -231,7 +235,7 @@
 \newcommand{\IntroduceVertexWithEdgesNode}{\textsc{Introduce Vertex With Edges Node}}
 
 \newcommand{\flexrilog}{\textsc{FlexRiLoG}}
-\newcommand{\trcon}{$\triangle$-connected}
+\newcommand{\trcon}{\mbox{$\triangle$-connected}}
 \newcommand{\rbcol}{\( \red \)-\( \blue \)-coloring}
 
 % Math mode macros
