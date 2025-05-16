@@ -3,7 +3,7 @@
 \setcounter{page}{1}
 
 % Pohádka
-% Nepřehánět to s definicemi a citacemi -> spíše teoretická část
+% Nepřehánět to s definicemi a~citacemi -> spíše teoretická část
 % Proč to dělám, význam, návaznost (PyRigi)
 % Jak jsem si to vybral
 % prodat drony
@@ -11,48 +11,48 @@
 % - část úvodu, nebo vlastní kapitola
 % Obsah jen stručně
 
-A core concept of Rigidity Theory is a \emph{framework} which is
-a simple graph~\(G\) with its realization
-into a \(d\)-dimensional space \(p: V(G) \to \R^d\).
-A framework is \emph{\( d \)-flexible} if there exists
-a continuous deformation of \( p \) such that
-the distances between neighboring vertices are preserved during the transformation.
-Otherwise, the framework is called \emph{\( d \)-rigid}.
+A~core concept of Rigidity Theory is a~\emph{framework} which is
+a~simple graph~\(G\) with its realization
+into a~\(d\)-dimensional space \(p: V(G) \to \R^d\).
+A~framework is \emph{\( d \)-flexible} if there exists
+a~continuous deformation of \( p \) such that
+the~distances between neighboring vertices are preserved during the~transformation.
+Otherwise, the~framework is called \emph{\( d \)-rigid}.
 
-It is known that for a graph either almost all realizations are \( d \)-flexible,
+It is known that for a~graph either almost all realizations are \( d \)-flexible,
 or almost all realizations are \( d \)-rigid~\cite{generically_rigid_graphs}.
-A graph is \emph{(generically) \( d \)-rigid} if most of the realizations are \( d \)-rigid
-and \emph{(generically) \( d \)-flexible} if most of the realizations are \( d \)-flexible.
+A~graph is \emph{(generically) \( d \)-rigid} if most of the~realizations are \( d \)-rigid
+and \emph{(generically) \( d \)-flexible} if most of the~realizations are \( d \)-flexible.
 %
-As for a rigid graph,
+As for a~rigid graph,
 there may be some flexible realizations,
 and therefore we talk about paradoxical flexibility.
 
-An illustrative application of the Rigidity Theory is a squadron of drones
-where the drones can measure distance to their close neighbors.
-Can we determine the locations of all the drones
-up to translation and rotation of the whole squadron
+An~illustrative application of the~Rigidity Theory is a~squadron of drones
+where the~drones can measure distance to their close neighbors.
+Can we determine the~locations of all the~drones
+up to translation and rotation of the~whole squadron
 just from such information?
 
-For similar problems in the plane,
-one would think that if the graph formed is rigid, the answer is yes, and
-for flexible graphs the answer is no.
-But as stated above, paradoxically, even a rigid graph can have a flexible realization,
-and it may just happen that the drones form such a \( 2 \)-flexible framework.
+For similar problems in the~plane,
+one would think that if the~graph formed is rigid, the~answer is yes, and
+for flexible graphs the~answer is no.
+But as stated above, paradoxically, even a~rigid graph can have a~flexible realization,
+and it may just happen that the~drones form such a~\( 2 \)-flexible framework.
 
 In efforts to find such paradoxical realizations,
-a new edge coloring was defined~\cite{legersky_original}.
-A \emph{NAC-coloring} (where NAC stands for ``no almost cycle'')
-is an~edge coloring of a graph by \( \red \) and \( \blue \)
-such that both the colors are used and there is no almost cycle formed.
-An \emph{almost cycle} is a cycle in the colored graph such that exactly one
-edge of the cycle is colored \( \red \) or exactly one edge is colored \( \blue \).
-Such coloring exists if and only if the graph has a flexible realization~\cite{legersky_original}.
-This provides a simple but strong tool to decide whenever a graph has
-a flexible realization even if it is (generically) rigid.
-As shown later in the thesis, one can check in polynomial time
-if a given coloring is a NAC-coloring.
-Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring~\cite{np_complete}.
+a~new edge coloring was defined~\cite{legersky_original}.
+A~\emph{NAC-coloring} (where NAC stands for ``no almost cycle'')
+is an~edge coloring of a~graph by \( \red \) and \( \blue \)
+such that both the~colors are used and there is no almost cycle formed.
+An~\emph{almost cycle} is a~cycle in the~colored graph such that exactly one
+edge of the~cycle is colored \( \red \) or exactly one edge is colored \( \blue \).
+Such coloring exists if and only if the~graph has a~flexible realization~\cite{legersky_original}.
+This provides a~simple but strong tool to decide whenever a~graph has
+a~flexible realization even if it is (generically) rigid.
+As shown later in the~thesis, one can check in polynomial time
+if a~given coloring is a~NAC-coloring.
+Unfortunately, it is NP-complete to decide if a~graph has any NAC-coloring~\cite{np_complete}.
 
 \begin{figure}[ht]
 	\centering
@@ -78,59 +78,59 @@ Unfortunately, it is NP-complete to decide if a graph has any NAC-coloring~\cite
 		\draw[edge] (a)edge(b) (b)edge(c) (c)edge(a) (d)edge(e) (e)edge(f) (f)edge(d) ;
 		\draw[edge] (a)edge(d) (b)edge(e) (c)edge(f);
 	\end{tikzpicture}
-	\caption[Flexible realization of 3-prism]{The $3$-prism is generically $2$-rigid, but has a flexible realization (right).
-		It has a unique NAC-coloring modulo swapping colors (left).}%
+	\caption[Flexible realization of 3-prism]{The $3$-prism is generically $2$-rigid, but has a~flexible realization (right).
+		It has a~unique NAC-coloring modulo swapping colors (left).}%
 	\label{fig:3prism}
 \end{figure}
 
-A nice example for NAC-coloring showcase is the 3-prism graph in~\Cref{fig:3prism},
-a graph formed from two triangles with three interconnecting edges.
-Such a graph is rigid, still it has a NAC-coloring and flexible realizations.
-The flexible realizations are all the realizations where
-the triangles are identical except for translation.
+A~nice example for NAC-coloring showcase is the 3-prism graph in~\Cref{fig:3prism},
+a~graph formed from two triangles with three interconnecting edges.
+Such a~graph is rigid, still it has a~NAC-coloring and flexible realizations.
+The~flexible realizations are all the~realizations where
+the~triangles are identical except for translation.
 It can be easily seen that there are
-no other NAC-colorings except for the one, where the colors are swapped.
+no other NAC-colorings except for the~one, where the~colors are swapped.
 
-Among the goals of this thesis is to
+Among the~goals of this thesis is to
 %
-study basics of Rigidity theory with the focus on existence of flexible realizations
+study basics of Rigidity theory with the~focus on existence of flexible realizations
 and its combinatorial characterization using NAC-colorings.
 %
-In \Cref{chapter:np},
-we show that the problem of deciding if a graph has a NAC-coloring
+In~\Cref{chapter:np},
+we show that the~problem of deciding if a~graph has a~NAC-coloring
 is NP-complete even on graphs with maximum degree five.
 %
-We provide a parametrized approach in \Cref{chapter:fpt}
+We provide a~parametrized approach in~\Cref{chapter:fpt}
 where complexity can be reduced for graphs
 with low internal structural complexity (treewidth).
 %
-The relation of NAC-colorings with stable cuts is presented in \Cref{chapter:stable_cuts},
-and an algorithm for stable cut search on flexible graphs from~\cite{stable_cuts_legersky}
+The~relation of NAC-colorings with stable cuts is presented in~\Cref{chapter:stable_cuts},
+and an~algorithm for stable cut search on flexible graphs from~\cite{stable_cuts_legersky}
 is described and implemented.
 %
-In \Cref{chapter:algo},
-we provide an algorithm
-that can find all the NAC-colorings of a graph.
+In~\Cref{chapter:algo},
+we provide an~algorithm
+that can find all the~NAC-colorings of a~graph.
 Multiple heuristics are used to significantly
-reduce the runtime of the algorithm.
+reduce the~runtime of the~algorithm.
 %
-We describe the implementation in \Cref{chapter:impl}
-and compare and evaluate the performance of the algorithm
+We describe the~implementation in~\Cref{chapter:impl}
+and compare and evaluate the~performance of the~algorithm
 compared to previous implementations,
 and also we compare individual heuristics among each other
-in \Cref{chapter:benchmarks}.
+in~\Cref{chapter:benchmarks}.
 Multiple relevant graph classes are considered.
 
-The code implemented in this thesis available at~\cite{my_code}
+The~code implemented in this thesis available at~\cite{my_code}
 shall enrich PyRigi~\cite{pyrigi}
 library used for research in Rigidity Theory.
 Currently, there are no such algorithms implemented in PyRigi itself,
-the only available implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
+the~only available implementation is rather naive in FlexRiLoG~\cite{flexrilog}.
 
-In this thesis, the results shown in our previous paper~\cite{my_paper}
+In this thesis, the~results shown in our previous paper~\cite{my_paper}
 (done as part of VýLeT --- Student Summer Research Program)
-are extended upon by introducing a fixed-parameter tractable algorithm,
+are extended upon by introducing a~fixed-parameter tractable algorithm,
 discussion of relation to stable cuts,
 and present other heuristic that do not perform as well.
-Here, we also describe the remaining topics more in detail.
+Here, we also describe the~remaining topics more in detail.
 

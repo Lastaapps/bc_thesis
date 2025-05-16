@@ -9,10 +9,7 @@ of the thesis can be found in artifacts in GitHub workflows.
 ## TODO
 
 ### Critical
-- extend implementation section/chapter
-- resolve todos
 - clear useless runs and classes from precomputed results
-- za všechna in narvat vlnovku, pozor na in na konci řádku
 
 ### Nice to have TODOS
 - more examples (where?)

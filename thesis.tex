@@ -153,12 +153,27 @@
 % Handles czech line breaks
 % \usepackage{xevlna}
 % Should improve line breaking
-\usepackage{microtype}
 \usepackage{pdflscape}
 \usepackage{hyperref}
 \usepackage[nameinlink]{cleveref}
 \Crefname{observation}{Observation}{Observations}
 \usepackage{todonotes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[babel=true]{microtype}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sed script to add ~ almost everywhere
+% s/\(^\| \|\t\)\(A\|a\|An\|an\|The\|the\) \([a-zA-Z]\|\\[a-zA-z]\|\$\|\\(\)/\1\2\~\3/g
+%
+% Check validity - find broken math mode most of the time
+% grep -ir "\\\([^~)]*~[^)]*)" .
+%
+% Fixes manually some of the broken math mode
+% /\(A\|a\)\~\\in
+% /\(A\|a\)\~\\
+% Also check all the align blocks
+% Do not search PDF for '~'
+
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
