@@ -1322,7 +1322,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=2.196033in,y=0.234413in,,top]{\color{textcolor}{\rmfamily\fontsize{10.000000}{12.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Number of m. classes or t. components}}%
+\pgftext[x=2.196033in,y=0.234413in,,top]{\color{textcolor}{\rmfamily\fontsize{10.000000}{12.000000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Number of m. classes or $\triangle$-conn. components}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -1485,16 +1485,16 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetstrokeopacity{0.800000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{1.306478in}{1.750855in}}%
-\pgfpathlineto{\pgfqpoint{3.709042in}{1.750855in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{3.734042in}{1.750855in}}{\pgfqpoint{3.734042in}{1.775855in}}%
-\pgfpathlineto{\pgfqpoint{3.734042in}{2.130298in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{3.734042in}{2.155298in}}{\pgfqpoint{3.709042in}{2.155298in}}%
-\pgfpathlineto{\pgfqpoint{1.306478in}{2.155298in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{1.281478in}{2.155298in}}{\pgfqpoint{1.281478in}{2.130298in}}%
-\pgfpathlineto{\pgfqpoint{1.281478in}{1.775855in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{1.281478in}{1.750855in}}{\pgfqpoint{1.306478in}{1.750855in}}%
-\pgfpathlineto{\pgfqpoint{1.306478in}{1.750855in}}%
+\pgfpathmoveto{\pgfqpoint{0.982850in}{1.595207in}}%
+\pgfpathlineto{\pgfqpoint{3.679875in}{1.595207in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{3.713208in}{1.595207in}}{\pgfqpoint{3.713208in}{1.628541in}}%
+\pgfpathlineto{\pgfqpoint{3.713208in}{2.101131in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{3.713208in}{2.134465in}}{\pgfqpoint{3.679875in}{2.134465in}}%
+\pgfpathlineto{\pgfqpoint{0.982850in}{2.134465in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{0.949516in}{2.134465in}}{\pgfqpoint{0.949516in}{2.101131in}}%
+\pgfpathlineto{\pgfqpoint{0.949516in}{1.628541in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{0.949516in}{1.595207in}}{\pgfqpoint{0.982850in}{1.595207in}}%
+\pgfpathlineto{\pgfqpoint{0.982850in}{1.595207in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -1509,11 +1509,11 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetstrokeopacity{0.600000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{1.331478in}{2.010327in}}%
-\pgfpathlineto{\pgfqpoint{1.581478in}{2.010327in}}%
-\pgfpathlineto{\pgfqpoint{1.581478in}{2.097827in}}%
-\pgfpathlineto{\pgfqpoint{1.331478in}{2.097827in}}%
-\pgfpathlineto{\pgfqpoint{1.331478in}{2.010327in}}%
+\pgfpathmoveto{\pgfqpoint{1.016183in}{1.941171in}}%
+\pgfpathlineto{\pgfqpoint{1.349516in}{1.941171in}}%
+\pgfpathlineto{\pgfqpoint{1.349516in}{2.057837in}}%
+\pgfpathlineto{\pgfqpoint{1.016183in}{2.057837in}}%
+\pgfpathlineto{\pgfqpoint{1.016183in}{1.941171in}}%
 \pgfpathclose%
 \pgfusepath{fill}%
 \end{pgfscope}%
@@ -1521,7 +1521,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=1.681478in,y=2.010327in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Monochromatic classes}}%
+\pgftext[x=1.482850in,y=1.941171in,left,base]{\color{textcolor}{\rmfamily\fontsize{12.000000}{14.400000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Monochromatic classes}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -1534,11 +1534,11 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetstrokeopacity{0.600000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{1.331478in}{1.826856in}}%
-\pgfpathlineto{\pgfqpoint{1.581478in}{1.826856in}}%
-\pgfpathlineto{\pgfqpoint{1.581478in}{1.914356in}}%
-\pgfpathlineto{\pgfqpoint{1.331478in}{1.914356in}}%
-\pgfpathlineto{\pgfqpoint{1.331478in}{1.826856in}}%
+\pgfpathmoveto{\pgfqpoint{1.016183in}{1.696542in}}%
+\pgfpathlineto{\pgfqpoint{1.349516in}{1.696542in}}%
+\pgfpathlineto{\pgfqpoint{1.349516in}{1.813208in}}%
+\pgfpathlineto{\pgfqpoint{1.016183in}{1.813208in}}%
+\pgfpathlineto{\pgfqpoint{1.016183in}{1.696542in}}%
 \pgfpathclose%
 \pgfusepath{fill}%
 \end{pgfscope}%
@@ -1546,7 +1546,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=1.681478in,y=1.826856in,left,base]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Triangle-connected components}}%
+\pgftext[x=1.482850in,y=1.696542in,left,base]{\color{textcolor}{\rmfamily\fontsize{12.000000}{14.400000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$\triangle$-connected components}}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%
