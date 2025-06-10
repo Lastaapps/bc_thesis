@@ -34,4 +34,6 @@ _minted/
 *.pdf
 *.bkp
 !assets/*.pdf
+!supervisor-report.pdf
+!reviewer-report.pdf
 styles
