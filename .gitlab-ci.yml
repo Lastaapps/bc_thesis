@@ -5,17 +5,21 @@ LuaLaTeX:
         - sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
         - latexmk -pdflua thesis.tex
         - latexmk -pdflua thesis-twoside.tex
+        - latexmk -pdflua presentation.tex
     artifacts:
         paths:
             - thesis.pdf
             - thesis-twoside.pdf
+            - presentation.pdf
 
 XeLaTeX:
     script: 
         - sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
         - latexmk -pdfxe thesis.tex
         - latexmk -pdfxe thesis-twoside.tex
+        - latexmk -pdfxe presentation.tex
     artifacts:
         paths:
             - thesis.pdf
             - thesis-twoside.pdf
+            - presentation.pdf

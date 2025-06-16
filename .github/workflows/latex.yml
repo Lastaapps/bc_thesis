@@ -14,13 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build with LuaLaTeX
+      - name: Build (LuaLaTeX)
         run: latexmk -pdflua thesis.tex
 
-      - name: Build with LuaLaTeX twosided
+      - name: Build (twosided) (LuaLaTeX)
         run: |
           sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
           latexmk -pdflua thesis-twoside.tex
+
+      - name: Build Presentation (LuaLaTeX)
+        run: latexmk -pdflua presentation.tex
 
       - name: Upload PDF artifact (LuaLaTeX)
         uses: actions/upload-artifact@v4
@@ -34,6 +37,12 @@ jobs:
           name: thesis-twoside-lualatex
           path: thesis-twoside.pdf
 
+      - name: Upload PDF artifact (Presentation) (LuaLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-lualatex
+          path: presentation.pdf
+
   XeLaTeX:
     runs-on: ubuntu-latest
     container:
@@ -42,13 +51,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build with XeLaTeX
+      - name: Build (XeLaTeX)
         run: latexmk -pdfxe thesis.tex
 
-      - name: Build with XeLaTeX twosided
+      - name: Build twosided (XeLaTeX)
         run: |
           sed 's/,oneside/,twoside/' thesis.tex > thesis-twoside.tex
           latexmk -pdfxe thesis-twoside.tex
+
+      - name: Build Presentation (XeLaTeX)
+        run: latexmk -pdfxe presentation.tex
 
       - name: Upload PDF artifact (XeLaTeX)
         uses: actions/upload-artifact@v4
@@ -61,3 +73,9 @@ jobs:
         with:
           name: thesis-twoside-xelatex
           path: thesis-twoside.pdf
+
+      - name: Upload PDF artifact (Presentation) (XeLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: presentation-xelatex
+          path: presentation.pdf
