@@ -1,4 +1,19 @@
-\documentclass{beamer}
+\newif\ifaspectratiobasic
+\aspectratiobasictrue % uncomment for 4:3
+
+\ifaspectratiobasic
+% 4:3
+\newcommand\mytikztextsize{}
+\newcommand\mytikzscale{1.50}
+\newcommand\myaspectratio{43}
+\else
+% 16:9
+\newcommand\mytikztextsize{\small}
+\newcommand\mytikzscale{1.40}
+\newcommand\myaspectratio{169}
+\fi
+
+\documentclass[aspectratio=\myaspectratio]{beamer}
 \usetheme{moloch}
 
 \usepackage[czech,english]{babel}
@@ -96,7 +111,8 @@
 
 	\begin{figure}[h]
 		\centering
-		\begin{tikzpicture}[scale=1.50]
+		% \begin{tikzpicture}[scale=1.50] % 4:3
+		\begin{tikzpicture}[scale=1.40] % 16:9
 			% for~i in~range(1,8):
 			%       for~j in~range(1,5):
 			%           print(f"\\node[vertex] ({i}{j}) at ({i/2}, {j/2}) {{}};")
@@ -127,7 +143,7 @@
 			\node[]           (d73) at (3.50, 1.50) {};
 			\node[vertex] (special) at (2.25, 0.75) {};
 
-			\node[] at (2.25, 1.5) {$A_i$};
+			\node[] at (2.25, 1.5) {\mytikztextsize $A_i$};
 
 			%%% Left part
 			% Bridge to center
@@ -137,8 +153,8 @@
 			\draw[edge] (32)edge(special) (42)edge(special) (33)edge(44) (43)edge(44) (42)edge(43);
 			%%% Decoration
 			\draw[edge] (22)edge(d22) (23)edge(d23);
-			\node[] at (1.0, 1.25) {$x_i$};
-			\node[] at (2.125, 1.25) {$x_i$};
+			\node[] at (1.0, 1.25) {\mytikztextsize $x_i$};
+			\node[] at (2.125, 1.25) {\mytikztextsize $x_i$};
 
 			%%% Right part
 			% Bridge to center
@@ -148,8 +164,8 @@
 			\draw[edge] (62)edge(special) (52)edge(special) (63)edge(54) (53)edge(54) (52)edge(53);
 			% Decoration
 			\draw[edge] (72)edge(d72) (73)edge(d73);
-			\node[] at (3.50,  1.25) {$\bar{x}_i$};
-			\node[] at (2.375, 1.25) {$\bar{x}_i$};
+			\node[] at (3.50,  1.25) {\mytikztextsize $\bar{x}_i$};
+			\node[] at (2.375, 1.25) {\mytikztextsize $\bar{x}_i$};
 
 			%%% Center piece
 			% Center peace and the~one above
@@ -158,8 +174,8 @@
 			\draw[bedge] (44)edge(54) (45)edge(55) (46)edge(56);
 			%%% Decoration
 			\draw[bedge] (46)edge(d46) (56)edge(d56);
-			\node[] at (2.25, 2.75)  {$t$};
-			\node[] at (2.25, 1.875) {$t$};
+			\node[] at (2.25, 2.75)  {\mytikztextsize $t$};
+			\node[] at (2.25, 1.875) {\mytikztextsize $t$};
 
 			\begin{scope}[xshift=4cm]
 				\node[vertex]    (13) at (0.75, 1.50) {};
@@ -197,35 +213,35 @@
 				\draw[bedge] (34)edge(44);
 				\draw[redge] (33)edge(43);
 				%%% Labels
-				\node[] at (1.750, 1.750) {$B_i$};
-				\node[] at (1.375, 1.700) {$x_i$};
-				\node[] at (2.125, 1.800) {$\bar{x}_i$};
-				\node[] at (1.700, 2.125) {$t$};
-				\node[] at (1.800, 1.375) {$f$};
+				\node[] at (1.750, 1.750) {\mytikztextsize $B_i$};
+				\node[] at (1.375, 1.700) {\mytikztextsize $x_i$};
+				\node[] at (2.125, 1.800) {\mytikztextsize $\bar{x}_i$};
+				\node[] at (1.700, 2.125) {\mytikztextsize $t$};
+				\node[] at (1.800, 1.375) {\mytikztextsize $f$};
 
 				%%% Left
 				\draw[edge] (23)edge(33) (24)edge(34) (23)edge(24) (23)edge(34);
 				\draw[edge] (13)edge(23) (14)edge(24) (13)edge(14) (13)edge(24);
 				\draw[edge] (13)edge(d13) (14)edge(d14);
-				\node[] at (0.50, 1.75) {$x_i$};
+				\node[] at (0.50, 1.75) {\mytikztextsize $x_i$};
 
 				%%% Right
 				\draw[edge] (43)edge(53) (44)edge(54) (53)edge(54) (43)edge(54);
 				\draw[edge] (53)edge(63) (54)edge(64) (63)edge(64) (53)edge(64);
 				\draw[edge] (63)edge(d63) (64)edge(d64);
-				\node[] at (3.00, 1.75) {$\bar{x}_i$};
+				\node[] at (3.00, 1.75) {\mytikztextsize $\bar{x}_i$};
 
 				%%% Top
 				\draw[bedge] (34)edge(35) (44)edge(45) (35)edge(45) (35)edge(44);
 				\draw[bedge] (35)edge(36) (45)edge(46) (36)edge(46) (36)edge(45);
 				\draw[bedge] (36)edge(d36) (46)edge(d46);
-				\node[] at (1.75, 3.00) {$t$};
+				\node[] at (1.75, 3.00) {\mytikztextsize $t$};
 
 				%%% Bottom
 				\draw[redge] (32)edge(33) (42)edge(43) (32)edge(42) (33)edge(42);
 				\draw[redge] (31)edge(32) (41)edge(42) (31)edge(41) (32)edge(41);
 				\draw[redge] (31)edge(d31) (41)edge(d41);
-				\node[] at (1.75, 0.50) {$f$};
+				\node[] at (1.75, 0.50) {\mytikztextsize $f$};
 
 			\end{scope}
 		\end{tikzpicture}
@@ -235,13 +251,14 @@
 
 	\begin{figure}[h]
 		\centering
-		\begin{tikzpicture}[scale=1.50]
+		% \begin{tikzpicture}[scale=1.50] % 4:3
+		\begin{tikzpicture}[scale=1.40] % 16:9
 			%%% Center
 			\node[vertexSig] (35) at (1.5, 2.5) {};
 			\node[vertexSig] (53) at (2.5, 1.5) {};
 			\node[vertex]    (57) at (2.5, 3.5) {};
 			\node[vertex]    (75) at (3.5, 2.5) {};
-			\node[] at (2.5, 2.5) {$C_i$};
+			\node[] at (2.5, 2.5) {\mytikztextsize $C_i$};
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			%%% t
@@ -257,8 +274,8 @@
 			\node[] (14d) at (0.25, 2.0 ) {};
 			\draw[bedge] (13)edge(13d) (14)edge(14d);
 			%%%% Labels
-			\node[] at (0.25, 1.75) {$t$};
-			\node[] at (2.125, 2.125) {$t$};
+			\node[] at (0.25, 1.75) {\mytikztextsize $t$};
+			\node[] at (2.125, 2.125) {\mytikztextsize $t$};
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			%%% x_1
@@ -297,10 +314,10 @@
 			\node[] (p1t2d) at (0.75, 2.5) {};
 			\draw[bedge] (p1t1)edge(p1t1d) (p1t2)edge(p1t2d);
 			%%%% Labels
-			\node[] at (1.875, 2.625) {$\hat{x}_1$};
-			\node[] at (2.375, 3.125) {$\hat{x}_1$};
-			\node[] at (0.0  , 3.25 ) {$\hat{x}_1$};
-			\node[] at (0.875, 2.625) {$t$};
+			\node[] at (1.875, 2.625) {\mytikztextsize $\hat{x}_1$};
+			\node[] at (2.375, 3.125) {\mytikztextsize $\hat{x}_1$};
+			\node[] at (0.0  , 3.25 ) {\mytikztextsize $\hat{x}_1$};
+			\node[] at (0.875, 2.625) {\mytikztextsize $t$};
 
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -340,10 +357,10 @@
 			\node[] (p2t2d) at (4.25, 2.5) {};
 			\draw[bedge] (p2t1)edge(p2t1d) (p2t2)edge(p2t2d);
 			%%%% Labels
-			\node[] at (2.625, 3.125) {$\hat{x}_2$};
-			\node[] at (3.125, 2.625) {$\hat{x}_2$};
-			\node[] at (5.00 , 3.25 ) {$\hat{x}_2$};
-			\node[] at (4.125, 2.625) {$t$};
+			\node[] at (2.625, 3.125) {\mytikztextsize $\hat{x}_2$};
+			\node[] at (3.125, 2.625) {\mytikztextsize $\hat{x}_2$};
+			\node[] at (5.00 , 3.25 ) {\mytikztextsize $\hat{x}_2$};
+			\node[] at (4.125, 2.625) {\mytikztextsize $t$};
 
 			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			%%% x_3
@@ -382,10 +399,10 @@
 			\node[] (p3t2d) at (4.25, 2.5) {};
 			\draw[bedge] (p3t1)edge(p3t1d) (p3t2)edge(p3t2d);
 			%%%% Labels
-			\node[] at (3.125, 2.375) {$\hat{x}_3$};
-			\node[] at (2.625, 1.875) {$\hat{x}_3$};
-			\node[] at (5.00 , 1.75 ) {$\hat{x}_3$};
-			\node[] at (4.125, 2.375) {$t$};
+			\node[] at (3.125, 2.375) {\mytikztextsize $\hat{x}_3$};
+			\node[] at (2.625, 1.875) {\mytikztextsize $\hat{x}_3$};
+			\node[] at (5.00 , 1.75 ) {\mytikztextsize $\hat{x}_3$};
+			\node[] at (4.125, 2.375) {\mytikztextsize $t$};
 
 		\end{tikzpicture}
 	\end{figure}
@@ -495,9 +512,9 @@
 	\frametitle{Benchmarks}
 	\begin{itemize}
 		\item
-		      Flexible vs.\ minimally rigid vs.\ globally rigid.
+		      Many NAC-colorings/few NAC-colorings/no NAC-coloring.
 		\item
-		      Any NAC-coloring / all NAC-colorings / the number of NAC-colorings.
+		      Any NAC-coloring/all NAC-colorings/the number of NAC-colorings.
 	\end{itemize}
 \end{frame}
 
@@ -525,7 +542,7 @@
 			      \item Hard to randomly find hard graphs.
 		      \end{itemize}
 		\item
-		      Tens of vertices / monochromatic classes run in few seconds.
+		      Tens of vertices/monochromatic classes run in few seconds.
 	\end{itemize}
 \end{frame}
 
