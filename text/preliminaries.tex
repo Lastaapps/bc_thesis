@@ -105,7 +105,7 @@ We~can simplify the~problem if~we talk about \emph{generic} behavior.
 %
 For~rigid graphs, it~holds that almost all%
 \nohznamka{
-	If~a~condition holds for~almost all elements of a~set,
+	If~a~condition holds for~almost all elements of an~infinite set,
 	then the~condition holds for~all elements except for~a~subset of measure zero.
 }
 or all the~realizations are
@@ -191,11 +191,11 @@ that corresponds with the~existence of a~flexible realization.
 
 \begin{definition}[NAC-coloring~\cite{legersky_original}]
 	Let~\( G \) be a~graph and \( \delta: E(G) \to \{ \red, \blue \} \)
-	be a~coloring of edges:
+	be a~coloring of its edges:
 	%
 	\begin{itemize}
 		\item A~cycle in~\( G \) is a~\( \red \) cycle, if~all its edges are \( \red \),
-		      analogously for~a~\( \blue \) cycles.
+		      analogously for~\( \blue \) cycles.
 		\item A~cycle in~\( G \) is an~\emph{almost \( \red \) cycle},
 		      if~exactly one of its edges is \( \blue \).
 		      \emph{Almost \( \blue \) cycle} is defined analogously.
@@ -277,7 +277,7 @@ that corresponds with the~existence of a~flexible realization.
 	\label{fig:3prismK33flexible}
 \end{figure}
 
-An~example of NAC-coloring and corresponding flexible realization
+An~example of a NAC-coloring and the corresponding flexible realization
 can be seen in~\Cref{fig:3prismK33flexible}.
 %
 As shown in~\cite{np_complete}, it~is NP-complete to decide if~a~graph has a~NAC-coloring.
@@ -361,7 +361,7 @@ This idea can be expanded further to neighboring triangles.
 \end{definition}
 %
 \begin{lemma}[\cite{legersky_original}]
-	Let~\( \delta \) be a~coloring of a~graph \( G \) such that there are
+	Let~\( \delta \) be a~\rbcol{} of a~graph \( G \) such that there are
 	no almost cycles. If~\( G^\prime \) is
 	a~\( \triangle \)-connected subgraph of \( G \),
 	then \( \delta(e_1) = \delta(e_2) \) for~all \( e_1, e_2 \in E(G^\prime) \).
@@ -406,7 +406,7 @@ If~there is a~stable cut in~a~graph, a~NAC-coloring can be simply found.
 We~elaborate more on this case in~\Cref{chapter:stable_cuts}.
 
 We~continue with other lemmas that are useful in~our algorithm.
-They are able to find a~NAC-coloring of a~graph in~polynomial time for~some graph classes.
+They allow us to find a~NAC-coloring of a~graph in~polynomial time for~some graph classes.
 %
 \begin{lemma}[\cite{legersky_original}]%
 	\label[lemma]{lemma:weird_four_cycle}
@@ -422,7 +422,7 @@ such that it~is also an~edge cut in~\( G \).
 We~color edges in~\( E_c^\prime \) \( \red \) and the~other edges \( \blue \).
 See~\cite{legersky_original} for~a~complete proof.
 
-For~graph \( G \), some vertex \( v \in G \) is \emph{an articulation} vertex if
+For~a~graph \( G \), some vertex \( v \in G \) is \emph{an articulation} vertex if
 \( \{v\} \) is a~vertex cut in~\( G \).
 When all the~articulation vertices are found,
 the~graph can be decomposed into blocks

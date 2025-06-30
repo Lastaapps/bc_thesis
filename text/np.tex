@@ -31,7 +31,7 @@ in~the~original proof of NAC-coloring NP-completeness~\cite{np_complete}.
 For~a~reduction from another NP-complete problem
 we~use the~well-known \emph{3-SAT} problem.
 Propositional logic SAT answers the~question
-whether the~formula is satisfiable ---
+whether a~given formula is satisfiable ---
 there exists a~truth assignment of variables that satisfies the~formula.
 3-SAT problem is an~alternative formulation of SAT
 where the~formula must be in~the~conjunctive normal form (CNF), namely in~3-CNF
@@ -122,7 +122,7 @@ The~goal is to create a~truth assignment~\( \tau \).
 W.l.o.g.\ let~the~connecting edge corresponding to \( \true \) is colored \( \blue \).
 The~elementary formulas colored by \( \blue \) are assigned \( \true \) in~\( \tau \),
 the~other formulas are assigned \( \false \).
-We~show that \( \phi \) is satisfied with assignment \( \tau \).
+We~show that \( \phi \) is satisfied with the~assignment \( \tau \).
 Because of cycles \( A_i \) and \( B_i \), literals \( x_i \) and \( \bar{x}_i \)
 must have different colors. In~cycles \( C_i \) corresponding to clauses
 at least one of \( \hat{x}_{i,1}, \hat{x}_{i,2}, \hat{x}_{i,3} \) must be colored \( \blue \).
@@ -669,7 +669,7 @@ We~already presented this proof in~our previous paper~\cite{my_paper}.
 	otherwise \false{}.
 	Each cause $L_i$ is satisfied since
 	in every cycle $C_i$, at least one of
-	the~literals $\hat{x}_{i,j}$ corresponds to edges blue colored.
+	the~literals $\hat{x}_{i,j}$ corresponds to edges colored blue.
 	Otherwise, an~almost red cycle is formed.
 	Therefore, a~truth assignment for~$\phi$ can be obtained
 	from a~NAC-coloring of~$G_\phi$ in~polynomial time.

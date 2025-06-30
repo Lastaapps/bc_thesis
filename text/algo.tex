@@ -410,7 +410,7 @@ The~output is a list of subgraphs induced by the~monochromatic classes in~each b
 
 We~start with $\frac{|P|}{k}$ empty bags
 and all vertices of the~graph labelled $open$.
-First, we~add a~random of the~remaining monochromatic classes to a~bag.
+First, we~add a~random class of the~remaining monochromatic classes to a~bag.
 All the~vertices of the~monochromatic classes in~the~bag are denoted by $used$.
 We~take all $open$ vertices that are neighbors of the~vertices in~$used$ and assign
 them a~score. A~vertex $best$ with the~highest score is chosen.
@@ -427,7 +427,7 @@ on the~first and adds another rule ---
 if~the~number of neighbors matches, the~vertex with lower degree is chosen.
 %
 Other variations of this approach were also tried,
-but the~performance was not better.
+but the~performance was worse.
 
 
 \begin{algorithm}[ht]
