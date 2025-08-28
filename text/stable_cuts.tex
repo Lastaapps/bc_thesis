@@ -111,8 +111,8 @@ for~graphs from graph class \( \GSC \) defined as follows:
 %
 %
 \begin{theorem}[\cite{stable_cuts_2v_3,stable_cuts_2v_3_revisit}]
-	Let~\( G \) be a~graph with \( |E(G)| \le 2|V(G)|-3 \). Then \( G \) contains
-	a~stable cut or \( G \in \GSC \).
+	Let~\( G \) be a~graph with \( |E(G)| \le 2|V(G)|-3 \).
+	Then either~\( G \) contains a~stable cut or \( G \in \GSC \).
 \end{theorem}
 %
 Note that 2-trees (\Cref{def:2-tree})
@@ -131,7 +131,7 @@ are not equivalent.
 There are other notable similarities between NAC-colorings and stable cuts.
 Namely, as proved in~\cite{stable_cuts_complexity_base} it~is NP-complete
 to decide whether a~graph has a~stable cut.
-After it~was shown in~\cite{stable_cuts_complexity_deg_five} that
+As shown in~\cite{stable_cuts_complexity_deg_five},
 it~is NP-complete to decide whether a~\emph{line} graph with maximum degree five
 admits a~stable cut.
 %
@@ -199,7 +199,7 @@ was presented as a~practical result of the~following theorem.
 %
 \begin{theorem}[\cite{stable_cuts_legersky}]
 	Let~\( G \) be a~flexible graph and \( u, v \in V (G) \) be such that no rigid component of \( G \)
-	contains both \( u \) and \( v \). Then there is a~stable cut \( S \) of \( G \) that separates \( u \) and \( v \), and such that
+	contains both \( u \) and \( v \). Then there is a~stable cut~\( S \) of~\( G \) that separates \( u \) and \( v \), and such that
 	every rigid component of \( G \) contains at~most one vertex of \( S \). Moreover, if~\( G \) is 2-connected,
 	then for~every vertex \( v \in V(G) \), \( G \) has a~stable cut avoiding \( v \).
 \end{theorem}

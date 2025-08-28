@@ -41,8 +41,8 @@ is in~3-CNF\@.
 It~was shown that 3-SAT is NP-complete,
 and it~is a~common tool for~NP-completeness proofs~\cite{3-sat}.
 
-First, for~a~formula~\( \phi \) we~create a~graph \( G_\phi \).
-Alongside the~graph, an~edge-map is introduced mapping into the~literals
+First, for~a~formula~\( \phi \) in~3-CNF we~create a~graph \( G_\phi \).
+Alongside the~graph, an~edge-map is introduced mapping to the~literals
 of \( \phi \). Recall that for~an~elementary variable \( x_i \), the~literals
 are both \( x_i \) and \( \neg x_i \). We~denote \( \lnot x_i \) by \( \bar{x}_i \).
 There are also literals \( t \) and \( f \) for~\( \true \) and \( \false \).
@@ -108,7 +108,7 @@ The~paper~\cite{np_complete} then introduces a~\emph{connecting element} gadget.
 %
 Now, for~each edge in~\( G_\phi \) we~add a~connecting element gadget.
 The~edge labeled by \( x_i \) is identified with the~left most edge
-of the~gadget in~\Cref{fig:np_gadget_connecting},
+of the~gadget in~\Cref{fig:np_gadget_connecting}.
 Then the~right most edge is identified with the~connecting edge corresponding to literal \( x_i \).
 The~top most edge is identified with the~connecting edge corresponding to literal \( \bar{x}_i \).
 
@@ -119,7 +119,7 @@ all the~edges labeled by~\( x_i \) are colored the~same.
 
 Let~us suppose that we~have a~NAC-coloring \( \delta \) of \( G_\phi \).
 The~goal is to create a~truth assignment~\( \tau \).
-W.l.o.g.\ let~the~connecting edge corresponding to \( \true \) is colored \( \blue \).
+W.l.o.g.\ let~the~connecting edge corresponding to \( \true \) be colored \( \blue \).
 The~elementary formulas colored by \( \blue \) are assigned \( \true \) in~\( \tau \),
 the~other formulas are assigned \( \false \).
 We~show that \( \phi \) is satisfied with the~assignment \( \tau \).
@@ -320,8 +320,8 @@ We~already presented this proof in~our previous paper~\cite{my_paper}.
 	For~each variable $x_i$, we~create two gadgets:
 	one with cycle $A_i$ in~the~center
 	with the~edges of the~cycle linked using braced ladders
-	to the~trains $x_i, \bar{x}_i$ and $t$,
-	and the~other linked to the~trains $x_i, \bar{x}_i, t$ and $f$
+	to the~trains~$x_i, \bar{x}_i$ and~$t$,
+	and the~other linked to the~trains $x_i, \bar{x}_i, t$ and~$f$
 	according to \Cref{fig:proof_enforce_true_false}.
 
 	\begin{figure}[h]
@@ -637,9 +637,9 @@ We~already presented this proof in~our previous paper~\cite{my_paper}.
 	\end{figure}
 
 	Note that for~the~variable gadgets we~add
-	a~fixed number of vertices and edges bounded by $O(n)$ and
-	for the~clause gadgets the~number is bounded by $O(k)$.
-	Therefore, the~whole graph size is bounded by $O(n+k)$
+	a~fixed number of vertices and edges bounded by~$O(n)$ and
+	for the~clause gadgets the~number is bounded by~$O(k)$.
+	Therefore, the~whole graph size is bounded by~$O(n+k)$
 	and the~graph can be constructed in~polynomial time.
 	Also, note that the~maximum degree is five.
 
@@ -657,7 +657,7 @@ We~already presented this proof in~our previous paper~\cite{my_paper}.
 	otherwise $B_i$ would form an~almost cycle.
 	Since every edge is labelled by a~literal and NAC-coloring is surjective,
 	there is literal $x_j$ such that the~trains~$x_j$ and~$\bar{x}_j$ are red.
-	But then the~cycle $A_j$ is an~almost cycle, which is a~contradiction.
+	But then the~cycle $A_j$ is an~almost red cycle, which is a~contradiction.
 	Hence, the~train $f$ is red.
 	From the~cycles $B_i$ we~also see
 	that trains $x_i$ and $\bar{x}_i$ have to be colored with different colors
@@ -702,7 +702,7 @@ We~already presented this proof in~our previous paper~\cite{my_paper}.
 	as $x_i$ is blue and $\bar{x}_i$ is red, or the~other way around.
 
 	For~the~third gadget in~\Cref{fig:proof_clause},
-	suppose first that $e$ is the~edge in~cycle $C_i$ labelled $t$.
+	suppose first that $e$ is the~edge in~cycle~$C_i$ labelled~$t$.
 	Since it~is blue, the~edges labelled $\hat{x}_{i,1}$ and $\hat{x}_{i,3}$ are red.
 	The~edges labelled $\hat{x}_{i,2}$ are blue since the~$i$-th clause evaluates to \true{}.
 	Hence, nor $C_i$ nor any other cycle inside the~gadget is an~almost red cycle.
@@ -720,17 +720,17 @@ are really needed. We~present a~counter-example.
 Let~us have a 3-CNF formula~\( \phi = (A \lor B \lor C) \land (\lnot A~\lor D \lor B) \).
 For~each satisfiable truth assignment, there should be a~NAC-coloring in~\( G_\phi \).
 %
-This formula is satisfiable, for~example, if~\( C \) and \( D \) are assigned \( \true \)
-and all the~other literals are assigned \( \false \).
+This formula is satisfiable, for~example, if~\( C \) and~\( D \) are assigned~\( \true \)
+and all the~other literals are assigned~\( \false \).
 If~we create corresponding \( \red \)-\( \blue \)-coloring in~\( G_\phi \)
 where the~cause gadgets do not have the 3-prisms, an~almost cycle is created:
 %
-the~cycle starts at \( A \) in~the~first cause, goes through connecting
-train to \( A \) section in~the~second cause. There, it~uses the~\( \blue \)
-\( \true \) edge and goes to \( B \). Using a~connecting train,
+the~cycle starts at~\( A \) in~the~first cause, goes through connecting
+train to~\( A \) section in~the~second cause. There, it~uses the~\( \blue \)
+\( \true \) edge and goes to~\( B \). Using a~connecting train,
 it~goes back to the~\( B \) segment in~the~first cause.
-Here, it~joins back to \( A \) as the~segments share a~vertex.
-All edges corresponding to \( A \) and \( B \)
+Here, it~joins back to~\( A \) as the~segments share a~vertex.
+All edges corresponding to~\( A \) and~\( B \)
 are \( \red \), and we~used only a~single \( \blue \) edge.
 Therefore, an~almost cycle exists, and the~coloring is not a~NAC-coloring.
 If~the~prisms are used, four more blue edges are visited with an~analogous cycle.

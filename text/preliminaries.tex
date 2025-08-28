@@ -86,7 +86,8 @@ Note that two non-neighboring vertices can be mapped to the~same position.
 The~existence of \emph{injective} flexible realizations
 has been also studied~\cite{injective_realizations},
 but they are of no interest for~us in~this thesis
-as there is no known combinatorial characterization of them.
+as there is no known combinatorial characterization
+of graphs with an injective flexible realization in \( \R^2 \).
 
 For~\( d = 1 \) or \( d \ge 3 \),
 the~question whether a~graph has a~flexible \( d \)-framework is simple.
@@ -108,8 +109,7 @@ For~rigid graphs, it~holds that almost all%
 	If~a~condition holds for~almost all elements of an~infinite set,
 	then the~condition holds for~all elements except for~a~subset of measure zero.
 }
-or all the~realizations are
-either \( d \)-rigid.
+realizations are \( d \)-rigid or almost all realizations are \( d \)-flexible.
 As there may be few \( d \)-flexible realizations,
 we~talk about paradoxical flexibility.
 %
@@ -141,7 +141,8 @@ Pollaczek-Geiringer and later Laman gave characterization of minimally $2$-rigid
 	%
 	A~graph \( G \) is minimally \( 2 \)-rigid if~and only if
 	\( |E(G)| = 2|V(G)| - 3\) and
-	\( |E(H)| \le 2|V(H)| - 3 \) for~any \( H \) subgraph of \( G \).
+	\( |E(H)| \le 2|V(H)| - 3 \) for~any \( H \) subgraph of \( G \)
+	with at least two vertices.
 \end{theorem}
 %
 \begin{corollary}[\cite{polzacek_1927,laman_1970}]
@@ -298,7 +299,7 @@ in~an~edge coloring \( \delta \).
 		We~also later use a~similar notation for~vertex-induced components:
 		for \(X \subseteq V(G)\), by \(G[X]\) we~denote
 		the~induced subgraph of \( G \) on vertices \( X \),
-		\( G[X] = (X, \{ \{u, v\} \mid u, v \in X\}) \).
+		\( G[X] = (X, \{ \{u, v\} \in E(G) \mid u, v \in X\}) \).
 	}
 	are induced subgraphs of \( G \).
 \end{lemma}
@@ -309,7 +310,7 @@ an~almost cycle is formed from a~\( u \)-\( v \)-path in~\( G[E_\red] \)
 and the~edge \( \{u, v\} \).
 The~check can be done in~polynomial (linear) time.
 
-Now we~present relation of NAC-colorings and flexible frameworks.
+Now we~present a~relation of NAC-colorings and flexible frameworks.
 %
 \begin{theorem}[\cite{legersky_original}]
 	A~connected graph \( G \) with at least one edge has a~flexible
@@ -329,7 +330,7 @@ there exists a~NAC-coloring~\( \delta^\prime \) on~\( G \)
 where \( \red \) and \( \blue \) colors are swapped.
 %
 \begin{definition}
-	By \( \nac{G} \) we~denote the~set of all the~NAC-coloring of graph \( G \).
+	By \( \nac{G} \) we~denote the~set of all the~NAC-colorings of graph \( G \).
 	By \( \nnac{G} \) we~denote the~number of NAC-colorings of \( G \)
 	up to swapping the~colors.
 	That is \( \nnac{G} = | \nac{G} | / 2 \)
@@ -350,7 +351,7 @@ This idea can be expanded further to neighboring triangles.
 \begin{definition}[\( \triangle \)-connected component~\cite{legersky_original}]
 	\label[definition]{def:triangle_connected_component}
 	Let~\( G \) be a~graph and \( \sim^\prime_\triangle \) be
-	a~relation on \( E(G) \times E(G) \) such that \( e_1 \sim^\prime_\triangle e_2 \)
+	a~relation on \( E(G) \) such that \( e_1 \sim^\prime_\triangle e_2 \)
 	if and only if~there exists a 3-cycle subgraph \( C_3 \) of \( G \)
 	such that \( e_1, e_2 \in E(C_3) \).
 	Let~\( \sim_\triangle \) be the~reflexive-transitive closure of \( \sim^\prime_\triangle \).
