@@ -22,7 +22,7 @@ To set up the~project, create a~virtual environment and install packages
 from \texttt{requirements.txt}. On NixOS, \texttt{shell.nix} can be used.
 See \texttt{README.md} for~additional instructions.
 We~go through the~main folders and files of the~project,
-see project file structure in~\nameref{chapter:attachments}.
+see the project file structure in~\nameref{chapter:attachments}.
 
 
 \section{Files overview}
@@ -114,7 +114,7 @@ or generated using NetworkX~\cite{networkx} and checks from PyRigi~\cite{pyrigi}
 Graphs are stored in~Graph6 or Sparse6 formats~\cite{graph6}.
 %
 Files and directories store these graph classes:
-minimally rigid graph, graphs with no three nor four cycles, globally rigid graph,
+minimally rigid graphs, graphs with no three nor four cycles, globally rigid graphs,
 and graphs with no NAC-coloring, see~\nameref{chapter:attachments}.
 %
 The~code for~working with datasets is stored in~directory \texttt{benchmarks}.
@@ -156,7 +156,7 @@ we~describe the~main entry points to our library.
 
 % To call algorithm~\Cref{alg:stable_cut_flexible},
 % first import function \texttt{stable\_cut\_in\_flexible\_graph}
-\Cref{alg:stable_cut_flexible},
+\Cref{alg:stable_cut_flexible}
 is implemented in~\texttt{stable\_cut\_in\_flexible\_graph}
 from module \texttt{stablecut.flexible\_graphs}.
 The~function accepts a~graph and

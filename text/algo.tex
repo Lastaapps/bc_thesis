@@ -7,7 +7,7 @@
 	Therefore, we~cannot hope for~an~algorithm that can solve this problem in~polynomial time.
 	The~trivial idea how to search for~NAC-colorings is to
 	try all the~\( \red \)-\( \blue \)-edge colorings
-	and check in~polynomial time if~a~coloring given is a~NAC-coloring.
+	and check in~polynomial time if~a~given coloring is a~NAC-coloring.
 	In~this chapter, we~propose multiple optimizations to the~naive approach
 	and an~algorithm that significantly outperforms the~naive approach in~general case.
 
@@ -25,7 +25,7 @@ Although the~proposed approaches are written so that all NAC-colorings are gener
 the~existence of a~NAC-coloring can be checked easily by stopping after finding a~first one.
 
 This chapter is based on our previous work in~\cite{my_paper},
-here we~describe the~approaches used more in~detail
+here we~describe the~used approaches more in~detail
 and also describe other approaches that do not work as well as the~approaches
 shown in~the~paper. We~evaluate the~performance
 of the~algorithms and related heuristics in~\Cref{chapter:benchmarks}.
@@ -35,7 +35,7 @@ of the~algorithms and related heuristics in~\Cref{chapter:benchmarks}.
 A~naive approach to list all NAC-colorings is to consider
 all $2^{|E(G)|} - 2$ surjective \( \red \)-\( \blue \)-edge colorings of graph $G$
 and check each of them in~polynomial time using \Cref{lemma:is_nac_coloring}.
-We~call this check \IsNACColoring{}$(G, E_r, E_b)$.
+We~call this check \IsNACColoring{}$(G, E_\red, E_\blue)$.
 To remind the~reader, the~idea is simple
 --- first we~create subgraphs \( G[E_\red], G[E_\blue] \).
 If~there is w.l.o.g.\ \( \blue \) edge \( \{u, v\} \)
@@ -361,11 +361,11 @@ for~these two phases.
 
 		\ForAll{$(E_{r_{1}}, E_{b_{1}}) \in N_1$}
 		\ForAll{$(E_{r_{2}}, E_{b_{2}}) \in N_2$}
-		\State{} $E_r \gets E_{r_{1}} \cup E_{r_{2}}$
-		\State{} $E_b \gets E_{b_{1}} \cup E_{b_{2}}$
-		\If{$\Call{IsNACColoring}{G, E_r, E_b}$}
+		\State{} $E_\red \gets E_{r_{1}} \cup E_{r_{2}}$
+		\State{} $E_\blue \gets E_{b_{1}} \cup E_{b_{2}}$
+		\If{$\Call{IsNACColoring}{G, E_\red, E_\blue}$}
 		% \Comment{} cycles check can be also used here
-		\State{} $S \gets S \cup \{(E_r, E_b)\}$
+		\State{} $S \gets S \cup \{(E_\red, E_\blue)\}$
 		\EndIf{}
 		\EndFor{}
 		\EndFor{}
@@ -497,7 +497,7 @@ all monochromatic classes are marked as used.
 \subsubsection*{\KernighanLin{}, \Cuts{}}
 
 Kernighan-Lin algorithm~\cite{kernighan_lin} proposes a~heuristic based algorithm
-for~partitioning a~graph into two parts. It~tires to minimize the~edge cut between
+for~partitioning a~graph into two parts. It~tries to minimize the~edge cut between
 the~parts by iteratively swapping pairs of vertices from the~parts.
 
 As noted in~\Cref{observ:monochromatic_classes_graph},
@@ -716,6 +716,6 @@ As shown in~\cite{legersky_original}, there are no flexible realizations
 of graphs with \( |E(G)| > \frac{n(n-1)}{2} - (n-2) \) where \( n = |V(G)| \).
 These graphs always form a~\trcon{} component.
 %
-Another polynomial algorithm goes from \Cref{lemma:weird_four_cycle}
+Another polynomial algorithm goes from \Cref{lemma:weird_four_cycle}.
 The~algorithm is not implemented as part of the~thesis.
 

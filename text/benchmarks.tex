@@ -50,7 +50,7 @@ but we~reached no performance gains compared to the~random relabeling.
 Visualizations in~the~following sections were created by grouping data per dataset,
 graph size and some specified attribute --- usually the~strategies used.
 %
-We~show mean of the~running time in~milliseconds or
+We~show the~mean of the~running time in~milliseconds or
 the~number of \IsNACColoring{} calls.
 %
 Graphs with median and third quartile can be seen in~\texttt{NAC\_presentation.ipynb}.
@@ -72,7 +72,7 @@ of all minimally rigid graphs with given vertex count.
 They are generated using Nauty~\cite{nauty}
 with a~corresponding plugin~\cite{nauty_plugin}.
 %
-We~show results of the~implementation
+We~show the~results of the~implementation
 in~\flexrilog{}~\cite{flexrilog} using \trcon{} components
 run in~SageMath~\cite{sagemath}
 and compare them to our implementation of the~same \Naive{} algorithm
@@ -330,7 +330,7 @@ These graphs are probably not included in~our dataset.
 
 The~idea of monochromatic classes is so effective
 that even large graphs collapse into just a~few monochromatic classes.
-The Majority of the~graphs in~this dataset either has a~NAC-coloring,
+The~majority of the~graphs in~this dataset either has a~NAC-coloring,
 or only a~single monochromatic class and therefore no NAC-coloring.
 In~our dataset, 75 percent of graphs have less than ten	monochromatic classes,
 but only 10 percent of graphs have less than ten \trcon{} components
@@ -567,7 +567,7 @@ should join subgraphs near to each other together. This is not the~case.
 
 Based on our benchmarks, most of which we~presented in~the~previous sections,
 we~evaluate respective strategies and choose ones
-that should be recommend are kept and merged into PyRigi.
+to be kept and merged into PyRigi.
 %
 For~graph classes with a~lot of NAC-colorings,
 \NaiveCycles{} is usually the best choice

@@ -399,7 +399,7 @@ We~start by defining other auxiliary predicates:
 	\item For~a~subset of vertices \( U \) and a~subset of edges \( F \), we~define predicate
 	      %
 	      \begin{align*}
-		      \text{incident}(U, F) \coloneqq \predsp
+		      \text{induced}(U, F) \coloneqq \predsp
 		       & \big(\forall v \in U \predsp \exists e \in F : \inc (v, e)\big)                                                       \\
 		       & \land \big(\forall e \in F \predsp \exists v_1, v_2 \in U : v_1 \ne v_2 \land \inc (v_1, e) \land \inc (v_2, e)\big).
 	      \end{align*}
@@ -412,7 +412,7 @@ We~start by defining other auxiliary predicates:
 	      %
 	      \begin{align*}
 		      \text{cycle}(F) \coloneqq \predsp
-		      \big( \exists X \subseteq V : \text{incident}(X, F) \land \text{connected}(X) \big)
+		      \big( \exists X \subseteq V : \text{induced}(X, F) \land \text{connected}(X) \big)
 		      \land \text{deg2}(F).
 	      \end{align*}
 	      %
@@ -1265,10 +1265,12 @@ merges that do not produce almost NAC-colorings.
 	\( s_i' = (P_{i,\red}', R_{i,\red}', P_{i,\blue}', R_{i,\blue}') \),
 	and \( s = M(s_1', s_2')
 	= (P_\red, R_\red, P_\blue, R_\blue) \in S_t \).
-	For each \( a \in \{\red, \blue \} \),
-	\( (s_1', s_2') \in \mathcal{B} \) if~and only if
-	there exists \( p \in P_{a} \)
+	%
+	It holds that \( (s_1', s_2') \in \mathcal{B} \) if~and only if
+	there for each \( a \in \{\red, \blue \} \)
+	exists \( p \in P_{a} \)
 	and \( P_{i, a}'' \subseteq P_{i, a}' \)
+	%
 	such that \( \bigcup_{p' \in P_{i, a}''} p' = p \)
 	and there exists \( p_1', p_2' \in P_{i, a}'' : (p_1', p_2') \in R_{i, a}' \).
 \end{lemma}
