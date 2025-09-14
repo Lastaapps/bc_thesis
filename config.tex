@@ -1,3 +1,75 @@
+%%%%%%%%%%%%%%%%%
+% CUSTOM COMMANDS
+%%%%%%%%%%%%%%%%%
+
+% Text mode macros
+\newcommand{\G}{\(G\)}
+\newcommand{\Ered}{E_\text{red}}
+\newcommand{\Eblue}{E_\text{blue}}
+%% Proof, Algo
+\newcommand{\true}{\textit{True}}
+\newcommand{\false}{\textit{False}}
+\DeclareMathOperator{\CP}{\Pi_{\NAC}}
+\DeclareMathOperator{\partition}{\mathbf{partition}}
+\DeclareMathOperator{\cycle}{\mathbf{cycle}}
+\DeclareMathOperator{\NACcond}{\mathbf{NACcond}}
+
+\newcommand{\Naive}{\textsc{Naive}}
+\newcommand{\NaiveCycles}{\textsc{NaiveCycles}}
+\newcommand{\Subgraphs}{\textsc{Subgraphs}}
+\newcommand{\None}{\textsc{None}}
+\newcommand{\Neighbors}{\textsc{Neighbors}}
+\newcommand{\NeighborsDegree}{\textsc{NeighborsDegree}}
+\newcommand{\CyclesMatchChunks}{\textsc{CyclesMatchChunks}}
+\newcommand{\KernighanLin}{\textsc{Kernighan-Lin}}
+\newcommand{\Cuts}{\textsc{Cuts}}
+\newcommand{\CycleMask}{\textsc{CycleMask}}
+\newcommand{\IsNACColoring}{\textsc{IsNACColoring}}
+\newcommand{\MergeLinear}{\textsc{Linear}}
+\newcommand{\SharedVertices}{\textsc{SharedVertices}}
+\newcommand{\Log}{\textsc{Log}}
+\newcommand{\SortedBits}{\textsc{SortedBits}}
+\newcommand{\SortedSize}{\textsc{SortedSize}}
+\newcommand{\MinMax}{\textsc{MinMax}}
+\newcommand{\PromisingCycles}{\textsc{PromisingCycles}}
+\newcommand{\Score}{\textsc{Score}}
+%% FPT
+\newcommand{\MSO}{$\text{MSO}_2$}
+\newcommand{\LeafNode}{\textsc{Leaf Node}}
+\newcommand{\RootNode}{\textsc{Root Node}}
+\newcommand{\IntroduceVertexNode}{\textsc{Introduce Vertex Node}}
+\newcommand{\ForgetVertexNode}{\textsc{Forget Vertex Node}}
+\newcommand{\IntroduceEdgeNode}{\textsc{Introduce Edge Node}}
+\newcommand{\JoinNode}{\textsc{Join Node}}
+\newcommand{\IntroduceVertexWithEdgesNode}{\textsc{Introduce Vertex With Edges Node}}
+
+\newcommand{\flexrilog}{\textsc{FlexRiLoG}}
+\newcommand{\trcon}{\mbox{$\triangle$-connected}}
+\newcommand{\rbcol}{\( \red \)-\( \blue \)-coloring}
+% Math mode macros
+\newcommand{\red}{\text{red}}
+\newcommand{\blue}{\text{blue}}
+\DeclareMathOperator{\NAC}{NAC}
+\DeclareMathOperator{\aNAC}{aNAC}
+\newcommand{\nac}[1]{\NAC(#1)}
+\newcommand{\nnac}[1]{\NAC_{\#} (#1)}
+\newcommand{\anac}[1]{\aNAC(#1)}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\inc}{\text{inc}}
+\newcommand{\pluseq}{\mathrel{+}=}
+\newcommand{\equivclass}[2]{%
+	#1{/\!}_{#2}%
+}
+\newcommand{\predsp}{\ }
+%% Stable cuts
+\newcommand{\GSC}{\mathcal{G}_{sc}}
+%% Bitwise operators
+\newcommand*\BitAnd{\mathbin{\&}}
+\newcommand*\BitOr{\mathbin{|}}
+\newcommand*\ShiftLeft{\ll}
+\newcommand*\ShiftRight{\gg}
+\newcommand*\BitNeg{\ensuremath{\mathord{\sim}}}
 
 %%%%%%%%%%%%%%%
 %% Tikz
