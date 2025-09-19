@@ -20,6 +20,9 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{amssymb}
 
 \title{NAC-COLORINGS SEARCH\@:\newline COMPLEXITY AND ALGORITHMS}
 \author{Petr Laštovička, Jan Legerský}
@@ -27,6 +30,10 @@
 \date{September 22, 2025}
 
 \include{./config}
+
+\newcommand{\includegraphicsmax}[2][]{%
+    \includegraphics[width=0.80\textwidth,height=0.69\textheight,keepaspectratio,#1]{#2}%
+}
 
 \begin{document}
 \maketitle
@@ -578,9 +585,243 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Our FPT algorithm}
+
+	\begin{itemize}
+		\item
+		      Parametrized by tree-width.
+		\item
+		      NAC-coloring counting.
+		\item
+		      Uses a nice-tree decomposition \( T \) of width \( k \)
+		      with \IntroduceEdgeNode{}s.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
 	\frametitle{State space}
 
-	For a bag
+	\begin{itemize}
+		\item
+		      Let us have a node \( t \) in a nice tree decomposition \( T \)
+		      and a vertex bag \( X_t \).
+		      % By \( G_t \) we denote a graph already formed by child nodes.
+		\item
+		      Let us have a part \( P \in \mathcal{P}(X_t) \)
+		      and a binary relation \( R \) on \( P \).
+		\item
+		      We define a state \( s \) as a tuple \( P_\red, R_\red, P_\blue, R_\blue \).
+		      We define state space \( S_t \) of \( t \) as the set of all such states \( s \).
+		\item
+		      By red, resp.\ blue, halve of a state \( s \)
+		      we mean \( P_\red, R_\red \), resp. \( P_\blue, R_\blue \).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{State space}
+
+	\only<1>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/state_example_01}
+			\caption{Basic state example.}
+		\end{figure}
+	}
+	\only<2>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/state_example_02}
+			\caption{State with relations between parts.}
+		\end{figure}
+	}
+	\only<3>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/state_example_03}
+			\caption{State with a single part for both colors.}
+		\end{figure}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cache function}
+
+	\begin{itemize}
+		\item
+		      An \emph{almost NAC-coloring} is a red-blue-coloring
+		      such that there are not almost cycles.
+		\item
+		      A state \( s \in S_t \) is consistent with an almost NAC-coloring \( \delta \)
+		      on \( G_t \) if for both halves, w.l.o.g.\ for red, it holds that:
+		      \begin{itemize}
+			      \item
+			            If two vertices \( u, v \in X_t \) are in the same red connected component,
+			            then they are also in the same part in \( P_\red \).
+			      \item
+			            If there is a \( \blue \) edge connecting two red components
+			            spanning vertices \( u, v \in X_t \),
+			            it holds that \( (p_u, p_v) \in R_\red \).
+		      \end{itemize}
+		\item
+		      Let \( \mathcal{S} = \{ (t, s) | s \in S_t, t \in T \} \).
+		      Let us have the cache function \( c: \mathcal{S} \to \N_0 \)
+		      such that \( c(t, s) \) is the number of almost NAC-colorings
+		      in \( G_t \) consistent with \( s \).
+	\end{itemize}
+\end{frame}
+
+% \begin{frame}
+% 	\frametitle{\LeafNode{}}
+% 	Let~us have a~\LeafNode{} \( t \in T \).
+% 	It~holds that \( c[t, s] = 0 \) for~all \( s \in S_t \).
+% \end{frame}
+
+
+\begin{frame}
+	\frametitle{\InroduceVertexNode{}}
+
+	\only<1>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/introduce_vertex_cases_happy}
+			\caption{Isolated vertex is introduced correctly.}
+		\end{figure}
+	}
+	\only<2>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/introduce_vertex_cases_sad}
+			\caption{Such states cannot represent any almost NAC-coloring.}
+		\end{figure}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\IntroduceVertexNode{}}
+
+	Let \( t' \) be the only child of \( t \) in \( T \).
+
+	\begin{align*}
+		c[t, s] & =
+		\begin{cases}
+			0,         & \text{if } \exists a \in \{\red, \blue\} : \{v\} \not\in P_a,                    \\
+			0,         & \text{if } \exists a \in \{\red, \blue\} \exists p \in P_a : (\{v\}, p) \in R_a, \\
+			c[t', s'], & \text{otherwise},
+		\end{cases}
+	\end{align*}
+	where
+	\begin{align*}
+		s' & \coloneqq (P_\red \setminus \{\{v\}\}, R_\red, P_\blue \setminus \{\{v\}\}, R_\blue).
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\ForgetVertexNode{}}
+
+	\only<1>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/forget_node_part}
+		\end{figure}
+	}
+	\only<2>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/forget_node_relations}
+		\end{figure}
+	}
+
+	Let \( S' \subset S_{t'} \) be states yielding \( s \) after removing \( v \):
+	%
+	\begin{align*}
+		c[t, s] & = \sum_{s' \in S'} c[t', s'].
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\IntroduceEdgeNode{}}
+
+	\begin{figure}
+		\centering
+		\includegraphicsmax{./assets/introduce_edge_cases}
+	\end{figure}
+
+	Each possibly consistent state \( s \in S_t \)
+	is an extension of almost NAC-colorings on \( G_{t'} \)
+	of the following four cases. This is evaluated for both colors.
+\end{frame}
+
+\begin{frame}
+	\frametitle{\JoinNode{}}
+
+	\begin{figure}
+		\centering
+		\includegraphicsmax{./assets/join_node_happy}
+	\end{figure}
+
+	\begin{itemize}
+		\item
+		      There are not edges in \( G_t \) among vertices in \( X_t \).
+		\item
+		      Merge partitions using reflex transitive closure
+		      while avoiding almost cycles.
+		\item
+		      Let \( S_1' \subset S_{t_1'}, S_2' \subset S_{t_2'} \) be states yielding \( s \) after merging:
+		      %
+		      \begin{align*}
+			      c[t, s] & = \sum_{(s_1', s_2') \in S_1' \times S_2'} c[t_1', s_1'] \cdot c[t_{2}', s_{2}'].
+		      \end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\JoinNode{} --- bad cases}
+
+	\only<1>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/join_node_sad_01}
+			\caption{Left blue relation causes an almost cycle in a red part on right.}
+		\end{figure}
+	}
+	\only<2>{
+		\begin{figure}
+			\centering
+			\includegraphicsmax{./assets/join_node_sad_02}
+			\caption{Multiple parts merged, problems occur ``transitively''.}
+		\end{figure}
+	}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Complexity}
+
+	\begin{itemize}
+		\item
+		      Proved by induction over tree nodes.%
+		      \footnote{The algorithm will never give you up.}
+		\item
+		      State space size: up to \( {(k+1)}^{(k+1)} \) partitions per node,
+		      up to \( 2^{\binom{k+1}{2}} \) relations per part.
+		\item
+		      The algorithm yields \( 2^{O(k^2)} \cdot O(n) \) time complexity.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Omitted details}
+
+	\begin{itemize}
+		\item
+		      Special case for the first introduced edge and operations before that.
+		\item
+		      Definition of \IntroduceVertexWithEdgesNode{}.
+		\item
+		      Additional detection of states not corresponding to any almost NAC-coloring.
+    \item
+          Only proved, not implemented.
+	\end{itemize}
 \end{frame}
 
 \section{Algorithms for NAC-coloring search}
@@ -661,10 +902,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{}
-
-\end{frame}
 \begin{frame}
 	\frametitle{}
 
