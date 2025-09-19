@@ -25,6 +25,10 @@ jobs:
       - name: Build Presentation (LuaLaTeX)
         run: latexmk -pdflua presentation.tex
 
+      - name: Build G2OAT (LuaLaTeX)
+        run: latexmk -pdflua g2oat.tex
+
+        ################################################################################
       - name: Upload PDF artifact (LuaLaTeX)
         uses: actions/upload-artifact@v4
         with:
@@ -42,6 +46,12 @@ jobs:
         with:
           name: presentation-lualatex
           path: presentation.pdf
+
+      - name: Upload PDF artifact (G2OAT) (LuaLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: g2oat-lualatex
+          path: g2oat.pdf
 
   XeLaTeX:
     runs-on: ubuntu-latest
@@ -62,6 +72,10 @@ jobs:
       - name: Build Presentation (XeLaTeX)
         run: latexmk -pdfxe presentation.tex
 
+      - name: Build G2OAT (XeLaTeX)
+        run: latexmk -pdfxe g2oat.tex
+
+        ################################################################################
       - name: Upload PDF artifact (XeLaTeX)
         uses: actions/upload-artifact@v4
         with:
@@ -79,3 +93,9 @@ jobs:
         with:
           name: presentation-xelatex
           path: presentation.pdf
+
+      - name: Upload PDF artifact (G2OAT) (XeLaTeX)
+        uses: actions/upload-artifact@v4
+        with:
+          name: g2oat-xelatex
+          path: g2oat.pdf

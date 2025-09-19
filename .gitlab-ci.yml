@@ -6,11 +6,13 @@ LuaLaTeX:
         - latexmk -pdflua thesis.tex
         - latexmk -pdflua thesis-twoside.tex
         - latexmk -pdflua presentation.tex
+        - latexmk -pdflua g2oat.tex
     artifacts:
         paths:
             - thesis.pdf
             - thesis-twoside.pdf
             - presentation.pdf
+            - g2oat.pdf
 
 XeLaTeX:
     script: 
@@ -18,8 +20,10 @@ XeLaTeX:
         - latexmk -pdfxe thesis.tex
         - latexmk -pdfxe thesis-twoside.tex
         - latexmk -pdfxe presentation.tex
+        - latexmk -pdfxe g2oat.tex
     artifacts:
         paths:
             - thesis.pdf
             - thesis-twoside.pdf
             - presentation.pdf
+            - g2oat.pdf
