@@ -30,6 +30,7 @@
 \date{September 22, 2025}
 
 \include{./config}
+\newcommand{\BenchFigureScale}{0.42}
 
 \newcommand{\includegraphicsmax}[2][]{%
     \includegraphics[width=0.80\textwidth,height=0.69\textheight,keepaspectratio,#1]{#2}%
@@ -43,7 +44,7 @@
 	\frametitle{Contents}
 	\begin{itemize}
 		\item
-		      Introduction to Rigidity theory, flexible realizations and NAC-colorings
+		      Introduction to Rigidity theory, flexible realizations and NAC-colorings.
 		\item
 		      NAC-coloring existence is NP-complete also on graphs with maximum degree five.
 		\item
@@ -57,6 +58,9 @@
 
 \begin{frame}
 	\frametitle{Rigidity theory}
+
+	Properties of objects formed from joints and rigid bars.
+
 	\begin{definition}[\( d \)-realization]
 		A~\emph{\( d \)-realization} of a~graph \( G \) is a~mapping \( p: V(G) \to \R^d \).
 	\end{definition}
@@ -220,11 +224,11 @@
 \section{NAC-coloring existence complexity}
 
 \begin{frame}
-	\frametitle{Previous research}
+	\frametitle{Problem's complexity}
 
 	\begin{itemize}
 		\item
-		      It is NP-complete to decide whether a graph has a NAC-coloring.
+		      It is NP-complete to decide whether a graph has a~NAC-coloring.
 		\item
 		      Correspondence with stable cuts (independent vertex cuts).
 		\item
@@ -234,6 +238,9 @@
 		      \end{itemize}
 		\item
 		      And other polynomial checks\ldots
+		\item
+		      We show that it is NP-complete to decide whether
+		      a graph with maximum degree five has a NAC-coloring.
 	\end{itemize}
 \end{frame}
 
@@ -241,11 +248,11 @@
 	\frametitle{Original reduction}
 	\begin{itemize}
 		\item
-		      Reduction from 3-SAT\@.
+		      Reduction from 3-SAT, a graph gadget.
 		\item
 		      No bound on the degree of vertices.
 		\item
-		      Our reduction idea is based upon this original construction.
+		      Our reduction idea is based on this original construction.
 	\end{itemize}
 \end{frame}
 
@@ -260,7 +267,9 @@
 		      we ensure that \( x \) and \( \bar{x} \)
 		      they correspond to different color and different truth value.
 		\item
-		      Then for each clause we ensure that at least one of the literals is true.
+		      For each clause we ensure that at least one of the literals is true.
+		\item
+		      Color correspondence to true/false.
 		\item
 		      We use leathers to connect individual gadgets.
 		\item
@@ -571,6 +580,18 @@
 
 \end{frame}
 
+\begin{frame}
+	\frametitle{NP-completeness for maximum degree four}
+
+	\begin{itemize}
+		\item
+		      We show that the problem is NP-complete for graphs with average degree
+		      \( 4 + \varepsilon, \varepsilon > 0 \).
+		\item
+		      Maximum degree four remains an open question.
+	\end{itemize}
+\end{frame}
+
 \section{FPT algorithm for NAC-coloring counting}
 
 \begin{frame}
@@ -589,12 +610,14 @@
 
 	\begin{itemize}
 		\item
-		      Parametrized by tree-width.
+		      Parametrized by treewidth.
 		\item
-		      NAC-coloring counting.
+		      NAC-coloring counting, not only existence.
 		\item
 		      Uses a nice-tree decomposition \( T \) of width \( k \)
 		      with \IntroduceEdgeNode{}s.
+		\item
+		      Dynamic programming algorithm.
 	\end{itemize}
 \end{frame}
 
@@ -603,18 +626,39 @@
 
 	\begin{itemize}
 		\item
-		      Let us have a node \( t \) in a nice tree decomposition \( T \)
-		      and a vertex bag \( X_t \).
-		      % By \( G_t \) we denote a graph already formed by child nodes.
+		      Let us have a node \( t \) in a nice tree decomposition \( T \),
+		      a~vertex bag \( X_t \) and
+		      a~graph \( G_t \) already formed by the child nodes.
 		\item
 		      Let us have a part \( P \in \mathcal{P}(X_t) \)
 		      and a binary relation \( R \) on \( P \).
 		\item
-		      We define a state \( s \) as a tuple \( P_\red, R_\red, P_\blue, R_\blue \).
-		      We define state space \( S_t \) of \( t \) as the set of all such states \( s \).
+		      We define a \emph{state} \( s \) as a tuple \( P_\red, R_\red, P_\blue, R_\blue \).
+		      We define \emph{state space} \( S_t \) of \( t \) as the set of all such states \( s \).
 		\item
 		      By red, resp.\ blue, halve of a state \( s \)
 		      we mean \( P_\red, R_\red \), resp. \( P_\blue, R_\blue \).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{State space}
+	\begin{itemize}
+		\item
+		      An \emph{almost NAC-coloring} is a red-blue-coloring
+		      such that there are not almost cycles.
+		\item
+		      A state \( s \in S_t \) is consistent with an almost NAC-coloring~\( \delta \)
+		      on~\( G_t \) if for both halves, w.l.o.g.\ for red halve, it holds that:
+		      \begin{itemize}
+			      \item
+			            If two vertices \( u, v \in X_t \) are in the same red connected component,
+			            then they are also in the same part in \( P_\red \).
+			      \item
+			            If there is a \( \blue \) edge connecting two red components
+			            spanning vertices \( u, v \in X_t \),
+			            it holds that \( (p_u, p_v) \in R_\red \).
+		      \end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -649,25 +693,12 @@
 
 	\begin{itemize}
 		\item
-		      An \emph{almost NAC-coloring} is a red-blue-coloring
-		      such that there are not almost cycles.
-		\item
-		      A state \( s \in S_t \) is consistent with an almost NAC-coloring \( \delta \)
-		      on \( G_t \) if for both halves, w.l.o.g.\ for red, it holds that:
-		      \begin{itemize}
-			      \item
-			            If two vertices \( u, v \in X_t \) are in the same red connected component,
-			            then they are also in the same part in \( P_\red \).
-			      \item
-			            If there is a \( \blue \) edge connecting two red components
-			            spanning vertices \( u, v \in X_t \),
-			            it holds that \( (p_u, p_v) \in R_\red \).
-		      \end{itemize}
-		\item
 		      Let \( \mathcal{S} = \{ (t, s) | s \in S_t, t \in T \} \).
 		      Let us have the cache function \( c: \mathcal{S} \to \N_0 \)
 		      such that \( c(t, s) \) is the number of almost NAC-colorings
 		      in \( G_t \) consistent with \( s \).
+		\item
+		      We show recursive relations of the cache function.
 	\end{itemize}
 \end{frame}
 
@@ -679,7 +710,7 @@
 
 
 \begin{frame}
-	\frametitle{\InroduceVertexNode{}}
+	\frametitle{\IntroduceVertexNode{}}
 
 	\only<1>{
 		\begin{figure}
@@ -762,15 +793,15 @@
 
 	\begin{itemize}
 		\item
-		      There are not edges in \( G_t \) among vertices in \( X_t \).
+		      There are no edges in \( G_t \) among vertices in \( X_t \).
 		\item
 		      Merge partitions using reflex transitive closure
 		      while avoiding almost cycles.
 		\item
-		      Let \( S_1' \subset S_{t_1'}, S_2' \subset S_{t_2'} \) be states yielding \( s \) after merging:
+		      Let \( S' \subset S_{t_1'} \times S_{t_2'} \) be tuples of states yielding \( s \) after merging:
 		      %
 		      \begin{align*}
-			      c[t, s] & = \sum_{(s_1', s_2') \in S_1' \times S_2'} c[t_1', s_1'] \cdot c[t_{2}', s_{2}'].
+			      c[t, s] & = \sum_{(s_1', s_2') \in S'} c[t_1', s_1'] \cdot c[t_{2}', s_{2}'].
 		      \end{align*}
 	\end{itemize}
 \end{frame}
@@ -818,9 +849,10 @@
 		\item
 		      Definition of \IntroduceVertexWithEdgesNode{}.
 		\item
-		      Additional detection of states not corresponding to any almost NAC-coloring.
-    \item
-          Only proved, not implemented.
+		      Optimizations --- additional detection of states not corresponding
+		      to any almost NAC-coloring.
+		\item
+		      Only proved, not implemented.
 	\end{itemize}
 \end{frame}
 
@@ -829,6 +861,8 @@
 \begin{frame}
 	\frametitle{NAC-coloring search}
 	\begin{itemize}
+		\item
+		      Polynomial check whether a red-blue-coloring is a NAC-coloring.
 		\item
 		      Naive approach tries all the red-blue-colorings.
 		\item
@@ -876,9 +910,26 @@
 			\node[vertex] (4) at (1.5, 0.866) {};
 			\node[vertex,label={north:$v$}] (5) at (1, 0) {};
 			\draw[redge] (0)edge(1) (1)edge(2) (0)edge(3) (1)edge(3) (1)edge(4) (2)edge(4) (3)edge(4)  ;
-			\draw[edge]  (0)edge(5) (2)edge(5)  ;
+			\draw[yedge]  (0)edge(5) (2)edge(5)  ;
 		\end{tikzpicture}
 	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cycles detection}
+
+	\begin{itemize}
+		\item
+		      Polynomial check runs in \( O(n+m) \) time.
+		\item
+		      For each short cycle, we create a bit-mask
+		      as in the internal representation.
+		\item
+		      Each coloring first checked against the mask,
+		      the~original check used as fallback.
+		\item
+		      Balance between the number of cycles and time spent checking cycles.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -886,7 +937,7 @@
 	\begin{itemize}
 		\item
 		      NAC-coloring restricted to a subgraph
-		      is monochromatic or a NAC-coloring.
+		      is monochromatic or a~NAC-coloring.
 		\item
 		      Strategy:
 		      \begin{itemize}
@@ -903,68 +954,44 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{}
+	\frametitle{Graph decomposition strategies}
 
-\end{frame}
-\begin{frame}
-	\frametitle{}
-
-\end{frame}
-\begin{frame}
-	\frametitle{}
-
-\end{frame}
-\begin{frame}
-	\frametitle{}
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-	\frametitle{FPT algorithm}
 	\begin{itemize}
 		\item
-		      Algorithms polynomial in graph size with a factor \( f(k) \), where~\( k \) is a graph's parameter.
+		      Specified number of monochromatic classes per subgraph.
 		\item
-		      Algorithm for NAC-coloring counting parametrized by treewidth \( k \).
+		      Best performance for few monochromatic classes per subgraph.
 		\item
-		      Treewidth represents similarity of a graph with trees.
-		\item
-		      Decomposition tree where nodes are bags of vertices\newline{}(vertex cuts) of the original graph.
-		\item
-		      Dynamic programming on the decomposition tree.
+		      Well performing strategies:
+		      \begin{itemize}
+			      \item
+			            \None{} -- take vertices in the input order.
+			      \item
+			            \Neighbors{} -- finding subgraphs where monochromatic classes share cycles.
+		      \end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{FPT algorithm}
+	\frametitle{Merging strategies}
+
 	\begin{itemize}
 		\item
-		      Information about connectivity in bags needs to be preserved.
+		      Each time, a pair of subgraphs and corresponding NAC-colorings is merged.
 		\item
-		      Super-exponential complexity in \( k \), linear in the graph size.
+		      Lazy merging -- heavy use of iterators, improves the existence question case.
 		\item
-		      Recursive definition of the cache function.
+		      Well performing strategies:
+		      \begin{itemize}
+			      \item
+			            \MergeLinear{} -- reduce called on the list in the order provided by decomposition.
+			      \item
+			            \SharedVertices{} -- group classes with many common vertices.
+		      \end{itemize}
 		\item
-		      Additional optimizations proposed and variations discussed.
-		\item
-		      Not implemented, proved only.
+		      Tree-like merging strategy unreliable.
 	\end{itemize}
 \end{frame}
-
-% \begin{frame}
-% 	\frametitle{Stable cuts}
-% 	\begin{itemize}
-% 		\item
-% 		      A \emph{stable cut} is a vertex cut that is also an independent set.
-% 		\item
-% 		      If a stable cut exists, a NAC-coloring also trivially exists.
-% 		\item
-% 		      Algorithm for stable cut search in flexible graphs implemented.
-% 	\end{itemize}
-% \end{frame}
-
 
 \begin{frame}
 	\frametitle{Benchmarks}
@@ -980,13 +1007,32 @@
 	\frametitle{Graphs with many NAC-colorings}
 	\begin{itemize}
 		\item
-		      Improved naive approach is the fastest for find some NAC-coloring.
+		      Naive approach with cycles is the fastest to check for NAC-coloring existence.
 		\item
-		      Fast for finding any NAC-coloring on over 100 vertex graphs.
+		      Moustly because of additional overhead as the problem is simple.
+		\item
+		      \Subgraphs{} still fast for finding any NAC-coloring on over 100 vertex graphs.
 		\item
 		      Listing all NAC-colorings runs fast enough for 30 vertex graphs,
 		      naive approach is slow for small graphs.
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+
+	\begin{figure}[ht]
+		\centering
+		\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_all_monochromatic_runtime_split_merging_mean.pgf}}
+		\caption[Running time for~minimally rigid graphs]{
+			Mean running time to find all NAC-colorings for~minimally rigid graphs.}%
+	\end{figure}%
+
+	\begin{figure}[thbp]
+		\centering
+		\scalebox{\BenchFigureScale}{\input{./figures/graph_export_minimally_rigid_random_first_monochromatic_runtime_split_merging_mean.pgf}}
+		\caption[Mean runtime for~minimally rigid graphs (some)]{
+			Mean running time to find some NAC-coloring for~minimally rigid graphs.}%
+	\end{figure}%
 \end{frame}
 
 \begin{frame}
@@ -1001,6 +1047,38 @@
 		      \end{itemize}
 		\item
 		      Tens of vertices/monochromatic classes run in few seconds.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}[thbp]
+		\centering
+		\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_first_vertex_runtime_split_merging_mean.pgf}}
+		\caption[Mean runtime for~globally rigid graphs (some)]{
+			Mean running time to find some NAC-coloring for~globally rigid graphs.}%
+		\label{fig:graph_globally_rigid_first_runtime}
+	\end{figure}%
+	\begin{figure}[thbp]
+		\centering
+		\scalebox{\BenchFigureScale}{\input{./figures/graph_export_globally_rigid_all_monochromatic_runtime_split_merging_mean.pgf}}
+		\caption[Mean runtime for~globally rigid graphs (all)]{
+			Mean running time to find all NAC-colorings for~globally rigid graphs.}%
+		\label{fig:graph_globally_rigid_all_runtime}
+	\end{figure}%
+\end{frame}
+
+\begin{frame}
+	\frametitle{Benchmarks summary}
+
+	Compared to the \Naive{} approach:
+	%
+	\begin{itemize}
+		\item
+		      The number of cycles/polynomial checks reduced significantly.
+		\item
+		      Faster except for small graphs (important for graph class exploration).
+		\item
+		      Other polynomial optimizations introduced.
 	\end{itemize}
 \end{frame}
 

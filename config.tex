@@ -89,3 +89,19 @@
 \tikzstyle{bedge}=[edge,colB]
 \tikzstyle{yedge}=[edge,colOrange]
 %%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%
+% MatPlotlib graphs
+% colors bright form https://personal.sron.nl/~pault/#sec:qualitative
+\definecolor{currentstroke1}{HTML}{BBBBBB}
+\definecolor{currentstroke2}{HTML}{EE6677}
+\definecolor{currentstroke3}{HTML}{228833}
+\definecolor{currentstroke4}{HTML}{CCBB44}
+\definecolor{currentstroke5}{HTML}{66CCEE}
+\definecolor{currentstroke6}{HTML}{AA3377}
+\definecolor{currentstroke7}{HTML}{4477AA}
+% Required for some Matplotlib (3.9.*) exported graphs to render as
+% its pgd export feature is broken
+% https://github.com/matplotlib/matplotlib/issues/27907
+\providecommand\mathdefault[1]{#1}
+
