@@ -6,6 +6,10 @@ at Faculty of Information technology, CTU Prague.
 The [latest PDF version](https://github.com/Lastaapps/bc_thesis/actions/workflows/latex.yml)
 of the thesis can be found in artifacts in GitHub workflows.
 
+Recording of a talk I gave at G2OAT seminar 2025 can be seen
+[here](https://ggoat.fit.cvut.cz/seminar/lastovicka-nac-coloring-search.html)
+([backup](https://www.youtube.com/watch?v=doEYDJNJzOM) link).
+
 ## Abstract
 
 One of the questions in Rigidity Theory is whether a realization of the
